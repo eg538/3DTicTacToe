@@ -1,4 +1,5 @@
-type cell
+type player = None | Some python | Some caml
+type cell = {cell: (int*int*int); taken: bool; player: option player}
 
 (** [positions] is a list of the cells that make up each plane. Because each
   * plane is 3 x 3, the length of this list should be nine. The list is ordered
