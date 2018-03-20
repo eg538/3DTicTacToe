@@ -59,15 +59,15 @@ val avatars: state -> string * plep list
  *    commands "look", “hint” and “score”, leave the observable state
  *    unchanged ([st'] is equivalent to [st]).
  *      + The object "hint" is only valid if there remains an empty spot on
- *        the board and the game
+ *        the board and the game has not terminated (a game is defined to have terminated
+ *        if there are no empty cells left on the board)
  *      + The object "score" is only valid if it requests the score of a valid player
  *        (NOTE: This is so that the current player will not only be able to see his own
  *        score but also the score of the opponent, whether human or computer)
  *      + The object "look" is only valid before the proper GUI is implemented and for use
  *        with the text GUI (NOTE: Do we need look if we get to the fancier GUI, since then
  *        the board is always in display?)
- *    has not terminated (TODO: how to determine if the game should terminate?)
- * TODO: what is the behavior of do if [c] is not a valid command?
+ * If [c] is not a valid command, [st'] is equivalent to [st]
  * effects: none. do' shouldn't print or display anything in order to maintain
  * model-view-controller
  *)
