@@ -31,7 +31,7 @@ val three_row_col_3d: cell list -> cell list -> cell list -> bool
 val three_row_diag_3d:
 *)
 
-(*(* [accounted_for] keeps track of the number of 3-in-a-row wins of either
+(* [accounted_for] keeps track of the number of 3-in-a-row wins of either
    X's or O's. It is not dependent on the player's icon in the
    game. The 3-in-a-row wins are kept in a list of triples,
    where each triple corresponds to a location in the grid.
