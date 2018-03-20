@@ -1,9 +1,11 @@
 open Command
 type state
+type player
+type info
 
 (*[init_state info] is the initial state of the game
- * ass determined by info (TODO: decide what type info will be),
- * which is composed of information (mode, avatar, level), where
+ * ass determined by info, which is composed of information
+ * (mode, avatar, level), where
  *  - mode: single or multiplayer mode
  *  - avatar: the player(s)'s avatar(s)
  *  - level: easy, medium or difficult level
