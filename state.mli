@@ -1,3 +1,4 @@
+open Command
 type state
 
 (*[init_state info] is the initial state of the game
@@ -70,4 +71,4 @@ val avatars: state -> string * plep list
  * effects: none. do' shouldn't print or display anything in order to maintain
  * model-view-controller
  *)
-val do': Command.command -> state -> state
+val do': command -> state -> state
