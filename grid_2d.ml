@@ -6,7 +6,8 @@ module type Plane = sig
   val move_valid: cell -> cell list -> bool
 end
 
-type player = Some python | Some caml
+type player = Some Python | Some Caml
+
 type cell = {cell: (int*int*int); taken: bool; player: option player}
 
 

@@ -1,6 +1,7 @@
 open Command
 type info
 type state
+type player
 
 module type State = sig
   val init_state : info -> state

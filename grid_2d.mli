@@ -1,4 +1,4 @@
-type player = None | Some python | Some caml
+type player = None | Some Python | Some Caml
 type cell = {cell: (int*int*int); taken: bool; player: option player}
 
 (** [positions] is a list of the cells that make up each plane. Because each
