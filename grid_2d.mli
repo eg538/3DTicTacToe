@@ -46,3 +46,11 @@ val three_row_2d: cell -> cell list -> bool
   *   - taken is true for that cell in [lst]
  **)
 val move_valid: cell -> cell list -> bool
+
+(* [retrieve_same_plane_match cell] returns the three-in-a-row instance in the
+   form of a [cell list] including the given cell that was just played. This
+   would check only return a three-in-a-row instance on the plane that the
+   particular cell is currently on -- the rest of the possible 3d instances are
+   checked in grid_3d.ml - cdc222
+*)
+val retrieve_same_plane_match: cell -> cell list

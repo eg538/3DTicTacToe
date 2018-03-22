@@ -37,4 +37,4 @@ val three_row_diag_3d:
    where each triple corresponds to a location in the grid.
  *)
   (*added into accounted_for list, list of 3 triples () *)
-  val accounted_for: cell list *)
+  val accounted_for: cell list
