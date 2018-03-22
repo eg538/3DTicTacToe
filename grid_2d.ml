@@ -6,7 +6,7 @@ module type Plane = sig
   val move_valid: cell -> cell list -> bool
 end
 
-type player = Some Python | Some Caml
+type player = None | Some Python | Some Caml
 
 type cell = {cell: (int*int*int); taken: bool; player: option player}
 
@@ -16,7 +16,10 @@ module Top: Plane = struct
 
   let positions = failwith "Unimplemented"
 
-  let cells_left lst = failwith "Unimplemented"
+  let cells_left lst =
+    match lst with
+    | [] -> []
+    | 
 
   let three_row_2d cell1 lst = failwith "Unimplemented"
 
