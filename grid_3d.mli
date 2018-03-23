@@ -1,3 +1,5 @@
+(*TODO: should be able to call Top, Bottom, Middle of type Grid 2D*)
+
 (* [get_parent_plane cell] gets the cell list plane that the current [cell] is
    in. Maybe the return type would be of type elevation, depending on how we
    hardcode. resolution needed (*FIXME*)

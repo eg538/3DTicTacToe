@@ -1,7 +1,7 @@
 type player = None | Python | Caml
 type cell = {cell: (int*int*int); taken: bool; player: player}
 
-(** [positions] is a list of the cells that make up each plane. Because each
+(** [get_parent_plane] is a list of the cells that make up a specific [cell]'s plane. Because each
   * plane is 3 x 3, the length of this list should be nine. The list is ordered
   * by the row element of the cell tuple (as plane will be the same for all 9
   * cells). That is the order for list (regardless of the plane) should be:
@@ -9,8 +9,7 @@ type cell = {cell: (int*int*int); taken: bool; player: player}
   * ... (_, row3, col3)] (entirety of record data has been omitted to illustrate
   * the ordering)
  **)
-val positions : cell list
-
+val get_parent_plane : cell -> cell list
 
 (** [cells_left lst] is a list of the cells that are still free. If no cells are
   * free, then [cells_left lst] returns []. The list is unordered. Used to know
