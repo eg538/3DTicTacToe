@@ -1,20 +1,6 @@
 open Grid_2d
 
-(*TODO: does everyone agree that we need to "hardcode" all the positions for every level
-  in this .ml file. So far, I've "grouped" the positions as a variant.
-*)
 
-(*type elevation = Top | Middle | Bottom*)
-
-(*let win_list = ref 0
-
-let accounted_for instance =
-  if (List.mem (instance) win_list) then false
-  else (
-    win_list := instance::win_list;
-    true
-  )
-*)
 let diag_check c = failwith "Unimplemented"
 let col_check c = failwith "Unimplemented"
   (*WIP *)
