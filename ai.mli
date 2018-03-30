@@ -17,13 +17,23 @@ val available_cells: state -> cell list
 (* cell list is generated from available cells *)
 val children: valid_node -> cell list -> valid_node list
 
-(*TBD*)
+(*[heuristic_fxn valid_node] calculates the utility value based on a yet to be
+  determined heuristic function from [valid_node]'s perspective in the game
+*)
 val heuristic_fxn: valid_node -> int
 
+(* [alpha_beta_pruned_tree tree] returns a [tree] with the removed game states
+   that don't necessarily need to be checked to find the optimal move. utility
+   values are determined based on the heuristic function
+*)
 val alpha_beta_pruned_tree: tree -> tree
 
-(*
+(* [player_hint tree] returns the optimal [cell] that should be played by the
+   current player to maximize chances of winning as the player
 *)
 val player_hint: tree -> cell
-(**)
+
+(* [computer_turn tree] returns the optimal [cell] that should be played by the
+   computer to maximize chances of winning as the computer
+*)
 val computer_turn: tree -> cell
