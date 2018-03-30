@@ -8,8 +8,9 @@ type cell = {cell: (int*int*int); taken: bool; player: player}
   * [(_,row1,col1)  , (_,row1,col2), ..., (_, row2, col1), ..., (_,row3, col1),
   * ... (_, row3, col3)] (entirety of record data has been omitted to illustrate
   * the ordering)
+  * requires: a valid cell and a valid state
  **)
-val get_parent_plane : cell -> cell list
+val get_parent_plane : cell -> state -> cell list
 
 (** [cells_left lst] is a list of the cells that are still free. If no cells are
   * free, then [cells_left lst] returns []. The list is unordered. Used to know
@@ -45,11 +46,3 @@ val three_row_2d: cell -> cell list -> bool
   *   - taken is true for that cell in [lst]
  **)
 val move_valid: cell -> cell list -> bool
-
-(* [retrieve_same_plane_match cell] returns the three-in-a-row instance in the
-   form of a [cell list] including the given cell that was just played. This
-   would check only return a three-in-a-row instance on the plane that the
-   particular cell is currently on -- the rest of the possible 3d instances are
-   checked in grid_3d.ml - cdc222
-*)
-val retrieve_same_plane_match: cell -> cell list
