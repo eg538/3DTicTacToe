@@ -1,0 +1,14 @@
+### Starting build.
+# Target: state.mli.depends, tags: { extension:mli, file:state.mli, ocaml, ocamldep, quiet }
+/Users/EmilyGao/.opam/4.06.0/bin/ocamldep.opt -modules state.mli > state.mli.depends
+# Target: command.mli.depends, tags: { extension:mli, file:command.mli, ocaml, ocamldep, quiet }
+/Users/EmilyGao/.opam/4.06.0/bin/ocamldep.opt -modules command.mli > command.mli.depends
+# Target: command.cmi, tags: { byte, compile, extension:mli, file:command.mli, interf, ocaml, quiet }
+/Users/EmilyGao/.opam/4.06.0/bin/ocamlc.opt -c -o command.cmi command.mli
+# Target: state.cmi, tags: { byte, compile, extension:mli, file:state.mli, interf, ocaml, quiet }
+/Users/EmilyGao/.opam/4.06.0/bin/ocamlc.opt -c -o state.cmi state.mli
++ /Users/EmilyGao/.opam/4.06.0/bin/ocamlc.opt -c -o state.cmi state.mli
+File "state.mli", line 11, characters 16-20:
+Error: Unbound type constructor info
+Command exited with code 2.
+# Compilation unsuccessful.
