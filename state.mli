@@ -4,7 +4,7 @@ type player
 type info
 
 (*[init_state info] is the initial state of the game
- * ass determined by info, which is composed of information
+ * as determined by info, which is composed of information
  * (mode, avatar, level), where
  *  - mode: single or multiplayer mode
  *  - avatar: the player(s)'s avatar(s)
