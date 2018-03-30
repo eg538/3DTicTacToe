@@ -1,0 +1,5 @@
+"Rule: ocaml dependencies mli (%=state )": "z^*M\226\182;\007\135oh\014v]pb"
+"Rule: ocaml dependencies mli (%=command )": "\247\023XIT\211\193\239\208]\022~\154\244\250\224"
+"Resource: /Users/EmilyGao/Documents/CS3110/Assignments/3d-tictactoe/state.mli": "\000K1\254\151sk\025\216\189\250\208R\219\029J"
+"Rule: ocaml: mli -> cmi (%=command )": "\211\208C5\192v\000\150\174_\225]\194\160A\209"
+"Resource: /Users/EmilyGao/Documents/CS3110/Assignments/3d-tictactoe/command.mli": "dO\233\014\187\012\197\252\000\021Q|\231T\n\156"
