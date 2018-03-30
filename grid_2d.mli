@@ -8,8 +8,9 @@ type cell = {cell: (int*int*int); taken: bool; player: player}
   * [(_,row1,col1)  , (_,row1,col2), ..., (_, row2, col1), ..., (_,row3, col1),
   * ... (_, row3, col3)] (entirety of record data has been omitted to illustrate
   * the ordering)
+  * requires: a valid cell and a valid state
  **)
-val get_parent_plane : cell -> cell list
+val get_parent_plane : cell -> state -> cell list
 
 (** [cells_left lst] is a list of the cells that are still free. If no cells are
   * free, then [cells_left lst] returns []. The list is unordered. Used to know
