@@ -1,18 +1,8 @@
 # 3d-tictactoe
 cs 3110 final project
+** modified on April 10, 2018 **
 
-Milestone 1: Design (03/29/2018, Thursday)
-Prepare Design Doc:
-contains:
--System Descriptions: proposal
--System Design: Modules being implemented and why?
--Module Design: Interfaces used, .mli file making each interface precise name, types, specs
-              : Submit zip file named interfaces.mli containing the .mli files 
--Data: What data is stores? basically the different records, variants and data structures used
--External Dependecies: 3rd party libraries we would use 
--Testing Plan: What kind of tests would be used
-
-
+http://www.myhip.com/ttt3d/3d_tic_tac_toe_too.html <- for inspiration
 
 Design Review Meeting: (Monday 04/09/2018 --- Friday 04/13/2018)
 Here's the agenda for your design review meeting:
@@ -29,7 +19,7 @@ Milestone 2: Prototype (05/01/2018, Tuesday)
 Prepare status.pdf:
 contains:
 -System Description: Include your system proposal and design document from Milestones 0 and 1, updated to account for any changes you have since made.
--Changes: lol 
+-Changes: lol
 -Status: what pieces of your project you have implemented so far
 -Roadmap: what remains to be implemented
 -Testing: what has been tested successfully

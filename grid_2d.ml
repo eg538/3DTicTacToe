@@ -26,7 +26,7 @@ module Top: Plane = struct
 
   let rec get_parent_plane cell_pos st =
     let pl_match = get_plane cell_pos.cell in
-    let cell_list = st.cell_list (* or whatever this data is called in the state record *) in
+    let cell_list = st.cells in
     List.filter (fun x -> get_plane x.cell = pl_match ) cell_list
 
   let cells_left lst =
