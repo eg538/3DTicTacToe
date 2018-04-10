@@ -1,7 +1,13 @@
 open Command
+
+open Grid_3d
+
 type state
 type player
 type info
+type level
+type result
+type num_players
 
 (*[init_state info] is the initial state of the game
  * as determined by info, which is composed of information
