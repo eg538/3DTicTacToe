@@ -20,6 +20,9 @@ module Top: Plane = struct
 
   type cell
 
+      (*given a cell coordinate, return the cell object *)
+
+
   let get_plane cell_pos =
     match cell_pos with
     | (pl, _ , _ ) -> pl
