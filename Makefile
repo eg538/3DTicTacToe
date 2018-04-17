@@ -4,9 +4,6 @@ test:
 play:
 	ocamlbuild -use-ocamlfind main.byte && ./main.byte
 
-check:
-	bash checkenv.sh && bash checktypes.sh
-
 zip:
 	zip 3dtictactoesrc.zip *.ml* *.json
 
