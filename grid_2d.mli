@@ -7,16 +7,11 @@ type cell = {cell: (int*int*int); taken: bool; player: player}
  **)
 val get_plane : int*int*int -> int
 
-(** [get_parent_plane] is a list of the cells that make up a specific [cell]'s plane. Because each
-  * plane is 3 x 3, the length of this list should be nine. The list is ordered
-  * by the row element of the cell tuple (as plane will be the same for all 9
-  * cells). That is the order for list (regardless of the plane) should be:
-  * [(_,row1,col1)  , (_,row1,col2), ..., (_, row2, col1), ..., (_,row3, col1),
-  * ... (_, row3, col3)] (entirety of record data has been omitted to illustrate
-  * the ordering)
-  * requires: a valid cell and a valid state
+(** [get_parent_plane cell lst_of_cells] is a list of the cells that make up a specific [cell]'s plane. Because each
+  * plane is 3 x 3, the length of this list should be nine.
+  * requires: a valid cell and [lst_of_cells] which is state.cells (a list of all the cells of the board)
  **)
-val get_parent_plane : cell -> state -> cell list
+val get_parent_plane : cell -> cell list -> cell list
 
 (** [cells_left lst] is a list of the cells that are still free. If no cells are
   * free, then [cells_left lst] returns []. The list is unordered. Used to know
@@ -29,7 +24,9 @@ val cells_left : cell list -> cell list
  **)
 val is_taken : cell -> cell list -> bool
 
-(** [cell_valid cell] is a bool that is true if the given cell is a valid cell. It is a helper function for move_valid**)
+(** [cell_valid cell] is a bool that is true if the given cell is a valid cell.
+  * It is a helper function for move_valid
+ **)
 val cell_valid : cell -> bool
 
 
@@ -43,7 +40,7 @@ val cell_valid : cell -> bool
  **)
 val move_valid: cell -> cell list -> bool
 
-(** [three_row_2d input_cell state] is true if the inputted cell makes a vertical,
+(** [three_row_2d input_cell lst_of_cells] is true if the inputted cell makes a vertical,
   * diagonal, or horizontal line with the same players. It is false otherwise.
   * Requires: current state the game is in
   * Example:
@@ -53,5 +50,6 @@ val move_valid: cell -> cell list -> bool
   *  - let cell_occupied = [cell2, cell3] in
   *  - [three_row_2d cell_input cell_occupied] returns true
   *  - (it forms a horizontal line in the top plane in the top row)
+  * requires: [lst_of_cells] which is state.cells (a list of the cells in the gird)
  **)
-val three_row_2d: cell -> state -> bool
+val three_row_2d: cell -> lst_of_cells -> bool
