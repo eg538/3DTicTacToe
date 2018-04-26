@@ -1,9 +1,17 @@
 open Command
+
+open Grid_3d
+
 type state
+type player
+type info
+type level
+type result
+type num_players
 
 (*[init_state info] is the initial state of the game
- * ass determined by info (TODO: decide what type info will be),
- * which is composed of information (mode, avatar, level), where
+ * as determined by info, which is composed of information
+ * (mode, avatar, level), where
  *  - mode: single or multiplayer mode
  *  - avatar: the player(s)'s avatar(s)
  *  - level: easy, medium or difficult level
@@ -38,7 +46,7 @@ val board: state -> string
 
 (*[avatars st] is the assignment of the avatars when game is in state in the form
  * [("player1", player1's avatar); ("player2", player2's avatar)*)
-val avatars: state -> string * plep list
+val avatars: state -> string * player list
 
 (*[do' c st] is [st'] if executing command [c] in state [st] results
  * in [st']. The following describe the valid commands and the result

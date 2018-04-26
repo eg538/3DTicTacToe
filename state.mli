@@ -20,20 +20,38 @@ val init_state: info -> state
 
 (*[p1score st] is player 1's score when the game is in state [st].
  * Player 1 is the human player*)
-val p1score: state -> int
+val p1_score: state -> int
 
 (*[p2score st] is player 2's score when the game is in state [st].
  * Player 2 could either be a second human player or the computer*)
-val p2score: state -> int
+val p2_score: state -> int
 
 (*[curr_player st] is the player whose turn it is to go when game is in
  * state [st]*)
 val curr_player: state -> string
 
+val p1_hints: state -> int
+
+val p2_hints: state -> int
+
+val p1_tries: state -> int
+
+val p2_tries: state -> int
+
+val get_result: state -> player
+
+val get_result_message: state -> string
+
+val find_cell: state -> int * int * int -> cell
+
+val make_move: state -> int * int * int -> player -> unit
+
 (*[asciiBoard st] is the ascii string representation of the 3D tictactoe
  * board when the game is in state [st]
  * NOTE: for testing before implementation of GUI*)
 val asciiBoard: state -> string
+
+val print_board: state -> unit
 
 (*[hint st] is the optimal move for the current player of [st] when game is
  * in state [st]*)

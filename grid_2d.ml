@@ -13,7 +13,7 @@ end
 
 type player = None |  Python |  Caml
 
-type cell = {cell: (int*int*int); taken: bool; player:  player}
+type cell = {cell: (int*int*int); player:  player}
 
 
 module Top: Plane = struct

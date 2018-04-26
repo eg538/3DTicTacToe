@@ -1,3 +1,4 @@
+open Grid_2d
 (*TODO: should be able to call Top, Bottom, Middle of type Grid 2D, already defined in grid_2d.ml*)
 
 (* [win_evaluation] takes in [cell] and the 3 [cell list]s making up the grid
