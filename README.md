@@ -13,6 +13,10 @@ Discussion of design [21 min]: The team and staff member discuss the design. The
 Planning [3 min]: The team presents its implementation plan to the staff member.
 Wrapup [1 min].
 
+** modifed on April 13, 2018 **
+* need to add more features to make it more complicated --> more heuresitcs, web game applications, more rows, up the GUI
+* reason-react-JS for front end web; reprocessing
+* co-https (networking) <- for multiplayer games (running on a server)
 
 
 Milestone 2: Prototype (05/01/2018, Tuesday)
