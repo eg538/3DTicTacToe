@@ -1,17 +1,6 @@
 open Command
 open Grid_3d
-
-type level = Easy| Medium| Hard
-
-type player = Caml | Python| None
-
-type num_players = Single| Multi
-
-type info = {
-  info_mode : num_players;
-  info_p1_avatar : player;
-  info_level  : level;
-}
+open Parse_init
 
 type state = {
   result  : player; (*Will contain the player who won*)
@@ -130,11 +119,26 @@ let asciiBoard s = asciiBoard_helper (0, 0, 0) s.cells ""
 let print_board s = print_string (asciiBoard s)
 
 let hint = failwith "Unimplemented"
-let board = failwith "Unimplemented"
+
+let board s = s.cells
+
 let avatars s = 
   match s.p1_avatar with 
   | Caml -> [("player1", Caml); ("player2", Python)]
   | Python -> [("player1", Python); ("player2", Caml)]
   | None -> []
-let do' = failwith "Unimplemented"
+
+let do' c st = 
+  match c with 
+  | Play -> init_state 
+  | Score 
+  | Quit 
+  | Restart
+  | Try (pl, row, col)
+  | Place (pl, row, col)
+  | Hint 
+  | Look
+  | Turns
+  | Start
+  | _ 
 

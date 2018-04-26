@@ -60,7 +60,7 @@ val hint: state -> string
 (*[board st] is information regarding which spots in the board are filled and
  * with which player's move
  * TODO: figure out what type this function should return*)
-val board: state -> string
+val board: state -> (int*int*int, cell) Hashtbl.t
 
 (*[avatars st] is the assignment of the avatars when game is in state in the form
  * [("player1", player1's avatar); ("player2", player2's avatar)*)
