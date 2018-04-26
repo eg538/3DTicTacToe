@@ -1,6 +1,7 @@
-module type Plane = sig
-  type player 
+
   type cell
+
+module type Plane = sig
   val get_plane : (int*int*int) -> int
   val get_parent_plane: cell -> cell list -> cell list
   val cells_left: cell list -> cell list
@@ -10,7 +11,7 @@ module type Plane = sig
   val move_valid: cell -> cell list ->  bool
 end
 
-
+  type player 
 (*
 (** [get_plane] is an int tht returns the plane of a given cell. It is a helper
   * function for get_parnet_plane

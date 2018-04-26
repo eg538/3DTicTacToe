@@ -1,6 +1,7 @@
+  type player = None |  Python |  Caml
+  type cell = {cell: (int*int*int); taken: bool; player:  player}
+
 module type Plane = sig
-  type player 
-  type cell
   val get_plane : (int*int*int) -> int
   val get_parent_plane: cell -> cell list -> cell list
   val cells_left: cell list -> cell list
@@ -10,11 +11,11 @@ module type Plane = sig
   val move_valid: cell -> cell list ->  bool
 end
 
+
+
 module MakePlane
   = functor (K : Plane) ->
   struct
-    type player = None |  Python |  Caml
-    type cell = {cell: (int*int*int); taken: bool; player:  player}
 
     let get_plane cell_pos =
       match cell_pos with
