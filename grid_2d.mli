@@ -1,10 +1,23 @@
-type player = None | Python | Caml
-type cell = {cell: (int*int*int); taken: bool; player: player}
+module type Plane = sig
+  type player 
+  type cell
+  val get_plane : (int*int*int) -> int
+  val get_parent_plane: cell -> cell list -> cell list
+  val cells_left: cell list -> cell list
+  val is_taken : (int*int*int) -> cell list -> bool
+  val cell_valid : cell -> bool
+  val three_row_2d: cell -> cell list -> bool
+  val move_valid: cell -> cell list ->  bool
+end
 
 
+(*
 (** [get_plane] is an int tht returns the plane of a given cell. It is a helper
   * function for get_parnet_plane
  **)
+
+ = None | Python | Caml
+type cell = {cell: (int*int*int); taken: bool; player: player}
 val get_plane : int*int*int -> int
 
 (** [get_parent_plane cell lst_of_cells] is a list of the cells that make up a specific [cell]'s plane. Because each
@@ -52,4 +65,4 @@ val move_valid: cell -> cell list -> bool
   *  - (it forms a horizontal line in the top plane in the top row)
   * requires: [lst_of_cells] which is state.cells (a list of the cells in the gird)
  **)
-val three_row_2d: cell -> lst_of_cells -> bool
+val three_row_2d: cell -> cell list -> bool*)
