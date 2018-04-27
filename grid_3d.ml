@@ -1,7 +1,7 @@
 open Grid_2d
 open State
 
-type WinType3D =
+type winType3D =
   | WinV of cell list
   | WinH of cell list
   | WinNone

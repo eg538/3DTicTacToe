@@ -1,17 +1,6 @@
 open Command
 open Grid_3d
-
-type level = Easy| Medium| Hard
-
-type player = Caml | Python| None
-
-type num_players = Single| Multi
-
-type info = {
-  info_mode : num_players;
-  info_p1_avatar : player;
-  info_level  : level;
-}
+open Parse_init
 
 type state = {
   result  : player; (*Will contain the player who won*)
@@ -77,13 +66,23 @@ let init_state inf = {
   }
 
 let p1_score s = s.curr_score_1
+
 let p2_score s = s.curr_score_2
+
 let curr_player s = s.curr_player
-let p1_hints s = s.p1_num_hints
-let p2_hints s = s.p2_num_hints
-let p1_tries s = s.p1_num_tries
-let p2_tries s = s.p2_num_tries
+
+let num_hints s = 
+  match s.current_player with
+  | p1_avatar -> s.p1_num_hints
+  | _ -> s.p2_num_hints
+
+let num_tries s = 
+  match s.current_player with
+  | s.p1_avatar -> s.p1_num_tries
+  | _ -> s.p2_num_tries
+
 let get_result s = s.result
+
 let get_result_message s =
   match s.mode with 
   | Single -> begin
@@ -98,7 +97,6 @@ let get_result_message s =
               "Sad! You didn't win the Java cup, but try again next time for that steaming mug of Java!"
             else
               "Oh no! You were close to winning the Java cup!"
-  
 
 let rec find_cell s (pl, x, y) = Hashtbl.find s.cells (pl, x, y)
 
@@ -130,11 +128,29 @@ let asciiBoard s = asciiBoard_helper (0, 0, 0) s.cells ""
 let print_board s = print_string (asciiBoard s)
 
 let hint = failwith "Unimplemented"
-let board = failwith "Unimplemented"
+
+let board s = s.cells
+
 let avatars s = 
   match s.p1_avatar with 
   | Caml -> [("player1", Caml); ("player2", Python)]
   | Python -> [("player1", Python); ("player2", Caml)]
   | None -> []
-let do' = failwith "Unimplemented"
+
+let do' c st = 
+  match c with 
+  | Play str -> parse_init_file str |> init_state
+  | Score -> st
+  | Quit -> st
+  | Restart -> st
+  | Try (pl, row, col) -> failwith "Unimplemented"
+  | Place (pl, row, col) -> failwith "Unimplemented"
+  | Hint -> begin
+    match s.current_player with
+    | s.p1_avatar -> {s with p1_num_hints = if s.p1_num_hints > 0 then s.p1_num_hints - 1 else 0}
+    | _ -> {s with p2_num_hints = if s.p2_num_hints > 0 then s.p2_num_hints - 1 else 0}
+    end
+  | Look -> st
+  | Turns -> st
+  | _ -> raise InvalidCommand
 

@@ -1,18 +1,16 @@
 ### Starting build.
-# Target: state.mli.depends, tags: { extension:mli, file:state.mli, ocaml, ocamldep, quiet }
-/Users/EmilyGao/.opam/4.06.0/bin/ocamldep.opt -modules state.mli > state.mli.depends # cached
-# Target: command.mli.depends, tags: { extension:mli, file:command.mli, ocaml, ocamldep, quiet }
+# Target: state.mli.depends, tags: { package(ANSITerminal), package(oUnit), package(str), extension:mli, file:state.mli, ocaml, ocamldep, quiet, traverse }
+/Users/EmilyGao/.opam/4.06.0/bin/ocamldep.opt -modules state.mli > state.mli.depends
+# Target: command.mli.depends, tags: { package(ANSITerminal), package(oUnit), package(str), extension:mli, file:command.mli, ocaml, ocamldep, quiet, traverse }
 /Users/EmilyGao/.opam/4.06.0/bin/ocamldep.opt -modules command.mli > command.mli.depends # cached
-# Target: command.cmi, tags: { byte, compile, extension:mli, file:command.mli, interf, ocaml, quiet }
+# Target: command.cmi, tags: { package(ANSITerminal), package(oUnit), package(str), byte, compile, extension:mli, file:command.mli, interf, ocaml, quiet, traverse }
 /Users/EmilyGao/.opam/4.06.0/bin/ocamlc.opt -c -o command.cmi command.mli # cached
-# Target: grid_3d.mli.depends, tags: { extension:mli, file:grid_3d.mli, ocaml, ocamldep, quiet }
+# Target: grid_3d.mli.depends, tags: { package(ANSITerminal), package(oUnit), package(str), extension:mli, file:grid_3d.mli, ocaml, ocamldep, quiet, traverse }
 /Users/EmilyGao/.opam/4.06.0/bin/ocamldep.opt -modules grid_3d.mli > grid_3d.mli.depends
-# Target: grid_2d.mli.depends, tags: { extension:mli, file:grid_2d.mli, ocaml, ocamldep, quiet }
-/Users/EmilyGao/.opam/4.06.0/bin/ocamldep.opt -modules grid_2d.mli > grid_2d.mli.depends
-# Target: grid_2d.cmi, tags: { byte, compile, extension:mli, file:grid_2d.mli, interf, ocaml, quiet }
-/Users/EmilyGao/.opam/4.06.0/bin/ocamlc.opt -c -o grid_2d.cmi grid_2d.mli
-+ /Users/EmilyGao/.opam/4.06.0/bin/ocamlc.opt -c -o grid_2d.cmi grid_2d.mli
-File "grid_2d.mli", line 19, characters 31-36:
-Error: Unbound type constructor state
+# Target: grid_3d.cmi, tags: { package(ANSITerminal), package(oUnit), package(str), byte, compile, extension:mli, file:grid_3d.mli, interf, ocaml, quiet, traverse }
+/Users/EmilyGao/.opam/4.06.0/bin/ocamlc.opt -c -o grid_3d.cmi grid_3d.mli
++ /Users/EmilyGao/.opam/4.06.0/bin/ocamlc.opt -c -o grid_3d.cmi grid_3d.mli
+File "grid_3d.mli", line 8, characters 20-24:
+Error: Unbound type constructor cell
 Command exited with code 2.
 # Compilation unsuccessful.
