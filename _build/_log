@@ -1,8 +1,0 @@
-### Starting build.
-# Target: grid_3d.mli.depends, tags: { package(ANSITerminal), package(oUnit), package(str), extension:mli, file:grid_3d.mli, ocaml, ocamldep, quiet, traverse }
-/Users/cdchang/.opam/4.06.0/bin/ocamldep.opt -modules grid_3d.mli > grid_3d.mli.depends
-+ /Users/cdchang/.opam/4.06.0/bin/ocamldep.opt -modules grid_3d.mli > grid_3d.mli.depends
-File "grid_3d.mli", line 10, characters 0-3:
-Error: Syntax error
-Command exited with code 2.
-# Compilation unsuccessful.

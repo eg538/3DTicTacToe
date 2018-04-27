@@ -1,13 +1,16 @@
-(*TODO: should be able to call Top, Bottom, Middle of type Grid 2D, already defined in grid_2d.ml*)
+open Grid_2d
 
-type WinType3D 
-
+(*WinType3D is a type used in grid_3d*)
+type winType3D =
+| WinV of Grid_2d.cell list
+| WinH of Grid_2d.cell list
+| WinNone
 (* [win_evaluation] takes in [cell] and the 3 [cell list]s making up the grid
    space and determines whether the [cell] is part of a newly won 3-in-a-row
    instance.
 *)
 
-val win_evaluation: Grid_2d.cell -> Grid_2d.cell list -> Grid_2d.cell list -> Grid_2d.cell list -> bool
+(*val win_evaluation: Grid_2d.cell -> Grid_2d.cell list -> Grid_2d.cell list -> Grid_2d.cell list -> bool *)
 
 (* [cells_occupied] keeps track of the cells in the 3d grid space that have been
    played by a player. The accumulating list of cells would be of type
