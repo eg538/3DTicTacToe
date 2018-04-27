@@ -1,16 +1,8 @@
 ### Starting build.
-# Target: state.mli.depends, tags: { package(ANSITerminal), package(oUnit), package(str), extension:mli, file:state.mli, ocaml, ocamldep, quiet, traverse }
-/Users/EmilyGao/.opam/4.06.0/bin/ocamldep.opt -modules state.mli > state.mli.depends
-# Target: command.mli.depends, tags: { package(ANSITerminal), package(oUnit), package(str), extension:mli, file:command.mli, ocaml, ocamldep, quiet, traverse }
-/Users/EmilyGao/.opam/4.06.0/bin/ocamldep.opt -modules command.mli > command.mli.depends # cached
-# Target: command.cmi, tags: { package(ANSITerminal), package(oUnit), package(str), byte, compile, extension:mli, file:command.mli, interf, ocaml, quiet, traverse }
-/Users/EmilyGao/.opam/4.06.0/bin/ocamlc.opt -c -o command.cmi command.mli # cached
 # Target: grid_3d.mli.depends, tags: { package(ANSITerminal), package(oUnit), package(str), extension:mli, file:grid_3d.mli, ocaml, ocamldep, quiet, traverse }
-/Users/EmilyGao/.opam/4.06.0/bin/ocamldep.opt -modules grid_3d.mli > grid_3d.mli.depends
-# Target: grid_3d.cmi, tags: { package(ANSITerminal), package(oUnit), package(str), byte, compile, extension:mli, file:grid_3d.mli, interf, ocaml, quiet, traverse }
-/Users/EmilyGao/.opam/4.06.0/bin/ocamlc.opt -c -o grid_3d.cmi grid_3d.mli
-+ /Users/EmilyGao/.opam/4.06.0/bin/ocamlc.opt -c -o grid_3d.cmi grid_3d.mli
-File "grid_3d.mli", line 8, characters 20-24:
-Error: Unbound type constructor cell
+/Users/cdchang/.opam/4.06.0/bin/ocamldep.opt -modules grid_3d.mli > grid_3d.mli.depends
++ /Users/cdchang/.opam/4.06.0/bin/ocamldep.opt -modules grid_3d.mli > grid_3d.mli.depends
+File "grid_3d.mli", line 10, characters 0-3:
+Error: Syntax error
 Command exited with code 2.
 # Compilation unsuccessful.
