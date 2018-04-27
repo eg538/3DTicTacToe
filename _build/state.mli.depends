@@ -1,1 +1,1 @@
-state.mli: Command Grid_3d
+state.mli: Command Grid_3d Hashtbl

@@ -12,7 +12,7 @@ type info = {
   info_level  : level;
 }
 
-let parse file = 
+let parse_init_file file = 
   let init = Yojson.Basic.from_file file |> member "init" in
   {
   info_mode = 

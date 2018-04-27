@@ -1,7 +1,7 @@
 exception InvalidCommand
 
 type command =
-  |Play 
+  |Play of string
   |Score 
   |Quit 
   |Restart
@@ -10,7 +10,6 @@ type command =
   |Hint 
   |Look
   |Turns
-  |Start
 
 let list_coords obj = try (String.split_on_char ',' obj 
       |> List.map (fun a -> String.trim a) 
@@ -31,14 +30,14 @@ let parse str =
   else "" 
   in
   match action with
-  |"play" -> Play
-  |"place" -> Place (obj |> list_coords |> list_to_tup)
-  |"try" -> Try (obj |> list_coords |> list_to_tup)
-  |"start" -> Start
-  |"quit"-> Quit
-  |"look" -> Look
-  |"score" -> Score
-  |"turns" -> Turns
-  |"restart" -> Restart
-  |"hint" -> Hint
+  | "play" -> Play str
+  | "start" -> Play str
+  | "place" -> Place (obj |> list_coords |> list_to_tup)
+  | "try" -> Try (obj |> list_coords |> list_to_tup)
+  | "quit"-> Quit
+  | "look" -> Look
+  | "score" -> Score
+  | "turns" -> Turns
+  | "restart" -> Restart
+  | "hint" -> Hint
   | _ -> raise InvalidCommand

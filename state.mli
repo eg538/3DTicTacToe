@@ -30,13 +30,9 @@ val p2_score: state -> int
  * state [st]*)
 val curr_player: state -> string
 
-val p1_hints: state -> int
+val num_hints: state -> int
 
-val p2_hints: state -> int
-
-val p1_tries: state -> int
-
-val p2_tries: state -> int
+val num_tries: state -> int
 
 val get_result: state -> player
 
