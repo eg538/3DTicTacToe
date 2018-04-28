@@ -1,13 +1,9 @@
- (*open Grid_2d
-  open State *)
 type player = None |  Python |  Caml
 type cell = {cell: (int*int*int); taken: bool; player:  player}
 type winType3D =
   | WinV of cell list
   | WinH of cell list
   | WinNone
-
-
 
 module type Plane = sig
   val get_plane : (int*int*int) -> int
@@ -18,8 +14,6 @@ module type Plane = sig
   val three_row_2d: cell -> cell list -> bool
   val move_valid: cell -> cell list ->  bool
 end
-
-
 
 module TopPlane = struct
   let get_plane cell_pos =
@@ -292,29 +286,17 @@ end
        (List.mem {cell = (cell_pl, cell_ex + 1, cell_why -1); taken = true; player = cell_player} (get_parent_plane cell lst_of_cells)))
    end *)
 
-(*grid_space takes in 3 planes *)
-(* let init =
-   (TopPlane, MidPlane, BottomPlane) *)
-let fst' x = function
-  | y,_,_ -> y
-  | _ -> failwith "dkjfdjf"
-let snd' x = function
-  | _,y,_ -> y
-  | _ -> failwith "impossiblejekfje"
-let thd x = function
-  | _,_,y -> y
-  | _ -> failwith "Impossible"
+let fst' (y,_,_) = y
 
-(*let grid_space_construction planes = (*huge ass cell-list*)
-  let gs = Grid_2d.get_parent_plane (0,0,0) @ plane2.get_cells in
-  let gs' = plane3.get_cells @ gs in (*can't use get_parent_plane here*)
-  gs'
-*)
+let snd' (_,y,_) = y
+
+let thd (_,_,y) = y
+
 (*grid_space = state.cells *)
 let horizontal_3d_group c grid_space =
   match c.cell with
-  | (0,y,z) when (y=z) -> List.filter (fun a -> (a.cell |> snd')=(a.cell |> thd)) grid_space
-  | 0,_,_ -> List.filter
+  | (0,y,z) when (y=z) -> List.filter (fun a -> (a.cell |> snd')=(a.cell |> thd)) grid_space (*cell list of length 2*)
+  | 0,_,_ -> List.filter (*cell list of length 2*)
                (fun a -> a.cell <> (0,0,1) && a.cell <> (0,1,0) && a.cell <> (0,1,2) && a.cell <> (0,2,1)) grid_space
   | 1,y,z when (y=z) -> List.filter (fun a -> (a.cell |> snd')=(a.cell |> thd)) grid_space
   | 1,_,_ -> List.filter
@@ -338,7 +320,7 @@ let vertical_3d_groups c grid_space =
 let diag_check c grid_space =
   let diag_h = horizontal_3d_group c grid_space in
   let diag_v = vertical_3d_groups c grid_space in
-  let verdict_h = (List.for_all (fun x -> x.taken = true ) diag_h) in
+  let verdict_h = (List.for_all (fun x -> x.taken = true ) diag_h) in (*checks whether 2 of 3-in-row instance is true*)
   let verdict_v = (List.for_all (fun x -> x.taken = true) diag_v) in
   match (verdict_h, verdict_v) with
   | true, true -> WinH diag_h, WinV diag_v
@@ -358,24 +340,28 @@ let col_check c grid_space =
 
 let win_evaluation c p1 p2 p3 =
   let grid_space = p1@p2@p3 in (*3 grids, 3 cell lists *)
-  let diag_check_truth = (((diag_check c grid_space )|> fst) = WinNone) && (((diag_check c grid_space) |> fst) = WinNone) in
+  let diag_check_truth = (((diag_check c grid_space )|> fst) <> WinNone) || (((diag_check c grid_space) |> snd) <> WinNone) in
   let cases_3d = (diag_check_truth) || (col_check c grid_space) in
-  let case_1 = (TopPlane.three_row_2d c p2) || (TopPlane.three_row_2d c p3) in
+  let case_1 = TopPlane.three_row_2d c p1 in
+  let case_2 = TopPlane.three_row_2d c p2 in (*checking all horizontal cases*)
+  let case_3 = TopPlane.three_row_2d c p3 in
+  (*let case_1 = (TopPlane.three_row_2d c p2) || (TopPlane.three_row_2d c p3) in
   let case_2 = (TopPlane.three_row_2d c p1) || (TopPlane.three_row_2d c p3) in
-  let case_3 = (TopPlane.three_row_2d c p1) || (TopPlane.three_row_2d c p2) in
+    let case_3 = (TopPlane.three_row_2d c p1) || (TopPlane.three_row_2d c p2) in*)
   match TopPlane.get_plane c.cell with
   | 0 -> case_1 || cases_3d
   | 1 -> case_2 || cases_3d
   | 2 -> case_3 || cases_3d
+  | _ -> failwith "impossible"
 
 let cells_occupied p1 p2 p3 = (*is each plane represented as a cell list *)
-  let whole_space = List.fold_left (fun a x -> x::a) [] [p1;p2;p3] in
+  let whole_space = List.fold_left (fun a x -> x::a) [] p1@p2@p3 in
   List.filter (fun cell -> cell.taken = false) whole_space
 
 let get_the_win c current_player p1 p2 p3=
   let grid_space = p1@p2@p3 in
   if (win_evaluation c p1 p2 p3) then
-    let diag_check_truth = (((diag_check c grid_space )|> fst) = WinNone) && (((diag_check c grid_space) |> fst) = WinNone) in
+    let diag_check_truth = (((diag_check c grid_space )|> fst) <> WinNone) && (((diag_check c grid_space) |> snd) <> WinNone) in
     match (diag_check_truth) with
     | true  -> begin
         match diag_check c grid_space with
@@ -383,6 +369,7 @@ let get_the_win c current_player p1 p2 p3=
         | WinH x, WinV y -> x@y
         | WinH x, WinNone -> x
         | WinNone, WinV y -> y
+        | _, _ -> [] (*for pattern-non-exhaustive case*)
       end
     | _ -> find_vertical_cells c grid_space
   else []
