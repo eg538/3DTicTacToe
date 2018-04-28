@@ -144,7 +144,11 @@ let do' c st =
   | Quit -> st
   | Restart -> st
   | Try (pl, row, col) -> failwith "Unimplemented"
-  | Place (pl, row, col) -> failwith "Unimplemented"
+  | Place (pl, row, col) -> begin
+    match s.current_player with
+    | s.p1_avatar -> make_move st (p1, row, col) s.current_player; st
+    | _ -> {s with p2_num_hints = if s.p2_num_hints > 0 then s.p2_num_hints - 1 else 0}
+    end
   | Hint -> begin
     match s.current_player with
     | s.p1_avatar -> {s with p1_num_hints = if s.p1_num_hints > 0 then s.p1_num_hints - 1 else 0}
