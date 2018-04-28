@@ -37,7 +37,7 @@ let init_state inf = {
   p2_num_hints = num_helper inf;
   p2_num_tries = num_helper inf;
   cells = let hash = Hashtbl.create 123456 in
-          Hashtbl.add hash (0, 0, 0) {cell = (0, 0, 0); player = None};
+          Hashtbl.add hash (0, 0, 0) ({cell = (0, 0, 0); player = None});
           Hashtbl.add hash (0, 0, 1) {cell = (0, 0, 1); player = None};
           Hashtbl.add hash (0, 0, 2) {cell = (0, 0, 2); player = None};
           Hashtbl.add hash (0, 1, 0) {cell = (0, 1, 0); player = None};
@@ -77,9 +77,9 @@ let num_hints s =
   | p1_avatar -> s.p1_num_hints
   | _ -> s.p2_num_hints
 
-let num_tries s =
+let num_tries s = let check = s.p1_avatar in
   match s.current_player with
-  | s.p1_avatar -> s.p1_num_tries
+  | check -> s.p1_num_tries
   | _ -> s.p2_num_tries
 
 let get_result s = s.result
@@ -138,10 +138,22 @@ let avatars s =
   | Python -> [("player1", Python); ("player2", Caml)]
   | None -> []
 
+let check_valid_move st (pl, row, col) = failwith "Unimplemented"
+
 let play_move st (pl, row, col) = 
-  match st.current_player with
-  | st.p1_avatar -> failwith "Unimplemented"
-  | _ -> failwith "Unimplemented"
+  let cell_interest = Hashtbl.find st (pl, row, col) in 
+  Hashtbl.replace st (pl, row, col) {cell_interest with player = st.current_player};
+    let plane0 = Hashtbl.fold (fun (pln, r, c) v acc -> if pl = 0 then v::acc else acc) st [] in
+    let plane1 = Hashtbl.fold (fun (pln, r, c) v acc -> if pl = 1 then v::acc else acc) st [] in
+    let plane2 = Hashtbl.fold (fun (pln, r, c) v acc -> if pl = 2 then v::acc else acc) st [] in
+    let place_cell = Hashtbl.find st (pl, row, col) in
+    if win_evaluation place_cell plane0 plane1 plane2 then 
+      let p1_check = st.p1_avatar in
+      match st.current_player with
+      | p1_check -> {st with curr_score_1 = st.curr_score_1 + 1}
+      | _ -> {st with curr_score_2 = st.curr_score_2 + 1}
+    else 
+      st
 
 let do' c st =
   match c with
@@ -149,11 +161,17 @@ let do' c st =
   | Score -> st
   | Quit -> st
   | Restart -> st
-  | Try (pl, row, col) -> failwith "Unimplemented"
-  | Place (pl, row, col) -> play_move st (pl, row, col)
-  | Hint -> begin
+  | Try (pl, row, col) -> let p1_check = st.p1_avatar in
+    begin
     match s.current_player with
-    | s.p1_avatar -> {s with p1_num_hints = if s.p1_num_hints > 0 then s.p1_num_hints - 1 else 0}
+    | p1_check -> {s with p1_num_tries = if s.p1_num_tries > 0 then s.p1_num_tries - 1 else 0}
+    | _ -> {s with p2_num_tries = if s.p2_num_tries > 0 then s.p2_num_tries - 1 else 0}
+    end
+  | Place (pl, row, col) -> play_move st (pl, row, col)
+  | Hint -> let p1_check = st.p1_avatar in
+    begin
+    match s.current_player with
+    | p1_check -> {s with p1_num_hints = if s.p1_num_hints > 0 then s.p1_num_hints - 1 else 0}
     | _ -> {s with p2_num_hints = if s.p2_num_hints > 0 then s.p2_num_hints - 1 else 0}
     end
   | Look -> st
