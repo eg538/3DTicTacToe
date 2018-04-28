@@ -1,5 +1,6 @@
 open Command
 open Grid_3d
+open Grid_2d 
 open Parse_init
 
 type state = {
@@ -17,7 +18,7 @@ type state = {
   p2_num_tries : int;
 }
 
-let num_helper inf = 
+let num_helper inf =
   match inf.info_level with
   |Easy -> 7
   |Medium -> 5
@@ -71,12 +72,12 @@ let p2_score s = s.curr_score_2
 
 let curr_player s = s.curr_player
 
-let num_hints s = 
+let num_hints s =
   match s.current_player with
   | p1_avatar -> s.p1_num_hints
   | _ -> s.p2_num_hints
 
-let num_tries s = 
+let num_tries s =
   match s.current_player with
   | s.p1_avatar -> s.p1_num_tries
   | _ -> s.p2_num_tries
@@ -84,7 +85,7 @@ let num_tries s =
 let get_result s = s.result
 
 let get_result_message s =
-  match s.mode with 
+  match s.mode with
   | Single -> begin
     match s.result with
     | Caml -> "Caml wins!"
@@ -93,17 +94,17 @@ let get_result_message s =
   end
   | Multi -> if s.result = s.p1_avatar then
               "Congratulations! You won the Java cup!"
-            else if s.result <> None then 
+            else if s.result <> None then
               "Sad! You didn't win the Java cup, but try again next time for that steaming mug of Java!"
             else
               "Oh no! You were close to winning the Java cup!"
 
 let rec find_cell s (pl, x, y) = Hashtbl.find s.cells (pl, x, y)
 
-let make_move s (pl, x, y) plyr = let old_val = Hashtbl.find s.cells (pl, x, y) in 
+let make_move s (pl, x, y) plyr = let old_val = Hashtbl.find s.cells (pl, x, y) in
                                   Hashtbl.replace s.cells (pl, x, y) ({old_val with player = plyr})
 
-let rec asciiBoard_helper (a, b, c) s acc = try (match (a, b, c) with 
+let rec asciiBoard_helper (a, b, c) s acc = try (match (a, b, c) with
                                             | (3, 0, 0) -> acc
                                             | (1, 1, 1) -> asciiBoard_helper (a, b, c + 1) s (acc ^ "|---|")
                                             | _ -> let vl = Hashtbl.find s (a, b, c) in
@@ -118,10 +119,10 @@ let rec asciiBoard_helper (a, b, c) s acc = try (match (a, b, c) with
                                               asciiBoard_helper (a, b + 1, 0) s (acc ^ spot ^ "\n")
                                             else
                                               asciiBoard_helper (a, b, c + 1) s (acc ^ spot)
-                                            end) with 
+                                            end) with
                                             | _ -> "Not found: " ^ (string_of_int a) ^ ", " ^ (string_of_int b) ^ ", " ^ (string_of_int c)
 
- 
+
 
 let asciiBoard s = asciiBoard_helper (0, 0, 0) s.cells ""
 
@@ -131,14 +132,14 @@ let hint = failwith "Unimplemented"
 
 let board s = s.cells
 
-let avatars s = 
-  match s.p1_avatar with 
+let avatars s =
+  match s.p1_avatar with
   | Caml -> [("player1", Caml); ("player2", Python)]
   | Python -> [("player1", Python); ("player2", Caml)]
   | None -> []
 
-let do' c st = 
-  match c with 
+let do' c st =
+  match c with
   | Play str -> parse_init_file str |> init_state
   | Score -> st
   | Quit -> st
@@ -157,4 +158,3 @@ let do' c st =
   | Look -> st
   | Turns -> st
   | _ -> raise InvalidCommand
-

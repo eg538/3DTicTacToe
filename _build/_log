@@ -1,16 +1,30 @@
 ### Starting build.
-# Target: state.mli.depends, tags: { package(ANSITerminal), package(oUnit), package(str), extension:mli, file:state.mli, ocaml, ocamldep, quiet, traverse }
-/Users/EmilyGao/.opam/4.06.0/bin/ocamldep.opt -modules state.mli > state.mli.depends
-# Target: command.mli.depends, tags: { package(ANSITerminal), package(oUnit), package(str), extension:mli, file:command.mli, ocaml, ocamldep, quiet, traverse }
-/Users/EmilyGao/.opam/4.06.0/bin/ocamldep.opt -modules command.mli > command.mli.depends # cached
-# Target: command.cmi, tags: { package(ANSITerminal), package(oUnit), package(str), byte, compile, extension:mli, file:command.mli, interf, ocaml, quiet, traverse }
-/Users/EmilyGao/.opam/4.06.0/bin/ocamlc.opt -c -o command.cmi command.mli # cached
-# Target: grid_3d.mli.depends, tags: { package(ANSITerminal), package(oUnit), package(str), extension:mli, file:grid_3d.mli, ocaml, ocamldep, quiet, traverse }
-/Users/EmilyGao/.opam/4.06.0/bin/ocamldep.opt -modules grid_3d.mli > grid_3d.mli.depends
-# Target: grid_3d.cmi, tags: { package(ANSITerminal), package(oUnit), package(str), byte, compile, extension:mli, file:grid_3d.mli, interf, ocaml, quiet, traverse }
-/Users/EmilyGao/.opam/4.06.0/bin/ocamlc.opt -c -o grid_3d.cmi grid_3d.mli
-+ /Users/EmilyGao/.opam/4.06.0/bin/ocamlc.opt -c -o grid_3d.cmi grid_3d.mli
-File "grid_3d.mli", line 8, characters 20-24:
-Error: Unbound type constructor cell
+# Target: grid_3d.mli.depends, tags: { extension:mli, file:grid_3d.mli, ocaml, ocamldep, quiet, traverse }
+/Users/cdchang/.opam/4.06.0/bin/ocamldep.opt -modules grid_3d.mli > grid_3d.mli.depends
+# Target: grid_3d.cmi, tags: { byte, compile, extension:mli, file:grid_3d.mli, interf, ocaml, quiet, traverse }
+/Users/cdchang/.opam/4.06.0/bin/ocamlc.opt -c -o grid_3d.cmi grid_3d.mli
+# Target: grid_3d.ml.depends, tags: { extension:ml, file:grid_3d.ml, ocaml, ocamldep, quiet, traverse }
+/Users/cdchang/.opam/4.06.0/bin/ocamldep.opt -modules grid_3d.ml > grid_3d.ml.depends
+# Target: grid_3d.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:grid_3d.cmo, file:grid_3d.ml, implem, ocaml, quiet, traverse }
+/Users/cdchang/.opam/4.06.0/bin/ocamlc.opt -c -o grid_3d.cmo grid_3d.ml
++ /Users/cdchang/.opam/4.06.0/bin/ocamlc.opt -c -o grid_3d.cmo grid_3d.ml
+File "grid_3d.ml", line 366, characters 2-122:
+Warning 8: this pattern-matching is not exhaustive.
+Here is an example of a case that is not matched:
+3
+File "grid_3d.ml", line 380, characters 15-200:
+Warning 8: this pattern-matching is not exhaustive.
+Here is an example of a case that is not matched:
+((WinNone, WinH _)|(WinH _, WinH _)|(WinV _, _))
+File "grid_3d.ml", line 1:
+Error: The implementation grid_3d.ml
+       does not match the interface grid_3d.cmi:
+       Values do not match:
+         val cells_occupied : cell -> cell -> cell -> cell list
+       is not included in
+         val cells_occupied :
+           cell list -> cell list -> cell list -> cell list
+       File "grid_3d.mli", line 20, characters 0-68: Expected declaration
+       File "grid_3d.ml", line 371, characters 4-18: Actual declaration
 Command exited with code 2.
 # Compilation unsuccessful.

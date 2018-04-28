@@ -1,5 +1,5 @@
 open Command
-
+open Grid_2d
 open Grid_3d
 
 type state
@@ -38,7 +38,7 @@ val get_result: state -> player
 
 val get_result_message: state -> string
 
-val find_cell: state -> int * int * int -> cell
+val find_cell: state -> int * int * int -> Grid_2d.cell
 
 val make_move: state -> int * int * int -> player -> unit
 
