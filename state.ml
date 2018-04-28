@@ -138,6 +138,11 @@ let avatars s =
   | Python -> [("player1", Python); ("player2", Caml)]
   | None -> []
 
+let play_move st (pl, row, col) = 
+  match st.current_player with
+  | st.p1_avatar -> failwith "Unimplemented"
+  | _ -> failwith "Unimplemented"
+
 let do' c st =
   match c with
   | Play str -> parse_init_file str |> init_state
@@ -145,7 +150,7 @@ let do' c st =
   | Quit -> st
   | Restart -> st
   | Try (pl, row, col) -> failwith "Unimplemented"
-  | Place (pl, row, col) -> failwith "Unimplemented"
+  | Place (pl, row, col) -> play_move st (pl, row, col)
   | Hint -> begin
     match s.current_player with
     | s.p1_avatar -> {s with p1_num_hints = if s.p1_num_hints > 0 then s.p1_num_hints - 1 else 0}
