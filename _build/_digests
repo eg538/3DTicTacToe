@@ -1,7 +1,0 @@
-"Rule: ocaml: ml & cmi -> cmo (%=grid_3d )": "A\220\005\011d\241\187\238x\249\145\137\024\196\190N"
-"Resource: /Users/cdchang/CS3110/3d-tictactoe/grid_3d.ml": "}\176E\189|\1347i,\249Xv50\235y"
-"Rule: ocaml dependencies mli (%=grid_3d )": "\251\r\135\178\219_D\147\224s\208\162\172\148\158I"
-"Rule: ocaml: cmo* -> byte (%=grid_3d )": "\173\137$\158h[\200\230gh,\001\245'\1275"
-"Rule: ocaml: mli -> cmi (%=grid_3d )": "\171\2391\178\226f\167\1740t\001\0210\178\b\161"
-"Resource: /Users/cdchang/CS3110/3d-tictactoe/grid_3d.mli": "n!\234\187\250\204\"\195r-^[<KZ\159"
-"Rule: ocaml dependencies ml (%=grid_3d )": "\152\219\216\252\170d\002!\133\172\161\231\004d\181\137"

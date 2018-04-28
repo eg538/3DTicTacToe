@@ -36,34 +36,7 @@ let init_state inf = {
   p1_num_tries = num_helper inf;
   p2_num_hints = num_helper inf;
   p2_num_tries = num_helper inf;
-  cells = let hash = Hashtbl.create 123456 in
-          Hashtbl.add hash (0, 0, 0) ({cell = (0, 0, 0); player = None});
-          Hashtbl.add hash (0, 0, 1) {cell = (0, 0, 1); player = None};
-          Hashtbl.add hash (0, 0, 2) {cell = (0, 0, 2); player = None};
-          Hashtbl.add hash (0, 1, 0) {cell = (0, 1, 0); player = None};
-          Hashtbl.add hash (0, 1, 1) {cell = (0, 1, 1); player = None};
-          Hashtbl.add hash (0, 1, 2) {cell = (0, 1, 2); player = None};
-          Hashtbl.add hash (0, 2, 0) {cell = (0, 2, 0); player = None};
-          Hashtbl.add hash (0, 2, 1) {cell = (0, 2, 1); player = None};
-          Hashtbl.add hash (0, 2, 2) {cell = (0, 2, 2); player = None};
-          Hashtbl.add hash (1, 0, 0) {cell = (1, 0, 0); player = None};
-          Hashtbl.add hash (1, 0, 1) {cell = (1, 0, 1); player = None};
-          Hashtbl.add hash (1, 0, 2) {cell = (1, 0, 2); player = None};
-          Hashtbl.add hash (1, 1, 0) {cell = (1, 1, 0); player = None};
-          Hashtbl.add hash (1, 1, 2) {cell = (1, 1, 2); player = None};
-          Hashtbl.add hash (1, 2, 0) {cell = (1, 2, 0); player = None};
-          Hashtbl.add hash (1, 2, 1) {cell = (1, 2, 1); player = None};
-          Hashtbl.add hash (1, 2, 2) {cell = (1, 2, 2); player = None};
-          Hashtbl.add hash (2, 0, 0) {cell = (2, 0, 0); player = None};
-          Hashtbl.add hash (2, 0, 1) {cell = (2, 0, 1); player = None};
-          Hashtbl.add hash (2, 0, 2) {cell = (2, 0, 2); player = None};
-          Hashtbl.add hash (2, 1, 0) {cell = (2, 1, 0); player = None};
-          Hashtbl.add hash (2, 1, 1) {cell = (2, 1, 1); player = None};
-          Hashtbl.add hash (2, 1, 2) {cell = (2, 1, 2); player = None};
-          Hashtbl.add hash (2, 2, 0) {cell = (2, 2, 0); player = None};
-          Hashtbl.add hash (2, 2, 1) {cell = (2, 2, 1); player = None};
-          Hashtbl.add hash (2, 2, 2) {cell = (2, 2, 2); player = None};
-          hash
+  cells = failwith "Unimplemented"
   }
 
 let p1_score s = s.curr_score_1
@@ -99,34 +72,18 @@ let get_result_message s =
             else
               "Oh no! You were close to winning the Java cup!"
 
-let rec find_cell s (pl, x, y) = Hashtbl.find s.cells (pl, x, y)
+let rec find_cell s (pl, x, y) = failwith "Unimplemented"
 
 let make_move s (pl, x, y) plyr = let old_val = Hashtbl.find s.cells (pl, x, y) in
                                   Hashtbl.replace s.cells (pl, x, y) ({old_val with player = plyr})
 
-let rec asciiBoard_helper (a, b, c) s acc = try (match (a, b, c) with
-                                            | (3, 0, 0) -> acc
-                                            | (1, 1, 1) -> asciiBoard_helper (a, b, c + 1) s (acc ^ "|---|")
-                                            | _ -> let vl = Hashtbl.find s (a, b, c) in
-                                            begin let spot =
-                                              match vl.player with
-                                              | Caml -> "| C |"
-                                              | Python -> "| P |"
-                                              | None -> "|   |" in
-                                            if b = 2 && c = 2 then
-                                              asciiBoard_helper (a + 1, 0, 0) s (acc ^ spot ^ "\n\n")
-                                            else if c = 2 then
-                                              asciiBoard_helper (a, b + 1, 0) s (acc ^ spot ^ "\n")
-                                            else
-                                              asciiBoard_helper (a, b, c + 1) s (acc ^ spot)
-                                            end) with
-                                            | _ -> "Not found: " ^ (string_of_int a) ^ ", " ^ (string_of_int b) ^ ", " ^ (string_of_int c)
 
 
 
-let asciiBoard s = asciiBoard_helper (0, 0, 0) s.cells ""
 
-let print_board s = print_string (asciiBoard s)
+
+
+
 
 let hint = failwith "Unimplemented"
 
@@ -137,8 +94,6 @@ let avatars s =
   | Caml -> [("player1", Caml); ("player2", Python)]
   | Python -> [("player1", Python); ("player2", Caml)]
   | None -> []
-
-let check_valid_move st (pl, row, col) = failwith "Unimplemented"
 
 let play_move st (pl, row, col) = 
   let cell_interest = Hashtbl.find st (pl, row, col) in 
