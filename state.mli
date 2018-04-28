@@ -38,14 +38,9 @@ val get_result: state -> player
 
 val get_result_message: state -> string
 
-val find_cell: state -> int * int * int -> Grid_2d.cell
+val find_cell: state -> int * int * int -> cell
 
 val make_move: state -> int * int * int -> player -> unit
-
-(*[asciiBoard st] is the ascii string representation of the 3D tictactoe
- * board when the game is in state [st]
- * NOTE: for testing before implementation of GUI*)
-val asciiBoard: state -> string
 
 val print_board: state -> unit
 
