@@ -118,7 +118,7 @@ let do' c st =
     | p1_check -> {st with p1_num_tries = if st.p1_num_tries > 0 then st.p1_num_tries - 1 else 0}
     | _ -> {st with p2_num_tries = if st.p2_num_tries > 0 then st.p2_num_tries - 1 else 0}
     end
-  | Place (pl, row, col) -> play_move st (pl, row, col)
+  | Place (pl, row, col) -> play_move st (pl, row, col) |> switch_players
   | Hint -> let _p1_check = st.p1_avatar in
     begin
     match st.current_player with
