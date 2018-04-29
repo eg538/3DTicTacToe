@@ -1,4 +1,4 @@
-type player = None |  Python |  Caml
+open Parse_init
 
 type cell = {cell: (int*int*int); player: player}
 

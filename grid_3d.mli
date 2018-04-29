@@ -1,5 +1,5 @@
+open Parse_init
 type cell
-type player = None |  Python |  Caml
 type board
 (*WinType3D is a variant type used to distinguish the different types of
   "diagonal" wins that could occur in the 3x3x3 space.
@@ -9,6 +9,9 @@ type winType3D =
 | WinH of cell list
 | WinNone
 
+(*[empty_board] is an empty 3D tic tac toe board*)
+val empty_board: board
+
 (*[fst' c] returns the first entry of the triple [c]*)
 val fst' : (int*int*int) -> int
 
@@ -17,6 +20,9 @@ val snd' : (int*int*int) -> int
 
 (*[thd c] returns the third entry of the triple [c]*)
 val thd : (int*int*int) -> int
+
+(*[get_cell coords b] is the cell at coordinates [coords] in board [b]*)
+val get_cell: (int*int*int) -> board -> cell
 
 (*[place c b plyr] modifies board so that the cell at coordinate [c] contains [plyr]
  * raise: InvalidCell failure if [c] is not valid cell*)

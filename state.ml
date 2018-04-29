@@ -1,11 +1,10 @@
 open Command
-open Grid_3d
-open Grid_2d 
+open Grid_3d 
 open Parse_init
 
 type state = {
   result  : player; (*Will contain the player who won*)
-  cells   : ((int*int*int), cell) Hashtbl.t;
+  tttBoard   : board;
   current_player  : player;
   curr_score_1 : int;
   curr_score_2 : int;
@@ -18,32 +17,34 @@ type state = {
   p2_num_tries : int;
 }
 
-let num_helper inf =
-  match inf.info_level with
+let num_helper lvl =
+  match lvl with
   |Easy -> 7
   |Medium -> 5
   |Hard -> 3
 
-let init_state inf = {
-  result = None;
-  current_player = Python;
-  curr_score_1 = 0;
-  curr_score_2 = 0;
-  mode = inf.info_mode;
-  level = inf.info_level;
-  p1_avatar = inf.info_p1_avatar;
-  p1_num_hints = num_helper inf;
-  p1_num_tries = num_helper inf;
-  p2_num_hints = num_helper inf;
-  p2_num_tries = num_helper inf;
-  cells = failwith "Unimplemented"
+let init_state fl = 
+  let i = parse_init_file fl in
+  {
+    result = None;
+    tttBoard = empty_board;
+    current_player = Python;
+    curr_score_1 = 0;
+    curr_score_2 = 0;
+    mode = mode i;
+    level = level i;
+    p1_avatar = p1_avatar i;
+    p1_num_hints = num_helper (level i);
+    p1_num_tries = num_helper (level i);
+    p2_num_hints = num_helper (level i);
+    p2_num_tries = num_helper (level i)
   }
 
 let p1_score s = s.curr_score_1
 
 let p2_score s = s.curr_score_2
 
-let curr_player s = s.curr_player
+let curr_player s = s.current_player
 
 let num_hints s =
   match s.current_player with
@@ -72,22 +73,15 @@ let get_result_message s =
             else
               "Oh no! You were close to winning the Java cup!"
 
-let rec find_cell s (pl, x, y) = failwith "Unimplemented"
+let rec find_cell s (pl, x, y) = get_cell (pl, x, y) s.tttBoard
 
-let make_move s (pl, x, y) plyr = let old_val = Hashtbl.find s.cells (pl, x, y) in
-                                  Hashtbl.replace s.cells (pl, x, y) ({old_val with player = plyr})
+let print_board st = print_string (asciiBoard st.tttBoard)
 
-
-
-
-
-
-
-
+let make_move s (pl, x, y) = place (pl, x, y) s.tttBoard s.current_player
 
 let hint = failwith "Unimplemented"
 
-let board s = s.cells
+let board s = s.tttBoard
 
 let avatars s =
   match s.p1_avatar with
@@ -95,39 +89,41 @@ let avatars s =
   | Python -> [("player1", Python); ("player2", Caml)]
   | None -> []
 
+let inc_point st = let _p1_av = st.p1_avatar in
+  match st.current_player with 
+  | p1_av -> {st with curr_score_1 = st.curr_score_1 + 1}
+  | _ -> {st with curr_score_2 = st.curr_score_2 + 1}
+
 let play_move st (pl, row, col) = 
-  let cell_interest = Hashtbl.find st (pl, row, col) in 
-  Hashtbl.replace st (pl, row, col) {cell_interest with player = st.current_player};
-    let plane0 = Hashtbl.fold (fun (pln, r, c) v acc -> if pl = 0 then v::acc else acc) st [] in
-    let plane1 = Hashtbl.fold (fun (pln, r, c) v acc -> if pl = 1 then v::acc else acc) st [] in
-    let plane2 = Hashtbl.fold (fun (pln, r, c) v acc -> if pl = 2 then v::acc else acc) st [] in
-    let place_cell = Hashtbl.find st (pl, row, col) in
-    if win_evaluation place_cell plane0 plane1 plane2 then 
-      let p1_check = st.p1_avatar in
-      match st.current_player with
-      | p1_check -> {st with curr_score_1 = st.curr_score_1 + 1}
-      | _ -> {st with curr_score_2 = st.curr_score_2 + 1}
-    else 
-      st
+  make_move st (pl, row, col);
+  if win_evaluation (find_cell st (pl, row, col)) st.tttBoard then
+    inc_point st
+  else
+    st
+
+let switch_players st = let _p1_av = st.p1_avatar in
+match st.current_player with 
+| Python -> {st with current_player = Caml}
+| _ -> {st with current_player = Python}
 
 let do' c st =
   match c with
-  | Play str -> parse_init_file str |> init_state
+  | Play str -> init_state str
   | Score -> st
   | Quit -> st
   | Restart -> st
-  | Try (pl, row, col) -> let p1_check = st.p1_avatar in
+  | Try (pl, row, col) -> let _p1_check = st.p1_avatar in
     begin
-    match s.current_player with
-    | p1_check -> {s with p1_num_tries = if s.p1_num_tries > 0 then s.p1_num_tries - 1 else 0}
-    | _ -> {s with p2_num_tries = if s.p2_num_tries > 0 then s.p2_num_tries - 1 else 0}
+    match st.current_player with
+    | p1_check -> {st with p1_num_tries = if st.p1_num_tries > 0 then st.p1_num_tries - 1 else 0}
+    | _ -> {st with p2_num_tries = if st.p2_num_tries > 0 then st.p2_num_tries - 1 else 0}
     end
   | Place (pl, row, col) -> play_move st (pl, row, col)
-  | Hint -> let p1_check = st.p1_avatar in
+  | Hint -> let _p1_check = st.p1_avatar in
     begin
-    match s.current_player with
-    | p1_check -> {s with p1_num_hints = if s.p1_num_hints > 0 then s.p1_num_hints - 1 else 0}
-    | _ -> {s with p2_num_hints = if s.p2_num_hints > 0 then s.p2_num_hints - 1 else 0}
+    match st.current_player with
+    | p1_check -> {st with p1_num_hints = if st.p1_num_hints > 0 then st.p1_num_hints - 1 else 0}
+    | _ -> {st with p2_num_hints = if st.p2_num_hints > 0 then st.p2_num_hints - 1 else 0}
     end
   | Look -> st
   | Turns -> st

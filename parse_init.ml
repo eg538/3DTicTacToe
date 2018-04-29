@@ -31,3 +31,9 @@ let parse_init_file file =
     else
       Hard
   }
+
+let mode i = i.info_mode
+
+let p1_avatar i = i.info_p1_avatar
+
+let level i = i.info_level
