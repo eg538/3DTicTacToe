@@ -44,7 +44,11 @@ let p1_score s = s.curr_score_1
 
 let p2_score s = s.curr_score_2
 
-let curr_player s = s.current_player
+let curr_player s = 
+  match s.current_player with 
+  | Python -> "Python"
+  | Caml -> "Caml"
+  | _ -> "None"
 
 let num_hints s =
   match s.current_player with
@@ -79,7 +83,7 @@ let print_board st = print_string (asciiBoard st.tttBoard)
 
 let make_move s (pl, x, y) = place (pl, x, y) s.tttBoard s.current_player
 
-let hint = failwith "Unimplemented"
+let hint s = failwith "Unimplemented"
 
 let board s = s.tttBoard
 
@@ -89,14 +93,16 @@ let avatars s =
   | Python -> [("player1", Python); ("player2", Caml)]
   | None -> []
 
-let inc_point st = let _p1_av = st.p1_avatar in
-  match st.current_player with 
-  | p1_av -> {st with curr_score_1 = st.curr_score_1 + 1}
-  | _ -> {st with curr_score_2 = st.curr_score_2 + 1}
+let inc_point st = 
+  if (st.p1_avatar = Python && st.current_player = Python) || (st.p1_avatar = Caml && st.current_player = Caml) then 
+    {st with curr_score_1 = st.curr_score_1 + 1}
+  else
+    {st with curr_score_2 = st.curr_score_2 + 1}
 
 let play_move st (pl, row, col) = 
   make_move st (pl, row, col);
-  if win_evaluation (find_cell st (pl, row, col)) st.tttBoard then
+  print_endline "placed move";
+  if win_evaluation (find_cell st (pl, row, col)) st.tttBoard then 
     inc_point st
   else
     st
@@ -108,23 +114,27 @@ match st.current_player with
 
 let do' c st =
   match c with
-  | Play str -> init_state str
+  | Play str -> st
   | Score -> st
   | Quit -> st
   | Restart -> st
-  | Try (pl, row, col) -> let _p1_check = st.p1_avatar in
-    begin
-    match st.current_player with
-    | p1_check -> {st with p1_num_tries = if st.p1_num_tries > 0 then st.p1_num_tries - 1 else 0}
-    | _ -> {st with p2_num_tries = if st.p2_num_tries > 0 then st.p2_num_tries - 1 else 0}
+  | Try (pl, row, col) -> 
+    if (st.p1_avatar = Python && st.current_player = Python) || (st.p1_avatar = Caml && st.current_player = Caml) then 
+      {st with p1_num_tries = if st.p1_num_tries > 0 then st.p1_num_tries - 1 else 0}
+    else
+      {st with p2_num_tries = if st.p2_num_tries > 0 then st.p2_num_tries - 1 else 0}
+  | Place (pl, row, col) -> 
+    begin 
+      try(
+        play_move st (pl, row, col) |> switch_players
+      )with 
+      | _ -> st
     end
-  | Place (pl, row, col) -> play_move st (pl, row, col) |> switch_players
-  | Hint -> let _p1_check = st.p1_avatar in
-    begin
-    match st.current_player with
-    | p1_check -> {st with p1_num_hints = if st.p1_num_hints > 0 then st.p1_num_hints - 1 else 0}
-    | _ -> {st with p2_num_hints = if st.p2_num_hints > 0 then st.p2_num_hints - 1 else 0}
-    end
+  | Hint -> 
+    if (st.p1_avatar = Python && st.current_player = Python) || (st.p1_avatar = Caml && st.current_player = Caml) then 
+      {st with p1_num_hints = if st.p1_num_hints > 0 then st.p1_num_hints - 1 else 0}
+    else
+      {st with p2_num_hints = if st.p2_num_hints > 0 then st.p2_num_hints - 1 else 0}
   | Look -> st
-  | Turns -> st
-  | _ -> raise InvalidCommand
+  | CurrentPlayer -> st
+  | Invalid -> st

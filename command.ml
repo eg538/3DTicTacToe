@@ -9,7 +9,8 @@ type command =
   |Place of (int * int * int)
   |Hint 
   |Look
-  |Turns
+  | CurrentPlayer
+  |Invalid
 
 let list_coords obj = try (String.split_on_char ',' obj 
       |> List.map (fun a -> String.trim a) 
@@ -30,14 +31,14 @@ let parse str =
   else "" 
   in
   match action with
-  | "play" -> Play str
+  | "play" -> Play obj
   | "start" -> Play str
   | "place" -> Place (obj |> list_coords |> list_to_tup)
   | "try" -> Try (obj |> list_coords |> list_to_tup)
   | "quit"-> Quit
   | "look" -> Look
   | "score" -> Score
-  | "turns" -> Turns
+  | "current player" -> CurrentPlayer
   | "restart" -> Restart
   | "hint" -> Hint
-  | _ -> raise InvalidCommand
+  | _ -> Invalid

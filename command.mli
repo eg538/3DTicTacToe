@@ -9,7 +9,8 @@ type command =
   | Place of (int * int * int)
   | Hint 
   | Look
-  | Turns
+  | CurrentPlayer
+  | Invalid
 
  (* [parse str] is the command that represents player input [str].
   * requires: [str] is one of the commands forms. *)
