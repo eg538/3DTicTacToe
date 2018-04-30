@@ -1,11 +1,16 @@
 open State
 
 type valid_node = {board: cell list -> cell list -> cell list; mutable move: int*int*int}
-type tree = Leaf | Node of valid_node * tree * tree (*this is a binary tree, not necessarily the case?*)
+(*type tree = Leaf | Node of valid_node * tree * tree (*this is a binary tree, not necessarily the case?*)
+                             (*hashtbl, streams & laziness *) *)
+type 'a stream = Cons of 'a * (unit -> 'a stream)
+type nodeStream = Cons of int * (unit -> nodeStream)
 
-let game_tree_generate valid_node st =
+let rec game_tree_generate move st =
   let remaining_cells = available_cells st in
-
+  Cons (move, fun () ->
+      if List.mem move remaining_cells then
+        (game_tree_generate move st) else )
 (*[available_cells st] is the list of cells that are vacant in the 3D game board
  * that st contains*)
 let available_cells st =
@@ -18,7 +23,7 @@ let available_cells st =
 let children nd clist st =
   let generated_tree = game_tree_generate nd st in
   for i = 0 to (List.length clist)-1 do
-    List.map 
+    List.map (fun i -> )
   done
 
 (*[heuristic_fxn valid_node] calculates the utility value based on a yet to be
