@@ -2,5 +2,7 @@ open Graphics
 open State
 
 let init_welcome f =
-  draw_image (get_img "imgs/wilkommen.png") 0 0;
+  print_int([|[|black|];[|black|]|] |> Array.length);
+  let img = [|[|black|];[|black|]|]|> make_image in
+  draw_image  img 1000 750;
   moveto 0 0

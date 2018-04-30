@@ -2,6 +2,7 @@
  *feature for the MVC *)
 open Command
 open State
+open Graphics
 exception Terminated
 exception Restart
 
@@ -66,7 +67,10 @@ try (
 
 let main () =
   ANSITerminal.(print_string [red]
-    "\n\nWelcome to 3D Tic Tac Toe.\n");
+                  "\n\nWelcome to 3D Tic Tac Toe.\n");
+  print_int([|[|black|];[|black|]|] |> Array.length);
+  Graphics.open_graph " /tmp/launch-CmrU4n/org.macosforge.xquartz:0";
+  Gui.init_welcome();
   play_game ()
 
 let () = main ()
