@@ -1,13 +1,8 @@
 open Command
-open Grid_2d
 open Grid_3d
+open Parse_init
 
 type state
-type player
-type info
-type level
-type result
-type num_players
 
 (*[init_state info] is the initial state of the game
  * as determined by info, which is composed of information
@@ -16,7 +11,7 @@ type num_players
  *  - avatar: the player(s)'s avatar(s)
  *  - level: easy, medium or difficult level
  *)
-val init_state: info -> state
+val init_state: string -> state
 
 (*[p1score st] is player 1's score when the game is in state [st].
  * Player 1 is the human player*)
@@ -28,7 +23,7 @@ val p2_score: state -> int
 
 (*[curr_player st] is the player whose turn it is to go when game is in
  * state [st]*)
-val curr_player: state -> string
+val curr_player: state -> player
 
 val num_hints: state -> int
 
@@ -38,14 +33,7 @@ val get_result: state -> player
 
 val get_result_message: state -> string
 
-val find_cell: state -> int * int * int -> Grid_2d.cell
-
-val make_move: state -> int * int * int -> player -> unit
-
-(*[asciiBoard st] is the ascii string representation of the 3D tictactoe
- * board when the game is in state [st]
- * NOTE: for testing before implementation of GUI*)
-val asciiBoard: state -> string
+val find_cell: state -> (int * int * int) -> cell
 
 val print_board: state -> unit
 
@@ -56,11 +44,11 @@ val hint: state -> string
 (*[board st] is information regarding which spots in the board are filled and
  * with which player's move
  * TODO: figure out what type this function should return*)
-val board: state -> (int*int*int, cell) Hashtbl.t
+val board: state -> board
 
 (*[avatars st] is the assignment of the avatars when game is in state in the form
  * [("player1", player1's avatar); ("player2", player2's avatar)*)
-val avatars: state -> string * player list
+val avatars: state -> (string * player) list
 
 (*[do' c st] is [st'] if executing command [c] in state [st] results
  * in [st']. The following describe the valid commands and the result

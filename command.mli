@@ -1,3 +1,4 @@
+exception InvalidCommand
 (* [command] represents a command input by a player. *)
 type command = 
   | Play of string
