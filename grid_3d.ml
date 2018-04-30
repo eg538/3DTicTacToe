@@ -9,7 +9,7 @@ type winType3D =
 
 type board = ((int*int*int), cell) Hashtbl.t
 
-let empty_board = 
+let empty_board =
 let hash = Hashtbl.create 123456 in
 Hashtbl.add hash (0, 0, 0) ({cell = (0, 0, 0); player = None});
 Hashtbl.add hash (0, 0, 1) {cell = (0, 0, 1); player = None};
@@ -120,7 +120,7 @@ let three_row_2d cell lst_of_cells =
     (List.mem {cell = (cell_pl, cell_ex + 1, cell_why -1); player = cell_player} (get_parent_plane cell lst_of_cells)))
 
 
-let place (pl, row, col) b plyr = 
+let place (pl, row, col) b plyr =
   let c = get_cell (pl, row, col) b in
   if move_valid c b then
     Hashtbl.replace b (pl, row, col) {c with player = plyr}
@@ -130,9 +130,9 @@ let place (pl, row, col) b plyr =
 let fst' (y,_,_) = y
 
 let snd' (_,y,_) = y
-    
+
 let thd (_,_,y) = y
-    
+
     (*grid_space = state.cells *)
 let horizontal_3d_group c b =
   let grid_space = board_list_of_cells b in
@@ -146,7 +146,7 @@ let horizontal_3d_group c b =
     | 2,y,z when (y=z) -> List.filter (fun a -> (a.cell |> snd')=(a.cell |> thd)) grid_space
     | _ -> List.filter
               (fun a -> a.cell <> (2,0,1) && a.cell <> (2,1,0) && a.cell <> (2,1,2) && a.cell <> (2,2,1)) grid_space
-    
+
 let vertical_3d_groups c b =
   let grid_space = board_list_of_cells b in
     match c.cell with
@@ -159,12 +159,12 @@ let vertical_3d_groups c b =
     | x,2,z when (x=z) -> List.filter (fun a -> (a.cell |> fst')=(a.cell |> thd)) grid_space
     | _ -> List.filter
               (fun a -> a.cell <> (0,2,1) && a.cell <> (1,2,0) && a.cell <> (2,2,1) && a.cell <> (1,2,2)) grid_space
-  
+
 let diag_check c b =
   let diag_h = horizontal_3d_group c b in
   let diag_v = vertical_3d_groups c b in
-  let verdict_h = (List.for_all (fun x -> x.player <> None) diag_h) in (*checks whether 2 of 3-in-row instance is true*)
-  let verdict_v = (List.for_all (fun x -> x.player <> None) diag_v) in
+  let verdict_h = (List.for_all (fun x -> x.player = c.player) diag_h) in (*checks whether 2 of 3-in-row instance is true*)
+  let verdict_v = (List.for_all (fun x -> x.player = c.player) diag_v) in
   match (verdict_h, verdict_v) with
   | true, true -> WinH diag_h, WinV diag_v
   | true, false -> WinH diag_h, WinNone
@@ -173,14 +173,14 @@ let diag_check c b =
 
 let find_vertical_cells c b =
   let grid_space = board_list_of_cells b in
-  let f = c.cell |> fst' in
   let s = c.cell |> snd' in
-  List.filter (fun i -> (i.cell |> fst')=f && (i.cell |> snd')=s) grid_space
+  let t = c.cell |> thd in
+  List.filter (fun i -> (i.cell |> snd')=s && (i.cell |> thd)=t) grid_space
 
 let col_check c b =
   let cell_1 = (find_vertical_cells c b) |> List.hd in
   let cell_2 = (find_vertical_cells c b) |> List.rev |> List.hd in
-  (cell_1.player <> None) && (cell_2.player <> None)
+  (cell_1.player = c.player) && (cell_2.player = c.player)
 
 let win_evaluation c b =
   let p1 = Hashtbl.fold (fun (pln, r, c) v acc -> if pln = 0 then v::acc else acc) b [] in

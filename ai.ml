@@ -1,7 +1,7 @@
 open State
 
 type valid_node = {board: cell list -> cell list -> cell list; mutable move: int*int*int}
-type tree = Leaf | Node of valid_node * tree * tree
+type tree = Leaf | Node of valid_node * tree * tree (*this is a binary tree, not necessarily the case?*)
 
 let game_tree_generate valid_node st =
   let remaining_cells = available_cells st in
@@ -15,8 +15,11 @@ let available_cells st =
                    (2,2,1);(2,2,2)] in
   List.filter (fun x -> let temp = (Hashtbl.find (st.cells) x) in temp.player = None) positions
 
-let children nd clist =
-  failwith "unimplemented"
+let children nd clist st =
+  let generated_tree = game_tree_generate nd st in
+  for i = 0 to (List.length clist)-1 do
+    List.map 
+  done
 
 (*[heuristic_fxn valid_node] calculates the utility value based on a yet to be
   determined heuristic function from [valid_node]'s perspective in the game
