@@ -24,14 +24,20 @@ val thd : (int*int*int) -> int
 (*[get_cell coords b] is the cell at coordinates [coords] in board [b]*)
 val get_cell: (int*int*int) -> board -> cell
 
+(*[cell_coords c] is the coordinates of the cell [c]*)
+val cell_coords: cell -> (int*int*int)
+
 (*[place c b plyr] modifies board so that the cell at coordinate [c] contains [plyr]
  * raise: InvalidCell failure if [c] is not valid cell*)
 val place : (int*int*int) -> board -> player -> unit
 
-(*[asciiBoard st] is the ascii string representation of the 3D tictactoe
- * board when the game is in state [st]
+(*[asciiBoard b] is the ascii string representation of the 3D tictactoe
+ * board [b]
  * NOTE: for testing before implementation of GUI*)
 val asciiBoard : board -> string
+
+(*[copy b] is a copy of the board [b]*)
+val copy: board -> board
 
 (* [win_evaluation c b] determines whether new three-in-a-row instances
    were found overall in board [b] after putting a move on cell [c].

@@ -41,6 +41,8 @@ hash
 
 let get_cell (pl, row, col) b = Hashtbl.find b (pl, row, col)
 
+let cell_coords c = c.cell
+
 let rec asciiBoard_helper (a, b, c) s acc = try (match (a, b, c) with
                                         | (3, 0, 0) -> acc
                                         | (1, 1, 1) -> asciiBoard_helper (a, b, c + 1) s (acc ^ "|---|")
@@ -60,6 +62,8 @@ let rec asciiBoard_helper (a, b, c) s acc = try (match (a, b, c) with
                                         | _ -> "Not found: " ^ (string_of_int a) ^ ", " ^ (string_of_int b) ^ ", " ^ (string_of_int c)
 
 let asciiBoard b = asciiBoard_helper (0, 0, 0) b ""
+
+let copy b = Hashtbl.copy b
 
 let board_list_of_cells b = Hashtbl.fold (fun k v acc -> v::acc) b []
 

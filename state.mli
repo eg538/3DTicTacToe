@@ -23,7 +23,7 @@ val p2_score: state -> int
 
 (*[curr_player st] is the player whose turn it is to go when game is in
  * state [st]*)
-val curr_player: state -> string
+val curr_player: state -> player
 
 val num_hints: state -> int
 
