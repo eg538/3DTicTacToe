@@ -25,6 +25,7 @@ let rec play st =
         print_endline "Action impossible. Please try a different move."
       else 
         print_board st;
+        print_endline ("Score of player 1: "^(string_of_int (p1_score st))^"\n"^"Score of player 2: "^(string_of_int (p2_score st)));
       play newSt
   | Hint -> failwith "Unimplemented"
   | Look -> print_board st; play newSt
