@@ -5,6 +5,7 @@ open State
 open Graphics
 open Camlimages
 open Parse_init
+open Gui
 
 exception Terminated
 exception Restart
