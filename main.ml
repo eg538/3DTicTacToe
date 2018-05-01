@@ -2,7 +2,7 @@
  *feature for the MVC *)
 open Command
 open State
-open Graphics
+(* open Graphics *)
 exception Terminated
 exception Restart
 

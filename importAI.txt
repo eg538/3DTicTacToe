@@ -1,0 +1,7 @@
+#require "yojson";;
+#mod_use "command.ml";;
+#mod_use "parse_init.ml";;
+#mod_use "grid_3d.ml";;
+#mod_use "state.ml";;
+#use "ai.ml";;
+let test = init_state “test_game.json”;;

@@ -8,38 +8,38 @@ open Parse_init
 (* type nodeStream = Cons of int * (unit -> nodeStream) *)
 (* type node = {available: cell list; taken: cell list; hVal: int}
 type gsTree = Leaf of int * int * int | Node of node * (gsTree list) *)
-type gsTree = Leaf of int*int*int | Node of board * (gsTree list)
+type tree = Leaf of int*int*int | Node of board * (tree list)
 
 let switch_plyr p = match p with
   | Python -> Caml
   | Caml -> Python
 
-let rec placement_helper f b remaining_cells plyr d =
+let rec placement_helper f b remaining_cells plyr d acc =
   match remaining_cells with
-  | [] -> []
+  | [] -> acc
   | h::t -> let cpy = copy b in
     place (cell_coords h) cpy plyr;
-    (f cpy plyr d)::(placement_helper f b t plyr d)
+    placement_helper f b t plyr d ((f cpy plyr d)::acc)
 
 let rec gt_gen_help b plyr d =
-  print_string (asciiBoard b);
-  print_endline "*****************";
+  (* print_string (asciiBoard b);
+  print_endline "*****************"; *)
   let remaining_cells = cells_left b in
-  let occupied_cells = cells_occupied b in
-  let nd = {available = remaining_cells; taken = occupied_cells; hVal = 0} in
+  (* let occupied_cells = cells_occupied b in
+  let nd = {available = remaining_cells; taken = occupied_cells; hVal = 0} in *)
   if List.length remaining_cells > 0 && d <> 0 then
     (* Node (nd, placement_helper gt_gen_help b remaining_cells (switch_plyr plyr) (d - 1)) *)
-    Node (b, placement_helper gt_gen_help b remaining_cells (switch_plyr plyr) (d - 1))
+    Node (b, placement_helper gt_gen_help b remaining_cells (switch_plyr plyr) (d - 1) [])
   else
     (* Node (nd, [Leaf (0, 0, 0)]) *)
     Node (b, [Leaf (0, 0, 0)])
 
-let game_tree_generate st d = gt_gen_help (board st) (curr_player st) d
+let game_tree_generate st d = gt_gen_help (board st) (switch_plyr (curr_player st)) d
 
 let rec print_head t =
   match t with
   | Leaf (_, _, _) -> print_endline ""
-  | Node (b, children) -> print_string (asciiBoard b)
+  | Node (b, children) -> print_string ("*****************\n"^(asciiBoard b)^"*****************\n")
 
 let rec print_children t =
   match t with

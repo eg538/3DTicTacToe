@@ -96,6 +96,35 @@ let get_x (_, ex, _) = ex
 
 let get_y (_, _, why) = why
 
+let fst' (y,_,_) = y
+
+let snd' (_,y,_) = y
+
+let thd (_,_,y) = y
+
+let diagonal_hardcode c lst_of_cells = (*for corner cells *)
+  match c.cell with 
+  | p,x,y when (x=y) -> (List.filter (fun i -> (i.cell |> thd = (c.cell |> thd)) && (i.cell |> snd' = (c.cell |> snd')) && (p = fst' c.cell)) lst_of_cells) @ [c] 
+  | p,x,y when (x=0 && y=2) -> (List.filter (fun i -> ((i.cell |> thd = 1)&&(i.cell |> snd' = 1)) && ((i.cell |> thd = 2)&&(i.cell |> snd' = 0)) && (p = fst' c.cell)) lst_of_cells) @ [c] 
+  | p,x,y when (x=2 && y=0) -> (List.filter (fun i -> ((i.cell |> thd = 1)&&(i.cell |> snd' = 1)) && ((i.cell |> thd = 0)&&(i.cell |> snd' = 2) && (p = fst' c.cell))) lst_of_cells) @ [c]  
+  | _ -> failwith "non-exhaustive match "
+
+
+let three_row_2d_cells c lst_of_cells = 
+  match c.cell with 
+  | (p,x,y) when (x=1 && y <> 1) || (x<>1 && y =1) -> (*edge cells but not corners*)
+    (List.filter (fun i -> (thd (c.cell) = thd (i.cell)) 
+    && (p = fst' c.cell)) lst_of_cells)::(List.filter (fun i -> (snd' (c.cell) = snd' (i.cell)) 
+    && (p = fst' c.cell)) lst_of_cells)::[] (*horizontal 3-in-row, vertical 3-in-row*)
+  | (p,x,y) when (x<>1 && y<>1) -> 
+    (List.filter (fun i -> (thd (c.cell) = thd (i.cell)) 
+    && (p = fst' c.cell)) lst_of_cells)::(List.filter (fun i -> (snd' (c.cell) = snd' (i.cell))
+    && (p = fst' c.cell)) lst_of_cells)::(diagonal_hardcode c lst_of_cells)::[] (*horizontal 3-in-row, vertical 3-in-row, *)
+  | (p,_,_) -> 
+    (List.filter (fun i -> (thd (c.cell) = thd (i.cell))
+    &&(p = fst' c.cell)) lst_of_cells)::(List.filter (fun i -> (snd' (c.cell) = snd' (i.cell))
+    && (p = fst' c.cell)) lst_of_cells)::(diagonal_hardcode c lst_of_cells)::[] (*center cell in a plane*) 
+
 let three_row_2d cell lst_of_cells =
   let cell_player = cell.player in
   let cell_ex = get_x cell.cell in
@@ -131,11 +160,7 @@ let place (pl, row, col) b plyr =
   else
     raise (Failure "InvalidCell")
 
-let fst' (y,_,_) = y
-
-let snd' (_,y,_) = y
-
-let thd (_,_,y) = y
+(*relocated thd, fst', and snd' methods *)
 
     (*grid_space = state.cells *)
 let horizontal_3d_group c b =
