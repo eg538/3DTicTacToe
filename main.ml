@@ -4,6 +4,7 @@ open Command
 open State
 open Graphics
 open Camlimages
+open Parse_init
 
 exception Terminated
 exception Restart
