@@ -1,5 +1,6 @@
 open Graphics
 open State
+open Camlimages
 
 (*Draws the welcome screen, with the title of the game and creators*)
 val init_welcome : unit -> unit
