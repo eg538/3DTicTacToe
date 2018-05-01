@@ -2,7 +2,6 @@
  *feature for the MVC *)
 open Command
 open State
-open Graphics
 open Parse_init
 
 exception Terminated
