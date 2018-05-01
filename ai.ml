@@ -15,7 +15,10 @@ let switch_plyr p = match p with
   | Caml -> Python
   | None -> None
 
-let rec move_heur_fn move lst_cells = three_row_2d_cells move 
+let rec move_heur_fn move b plyr = 
+  let threes = three_row_2d_cells move b 
+              |> List.map (fun a -> List.filter (fun b -> b <> move) a) in
+  
 
 let rec placement_helper f b remaining_cells plyr d acc =
   match remaining_cells with

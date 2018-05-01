@@ -59,7 +59,7 @@ val cells_occupied: board -> cell list
 
 (*[three_row_2d_cells c lst_of_cells] is the list of lists of cells 
  *that create a three in a row with [c] in [lst_of_cells]*)
-val three_row_2d_cells: cell -> cell list -> cell list list
+val all_three_in_row_cells: cell -> board -> cell list list
 
 (*[get_the_win c current_player b] returns the cells that are of a newly
   found three-in-a-row instance including [c]

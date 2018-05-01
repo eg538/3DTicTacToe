@@ -3,7 +3,6 @@
 open Command
 open State
 open Graphics
-(* open Camlimages *)
 open Parse_init
 
 exception Terminated
@@ -71,9 +70,6 @@ try (
 let main () =
   ANSITerminal.(print_string [red]
                   "\n\nWelcome to 3D Tic Tac Toe.\n");
-  (* print_int([|[|black|];[|black|]|] |> Array.length);
-  Graphics.open_graph " 1000x750";
-  Gui.init_welcome(); *)
   play_game ()
 
 let () = main ()

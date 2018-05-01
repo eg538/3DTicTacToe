@@ -110,7 +110,9 @@ let diagonal_hardcode c lst_of_cells = (*for corner cells *)
   | _ -> failwith "non-exhaustive match "
 
 (*THIS NEW METHOD WORKS*)
-let three_row_2d_cells c lst_of_cells =
+let three_row_2d_cells c b =
+  let lst = board_list_of_cells b in
+  let lst_of_cells = get_parent_plane c lst in
   match c.cell with
   | (p,x,y) when (x=1 && y <> 1) || (x<>1 && y =1) -> (*edge cells but not corners*)
     (List.filter (fun i -> (thd (c.cell) = thd (i.cell))
@@ -216,15 +218,15 @@ let col_check c b =
   let cell_2 = (find_vertical_cells c b) |> List.rev |> List.hd in
   (cell_1.player = c.player) && (cell_2.player = c.player)
 
+let all_three_in_row_cells c b = 
+  (find_vertical_cells c b)::(vertical_3d_groups c b)::(horizontal_3d_group c b)::(three_row_2d_cells c b)
+
 let win_evaluation c b =
-  let p1 = Hashtbl.fold (fun (pln, r, c) v acc -> if pln = 0 then v::acc else acc) b [] in
-  let p2 = Hashtbl.fold (fun (pln, r, c) v acc -> if pln = 1 then v::acc else acc) b [] in
-  let p3 = Hashtbl.fold (fun (pln, r, c) v acc -> if pln = 2 then v::acc else acc) b [] in (*3 grids, 3 cell lists *)
   let diag_check_truth = (((diag_check c b )|> fst) <> WinNone) || (((diag_check c b) |> snd) <> WinNone) in
   let cases_3d = (diag_check_truth) || (col_check c b) in
-  let case_1 = victory_on_plane c (three_row_2d_cells c p1) in
-  let case_2 = victory_on_plane c (three_row_2d_cells c p2) in
-  let case_3 = victory_on_plane c (three_row_2d_cells c p3) in
+  let case_1 = victory_on_plane c (three_row_2d_cells c b) in
+  let case_2 = victory_on_plane c (three_row_2d_cells c b) in
+  let case_3 = victory_on_plane c (three_row_2d_cells c b) in
   (*(let case_1 = three_row_2d c p1 in
   let case_2 = three_row_2d c p2 in (*checking all horizontal cases*)
     let case_3 = three_row_2d c p3 in*)

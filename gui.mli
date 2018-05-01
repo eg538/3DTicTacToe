@@ -1,4 +1,4 @@
-open Graphics
+(* open Graphics
 open State
 
 (*Draws the welcome screen, with the title of the game and creators*)
@@ -22,4 +22,4 @@ val update_board : state -> unit
 
 (*draws the outcome screen of the game*)
 val draw_outcome : state -> image -> unit
-*)
+*) *)
