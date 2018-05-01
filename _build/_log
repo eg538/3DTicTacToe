@@ -1,0 +1,7 @@
+### Starting build.
+# Target: main.ml.depends, tags: { package(ANSITerminal), package(Camlimages), package(Graphics), package(oUnit), package(str), package(yojson), extension:ml, file:main.ml, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -package oUnit -package yojson -package str -package ANSITerminal -package Graphics -package Camlimages -modules main.ml > main.ml.depends
++ ocamlfind ocamldep -package oUnit -package yojson -package str -package ANSITerminal -package Graphics -package Camlimages -modules main.ml > main.ml.depends
+ocamlfind: Package `Camlimages' not found
+Command exited with code 2.
+# Compilation unsuccessful.

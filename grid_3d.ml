@@ -103,27 +103,32 @@ let snd' (_,y,_) = y
 let thd (_,_,y) = y
 
 let diagonal_hardcode c lst_of_cells = (*for corner cells *)
-  match c.cell with 
-  | p,x,y when (x=y) -> (List.filter (fun i -> (i.cell |> thd = (c.cell |> thd)) && (i.cell |> snd' = (c.cell |> snd')) && (p = fst' c.cell)) lst_of_cells) @ [c] 
-  | p,x,y when (x=0 && y=2) -> (List.filter (fun i -> ((i.cell |> thd = 1)&&(i.cell |> snd' = 1)) && ((i.cell |> thd = 2)&&(i.cell |> snd' = 0)) && (p = fst' c.cell)) lst_of_cells) @ [c] 
-  | p,x,y when (x=2 && y=0) -> (List.filter (fun i -> ((i.cell |> thd = 1)&&(i.cell |> snd' = 1)) && ((i.cell |> thd = 0)&&(i.cell |> snd' = 2) && (p = fst' c.cell))) lst_of_cells) @ [c]  
+  match c.cell with
+  | p,x,y when (x=y) -> (List.filter (fun i -> ((i.cell |> thd) = (i.cell |> snd')) && (p = fst' c.cell)) lst_of_cells)
+  | p,x,y when (x=0 && y=2) -> (List.filter (fun i -> (((i.cell |> thd = 1)&&(i.cell |> snd' = 1)) || ((i.cell |> thd = 0)&&(i.cell |> snd' = 2))) && (p = fst' c.cell)) lst_of_cells) @ [c]
+  | p,x,y when (x=2 && y=0) -> (List.filter (fun i -> (((i.cell |> thd = 1)&&(i.cell |> snd' = 1)) || ((i.cell |> thd = 2)&&(i.cell |> snd' = 0))) && (p = fst' c.cell)) lst_of_cells) @ [c]
   | _ -> failwith "non-exhaustive match "
 
-
-let three_row_2d_cells c lst_of_cells = 
-  match c.cell with 
+(*THIS NEW METHOD WORKS*)
+let three_row_2d_cells c lst_of_cells =
+  match c.cell with
   | (p,x,y) when (x=1 && y <> 1) || (x<>1 && y =1) -> (*edge cells but not corners*)
-    (List.filter (fun i -> (thd (c.cell) = thd (i.cell)) 
-    && (p = fst' c.cell)) lst_of_cells)::(List.filter (fun i -> (snd' (c.cell) = snd' (i.cell)) 
+    (List.filter (fun i -> (thd (c.cell) = thd (i.cell))
+    && (p = fst' c.cell)) lst_of_cells)::(List.filter (fun i -> (snd' (c.cell) = snd' (i.cell))
     && (p = fst' c.cell)) lst_of_cells)::[] (*horizontal 3-in-row, vertical 3-in-row*)
-  | (p,x,y) when (x<>1 && y<>1) -> 
-    (List.filter (fun i -> (thd (c.cell) = thd (i.cell)) 
+  | (p,x,y) when (x<>1 && y<>1) ->
+    (List.filter (fun i -> (thd (c.cell) = thd (i.cell))
     && (p = fst' c.cell)) lst_of_cells)::(List.filter (fun i -> (snd' (c.cell) = snd' (i.cell))
     && (p = fst' c.cell)) lst_of_cells)::(diagonal_hardcode c lst_of_cells)::[] (*horizontal 3-in-row, vertical 3-in-row, *)
-  | (p,_,_) -> 
+  | (p,_,_) ->
     (List.filter (fun i -> (thd (c.cell) = thd (i.cell))
     &&(p = fst' c.cell)) lst_of_cells)::(List.filter (fun i -> (snd' (c.cell) = snd' (i.cell))
-    && (p = fst' c.cell)) lst_of_cells)::(diagonal_hardcode c lst_of_cells)::[] (*center cell in a plane*) 
+    && (p = fst' c.cell)) lst_of_cells)::(diagonal_hardcode c lst_of_cells)::[] (*center cell in a plane*)
+
+let rec victory_on_plane c possible_instances =
+  match possible_instances with
+  | [] -> false
+  | h::t -> (List.for_all (fun m -> m.player = c.player) h) || (victory_on_plane c t)
 
 let three_row_2d cell lst_of_cells =
   let cell_player = cell.player in
@@ -204,7 +209,7 @@ let find_vertical_cells c b =
   let grid_space = board_list_of_cells b in
   let s = c.cell |> snd' in
   let t = c.cell |> thd in
-  List.filter (fun i -> (i.cell |> snd')=s && (i.cell |> thd)=t) grid_space
+  List.filter (fun i -> (i.cell |> snd')=s && ((i.cell |> thd)=t) && (i<>c)) grid_space
 
 let col_check c b =
   let cell_1 = (find_vertical_cells c b) |> List.hd in
@@ -217,9 +222,12 @@ let win_evaluation c b =
   let p3 = Hashtbl.fold (fun (pln, r, c) v acc -> if pln = 2 then v::acc else acc) b [] in (*3 grids, 3 cell lists *)
   let diag_check_truth = (((diag_check c b )|> fst) <> WinNone) || (((diag_check c b) |> snd) <> WinNone) in
   let cases_3d = (diag_check_truth) || (col_check c b) in
-  let case_1 = three_row_2d c p1 in
+  let case_1 = victory_on_plane c (three_row_2d_cells c p1) in
+  let case_2 = victory_on_plane c (three_row_2d_cells c p2) in
+  let case_3 = victory_on_plane c (three_row_2d_cells c p3) in
+  (*(let case_1 = three_row_2d c p1 in
   let case_2 = three_row_2d c p2 in (*checking all horizontal cases*)
-  let case_3 = three_row_2d c p3 in
+    let case_3 = three_row_2d c p3 in*)
   match get_plane c.cell with
   | 0 -> case_1 || cases_3d
   | 1 -> case_2 || cases_3d
