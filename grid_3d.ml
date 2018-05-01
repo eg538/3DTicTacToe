@@ -171,28 +171,26 @@ let place (pl, row, col) b plyr =
 let horizontal_3d_group c b =
   let grid_space = board_list_of_cells b in
   match c.cell with
-    | (0,y,z) when (y=z) -> List.filter (fun a -> (a.cell |> snd')=(a.cell |> thd)) grid_space (*cell list of length 2*)
-    | 0,_,_ -> List.filter (*cell list of length 2*)
-              (fun a -> a.cell <> (0,0,1) && a.cell <> (0,1,0) && a.cell <> (0,1,2) && a.cell <> (0,2,1)) grid_space
-    | 1,y,z when (y=z) -> List.filter (fun a -> (a.cell |> snd')=(a.cell |> thd)) grid_space
-    | 1,_,_ -> List.filter
-              (fun a -> a.cell <> (1,0,1) && a.cell <> (1,1,0) && a.cell <> (1,1,2) && a.cell <> (1,2,1)) grid_space
-    | 2,y,z when (y=z) -> List.filter (fun a -> (a.cell |> snd')=(a.cell |> thd)) grid_space
-    | _ -> List.filter
-              (fun a -> a.cell <> (2,0,1) && a.cell <> (2,1,0) && a.cell <> (2,1,2) && a.cell <> (2,2,1)) grid_space
+  | (x,0,z) when (x=z) -> List.filter (fun a -> ((a.cell |> fst')=(a.cell |> thd)) && ((a.cell |> snd')=0)) grid_space (*cell list of length 2*)
+  | _,0,_ -> List.filter (*cell list of length 2*)
+                 (fun a -> (a.cell = (2,0,0)) || (a.cell = (1,0,1)) || (a.cell <> (0,0,2))) grid_space
+  | x,1,z when (x=z) -> []
+  | _,1,_ -> []
+  | x,2,z when (x=z) -> List.filter (fun a -> ((a.cell |> fst')=(a.cell |> thd)) && (a.cell |> snd' = 2)) grid_space
+  | _ -> List.filter
+             (fun a -> a.cell = (2,2,0) || a.cell = (1,2,1) || a.cell = (0,2,2)) grid_space
 
 let vertical_3d_groups c b =
   let grid_space = board_list_of_cells b in
     match c.cell with
-    | x,0,z when (x=z) -> List.filter (fun a -> (a.cell |> fst')=(a.cell |> thd)) grid_space
+    | 0,y,_ when (y=0) -> List.filter (fun a -> ((a.cell |> fst')=(a.cell |> snd')) && (a.cell |> fst' = 0)) grid_space
     | 0,_,_ -> List.filter
-              (fun a -> a.cell <> (0,0,1) && a.cell <> (1,0,0) && a.cell <> (2,0,1) && a.cell <> (1,0,2)) grid_space
-    | x,1,z when (x=z) -> List.filter (fun a -> (a.cell |> fst')=(a.cell |> thd)) grid_space
-    | 1,_,_ -> List.filter
-                  (fun a -> a.cell <> (0,0,1) && a.cell <> (1,1,0) && a.cell <> (1,1,2) && a.cell <> (2,1,1)) grid_space
-    | x,2,z when (x=z) -> List.filter (fun a -> (a.cell |> fst')=(a.cell |> thd)) grid_space
+                 (fun a -> a.cell = (2,0,0) || a.cell = (1,1,0) || a.cell = (0,2,0)) grid_space
+    | 1,y,_ when (y=1) -> []
+    | 1,_,_ -> []
+    | 2,y,_ when (y=2) -> List.filter (fun a -> ((a.cell |> fst')=(a.cell |> thd)) && (a.cell |> fst' = 2)) grid_space
     | _ -> List.filter
-              (fun a -> a.cell <> (0,2,1) && a.cell <> (1,2,0) && a.cell <> (2,2,1) && a.cell <> (1,2,2)) grid_space
+             (fun a -> a.cell = (2,0,2) || a.cell = (1,1,2) || a.cell = (0,2,2)) grid_space
 
 let diag_check c b =
   let diag_h = horizontal_3d_group c b in
