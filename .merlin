@@ -2,6 +2,4 @@ B _build
 PKG oUnit
 PKG str
 PKG ANSITerminal
-PKG Camlimages
-PKG Images
-PKG Png
+PKG YOJSon
