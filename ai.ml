@@ -13,6 +13,9 @@ type tree = Leaf of int*int*int | Node of board * (tree list)
 let switch_plyr p = match p with
   | Python -> Caml
   | Caml -> Python
+  | None -> None
+
+let rec move_heur_fn move lst_cells = three_row_2d_cells move 
 
 let rec placement_helper f b remaining_cells plyr d acc =
   match remaining_cells with
