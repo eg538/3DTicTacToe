@@ -1,6 +1,5 @@
-open Graphics
+(* open Graphics
 open State
-open Camlimages
 
 (*Draws the welcome screen, with the title of the game and creators*)
 val init_welcome : unit -> unit
@@ -23,4 +22,4 @@ val update_board : state -> unit
 
 (*draws the outcome screen of the game*)
 val draw_outcome : state -> image -> unit
-*)
+*) *)

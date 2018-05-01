@@ -3,7 +3,6 @@
 open Command
 open State
 open Graphics
-open Camlimages
 open Parse_init
 
 exception Terminated
@@ -33,8 +32,8 @@ let rec play st =
       if newSt = st then
         print_endline "Action impossible. Please try a different move."
       else
-        print_board st;
-        print_endline ("Score of player 1: "^(string_of_int (p1_score st))^"\n"^"Score of player 2: "^(string_of_int (p2_score st)));
+        print_board newSt;
+        print_endline ("Score of player 1: "^(string_of_int (p1_score newSt))^"\n"^"Score of player 2: "^(string_of_int (p2_score newSt)));
       play newSt
   | Hint -> failwith "Unimplemented"
   | Look -> print_board st; play newSt
@@ -71,9 +70,6 @@ try (
 let main () =
   ANSITerminal.(print_string [red]
                   "\n\nWelcome to 3D Tic Tac Toe.\n");
-  print_int([|[|black|];[|black|]|] |> Array.length);
-  Graphics.open_graph " 1000x750";
-  Gui.init_welcome();
   play_game ()
 
 let () = main ()

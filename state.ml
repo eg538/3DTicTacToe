@@ -90,6 +90,7 @@ let avatars s =
   | None -> []
 
 let inc_point st =
+  print_endline "win!";
   if (st.p1_avatar = Python && st.current_player = Python) || (st.p1_avatar = Caml && st.current_player = Caml) then
     {st with curr_score_1 = st.curr_score_1 + 1}
   else
