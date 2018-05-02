@@ -3,7 +3,7 @@
 open Command
 open State
 open Graphics
-open Camlimages
+(* open Camlimages *)
 open Parse_init
 
 exception Terminated
