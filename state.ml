@@ -17,6 +17,8 @@ type state = {
   p2_num_tries : int;
 }
 
+(*[num_helper lvl] is the number of hints and tries that each player gets according
+ * to the level they chose*)
 let num_helper lvl =
   match lvl with
   |Easy -> 7
@@ -77,6 +79,8 @@ let rec find_cell s (pl, x, y) = get_cell (pl, x, y) s.tttBoard
 
 let print_board st = print_string (asciiBoard st.tttBoard)
 
+(*[make_move s coords] places a move at the cell at coordinates [coords]
+ * for the current player of state [s]*)
 let make_move s (pl, x, y) = place (pl, x, y) s.tttBoard s.current_player
 
 let hint s = failwith "Unimplemented"
@@ -89,6 +93,7 @@ let avatars s =
   | Python -> [("player1", Python); ("player2", Caml)]
   | None -> []
 
+(*[inc_point st] increments the score of the current player of state [st]*)
 let inc_point st =
   print_endline "win!";
   if (st.p1_avatar = Python && st.current_player = Python) || (st.p1_avatar = Caml && st.current_player = Caml) then
@@ -96,6 +101,9 @@ let inc_point st =
   else
     {st with curr_score_2 = st.curr_score_2 + 1}
 
+(*[play_move st coords] is the new state as a result of the current player of state [st]
+ * making a move at coordinates [coords], updating the scores accordingly if the move 
+ * creates a three-in-a-row for the player that made the move*)
 let play_move st (pl, row, col) =
   make_move st (pl, row, col);
   print_endline "placed move";
@@ -104,6 +112,7 @@ let play_move st (pl, row, col) =
   else
     st
 
+(*[switch_players st] returns the opponent of the current player of state [st]*)
 let switch_players st = let _p1_av = st.p1_avatar in
 match st.current_player with
 | Python -> {st with current_player = Caml}

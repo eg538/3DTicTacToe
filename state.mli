@@ -4,12 +4,9 @@ open Parse_init
 
 type state
 
-(*[init_state info] is the initial state of the game
- * as determined by info, which is composed of information
- * (mode, avatar, level), where
- *  - mode: single or multiplayer mode
- *  - avatar: the player(s)'s avatar(s)
- *  - level: easy, medium or difficult level
+(*[init_state string] is the initial state of the game
+ * with information such as the level, number of players, etc.
+ * determined by json file with the name [string]
  *)
 val init_state: string -> state
 
@@ -25,16 +22,26 @@ val p2_score: state -> int
  * state [st]*)
 val curr_player: state -> player
 
+(*[num_hints s] is the number of hints that the current player has when
+ * game is in state [s]*)
 val num_hints: state -> int
 
+(*[num_tries s] is the number of ints that the current player has when the
+ * game is in state [s]*)
 val num_tries: state -> int
 
+(*[get_result s] is the player that won in the end, None is the game was a draw*)
 val get_result: state -> player
 
+(*[get_result_message s] is the message that is displayed when the result of the game
+ * is determined*)
 val get_result_message: state -> string
 
+(*[find_cell s coords] is the cells that is at the coordinates [coords]  in the board of the game 
+ * when the it is in state [s]*)
 val find_cell: state -> (int * int * int) -> cell
 
+(*[print_board s] prints the board in state [s]*)
 val print_board: state -> unit
 
 (*[hint st] is the optimal move for the current player of [st] when game is
