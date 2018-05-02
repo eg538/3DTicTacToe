@@ -2,7 +2,7 @@ open Graphics
 open State
 open Camlimages
 open Images
-open Png
+open Jpeg
 
 
 (* [round (x, y) transforms the floating point values of (x, y) into ints. ]*)
@@ -46,7 +46,7 @@ let array_of_image img =
 
 (* [get_img img] returns an image according to input file name. *)
 let get_img img =
-  Png.load img [] |> array_of_image |> make_image
+  Jpeg.load img [] |> array_of_image |> make_image
 
 (*let init_welcome f =
   print_int([|[|black|];[|black|]|] |> Array.length);
@@ -57,5 +57,20 @@ let get_img img =
   moveto 0 0*)
 
 let init_welcome f =
-  draw_image (get_img "imgs/wilkommen.png") 0 0;
-  moveto 0 0
+  draw_image (get_img "imgs/wilkommen.jpg") 100 260;
+  (* moveto 60 260; *)
+  draw_image(get_img "imgs/Rectangle.jpg") 90 100;
+  (* let pressed = button_down () in *)
+  (* let pos = mouse_pos () in
+  let x = fst pos in
+  let y = snd pos in
+     if pressed then *)
+
+  let event_lst = [Graphics.Button_up] in
+  let mouse_status = wait_next_event event_lst  in
+  let x = mouse_status.mouse_x in
+  let y = mouse_status.mouse_y in
+
+  if (x >= 90 && x <= 282) && (y >= 100 && y <= 166) then (lineto 500 500;)
+      else draw_rect 90 90 90 90;
+  
