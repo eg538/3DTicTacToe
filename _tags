@@ -1,1 +1,1 @@
-true: package(oUnit),package(YOJSon),package(str),package(ANSITerminal), package(Graphics), package(CAMLImages), package(CAMLImages.png)
+true: package(oUnit),package(YOJSon),package(str),package(ANSITerminal), package(Graphics), package(CAMLImages), package(CAMLImages.png), package(CAMLImages.jpeg)

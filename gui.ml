@@ -57,9 +57,9 @@ let get_img img =
   moveto 0 0*)
 
 let init_welcome f =
-  draw_image (get_img "imgs/wilkommen.jpg") 100 260;
+  draw_image (get_img "imgs/wilkommen_main.jpg") 0 0;
   (* moveto 60 260; *)
-  draw_image(get_img "imgs/Rectangle.jpg") 90 100;
+  (*draw_image(get_img "imgs/Rectangle.jpg") 90 100;*)
   (* let pressed = button_down () in *)
   (* let pos = mouse_pos () in
   let x = fst pos in
@@ -73,4 +73,3 @@ let init_welcome f =
 
   if (x >= 90 && x <= 282) && (y >= 100 && y <= 166) then (lineto 500 500;)
       else draw_rect 90 90 90 90;
-  
