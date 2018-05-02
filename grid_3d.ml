@@ -43,7 +43,7 @@ let get_cell (pl, row, col) b = Hashtbl.find b (pl, row, col)
 
 let cell_coords c = c.cell
 
-(*[asciiBoard_helper (a,b,c) s acc] ... *)
+(*[asciiBoard_helper (a,b,c) s acc] is a helper method for asciiBoard *)
 let rec asciiBoard_helper (a, b, c) s acc =
   try (match (a, b, c) with
     | (3, 0, 0) -> acc
@@ -271,7 +271,7 @@ let get_the_win c current_player b=
         | WinH x, WinV y -> x@y
         | WinH x, WinNone -> x
         | WinNone, WinV y -> y
-        | _, _ -> [] 
+        | _, _ -> []
       end
     | _ -> find_vertical_cells c b
   else []
