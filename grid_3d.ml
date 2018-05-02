@@ -171,6 +171,18 @@ let place (pl, row, col) b plyr =
 
     (*grid_space = state.cells *)
 let horizontal_3d_group c b =
+let grid_space = board_list_of_cells b in
+match c.cell with
+| (0,y,z) when (y=z) -> List.filter (fun a -> (a.cell |> snd')=(a.cell |> thd)) grid_space (*cell list of length 2*)
+| 0,_,_ -> List.filter (*cell list of length 2*)
+          (fun a -> a.cell <> (0,0,1) && a.cell <> (0,1,0) && a.cell <> (0,1,2) && a.cell <> (0,2,1)) grid_space
+| 1,y,z when (y=z) -> List.filter (fun a -> (a.cell |> snd')=(a.cell |> thd)) grid_space
+| 1,_,_ -> List.filter
+          (fun a -> a.cell <> (1,0,1) && a.cell <> (1,1,0) && a.cell <> (1,1,2) && a.cell <> (1,2,1)) grid_space
+| 2,y,z when (y=z) -> List.filter (fun a -> (a.cell |> snd')=(a.cell |> thd)) grid_space
+| _ -> List.filter
+          (fun a -> a.cell <> (2,0,1) && a.cell <> (2,1,0) && a.cell <> (2,1,2) && a.cell <> (2,2,1)) grid_space
+  (*
   let grid_space = board_list_of_cells b in
   match c.cell with
   | (x,0,z) when (x=z) -> List.filter (fun a -> ((a.cell |> fst')=(a.cell |> thd)) && ((a.cell |> snd')=0)) grid_space (*cell list of length 2*)
@@ -181,8 +193,20 @@ let horizontal_3d_group c b =
   | x,2,z when (x=z) -> List.filter (fun a -> ((a.cell |> fst')=(a.cell |> thd)) && (a.cell |> snd' = 2)) grid_space
   | _ -> List.filter
              (fun a -> a.cell = (2,2,0) || a.cell = (1,2,1) || a.cell = (0,2,2)) grid_space
-
+*)
 let vertical_3d_groups c b =
+let grid_space = board_list_of_cells b in
+match c.cell with
+| x,0,z when (x=z) -> List.filter (fun a -> (a.cell |> fst')=(a.cell |> thd)) grid_space
+| 0,_,_ -> List.filter
+          (fun a -> a.cell <> (0,0,1) && a.cell <> (1,0,0) && a.cell <> (2,0,1) && a.cell <> (1,0,2)) grid_space
+| x,1,z when (x=z) -> List.filter (fun a -> (a.cell |> fst')=(a.cell |> thd)) grid_space
+| 1,_,_ -> List.filter
+              (fun a -> a.cell <> (0,0,1) && a.cell <> (1,1,0) && a.cell <> (1,1,2) && a.cell <> (2,1,1)) grid_space
+| x,2,z when (x=z) -> List.filter (fun a -> (a.cell |> fst')=(a.cell |> thd)) grid_space
+| _ -> List.filter
+          (fun a -> a.cell <> (0,2,1) && a.cell <> (1,2,0) && a.cell <> (2,2,1) && a.cell <> (1,2,2)) grid_space
+  (*
   let grid_space = board_list_of_cells b in
     match c.cell with
     | 0,y,_ when (y=0) -> List.filter (fun a -> ((a.cell |> fst')=(a.cell |> snd')) && (a.cell |> fst' = 0)) grid_space
@@ -193,11 +217,11 @@ let vertical_3d_groups c b =
     | 2,y,_ when (y=2) -> List.filter (fun a -> ((a.cell |> fst')=(a.cell |> thd)) && (a.cell |> fst' = 2)) grid_space
     | _ -> List.filter
              (fun a -> a.cell = (2,0,2) || a.cell = (1,1,2) || a.cell = (0,2,2)) grid_space
-
+*)
 let diag_check c b =
   let diag_h = horizontal_3d_group c b in
   let diag_v = vertical_3d_groups c b in
-  let verdict_h = (List.for_all (fun x -> x.player = c.player) diag_h) in (*checks whether 2 of 3-in-row instance is true*)
+  let verdict_h = (if diag_h <> [] then (List.for_all (fun x -> x.player = c.player) diag_h) else false) in (*checks whether 2 of 3-in-row instance is true*)
   let verdict_v = (List.for_all (fun x -> x.player = c.player) diag_v) in
   match (verdict_h, verdict_v) with
   | true, true -> WinH diag_h, WinV diag_v
@@ -216,7 +240,7 @@ let col_check c b =
   let cell_2 = (find_vertical_cells c b) |> List.rev |> List.hd in
   (cell_1.player = c.player) && (cell_2.player = c.player)
 
-let all_three_in_row_cells c b = 
+let all_three_in_row_cells c b =
   (find_vertical_cells c b)::(vertical_3d_groups c b)::(horizontal_3d_group c b)::(three_row_2d_cells c b)
 
 let win_evaluation c b =
