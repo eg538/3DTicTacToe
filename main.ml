@@ -7,11 +7,13 @@ open Parse_init
 exception Terminated
 exception Restart
 
+(*[string_of_player p] is the string representation of [p]*)
 let string_of_player p = match p with
   | Python -> "Python"
   | Caml -> "Caml"
   | None -> "None"
 
+(*[play st] is the helper function for play_game ()*)
 let rec play st =
   print_endline "Please enter command";
   let com = read_line () in
@@ -42,6 +44,8 @@ let rec play st =
   | Invalid -> print_endline "Action impossible. Please try a different move.";
     play newSt
 
+(*[play_game ()] is the simulation of a 3d tic-tac-toe game. It takes in commands 
+ * from the user and then progresses the game accordingly*)
 let rec play_game () =
 try (
   print_endline "Please type play and the name of the file you desire.";
