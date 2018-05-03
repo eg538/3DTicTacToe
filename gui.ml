@@ -57,7 +57,8 @@ let get_img img =
   moveto 0 0*)
 
 let init_welcome f =
-  draw_image (get_img "imgs/wilkommen_main.jpg") 0 0;
+  draw_image (get_img "imgs/background.jpg") 0 0;
+  draw_image (get_img "imgs/resized_wilkommen_main.jpg") 200 100;
   (* moveto 60 260; *)
   (*draw_image(get_img "imgs/Rectangle.jpg") 90 100;*)
   (* let pressed = button_down () in *)
@@ -65,6 +66,8 @@ let init_welcome f =
   let x = fst pos in
   let y = snd pos in
      if pressed then *)
+
+  draw_image (get_img "imgs/start.jpg") 420 20;
 
   let event_lst = [Graphics.Button_up] in
   let mouse_status = wait_next_event event_lst  in
