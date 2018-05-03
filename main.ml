@@ -74,6 +74,7 @@ let main () =
                   "\n\nWelcome to 3D Tic Tac Toe.\n");
   print_int([|[|black|];[|black|]|] |> Array.length);
   Graphics.open_graph " 1000x750";
+  Graphics.set_window_title "3D Tic-Tac-Toe";
   Gui.init_welcome();
   play_game ()
 

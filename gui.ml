@@ -68,11 +68,23 @@ let init_welcome f =
      if pressed then *)
 
   draw_image (get_img "imgs/start.jpg") 420 20;
+  let x_wilkommen = 200 in
+  let y_wilkommen = 100 in
+
+  let easy_x_pos = 548 in
+  let easy_y_pos = 383 in
+  let easy_width = 45 in
+  let easy_height = 24 in
+  let easy_x_min = x_wilkommen + easy_x_pos in
+  let easy_x_max = easy_x_min + easy_width in
+  let easy_y_min = y_wilkommen + easy_y_pos in
+  let easy_y_max = easy_y_min + easy_height in
 
   let event_lst = [Graphics.Button_up] in
   let mouse_status = wait_next_event event_lst  in
   let x = mouse_status.mouse_x in
   let y = mouse_status.mouse_y in
+  if (x !=0 && y!= 0) then draw_rect 250 150 90 90;
 
-  if (x >= 90 && x <= 282) && (y >= 100 && y <= 166) then (lineto 500 500;)
+  if (x >= easy_x_min && x <= easy_x_max) && (y >= easy_y_min && y <= easy_y_max) then (draw_rect easy_x_min easy_y_max 90 90)
       else draw_rect 90 90 90 90;
