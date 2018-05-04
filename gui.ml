@@ -56,19 +56,41 @@ let get_img img =
   Graphics.draw_image  i 1000 750;
   moveto 0 0*)
 
-let init_welcome f =
-  draw_image (get_img "imgs/background.jpg") 0 0;
-  draw_image (get_img "imgs/resized_wilkommen_main.jpg") 200 100;
-  (* moveto 60 260; *)
-  (*draw_image(get_img "imgs/Rectangle.jpg") 90 100;*)
-  (* let pressed = button_down () in *)
-  (* let pos = mouse_pos () in
-  let x = fst pos in
-  let y = snd pos in
-     if pressed then *)
+let clicked min_x min_y max_x max_y response =
+  let event_lst = [Graphics.Button_up] in
+  let mouse_status = wait_next_event event_lst  in
+  let x = mouse_status.mouse_x in
+  let y = mouse_status.mouse_y in
 
-  draw_image (get_img "imgs/start.jpg") 420 20;
-  let x_wilkommen = 200 in
+  if (x >= min_x && x <= max_x) && (y >= min_y && y <= max_y) then response
+
+let init_welcome f =
+  draw_image (get_img "imgs/background_crop.jpeg") 0 0;
+
+  draw_image (get_img "imgs/wilkommen-logo.jpg") 270 330;
+
+  draw_image (get_img "imgs/easy.jpg") 310 260;
+
+  draw_image (get_img "imgs/medium.jpg") 450 260;
+
+  draw_image (get_img "imgs/hard.jpg") 600 260;
+
+  draw_image (get_img "imgs/g.jpg") 380 200;
+
+  draw_image (get_img "imgs/krazy.jpg") 520 200;
+
+  draw_image (get_img "imgs/single.jpg") 395 130;
+
+  draw_image (get_img "imgs/multi.jpg") 520 130;
+
+  draw_image (get_img "imgs/group.jpg") 380 35;
+
+  let response_start =
+
+  clicked 380 35 (242+380) (35+69)
+
+
+  (* let x_wilkommen = 200 in
   let y_wilkommen = 100 in
 
   let easy_x_pos = 548 in
@@ -81,10 +103,21 @@ let init_welcome f =
   let easy_y_max = easy_y_min + easy_height in
 
   let event_lst = [Graphics.Button_up] in
+  let mouse_status = wait_next_event event_lst in
+  let x = mouse_status.mouse_x in
+  let y = mouse_status.mouse_y in
+  if (x >= easy_x_min && x <= easy_x_max) && (y >= easy_y_min && y <= easy_y_max) then set_color green; draw_rect 400 253 easy_width easy_height;
+
+  let event_lst = [Graphics.Button_up] in
   let mouse_status = wait_next_event event_lst  in
   let x = mouse_status.mouse_x in
   let y = mouse_status.mouse_y in
+<<<<<<< Updated upstream
   if (x >= 420 && x <= 618) && (y >= 20 && y <= 89) then 
   (clear_graph(); draw_image (get_img "imgs/xxoo.jpg") 0 0;draw_image (get_img "imgs/TTTmain.jpg") 250 40; 
     draw_image(get_img "imgs/hint.jpg") 800 555; draw_image(get_img "imgs/try.jpg") 134 555;)
        else draw_rect 250 150 90 90;
+=======
+  if (x >= 420 && x <= 618) && (y >= 20 && y <= 89) then (clear_graph(); draw_image (get_img "imgs/tttbgg.jpg") 0 0;draw_image (get_img "imgs/mainTTT.jpg") 220 40;)
+  else draw_rect 250 150 90 90; *)
+>>>>>>> Stashed changes
