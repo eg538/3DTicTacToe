@@ -85,9 +85,20 @@ let init_welcome f =
 
   draw_image (get_img "imgs/group.jpg") 380 35;
 
-  let response_start =
+  let event_lst = [Graphics.Button_up] in
+  let mouse_status = wait_next_event event_lst  in
+  let x = mouse_status.mouse_x in
+  let y = mouse_status.mouse_y in
 
-  clicked 380 35 (242+380) (35+69)
+  if (x >= 380 && x <=(242+380)) && (y>=35 && y<=(35+69)) then (clear_graph(); draw_image (get_img "imgs/xxoo.jpg") 0 0;draw_image (get_img "imgs/TTTmain.jpg") 250 40;
+                        draw_image(get_img "imgs/hint.jpg") 800 555; draw_image(get_img "imgs/try.jpg") 134 555;)
+
+
+
+  (* let response_start = (clear_graph(); draw_image (get_img "imgs/xxoo.jpg") 0 0;draw_image (get_img "imgs/TTTmain.jpg") 250 40;
+                        draw_image(get_img "imgs/hint.jpg") 800 555; draw_image(get_img "imgs/try.jpg") 134 555;) in
+
+  clicked 380 35 (242+380) (35+69) response_start; *)
 
 
   (* let x_wilkommen = 200 in
@@ -112,12 +123,9 @@ let init_welcome f =
   let mouse_status = wait_next_event event_lst  in
   let x = mouse_status.mouse_x in
   let y = mouse_status.mouse_y in
-<<<<<<< Updated upstream
-  if (x >= 420 && x <= 618) && (y >= 20 && y <= 89) then 
-  (clear_graph(); draw_image (get_img "imgs/xxoo.jpg") 0 0;draw_image (get_img "imgs/TTTmain.jpg") 250 40; 
+  if (x >= 420 && x <= 618) && (y >= 20 && y <= 89) then
+  (clear_graph(); draw_image (get_img "imgs/xxoo.jpg") 0 0;draw_image (get_img "imgs/TTTmain.jpg") 250 40;
     draw_image(get_img "imgs/hint.jpg") 800 555; draw_image(get_img "imgs/try.jpg") 134 555;)
        else draw_rect 250 150 90 90;
-=======
-  if (x >= 420 && x <= 618) && (y >= 20 && y <= 89) then (clear_graph(); draw_image (get_img "imgs/tttbgg.jpg") 0 0;draw_image (get_img "imgs/mainTTT.jpg") 220 40;)
-  else draw_rect 250 150 90 90; *)
->>>>>>> Stashed changes
+
+  *)
