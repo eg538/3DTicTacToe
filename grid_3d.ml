@@ -231,9 +231,12 @@ let find_vertical_cells c b =
   [c] are taken by the same player that played [c] in [b]
 *)
 let col_check c b =
+  if (((c.cell|> thd) = 1) && ((c.cell |> snd') = 1)) then false else
+    begin
   let cell_1 = (find_vertical_cells c b) |> List.hd in
   let cell_2 = (find_vertical_cells c b) |> List.rev |> List.hd in
   (cell_1.player = c.player) && (cell_2.player = c.player)
+  end
 
 let all_three_in_row_cells c b =
   let v = find_vertical_cells c b in
@@ -271,7 +274,7 @@ let get_the_win c current_player b=
         | WinH x, WinV y -> x@y
         | WinH x, WinNone -> x
         | WinNone, WinV y -> y
-        | _, _ -> [] 
+        | _, _ -> []
       end
     | _ -> find_vertical_cells c b
   else []
