@@ -85,7 +85,4 @@ let init_welcome f =
   let x = mouse_status.mouse_x in
   let y = mouse_status.mouse_y in
   if (x >= 420 && x <= 618) && (y >= 20 && y <= 89) then (clear_graph(); draw_image (get_img "imgs/tttbgg.jpg") 0 0;draw_image (get_img "imgs/mainTTT.jpg") 220 40;)
-       else draw_rect 250 150 90 90;
-
-  if (x >= easy_x_min && x <= easy_x_max) && (y >= easy_y_min && y <= easy_y_max) then (draw_rect easy_x_min easy_y_max 90 90)
-  else draw_rect 90 90 90 90; (**TODO: Why do we have this here?**)
+  else draw_rect 250 150 90 90;
