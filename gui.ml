@@ -84,5 +84,7 @@ let init_welcome f =
   let mouse_status = wait_next_event event_lst  in
   let x = mouse_status.mouse_x in
   let y = mouse_status.mouse_y in
-  if (x >= 420 && x <= 618) && (y >= 20 && y <= 89) then (clear_graph(); draw_image (get_img "imgs/tttbgg.jpg") 0 0;draw_image (get_img "imgs/mainTTT.jpg") 220 40;)
-  else draw_rect 250 150 90 90;
+  if (x >= 420 && x <= 618) && (y >= 20 && y <= 89) then 
+  (clear_graph(); draw_image (get_img "imgs/xxoo.jpg") 0 0;draw_image (get_img "imgs/TTTmain.jpg") 250 40; 
+    draw_image(get_img "imgs/hint.jpg") 800 555; draw_image(get_img "imgs/try.jpg") 134 555;)
+       else draw_rect 250 150 90 90;
