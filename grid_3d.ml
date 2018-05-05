@@ -173,7 +173,18 @@ let place (pl, row, col) b plyr =
   by slicing the 3D grid space represented by hashtable board [b] horizontally
 *)
 let horizontal_3d_group c b =
-let grid_space = board_list_of_cells b in
+  let grid_space = board_list_of_cells b in
+  match c.cell with
+  | (x,0,z) when (x=z) -> List.filter (fun a -> ((a.cell |> fst')=(a.cell |> thd)) && ((a.cell |> snd')=0)) grid_space (*cell list of length 2*)
+  | _,0,_ -> List.filter (*cell list of length 2*)
+               (fun a -> (a.cell = (2,0,0)) || (a.cell = (1,0,1)) || (a.cell = (0,0,2))) grid_space
+  | x,1,z when (x=z) -> []
+  | _,1,_ -> []
+  | x,2,z when (x=z) -> List.filter (fun a -> ((a.cell |> fst')=(a.cell |> thd)) && (a.cell |> snd' = 2)) grid_space
+  | _ -> List.filter
+           (fun a -> a.cell = (2,2,0) || a.cell = (1,2,1) || a.cell = (0,2,2)) grid_space
+
+(*let grid_space = board_list_of_cells b in
 match c.cell with
 | (0,y,z) when (y=z) -> List.filter (fun a -> (a.cell |> snd')=(a.cell |> thd)) grid_space (*cell list of length 2*)
 | 0,_,_ -> List.filter (*cell list of length 2*)
@@ -184,7 +195,7 @@ match c.cell with
 | 2,y,z when (y=z) -> List.filter (fun a -> (a.cell |> snd')=(a.cell |> thd)) grid_space
 | _ -> List.filter
           (fun a -> a.cell <> (2,0,1) && a.cell <> (2,1,0) && a.cell <> (2,1,2) && a.cell <> (2,2,1)) grid_space
-
+*)
 (*[horizontal_3d_group c b] extracts the diagonal instances that [c] is part of,
   by slicing the 3D grid space represented by hashtable board [b] horizontally
 *)
