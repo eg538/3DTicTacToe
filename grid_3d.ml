@@ -184,19 +184,7 @@ let horizontal_3d_group c b =
   | _ -> List.filter
            (fun a -> a.cell = (2,2,0) || a.cell = (1,2,1) || a.cell = (0,2,2)) grid_space
 
-(*let grid_space = board_list_of_cells b in
-match c.cell with
-| (0,y,z) when (y=z) -> List.filter (fun a -> (a.cell |> snd')=(a.cell |> thd)) grid_space (*cell list of length 2*)
-| 0,_,_ -> List.filter (*cell list of length 2*)
-          (fun a -> a.cell <> (0,0,1) && a.cell <> (0,1,0) && a.cell <> (0,1,2) && a.cell <> (0,2,1)) grid_space
-| 1,y,z when (y=z) -> List.filter (fun a -> (a.cell |> snd')=(a.cell |> thd)) grid_space
-| 1,_,_ -> List.filter
-          (fun a -> a.cell <> (1,0,1) && a.cell <> (1,1,0) && a.cell <> (1,1,2) && a.cell <> (1,2,1)) grid_space
-| 2,y,z when (y=z) -> List.filter (fun a -> (a.cell |> snd')=(a.cell |> thd)) grid_space
-| _ -> List.filter
-          (fun a -> a.cell <> (2,0,1) && a.cell <> (2,1,0) && a.cell <> (2,1,2) && a.cell <> (2,2,1)) grid_space
-*)
-(*[horizontal_3d_group c b] extracts the diagonal instances that [c] is part of,
+(*[vertical_3d_groups c b] extracts the diagonal instances that [c] is part of,
   by slicing the 3D grid space represented by hashtable board [b] horizontally
 *)
 let vertical_3d_groups c b =
@@ -282,10 +270,10 @@ let get_the_win c current_player b=
     | true  -> begin
         match diag_check c b with
         | WinNone, WinNone -> []
-        | WinH x, WinV y -> x@y
-        | WinH x, WinNone -> x
-        | WinNone, WinV y -> y
+        | WinH x, WinV y -> [x;y]
+        | WinH x, WinNone -> [x]
+        | WinNone, WinV y -> [y]
         | _, _ -> []
       end
-    | _ -> find_vertical_cells c b
+    | _ -> [[c] @ (find_vertical_cells c b)]
   else []

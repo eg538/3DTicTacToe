@@ -102,7 +102,7 @@ let inc_point st =
     {st with curr_score_2 = st.curr_score_2 + 1}
 
 (*[play_move st coords] is the new state as a result of the current player of state [st]
- * making a move at coordinates [coords], updating the scores accordingly if the move 
+ * making a move at coordinates [coords], updating the scores accordingly if the move
  * creates a three-in-a-row for the player that made the move*)
 let play_move st (pl, row, col) =
   make_move st (pl, row, col);
@@ -117,6 +117,19 @@ let switch_players st = let _p1_av = st.p1_avatar in
 match st.current_player with
 | Python -> {st with current_player = Caml}
 | _ -> {st with current_player = Python}
+
+let empty_diags =
+  (*horizontal_3d *)
+  let d1 = [{cell=(0,0,0);player=None};{cell=(1,0,1);player=None;{cell=(2,0,2);player=None}] in
+  let d2 = [{cell=(0,0,2);player=None};{cell=(1,0,1);player=None};{cell=(2,0,0);player=None}] in
+  let d3 = [{cell=(0,2,0);player=None};{cell=(1,2,1);player=None};{cell=(2,2,2);player=None}] in
+  let d4 = [{cell=(0,2,2);player=None};{cell=(1,2,1);player=None};{cell=(2,2,0);player=None}] in
+  (*vertical_3d *)
+  let d5 = [{cell=(0,0,0);player=None};{cell=(1,1,0);player=None};{cell=(2,2,0);player=None}] in
+  let d6 = [{cell=(2,0,0);player=None};{cell=(1,1,0);player=None};{cell=(0,0,2);player=None}] in
+  let d7 = [{cell=(0,0,2);player=None};{cell=(1,1,2);player=None};{cell=(2,2,2);player=None}] in
+  let d8 = [{cell=(2,0,2);player=None};{cell=(1,1,2);player=None};{cell=(0,2,2);player=None}] in
+  d1::d2::d3::d4::d5::d6::d7::d8::[]
 
 let do' c st =
   match c with
