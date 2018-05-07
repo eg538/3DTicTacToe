@@ -57,7 +57,7 @@ val cells_left: board -> cell list
 
 val cells_occupied: board -> cell list
 
-(*[three_row_2d_cells c lst_of_cells] is the list of lists of cells 
+(*[three_row_2d_cells c lst_of_cells] is the list of lists of cells
  *that create a three in a row with [c] in [lst_of_cells]*)
 val all_three_in_row_cells: cell -> board -> cell list list
 
