@@ -48,21 +48,54 @@ let array_of_image img =
 let get_img img =
   Jpeg.load img [] |> array_of_image |> make_image
 
-(*let init_welcome f =
-  print_int([|[|black|];[|black|]|] |> Array.length);
-  (*  let img = [|[|black|];[|black|]|]|> make_image in*)
-  let img = "imgs/wilkommen.png" in
-  let i =  Png.load img [] |> Graphic_image.array_of_image |> make_image in
-  Graphics.draw_image  i 1000 750;
-  moveto 0 0*)
+ let rect_drawn x y width height =
+  (set_color magenta;
+    set_line_width 9;
+    draw_rect x y width height;)
 
-let clicked min_x min_y max_x max_y response =
+(* let react x_min y_min width height =
+
+    let event_lst = [Graphics.Button_up] in
+    let mouse_status = wait_next_event event_lst  in
+    let x = mouse_status.mouse_x in
+    let y = mouse_status.mouse_y in
+    if (x >= x_min && x <= (x_min + width)) && (y >= y_min && y <= (y_min + height)) then (rect_drawn x_min y_min width height;)  *)
+
+
+let rec reaction =
   let event_lst = [Graphics.Button_up] in
   let mouse_status = wait_next_event event_lst  in
   let x = mouse_status.mouse_x in
   let y = mouse_status.mouse_y in
 
-  if (x >= min_x && x <= max_x) && (y >= min_y && y <= max_y) then response
+    (* easy button *)
+    if (x >= 310 && x <= (310 + 260)) && (y >= 107 && y <= (107 + 44)) then (rect_drawn 310 107 260 44; reaction;)
+
+    (* medium button *)
+    else if (x >= 450 && x <= (450 + 119)) && (y >= 260 && y <= (260 + 43)) then (rect_drawn 450 260 119 43; reaction;)
+
+    (*hard button pressed *)
+    else if (x >= 600 && x <= (600 + 81)) && (y >= 260 && y <= (260 + 43)) then (rect_drawn 600 260 81 43; reaction;)
+
+    (* normal button pressed *)
+    else if (x >= 280 && x <= (280 + 109)) && (y >= 200 && y <= (200 + 43)) then (rect_drawn 380 200 109 43; reaction;)
+
+    (* krazy button pressed *)
+    else if (x >= 520 && x <= (520 + 93)) && (y >= 200 && y <= (200 + 44)) then (rect_drawn 520 200 93 44; reaction;)
+
+    (* single button pressed *)
+    else if (x >= 395 && x <= (395 + 93)) && (y >= 130 && y <= (130 + 44)) then (rect_drawn 395 130 93 44; reaction;)
+
+    (* multi button pressed *)
+    else if (x >= 520 && x <= (520 + 82)) && (y >= 130 && y <= (130 + 44)) then (rect_drawn 520 130 82 44; reaction;)
+
+    (* start was hit*)
+    else if (x >= 380 && x <=(242+380)) && (y>=35 && y<=(35+69)) then
+      (clear_graph(); draw_image (get_img "imgs/xxoo.jpg") 0 0;draw_image (get_img "imgs/TTTmain.jpg") 250 40;
+       draw_image(get_img "imgs/hint.jpg") 800 555; draw_image(get_img "imgs/try.jpg") 134 555;)
+
+    (* nothing was hit *)
+    else reaction;
 
 let init_welcome f =
   draw_image (get_img "imgs/background_crop.jpeg") 0 0;
@@ -85,47 +118,35 @@ let init_welcome f =
 
   draw_image (get_img "imgs/group.jpg") 380 35;
 
-  let event_lst = [Graphics.Button_up] in
-  let mouse_status = wait_next_event event_lst  in
-  let x = mouse_status.mouse_x in
-  let y = mouse_status.mouse_y in
-
-  if (x >= 380 && x <=(242+380)) && (y>=35 && y<=(35+69)) then (clear_graph(); draw_image (get_img "imgs/xxoo.jpg") 0 0;draw_image (get_img "imgs/TTTmain.jpg") 250 40;
-                        draw_image(get_img "imgs/hint.jpg") 800 555; draw_image(get_img "imgs/try.jpg") 134 555;)
 
 
 
-  (* let response_start = (clear_graph(); draw_image (get_img "imgs/xxoo.jpg") 0 0;draw_image (get_img "imgs/TTTmain.jpg") 250 40;
-                        draw_image(get_img "imgs/hint.jpg") 800 555; draw_image(get_img "imgs/try.jpg") 134 555;) in
-
-  clicked 380 35 (242+380) (35+69) response_start; *)
 
 
-  (* let x_wilkommen = 200 in
-  let y_wilkommen = 100 in
 
-  let easy_x_pos = 548 in
-  let easy_y_pos = 383 in
-  let easy_width = 45 in
-  let easy_height = 24 in
-  let easy_x_min = x_wilkommen + easy_x_pos in
-  let easy_x_max = easy_x_min + easy_width in
-  let easy_y_min = y_wilkommen + easy_y_pos in
-  let easy_y_max = easy_y_min + easy_height in
 
-  let event_lst = [Graphics.Button_up] in
-  let mouse_status = wait_next_event event_lst in
-  let x = mouse_status.mouse_x in
-  let y = mouse_status.mouse_y in
-  if (x >= easy_x_min && x <= easy_x_max) && (y >= easy_y_min && y <= easy_y_max) then set_color green; draw_rect 400 253 easy_width easy_height;
 
-  let event_lst = [Graphics.Button_up] in
-  let mouse_status = wait_next_event event_lst  in
-  let x = mouse_status.mouse_x in
-  let y = mouse_status.mouse_y in
-  if (x >= 420 && x <= 618) && (y >= 20 && y <= 89) then
-  (clear_graph(); draw_image (get_img "imgs/xxoo.jpg") 0 0;draw_image (get_img "imgs/TTTmain.jpg") 250 40;
-    draw_image(get_img "imgs/hint.jpg") 800 555; draw_image(get_img "imgs/try.jpg") 134 555;)
-       else draw_rect 250 150 90 90;
 
-  *)
+  (* a;lsdkf
+  (* easy button pressed *)
+  react 310 260 107 44;
+
+  (* medium button pressed *)
+  react 450 260 119 43;
+
+  (*hard button pressed *)
+  react 600 260 81 43;
+
+  (* normal button pressed *)
+  react 380 200 109 43;
+
+  (* krazy button pressed *)
+  react 520 200 93 44;
+
+  (* single button pressed *)
+  react 395 130 93 44;
+
+  (* multi button pressed *)
+  react 520 130 82 44;
+
+;lsdkf *)
