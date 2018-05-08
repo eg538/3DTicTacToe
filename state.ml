@@ -1,8 +1,8 @@
 open Command
 open Grid_3d
 open Parse_init
-
-type state = {
+open Types
+(* type state = {
   result  : player; (*Will contain the player who won*)
   tttBoard   : board;
   current_player  : player;
@@ -16,7 +16,7 @@ type state = {
   p2_num_hints : int;
   p2_num_tries : int;
   diagonals: cell list list;
-}
+} *)
 
 (*[num_helper lvl] is the number of hints and tries that each player gets according
  * to the level they chose*)
@@ -103,7 +103,7 @@ let inc_point st =
   else
     {st with curr_score_2 = st.curr_score_2 + 1}
 
-let rec extract_cells_from_st st st_diags =
+ let rec extract_cells_from_st st st_diags =
   match st.diagonals with
   | [] -> []
   | [{cell=c1;player=_};{cell=c2;player=_};{cell=c3;player=_}]::t -> [c1;c2;c3]::(extract_cells_from_st st t)
@@ -158,6 +158,7 @@ let play_move st (pl, row, col) =
   make_move st (pl, row, col);
   print_endline "placed move";
   if win_evaluation (find_cell st (pl, row, col)) st.tttBoard then
+    (* updating st (pl, row, col) *)
     begin
     let c = find_cell st (pl,row,col) in
     let b = st.tttBoard in
@@ -182,7 +183,7 @@ let play_move st (pl, row, col) =
           if (st'.diagonals = st.diagonals) then st else inc_point st
         end
       | _ -> st
-    end
+       end
   else
     st
 

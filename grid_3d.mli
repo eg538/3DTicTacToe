@@ -1,13 +1,14 @@
 open Parse_init
-type cell
+open Types
+(* type cell
 type board
 (*WinType3D is a variant type used to distinguish the different types of
   "diagonal" wins that could occur in the 3x3x3 space.
 *)
 type winType3D =
-| WinV of cell list
-| WinH of cell list
-| WinNone
+| WinV of cell list list
+| WinH of cell list list
+| WinNone *)
 
 (*[empty_board] is an empty 3D tic tac toe board*)
 val empty_board: board
@@ -59,10 +60,18 @@ val cells_occupied: board -> cell list
 
 (*[three_row_2d_cells c lst_of_cells] is the list of lists of cells
  *that create a three in a row with [c] in [lst_of_cells]*)
-val all_three_in_row_cells: cell -> board -> cell list list
+(*val all_three_in_row_cells: cell -> board -> cell list list*)
 
 (*[get_the_win c current_player b] returns the cells that are of a newly
   found three-in-a-row instance including [c]
 *)
 
-val get_the_win: cell -> player -> board -> cell list
+val get_the_win: cell -> player -> board -> cell list list
+
+val diag_check: cell -> board -> (winType3D * winType3D)
+
+val three_row_2d_cells: cell -> board -> cell list list
+
+val victory_on_plane: cell -> cell list list -> bool
+
+val col_check: cell -> board -> bool

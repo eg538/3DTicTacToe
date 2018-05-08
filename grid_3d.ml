@@ -1,13 +1,13 @@
 open Parse_init
-
-type cell = {cell: (int*int*int); player: player}
+open Types
+(* type cell = {cell: (int*int*int); player: player}
 
 type winType3D =
   | WinV of cell list list
   | WinH of cell list list
   | WinNone
 
-type board = ((int*int*int), cell) Hashtbl.t
+type board = ((int*int*int), cell) Hashtbl.t *)
 
 let empty_board =
 let hash = Hashtbl.create 123456 in
@@ -287,8 +287,8 @@ let col_check c b =
   let cell_2 = (find_vertical_cells c b) |> List.rev |> List.hd in
   (cell_1.player = c.player) && (cell_2.player = c.player)
   end
-
-(*let all_three_in_row_cells c b =
+        (*
+let all_three_in_row_cells c b =
   let v = find_vertical_cells c b in
   let h = vertical_3d_groups c b in
   let h_3d = horizontal_3d_group c b in

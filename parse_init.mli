@@ -1,8 +1,10 @@
 open Yojson.Basic.Util
-type level = Easy| Medium| Hard
+open Types
+
+(* type level = Easy| Medium| Hard
 type player = Caml | Python| None
 type num_players = Single| Multi
-type info 
+type info  *)
 
 (*[parse_init_file f] is the information extract from json file [f]*)
 val parse_init_file: string -> info

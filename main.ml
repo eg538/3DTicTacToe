@@ -1,8 +1,10 @@
 (** This would be our main.ml where we would take care of the REPL
  *feature for the MVC *)
+open Types
 open Command
 open State
 open Parse_init
+open ANSITerminal
 
 exception Terminated
 exception Restart
@@ -44,12 +46,12 @@ let rec play st =
   | Invalid -> print_endline "Action impossible. Please try a different move.";
     play newSt
 
-(*[play_game ()] is the simulation of a 3d tic-tac-toe game. It takes in commands 
+(*[play_game ()] is the simulation of a 3d tic-tac-toe game. It takes in commands
  * from the user and then progresses the game accordingly*)
 let rec play_game () =
 try (
   print_endline "Please type play and the name of the file you desire.";
-  print_string  "> ";
+  print_endline "> ";
   let com = read_line () in
   let command = parse com in
   begin
