@@ -53,49 +53,62 @@ let get_img img =
     set_line_width 9;
     draw_rect x y width height;)
 
-(* let react x_min y_min width height =
+type choices = {mode : string; level : string; craziness: string; }
 
-    let event_lst = [Graphics.Button_up] in
-    let mouse_status = wait_next_event event_lst  in
-    let x = mouse_status.mouse_x in
-    let y = mouse_status.mouse_y in
-    if (x >= x_min && x <= (x_min + width)) && (y >= y_min && y <= (y_min + height)) then (rect_drawn x_min y_min width height;)  *)
-
-
-let rec reaction =
+let level_choice f =
   let event_lst = [Graphics.Button_up] in
   let mouse_status = wait_next_event event_lst  in
   let x = mouse_status.mouse_x in
   let y = mouse_status.mouse_y in
+  (* easy button *)
+  if (x >= 310 && x <= (310 + 108)) && (y >= 260 && y <= (260 + 44))
+  then (rect_drawn 310 260 108 44;)
 
-    (* easy button *)
-    if (x >= 310 && x <= (310 + 260)) && (y >= 107 && y <= (107 + 44)) then (rect_drawn 310 107 260 44; reaction;)
+  (* medium button *)
+  else if (x >= 450 && x <= (450 + 119)) && (y >= 260 && y <= (260 + 43))
+  then (rect_drawn 450 260 119 43; )
 
-    (* medium button *)
-    else if (x >= 450 && x <= (450 + 119)) && (y >= 260 && y <= (260 + 43)) then (rect_drawn 450 260 119 43; reaction;)
+  (*hard button pressed *)
+  else if (x >= 600 && x <= (600 + 81)) && (y >= 260 && y <= (260 + 43))
+  then (rect_drawn 600 260 81 43; )
 
-    (*hard button pressed *)
-    else if (x >= 600 && x <= (600 + 81)) && (y >= 260 && y <= (260 + 43)) then (rect_drawn 600 260 81 43; reaction;)
+let krazy_choice f =
+  let event_lst = [Graphics.Button_up] in
+  let mouse_status = wait_next_event event_lst  in
+  let x = mouse_status.mouse_x in
+  let y = mouse_status.mouse_y in
+  (* normal button pressed *)
+  if (x >= 380 && x <= (380 + 109)) && (y >= 200 && y <= (200 + 43))
+  then (rect_drawn 380 200 109 43; )
 
-    (* normal button pressed *)
-    else if (x >= 280 && x <= (280 + 109)) && (y >= 200 && y <= (200 + 43)) then (rect_drawn 380 200 109 43; reaction;)
+  (* krazy button pressed *)
+  else if (x >= 520 && x <= (520 + 93)) && (y >= 200 && y <= (200 + 44))
+  then (rect_drawn 520 200 93 44; )
 
-    (* krazy button pressed *)
-    else if (x >= 520 && x <= (520 + 93)) && (y >= 200 && y <= (200 + 44)) then (rect_drawn 520 200 93 44; reaction;)
+let num_player f =
+  let event_lst = [Graphics.Button_up] in
+  let mouse_status = wait_next_event event_lst  in
+  let x = mouse_status.mouse_x in
+  let y = mouse_status.mouse_y in
+  (* single button pressed *)
+  if (x >= 395 && x <= (395 + 93)) && (y >= 130 && y <= (130 + 44))
+  then (rect_drawn 395 130 93 44;)
 
-    (* single button pressed *)
-    else if (x >= 395 && x <= (395 + 93)) && (y >= 130 && y <= (130 + 44)) then (rect_drawn 395 130 93 44; reaction;)
+  (* multi button pressed *)
+  else if (x >= 520 && x <= (520 + 82)) && (y >= 130 && y <= (130 + 44))
+  then (rect_drawn 520 130 82 44; )
 
-    (* multi button pressed *)
-    else if (x >= 520 && x <= (520 + 82)) && (y >= 130 && y <= (130 + 44)) then (rect_drawn 520 130 82 44; reaction;)
 
-    (* start was hit*)
-    else if (x >= 380 && x <=(242+380)) && (y>=35 && y<=(35+69)) then
-      (clear_graph(); draw_image (get_img "imgs/xxoo.jpg") 0 0;draw_image (get_img "imgs/TTTmain.jpg") 250 40;
-       draw_image(get_img "imgs/hint.jpg") 800 555; draw_image(get_img "imgs/try.jpg") 134 555;)
+let start_choice f =
+  let event_lst = [Graphics.Button_up] in
+  let mouse_status = wait_next_event event_lst  in
+  let x = mouse_status.mouse_x in
+  let y = mouse_status.mouse_y in
+  if (x >= 380 && x <=(242+380)) && (y>=35 && y<=(35+69)) then
+    (clear_graph(); draw_image (get_img "imgs/xxoo.jpg") 0 0;draw_image (get_img "imgs/TTTmain.jpg") 250 40;
+     draw_image(get_img "imgs/hint.jpg") 800 555; draw_image(get_img "imgs/try.jpg") 134 555;)
 
-    (* nothing was hit *)
-    else reaction;
+
 
 let init_welcome f =
   draw_image (get_img "imgs/background_crop.jpeg") 0 0;
@@ -118,11 +131,62 @@ let init_welcome f =
 
   draw_image (get_img "imgs/group.jpg") 380 35;
 
+  (* let event_lst = [Graphics.Button_up] in
+  let mouse_status = wait_next_event event_lst  in
+  let x = mouse_status.mouse_x in
+  let y = mouse_status.mouse_y in
+  if (x >= 380 && x <=(242+380)) && (y>=35 && y<=(35+69)) then
+    (clear_graph(); draw_image (get_img "imgs/xxoo.jpg") 0 0;draw_image (get_img "imgs/TTTmain.jpg") 250 40;
+     draw_image(get_img "imgs/hint.jpg") 800 555; draw_image(get_img "imgs/try.jpg") 134 555;)
+  else level_choice(); *)
+
+  level_choice();
+
+  krazy_choice();
+
+  num_player();
+
+  start_choice();
 
 
 
 
 
+     (*
+       let rec reaction =
+         let event_lst = [Graphics.Button_up] in
+         let mouse_status = wait_next_event event_lst  in
+         let x = mouse_status.mouse_x in
+         let y = mouse_status.mouse_y in
+
+           (* easy button *)
+           if (x >= 310 && x <= (310 + 260)) && (y >= 107 && y <= (107 + 44)) then (rect_drawn 310 107 260 44; reaction;)
+
+           (* medium button *)
+           else if (x >= 450 && x <= (450 + 119)) && (y >= 260 && y <= (260 + 43)) then (rect_drawn 450 260 119 43; reaction;)
+
+           (*hard button pressed *)
+           else if (x >= 600 && x <= (600 + 81)) && (y >= 260 && y <= (260 + 43)) then (rect_drawn 600 260 81 43; reaction;)
+
+           (* normal button pressed *)
+           else if (x >= 280 && x <= (280 + 109)) && (y >= 200 && y <= (200 + 43)) then (rect_drawn 380 200 109 43; reaction;)
+
+           (* krazy button pressed *)
+           else if (x >= 520 && x <= (520 + 93)) && (y >= 200 && y <= (200 + 44)) then (rect_drawn 520 200 93 44; reaction;)
+
+           (* single button pressed *)
+           else if (x >= 395 && x <= (395 + 93)) && (y >= 130 && y <= (130 + 44)) then (rect_drawn 395 130 93 44; reaction;)
+
+           (* multi button pressed *)
+           else if (x >= 520 && x <= (520 + 82)) && (y >= 130 && y <= (130 + 44)) then (rect_drawn 520 130 82 44; reaction;)
+
+           (* start was hit*)
+           else if (x >= 380 && x <=(242+380)) && (y>=35 && y<=(35+69)) then
+             (clear_graph(); draw_image (get_img "imgs/xxoo.jpg") 0 0;draw_image (get_img "imgs/TTTmain.jpg") 250 40;
+              draw_image(get_img "imgs/hint.jpg") 800 555; draw_image(get_img "imgs/try.jpg") 134 555;)
+
+           (* nothing was hit *)
+           else reaction; *)
 
 
 
