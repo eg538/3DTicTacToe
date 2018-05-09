@@ -47,7 +47,7 @@ let rec play st =
 
 let rec play_game () =
 try (
-  print_endline "Please type play and the name of the file you desire.";
+  print_endline "Please type the desired mode, player 1 avatar and level";
   print_string  "> ";
   let com = read_line () in
   let command = parse com in

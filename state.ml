@@ -8,7 +8,8 @@ type state = {
   current_player  : player;
   curr_score_1 : int;
   curr_score_2 : int;
-  mode  : num_players;
+  mode  : mode;
+  num_players: num_players;
   level : level;
   p1_avatar : player;
   p1_num_hints : int;
@@ -23,8 +24,8 @@ let num_helper lvl =
   |Medium -> 5
   |Hard -> 3
 
-let init_state fl =
-  let i = parse_init_file fl in
+let init_state str =
+  let i = parse_init str in
   {
     result = None;
     tttBoard = copy empty_board;
@@ -32,6 +33,7 @@ let init_state fl =
     curr_score_1 = 0;
     curr_score_2 = 0;
     mode = mode i;
+    num_players = player_num i;
     level = level i;
     p1_avatar = p1_avatar i;
     p1_num_hints = num_helper (level i);
@@ -59,7 +61,7 @@ let num_tries s = let check = s.p1_avatar in
 let get_result s = s.result
 
 let get_result_message s =
-  match s.mode with
+  match s.num_players with
   | Single -> begin
     match s.result with
     | Caml -> "Caml wins!"
