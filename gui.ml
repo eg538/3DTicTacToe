@@ -55,51 +55,57 @@ let get_img img =
 
 type choices = {mode : string; level : string; craziness: string; }
 
-let level_choice f =
+let level_choice () =
   let event_lst = [Graphics.Button_up] in
   let mouse_status = wait_next_event event_lst  in
   let x = mouse_status.mouse_x in
   let y = mouse_status.mouse_y in
   (* easy button *)
   if (x >= 310 && x <= (310 + 108)) && (y >= 260 && y <= (260 + 44))
-  then (rect_drawn 310 260 108 44;)
+  then ((rect_drawn 310 260 108 44); "easy")
 
   (* medium button *)
   else if (x >= 450 && x <= (450 + 119)) && (y >= 260 && y <= (260 + 43))
-  then (rect_drawn 450 260 119 43; )
+  then ((rect_drawn 450 260 119 43); "medium")
 
   (*hard button pressed *)
   else if (x >= 600 && x <= (600 + 81)) && (y >= 260 && y <= (260 + 43))
-  then (rect_drawn 600 260 81 43; )
+  then ((rect_drawn 600 260 81 43); "hard")
 
-let krazy_choice f =
+  else "easy"
+
+let krazy_choice () =
   let event_lst = [Graphics.Button_up] in
   let mouse_status = wait_next_event event_lst  in
   let x = mouse_status.mouse_x in
   let y = mouse_status.mouse_y in
   (* normal button pressed *)
   if (x >= 380 && x <= (380 + 109)) && (y >= 200 && y <= (200 + 43))
-  then (rect_drawn 380 200 109 43; )
+  then ((rect_drawn 380 200 109 43); "normal")
 
   (* krazy button pressed *)
   else if (x >= 520 && x <= (520 + 93)) && (y >= 200 && y <= (200 + 44))
-  then (rect_drawn 520 200 93 44; )
+  then ((rect_drawn 520 200 93 44); "krazy")
 
-let num_player f =
+  else "normal"
+
+let num_player () =
   let event_lst = [Graphics.Button_up] in
   let mouse_status = wait_next_event event_lst  in
   let x = mouse_status.mouse_x in
   let y = mouse_status.mouse_y in
   (* single button pressed *)
   if (x >= 395 && x <= (395 + 93)) && (y >= 130 && y <= (130 + 44))
-  then (rect_drawn 395 130 93 44;)
+  then ((rect_drawn 395 130 93 44); "single")
 
   (* multi button pressed *)
   else if (x >= 520 && x <= (520 + 82)) && (y >= 130 && y <= (130 + 44))
-  then (rect_drawn 520 130 82 44; )
+  then ((rect_drawn 520 130 82 44); "multi")
+
+  else "single"
 
 
-let start_choice f =
+let start_choice () =
   let event_lst = [Graphics.Button_up] in
   let mouse_status = wait_next_event event_lst  in
   let x = mouse_status.mouse_x in
@@ -140,13 +146,15 @@ let init_welcome f =
      draw_image(get_img "imgs/hint.jpg") 800 555; draw_image(get_img "imgs/try.jpg") 134 555;)
   else level_choice(); *)
 
-  level_choice();
+  let level = level_choice() in print_endline level;
 
-  krazy_choice();
+  let mode = krazy_choice() in print_endline mode;
 
-  num_player();
+  let num = num_player() in print_endline num;
 
   start_choice();
+
+
 
 
 
