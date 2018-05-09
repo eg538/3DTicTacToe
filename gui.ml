@@ -144,17 +144,19 @@ let init_welcome f =
   if (x >= 380 && x <=(242+380)) && (y>=35 && y<=(35+69)) then
     (clear_graph(); draw_image (get_img "imgs/xxoo.jpg") 0 0;draw_image (get_img "imgs/TTTmain.jpg") 250 40;
      draw_image(get_img "imgs/hint.jpg") 800 555; draw_image(get_img "imgs/try.jpg") 134 555;)
-  else level_choice(); *)
+     else level_choice(); *)
 
-  let level = level_choice() in print_endline level;
+  let level = level_choice() in
 
-  let mode = krazy_choice() in print_endline mode;
+  let mode = krazy_choice() in
 
-  let num = num_player() in print_endline num;
+  let num = num_player() in
+
+  let play_str = "play " ^ num ^ " " ^ "python " ^ level ^ " " ^ mode in
 
   start_choice();
 
-
+  play_str
 
 
 

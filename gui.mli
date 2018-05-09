@@ -5,7 +5,7 @@ open Camlimages
 type choices
 
 (*Draws the welcome screen, with the title of the game and creators*)
-val init_welcome : unit -> unit
+val init_welcome : unit -> string
 
 (* Draws a magenta rectangle around the button the player presses*)
 val rect_drawn : int -> int -> int -> int -> unit

@@ -45,12 +45,10 @@ let rec play st =
   | Invalid -> print_endline "Action impossible. Please try a different move.";
     play newSt
 
-let rec play_game () =
+let rec play_game str =
 try (
-  print_endline "Please type the desired mode, player 1 avatar and level";
-  print_string  "> ";
-  let com = read_line () in
-  let command = parse com in
+  print_endline str;
+  let command = parse str in
   begin
   match command with
   | Play str ->
@@ -61,13 +59,13 @@ try (
       play init_st
       ) with
     | Terminated -> print_endline "Bye!"
-    | Restart -> play_game ()
+    | Restart -> play_game str
     | _ -> print_endline "Error"
     end
   | _ -> print_endline "Invalid command. No ongoing game."
   end
 ) with
-| _ -> print_endline "No such game file found"
+| _ -> print_endline "Invalid"
 
 let main () =
   ANSITerminal.(print_string [red]
@@ -75,7 +73,8 @@ let main () =
   (* print_int([|[|black|];[|black|]|] |> Array.length); *)
   Graphics.open_graph " 1000x750";
   Graphics.set_window_title "3D Tic-Tac-Toe";
-  Gui.init_welcome()
+  let str = Gui.init_welcome() in
+  play_game str
   (* play_game () *)
 
 let () = main ()
