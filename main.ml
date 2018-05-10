@@ -5,6 +5,7 @@ open Command
 open State
 open Parse_init
 open ANSITerminal
+open Gui
 
 exception Terminated
 exception Restart
@@ -46,14 +47,10 @@ let rec play st =
   | Invalid -> print_endline "Action impossible. Please try a different move.";
     play newSt
 
-(*[play_game ()] is the simulation of a 3d tic-tac-toe game. It takes in commands
- * from the user and then progresses the game accordingly*)
-let rec play_game () =
+let rec play_game str =
 try (
-  print_endline "Please type play and the name of the file you desire.";
-  print_endline "> ";
-  let com = read_line () in
-  let command = parse com in
+  print_endline str;
+  let command = parse str in
   begin
   match command with
   | Play str ->
@@ -64,24 +61,22 @@ try (
       play init_st
       ) with
     | Terminated -> print_endline "Bye!"
-    | Restart -> play_game ()
+    | Restart -> play_game str
     | _ -> print_endline "Error"
     end
   | _ -> print_endline "Invalid command. No ongoing game."
   end
 ) with
-| _ -> print_endline "No such game file found"
+| _ -> print_endline "Invalid"
 
 let main () =
   ANSITerminal.(print_string [red]
-                  "\n\nWelcome to 3D Tic Tac Toe!\n");
-  ANSITerminal.(print_string [blue]
-                  ("\nHere are the following commands:\n"^
-                  "- place x, y, z : makes a move at cell x, y, z, where x represents the plane [0, 1, 2], y represents the row [0, 1, 2] and z represents the column [0, 1, 2]\n"^
-                  "- score : displays the scores of the players\n"^
-                  "- look : displays the board again\n"^
-                  "- quit : quits the game\n"^
-                  "- current player : displays the avatar of the current player\n"));
-  play_game ()
+                  "\n\nWelcome to 3D Tic Tac Toe.\n");
+  (* print_int([|[|black|];[|black|]|] |> Array.length); *)
+  Graphics.open_graph " 1000x750";
+  Graphics.set_window_title "3D Tic-Tac-Toe";
+  let str = Gui.init_welcome() in
+  play_game str
+  (* play_game () *)
 
 let () = main ()
