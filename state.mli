@@ -2,7 +2,6 @@ open Command
 open Grid_3d
 open Parse_init
 open Types
-(* type state *)
 
 (*[init_state string] is the initial state of the game
  * with information such as the level, number of players, etc.

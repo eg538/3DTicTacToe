@@ -1,5 +1,6 @@
-(* open Graphics
+open Graphics
 open State
+open Camlimages
 
 type choices
 

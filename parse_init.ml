@@ -1,17 +1,4 @@
-type level = Easy| Medium| Hard
-
-type player = Caml | Python| None
-
-type num_players = Single| Multi
-
-type mode = Normal | Krazy
-
-type info = {
-  info_players_num : num_players;
-  info_p1_avatar : player;
-  info_level  : level;
-  info_mode : mode
-}
+open Types
 
 let rec parse_init str = 
   let lst = String.split_on_char ' ' (String.lowercase_ascii str) in

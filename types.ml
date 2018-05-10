@@ -4,8 +4,11 @@ type player = Caml | Python| None
 
 type num_players = Single| Multi
 
+type mode = Normal | Krazy
+
 type info = {
-  info_mode : num_players;
+  info_players_num: num_players;
+  info_mode : mode;
   info_p1_avatar : player;
   info_level  : level;
 }
@@ -25,7 +28,8 @@ type state = {
   current_player  : player;
   curr_score_1 : int;
   curr_score_2 : int;
-  mode  : num_players;
+  num_players: num_players;
+  mode  : mode;
   level : level;
   p1_avatar : player;
   p1_num_hints : int;

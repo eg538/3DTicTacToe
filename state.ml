@@ -2,25 +2,7 @@ open Command
 open Grid_3d
 open Parse_init
 open Types
-(* type state = {
-  result  : player; (*Will contain the player who won*)
-  tttBoard   : board;
-  current_player  : player;
-  curr_score_1 : int;
-  curr_score_2 : int;
-  mode  : mode;
-  num_players: num_players;
-  level : level;
-  p1_avatar : player;
-  p1_num_hints : int;
-  p1_num_tries : int;
-  p2_num_hints : int;
-  p2_num_tries : int;
-  diagonals: cell list list;
-} *)
 
-(*[num_helper lvl] is the number of hints and tries that each player gets according
- * to the level they chose*)
 let num_helper lvl =
   match lvl with
   |Easy -> 7
