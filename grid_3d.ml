@@ -1,13 +1,13 @@
 open Parse_init
-
-type cell = {cell: (int*int*int); player: player}
+open Types
+(* type cell = {cell: (int*int*int); player: player}
 
 type winType3D =
-  | WinV of cell list
-  | WinH of cell list
+  | WinV of cell list list
+  | WinH of cell list list
   | WinNone
 
-type board = ((int*int*int), cell) Hashtbl.t
+type board = ((int*int*int), cell) Hashtbl.t *)
 
 let empty_board =
 let hash = Hashtbl.create 123456 in
@@ -173,44 +173,94 @@ let place (pl, row, col) b plyr =
   by slicing the 3D grid space represented by hashtable board [b] horizontally
 *)
 let horizontal_3d_group c b =
-let grid_space = board_list_of_cells b in
-match c.cell with
-| (0,y,z) when (y=z) -> List.filter (fun a -> (a.cell |> snd')=(a.cell |> thd)) grid_space (*cell list of length 2*)
-| 0,_,_ -> List.filter (*cell list of length 2*)
-          (fun a -> a.cell <> (0,0,1) && a.cell <> (0,1,0) && a.cell <> (0,1,2) && a.cell <> (0,2,1)) grid_space
-| 1,y,z when (y=z) -> List.filter (fun a -> (a.cell |> snd')=(a.cell |> thd)) grid_space
-| 1,_,_ -> List.filter
-          (fun a -> a.cell <> (1,0,1) && a.cell <> (1,1,0) && a.cell <> (1,1,2) && a.cell <> (1,2,1)) grid_space
-| 2,y,z when (y=z) -> List.filter (fun a -> (a.cell |> snd')=(a.cell |> thd)) grid_space
-| _ -> List.filter
-          (fun a -> a.cell <> (2,0,1) && a.cell <> (2,1,0) && a.cell <> (2,1,2) && a.cell <> (2,2,1)) grid_space
+  let grid_space = board_list_of_cells b in
+  if (c.cell = (0,0,0) || (c.cell = (2,0,2))) then [(List.filter (fun a -> a.cell = (0,0,0) || a.cell = (1,0,1) || a.cell = (2,0,2)) grid_space)]
+  else if (c.cell = (2,0,0)) || (c.cell = (0,0,2)) then [(List.filter (fun a -> a.cell = (2,0,0) || a.cell = (1,0,1) || a.cell = (0,0,2)) grid_space)]
+  else if (c.cell = (0,2,0)) || (c.cell = (2,2,2)) then [(List.filter (fun a -> a.cell = (0,2,0) || a.cell = (1,2,1) || a.cell = (2,2,2)) grid_space)]
+  else if ((c.cell = (2,2,0)) || (c.cell = (0,2,2))) then [(List.filter (fun a -> a.cell = (2,2,0) || a.cell = (1,2,1) || a.cell = (0,2,2)) grid_space)]
+  else if (c.cell = (1,2,1)) then
+    begin
+      let l1 = (List.filter (fun a -> a.cell = (0,2,0) || a.cell = (1,2,1) || a.cell = (2,2,2)) grid_space) in
+      let l2 = (List.filter (fun a -> (a.cell = (2,2,0)) || (a.cell = (1,2,1)) || (a.cell = (0,2,2))) grid_space) in
+      [l1;l2]
+    end
+  else if (c.cell = (1,0,1)) then
+    begin
+      let l1 = (List.filter (fun a -> a.cell = (0,0,0) || a.cell = (1,0,1) || a.cell = (2,0,2)) grid_space) in
+      let l2 = (List.filter (fun a -> a.cell = (2,0,0) || a.cell = (1,0,1) || a.cell = (0,0,2)) grid_space) in
+      [l1;l2]
+    end
+  else []
 
-(*[horizontal_3d_group c b] extracts the diagonal instances that [c] is part of,
+  (*
+  match c.cell with
+  | (x,0,z) when (x=z) -> List.filter (fun a -> ((a.cell |> fst')=(a.cell |> thd)) && ((a.cell |> snd')=0)) grid_space (*cell list of length 2*)
+  | _,0,_ -> List.filter (*cell list of length 2*)
+               (fun a -> (a.cell = (2,0,0)) || (a.cell = (1,0,1)) || (a.cell = (0,0,2))) grid_space
+  | x,1,z when (x=z) -> []
+  | _,1,_ -> []
+  | x,2,z when (x=z) -> List.filter (fun a -> ((a.cell |> fst')=(a.cell |> thd)) && (a.cell |> snd' = 2)) grid_space
+  | _ -> List.filter
+           (fun a -> a.cell = (2,2,0) || a.cell = (1,2,1) || a.cell = (0,2,2)) grid_space
+*)
+(*[vertical_3d_groups c b] extracts the diagonal instances that [c] is part of,
   by slicing the 3D grid space represented by hashtable board [b] horizontally
 *)
 let vertical_3d_groups c b =
-let grid_space = board_list_of_cells b in
-match c.cell with
+  let grid_space = board_list_of_cells b in
+  if (c.cell = (0,0,0) || c.cell = (2,2,0)) then [(List.filter (fun a -> a.cell = (0,0,0) || a.cell = (1,1,0) || a.cell = (2,2,0)) grid_space)]
+  else if (c.cell = (0,2,0) || c.cell = (2,0,0)) then [(List.filter (fun a -> a.cell = (2,0,0) || a.cell = (1,1,0) || a.cell = (0,2,0)) grid_space)]
+  else if (c.cell = (1,1,0)) then
+    begin
+      let l1 = (List.filter (fun a -> a.cell = (0,0,0) || a.cell = (1,1,0) || a.cell = (2,2,0)) grid_space) in
+      let l2 = (List.filter (fun a -> a.cell = (2,0,0) || a.cell = (1,1,0) || a.cell = (0,2,0)) grid_space) in
+      [l1;l2]
+    end
+  else if (c.cell = (0,0,2) || (c.cell = (2,2,2))) then [(List.filter (fun a -> a.cell = (0,0,2) || a.cell = (1,1,2) || a.cell = (2,2,2)) grid_space)]
+  else if (c.cell = (2,0,2) || c.cell = (0,2,2)) then [List.filter (fun a -> a.cell = (2,0,2) || a.cell = (1,1,2) || a.cell = (0,2,2)) grid_space]
+  else if (c.cell = (1,1,2)) then
+    begin
+      let l1 = (List.filter (fun a -> a.cell = (0,0,2) || a.cell = (1,1,2) || a.cell = (2,2,2)) grid_space) in
+      let l2 = (List.filter (fun a -> a.cell = (2,0,2) || a.cell = (1,1,2) || a.cell = (0,2,2)) grid_space) in
+      [l1;l2]
+    end
+  else []
+(*match c.cell with
+| 1,1,0 -> (List.filter (fun a -> a.cell = (0,0,0) || a.cell = (1,1,0) || a.cell = (2,2,0)) grid_space)::(List.filter
+                        (fun a -> a.cell = (2,0,0) || a.cell = (1,1,0) || a.cell = (0,2,0)) grid_space)
+| 1,1,2 -> (List.filter (fun a -> a.cell = (0,0,2) || a.cell = (1,1,2) || a.cell = (2,2,2)) grid_space)::(List.filter
+                        (fun a -> a.cell = (2,0,2) || a.cell = (1,1,2) || a.cell = (0,2,2)) grid_space)
 | x,0,z when (x=z) -> List.filter (fun a -> (a.cell |> fst')=(a.cell |> thd)) grid_space
 | 0,_,_ -> List.filter
           (fun a -> a.cell <> (0,0,1) && a.cell <> (1,0,0) && a.cell <> (2,0,1) && a.cell <> (1,0,2)) grid_space
 | x,1,z when (x=z) -> List.filter (fun a -> (a.cell |> fst')=(a.cell |> thd)) grid_space
 | 1,_,_ -> List.filter
               (fun a -> a.cell <> (0,0,1) && a.cell <> (1,1,0) && a.cell <> (1,1,2) && a.cell <> (2,1,1)) grid_space
-| x,2,z when (x=z) -> List.filter (fun a -> (a.cell |> fst')=(a.cell |> thd)) grid_space
+| x,2,z when (x=z) -> List.filter (fun a -> (a.cell |> fst')=(a.cell |> thd) && (a.cell |> snd' = 2)) grid_space
 | _ -> List.filter
-          (fun a -> a.cell <> (0,2,1) && a.cell <> (1,2,0) && a.cell <> (2,2,1) && a.cell <> (1,2,2)) grid_space
-
+         (fun a -> a.cell <> (0,2,1) && a.cell <> (1,2,0) && a.cell <> (2,2,1) && a.cell <> (1,2,2) && (a.cell |> thd = 0)) grid_space
+*)
 (*[diag_check c b] finds the respective diagonal and horizontal wins that cover
   all three levels of the grid_space that relate to cell [c]
 *)
 let diag_check c b =
   let diag_h = horizontal_3d_group c b in
   let diag_v = vertical_3d_groups c b in
-  let verdict_h =
-    (if diag_h <> [] then (List.for_all (fun x -> x.player = c.player) diag_h)
-     else false) in
-  let verdict_v = (List.for_all (fun x -> x.player = c.player) diag_v) in
+  let verdict_h = (match diag_h with
+    | [] -> false
+    | h::[] -> (List.for_all (fun x -> x.player = c.player) h)
+    | h1::h2::[] -> (List.for_all (fun x -> x.player = c.player) h1) || (List.for_all (fun x -> x.player = c.player) h2)
+    | _ -> false
+    ) in
+  let verdict_v = (match diag_v with
+      | [] -> false
+      | h::[] -> (List.for_all (fun x -> x.player = c.player) h)
+      | h1::h2::[] -> (List.for_all (fun x -> x.player = c.player) h1) || (List.for_all (fun x -> x.player = c.player) h2)
+      | _ -> false
+  ) in
+    (*(if diag_h <> [] then (List.for_all (fun x -> x.player = c.player) diag_h)
+      else false) in *)
+  (*let verdict_v = (List.for_all (fun x -> x.player = c.player) diag_v) in *)
   match (verdict_h, verdict_v) with
   | true, true -> WinH diag_h, WinV diag_v
   | true, false -> WinH diag_h, WinNone
@@ -231,16 +281,20 @@ let find_vertical_cells c b =
   [c] are taken by the same player that played [c] in [b]
 *)
 let col_check c b =
+  if (((c.cell|> thd) = 1) && ((c.cell |> snd') = 1)) then false else
+    begin
   let cell_1 = (find_vertical_cells c b) |> List.hd in
   let cell_2 = (find_vertical_cells c b) |> List.rev |> List.hd in
   (cell_1.player = c.player) && (cell_2.player = c.player)
-
+  end
+        (*
 let all_three_in_row_cells c b =
   let v = find_vertical_cells c b in
   let h = vertical_3d_groups c b in
   let h_3d = horizontal_3d_group c b in
   let plane_2d_inst = three_row_2d_cells c b in
   v::h::h_3d::plane_2d_inst
+*)
 
 let win_evaluation c b =
   let diag_check_truth =
@@ -268,10 +322,10 @@ let get_the_win c current_player b=
     | true  -> begin
         match diag_check c b with
         | WinNone, WinNone -> []
-        | WinH x, WinV y -> x@y
+        | WinH x, WinV y -> x @y
         | WinH x, WinNone -> x
         | WinNone, WinV y -> y
         | _, _ -> []
       end
-    | _ -> find_vertical_cells c b
+    | _ -> [c ::(find_vertical_cells c b)](*[[c] @ (find_vertical_cells c b)] *)
   else []

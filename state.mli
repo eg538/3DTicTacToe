@@ -1,8 +1,8 @@
 open Command
 open Grid_3d
 open Parse_init
-
-type state
+open Types
+(* type state *)
 
 (*[init_state string] is the initial state of the game
  * with information such as the level, number of players, etc.
@@ -37,7 +37,7 @@ val get_result: state -> player
  * is determined*)
 val get_result_message: state -> string
 
-(*[find_cell s coords] is the cells that is at the coordinates [coords]  in the board of the game 
+(*[find_cell s coords] is the cells that is at the coordinates [coords]  in the board of the game
  * when the it is in state [s]*)
 val find_cell: state -> (int * int * int) -> cell
 

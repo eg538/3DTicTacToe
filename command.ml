@@ -1,24 +1,24 @@
 exception InvalidCommand
-
-type command =
+open Types
+(* type command =
   |Play of string
-  |Score 
-  |Quit 
+  |Score
+  |Quit
   |Restart
   |Try of (int * int * int)
   |Place of (int * int * int)
-  |Hint 
+  |Hint
   |Look
   | CurrentPlayer
-  |Invalid
+  |Invalid *)
 
-let list_coords obj = try (String.split_on_char ',' obj 
-      |> List.map (fun a -> String.trim a) 
+let list_coords obj = try (String.split_on_char ',' obj
+      |> List.map (fun a -> String.trim a)
       |> List.map (fun a -> int_of_string a))
-  with 
+  with
   | _ -> raise InvalidCommand
 
-let list_to_tup lst = match lst with 
+let list_to_tup lst = match lst with
                       | a::b::c::[] -> (a, b, c)
                       | _ -> raise InvalidCommand
 
@@ -28,7 +28,7 @@ let parse str =
     else String.length st in
   let action = String.trim(String.sub st 0 space) in
   let obj = if space < String.length st then String.trim(String.sub st space ((String.length st) - space))
-  else "" 
+  else ""
   in
   match action with
   | "play" -> Play obj
