@@ -27,7 +27,7 @@ val start_choice: unit -> unit
 (* Takes in a unit and will return a string command similar to what the user was
    expected to write in when playing on the terminal. Will pass this string into play.
    Hopefully will be able to then just use play to play the game. *)
-val play_board : unit -> string
+val play_board : state -> string
 
 (* val play_heavyduty: int -> int -> state -> state *)
 

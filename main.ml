@@ -20,7 +20,12 @@ let string_of_player p = match p with
 let rec play st=
   print_endline "in play now";
   print_endline "Please enter command";
-  let com = Gui.play_board () in
+  let playerr = match (State.curr_player st ) with
+    | Caml -> "camel"
+    | Python -> "python"
+    | None -> "none"
+in print_endline playerr;
+  let com = Gui.play_board st in
   let command = parse com in
   let newSt = do' command st in
   if game_ended newSt then

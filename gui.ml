@@ -154,7 +154,7 @@ let init_welcome f =
 
   play_str
 
-let play_board () =
+let play_board st =
   let event_lst = [Graphics.Button_up] in
   let mouse_status = wait_next_event event_lst  in
   let x = mouse_status.mouse_x in
@@ -163,13 +163,20 @@ let play_board () =
   print_string "y is: "; print_int y; print_endline " ";
   print_endline " ";
 
-  (* if (x >= 331 && x <=426) && (y >= 649 && y <= 685 )
-  then (get_img )
-  then ((rect_drawn 520 130 82 44); "multi")
+  let now_player =
+  match (State.curr_player st) with
+  | Caml -> "caml"
+  | Python -> "python"
+  | None -> "" in
+  let file_name = "imgs/" ^ now_player ^ ".jpg" in
+  print_endline file_name;
 
-  then (draw_image (get_img "imgs/python.jpg") 378 666; plep) *)
+  if (x >= 331 && x <=426) && (y >= 649 && y <= 685 )
+  then (( draw_image (get_img file_name) 360 666); "place 0,0,0")
+  else "place 1,0,1"
 
-  "place 0,0,0"
+
+
 
 (* let play_test_two str =
   Main.play_game str Main.main;
