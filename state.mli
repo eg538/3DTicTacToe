@@ -46,6 +46,9 @@ val print_board: state -> unit
 (*[game_ended s] is whether the game specified by state [s] has terminated*)
 val game_ended: state -> bool
 
+(*[other_player ply] is the avatar of the opponent player of [ply]*)
+val other_player: player -> player
+
 (*[hint st] is the optimal move for the current player of [st] when game is
  * in state [st]*)
 val hint: state -> string

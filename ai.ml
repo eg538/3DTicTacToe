@@ -1,32 +1,42 @@
 open State
 open Grid_3d
 open Parse_init
-(* type valid_node = {board: cell list -> cell list -> cell list; mutable move: int*int*int} *)
 
-(*type 'a stream = Cons of 'a * (unit -> 'a stream)*)
-
-(* type nodeStream = Cons of int * (unit -> nodeStream) *)
-(* type node = {available: cell list; taken: cell list; hVal: int}
-type gsTree = Leaf of int * int * int | Node of node * (gsTree list) *)
 type tree = Leaf of int*int*int | Node of board * (tree list)
+(* type node = {available: cell list; taken: cell list; hVal: int} *)
+(* type gsTree = Leaf of int * int * int | Node of node * (gsTree list) *)
 
-let switch_plyr p = match p with
-  | Python -> Caml
-  | Caml -> Python
-  | None -> None
+let rec move_heur_fn_helper move clst plyr acc =
+  match clst with 
+  | [] -> acc
+  | h::t -> if cell_coords h <> cell_coords move then
+      begin
+      match player h with
+      | plyr -> move_heur_fn_helper move t plyr (acc + 2)
+      | None -> move_heur_fn_helper move t plyr (acc + 1)
+      | _ -> move_heur_fn_helper move t plyr (acc + 0)
+      end
+    else
+    move_heur_fn_helper move t acc plyr
 
-let rec move_heur_fn move b plyr = failwith "unimpl"
-  (*let threes = three_row_2d_cells move b
-              |> List.map (fun a -> List.filter (fun b -> b <> move) a) in
-  *)
+let rec move_heur_fn move b clstlst plyr acc = 
+  match clstlst with
+  | [] -> acc
+  | h::t -> let score = move_heur_fn_helper move h 0 plyr in
+    move_heur_fn move b t plyr (acc + score)
 
 let rec placement_helper f b remaining_cells plyr d acc =
   match remaining_cells with
   | [] -> acc
   | h::t -> let cpy = copy b in
-    place (cell_coords h) cpy plyr;
-    placement_helper f b t plyr d ((f cpy plyr d)::acc)
-
+    let all_threes = all_three_in_row_cells move b in
+    let score = move_heur_fn h b all_threes plyr 0 in
+    place (cells_coords h) cpy plyr;
+    if score >= 6 then
+      placement_helper f b t plyr d ((f cpy plyr d)::acc)
+    else
+      placement_helper f b t plyr d acc
+    
 let rec gt_gen_help b plyr d =
   (* print_string (asciiBoard b);
   print_endline "*****************"; *)
