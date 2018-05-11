@@ -2,11 +2,10 @@ B _build
 PKG oUnit
 PKG YOJSon
 PKG ANSITerminal
-<<<<<<< HEAD
-PKG YOJSon
-=======
 PKG Images
 PKG CAMLImages
 PKG Png
 PKG Jpeg
->>>>>>> gui_checking
+PKG core
+PKG async
+PKG COHttp.async
