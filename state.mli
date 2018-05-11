@@ -43,6 +43,9 @@ val find_cell: state -> (int * int * int) -> cell
 (*[print_board s] prints the board in state [s]*)
 val print_board: state -> unit
 
+(*[game_ended s] is whether the game specified by state [s] has terminated*)
+val game_ended: state -> bool
+
 (*[hint st] is the optimal move for the current player of [st] when game is
  * in state [st]*)
 val hint: state -> string
