@@ -60,7 +60,7 @@ val board: state -> board
 
 (*[avatars st] is the assignment of the avatars when game is in state in the form
  * [("player1", player1's avatar); ("player2", player2's avatar)*)
-val avatars: state -> (string * player) list
+val p1_avatar: state -> player
 
 (*[do' c st] is [st'] if executing command [c] in state [st] results
  * in [st']. The following describe the valid commands and the result

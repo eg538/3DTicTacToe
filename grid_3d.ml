@@ -287,14 +287,8 @@ let col_check c b =
   let cell_2 = (find_vertical_cells c b) |> List.rev |> List.hd in
   (cell_1.player = c.player) && (cell_2.player = c.player)
   end
-        (*
-let all_three_in_row_cells c b =
-  let v = find_vertical_cells c b in
-  let h = vertical_3d_groups c b in
-  let h_3d = horizontal_3d_group c b in
-  let plane_2d_inst = three_row_2d_cells c b in
-  v::h::h_3d::plane_2d_inst
-*)
+
+let player_at_cell c = c.player
 
 let win_evaluation c b =
   let diag_check_truth =
@@ -313,6 +307,13 @@ let cells_occupied b =
   let lst_cells = board_list_of_cells b in
   let whole_space = List.fold_left (fun a x -> x::a) [] lst_cells in
   List.filter (fun cell -> cell.player <> None) whole_space
+
+let all_three_in_row_cells c b =
+  let v = find_vertical_cells c b in
+  let h = vertical_3d_groups c b in
+  let h_3d = horizontal_3d_group c b in
+  let plane_2d_inst = three_row_2d_cells c b in
+  (v::h) @ h_3d @ plane_2d_inst
 
 let get_the_win c current_player b=
   if (win_evaluation c b) then

@@ -74,11 +74,7 @@ let hint s = failwith "Unimplemented"
 
 let board s = s.tttBoard
 
-let avatars s =
-  match s.p1_avatar with
-  | Caml -> [("player1", Caml); ("player2", Python)]
-  | Python -> [("player1", Python); ("player2", Caml)]
-  | None -> []
+let p1_avatar s = s.p1_avatar
 
 (*[inc_point st] increments the score of the current player of state [st]*)
 let inc_point st =
