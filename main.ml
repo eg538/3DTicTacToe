@@ -18,6 +18,7 @@ let string_of_player p = match p with
 
 (*[play st] is the helper function for play_game ()*)
 let rec play st=
+  print_endline "in play now";
   print_endline "Please enter command";
   let com = read_line () in
   let command = parse com in
@@ -80,7 +81,11 @@ let rec main () =
   Graphics.open_graph " 1000x750";
   Graphics.set_window_title "3D Tic-Tac-Toe";
   let str = Gui.init_welcome() in
-  play_game str main
+  (* Gui.play_test_two str; *)
+  play_game str main;
   (* play_game () *)
+  (* print_endline "abvoe gui.play_board()"; *)
+  (* Gui.play_board() *)
+  (print_endline "help";)
 
 let () = main ()

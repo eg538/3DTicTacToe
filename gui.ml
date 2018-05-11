@@ -3,6 +3,9 @@ open State
 open Camlimages
 open Images
 open Jpeg
+open Command
+open Types
+
 
 
 (* [round (x, y) transforms the floating point values of (x, y) into ints. ]*)
@@ -137,14 +140,7 @@ let init_welcome f =
 
   draw_image (get_img "imgs/group.jpg") 380 35;
 
-  (* let event_lst = [Graphics.Button_up] in
-  let mouse_status = wait_next_event event_lst  in
-  let x = mouse_status.mouse_x in
-  let y = mouse_status.mouse_y in
-  if (x >= 380 && x <=(242+380)) && (y>=35 && y<=(35+69)) then
-    (clear_graph(); draw_image (get_img "imgs/xxoo.jpg") 0 0;draw_image (get_img "imgs/TTTmain.jpg") 250 40;
-     draw_image(get_img "imgs/hint.jpg") 800 555; draw_image(get_img "imgs/try.jpg") 134 555;)
-     else level_choice(); *)
+
 
   let level = level_choice() in
 
@@ -158,8 +154,15 @@ let init_welcome f =
 
   play_str
 
+(* let play_test_two str =
+  Main.play_game str Main.main;
+  print_endline "in play_board";
+  let event_lst = [Graphics.Button_up] in
+  let mouse_status = wait_next_event event_lst  in
+  let x = mouse_status.mouse_x in
+  let y = mouse_status.mouse_y in
 
-
+  if (x >= 150 && x <=(60+150) && (y>=400 && y<=(400 + 69))) then draw_rect 150 400 60 69; *)
 
 
      (*
@@ -197,30 +200,3 @@ let init_welcome f =
 
            (* nothing was hit *)
            else reaction; *)
-
-
-
-
-  (* a;lsdkf
-  (* easy button pressed *)
-  react 310 260 107 44;
-
-  (* medium button pressed *)
-  react 450 260 119 43;
-
-  (*hard button pressed *)
-  react 600 260 81 43;
-
-  (* normal button pressed *)
-  react 380 200 109 43;
-
-  (* krazy button pressed *)
-  react 520 200 93 44;
-
-  (* single button pressed *)
-  react 395 130 93 44;
-
-  (* multi button pressed *)
-  react 520 130 82 44;
-
-;lsdkf *)

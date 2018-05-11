@@ -1,6 +1,7 @@
 open Graphics
 open State
 open Camlimages
+open Types
 
 type choices
 
@@ -21,3 +22,16 @@ val num_player : unit -> string
 
 (* Will bring the player to the play screen when press start *)
 val start_choice: unit -> unit
+
+(* Handles the actual game play
+   the first int is pos_x, second is pos_y, a string command (e.g: place x,y,z) will be produced and passed into Command.parse and
+   the resulting command will be passed into do' which will return a state. In the midst of this, drawings will
+   be made
+*)
+(* val play_heavyduty: int -> int -> state -> state *)
+
+(* string is the starting string to produce the game. unit-> unit is main.
+   the last unit is what drawing the gui returns*)
+(* val play_board: string -> (unit-> unit)  -> unit *)
+
+(* val play_test_two: string -> unit *)
