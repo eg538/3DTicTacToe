@@ -23,11 +23,12 @@ val num_player : unit -> string
 (* Will bring the player to the play screen when press start *)
 val start_choice: unit -> unit
 
-(* Handles the actual game play
-   the first int is pos_x, second is pos_y, a string command (e.g: place x,y,z) will be produced and passed into Command.parse and
-   the resulting command will be passed into do' which will return a state. In the midst of this, drawings will
-   be made
-*)
+
+(* Takes in a unit and will return a string command similar to what the user was
+   expected to write in when playing on the terminal. Will pass this string into play.
+   Hopefully will be able to then just use play to play the game. *)
+val play_board : unit -> string
+
 (* val play_heavyduty: int -> int -> state -> state *)
 
 (* string is the starting string to produce the game. unit-> unit is main.

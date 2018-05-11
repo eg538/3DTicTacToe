@@ -154,6 +154,23 @@ let init_welcome f =
 
   play_str
 
+let play_board () =
+  let event_lst = [Graphics.Button_up] in
+  let mouse_status = wait_next_event event_lst  in
+  let x = mouse_status.mouse_x in
+  let y = mouse_status.mouse_y in
+  print_string "x is: "; print_int x; print_endline " ";
+  print_string "y is: "; print_int y; print_endline " ";
+  print_endline " ";
+
+  (* if (x >= 331 && x <=426) && (y >= 649 && y <= 685 )
+  then (get_img )
+  then ((rect_drawn 520 130 82 44); "multi")
+
+  then (draw_image (get_img "imgs/python.jpg") 378 666; plep) *)
+
+  "place 0,0,0"
+
 (* let play_test_two str =
   Main.play_game str Main.main;
   print_endline "in play_board";
