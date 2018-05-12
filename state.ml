@@ -29,6 +29,12 @@ let init_state str =
     game_end = false
   }
 
+let game_mode s = s.mode
+
+let game_num_plyrs s = s.num_players
+
+let game_level s = s.level
+
 let p1_score s = s.curr_score_1
 
 let p2_score s = s.curr_score_2
@@ -111,7 +117,7 @@ let rec search st diag_cells_in_q diags_cell_list_only = (*let diags_cell_list_o
     | h::t -> (check diag_cells_in_question h) || (search st diag_cells_in_question t) *)
 
 let accumulate_diag_wins diag_list st = (*cell list list *)
-  print_endline "adding on a diag 3 level win";
+  (* print_endline "adding on a diag 3 level win"; *)
   let s = extract_cells_from_st st st.diagonals in (*(int int int) list list *)
   match (diag_list: cell list list) with
   | [] -> st
@@ -217,6 +223,7 @@ let do' c st =
     else
       {st with p2_num_tries = if st.p2_num_tries > 0 then st.p2_num_tries - 1 else 0}
   | Place (pl, row, col) ->
+    (* print_endline ("Move made: "^(string_of_int pl)^", "^(string_of_int row)^", "^(string_of_int col)); *)
     begin
       try(
         play_move st (pl, row, col) |> switch_players |> check_game_end

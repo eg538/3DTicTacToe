@@ -9,6 +9,15 @@ open Types
  *)
 val init_state: string -> state
 
+(*[game_mode st] is the mode of the game specified by [st]*)
+val game_mode: state -> mode
+
+(*[game_num_plyrs st] is the number of players in the game specified by [st]*)
+val game_num_plyrs: state -> num_players
+
+(*[game_level st] is the level of the game specified by [st]*)
+val game_level: state -> level
+
 (*[p1score st] is player 1's score when the game is in state [st].
  * Player 1 is the human player*)
 val p1_score: state -> int
