@@ -7,6 +7,8 @@ open Command
 open Types
 
 
+(* make the black colored backround color *)
+let bblack = rgb 20 20 20
 
 (* [round (x, y) transforms the floating point values of (x, y) into ints. ]*)
 let round (x, y) = int_of_float x, int_of_float y
@@ -51,7 +53,7 @@ let array_of_image img =
 let get_img img =
   Jpeg.load img [] |> array_of_image |> make_image
 
- let rect_drawn x y width height =
+let rect_drawn x y width height =
   (set_color magenta;
     set_line_width 9;
    draw_rect x y width height;)
@@ -60,6 +62,18 @@ let rect_drawn_white x y width height =
   (set_color white;
    set_line_width 9;
    draw_rect x y width height;)
+
+let rect_drawn_cyan x y width height =
+  (set_color cyan;
+   set_line_width 9;
+   draw_rect x y width height;)
+
+let rect_drawn_bblack x y width height =
+  (set_color bblack;
+  set_line_width 9;
+  draw_rect x y width height;)
+
+
 
 type choices = {mode : string; level : string; num_p: string; }
 
@@ -72,7 +86,7 @@ let get_coordinates_choices c =
   else if c = "single" then rect_drawn_white 395 130 93 44
   else if c = "multi" then rect_drawn_white 520 130 82 44
   else ()
-    
+
 let rec get_choices ch =
 let event_lst = [Graphics.Button_up] in
 let mouse_status = wait_next_event event_lst  in
@@ -204,11 +218,8 @@ let repeat_cell x y =
 
 let responsive_board str x y =
   let file_name = "imgs/" ^ str ^ ".jpg" in
-  print_endline file_name;
   (draw_image (get_img file_name ) x y;)
 
 let highlight_curr_player str =
-  
-  print_endline "adjfls;";
-  if str = "caml" then (rect_drawn 331 145 40 40;)
-  else (rect_drawn 596 150 50 50;)
+  if str = "python" then (rect_drawn_bblack 596 150 64 60; rect_drawn_cyan 334 145 62 65;)
+  else (rect_drawn_bblack 334 145 62 65; rect_drawn_cyan 596 150 64 60;)

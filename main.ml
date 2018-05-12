@@ -18,17 +18,14 @@ let string_of_player p = match p with
 
 (*[play st] is the helper function for play_game ()*)
 let rec play st=
-  print_endline "in play now";
   print_endline "Please enter command";
   let playerr = match (State.curr_player st ) with
     | Caml -> "caml"
     | Python -> "python"
     | None -> "none"
   in print_endline playerr;
-  let test = Gui.play_board () in
-  print_endline "should highlight player";
   Gui.highlight_curr_player playerr;
-  print_endline "highlighted player";
+  let test = Gui.play_board () in
   let com = fst test in
   let command = parse com in
   let newSt = do' command st in
@@ -52,7 +49,6 @@ let rec play st=
         print_int ex;
         print_int why;
         (Gui.repeat_cell ex why;
-         print_endline "here";
         (print_endline "Action impossible. Please try a different move.";
          play newSt);)
       else
@@ -61,7 +57,6 @@ let rec play st=
       let y = snd test |> snd in
       Gui.cover_up ();
         Gui.responsive_board playerr x y ;
-        print_endline "there";
         print_endline ("Score of player 1: "^(string_of_int (p1_score newSt))^"\n"^"Score of player 2: "^(string_of_int (p2_score newSt)));
         play newSt
     | Hint -> failwith "Unimplemented"
