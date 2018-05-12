@@ -43,7 +43,10 @@ val repeat_cell : int -> int -> unit
 (* Draws a rectangle around the image of the current player *)
 val highlight_curr_player: string -> unit
 
-    (* D*)
+(* Draws the current score for each player. The first int is player1's score and
+   the second int is player 2's score
+*)
+val score : int -> int -> unit
 
 (* Displays the win/lose/draw message *)
 val winner_winner_chicken_dinner: string -> unit

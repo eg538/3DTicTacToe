@@ -10,6 +10,9 @@ open Types
 (* make the black colored backround color *)
 let bblack = rgb 32 32 32
 
+(* make the color for score text *)
+let score_color = rgb 0 255 205
+
 (* [round (x, y) transforms the floating point values of (x, y) into ints. ]*)
 let round (x, y) = int_of_float x, int_of_float y
 
@@ -120,7 +123,7 @@ let rec start_game ch =
   let y = mouse_status.mouse_y in
   if(x >= 380 && x <=(242+380)) && (y>=35 && y<=(35+69)) then(
     let play_str = "play " ^ ch.num_p ^ " " ^ "python " ^ ch.level ^ " " ^ ch.mode in
-    rect_drawn x y 90 90; clear_graph(); draw_image (get_img "imgs/xxoo.jpg") 0 0;draw_image (get_img "imgs/TTTmain.jpg") 250 40;
+    rect_drawn x y 90 90; clear_graph(); draw_image (get_img "imgs/xxoo.jpg") 0 0;draw_image (get_img "imgs/TTT.jpg") 250 40;
     draw_image(get_img "imgs/hint.jpg") 800 555; draw_image(get_img "imgs/try.jpg") 134 555;
     play_str) else (
     let event_lst = [Graphics.Button_up] in
@@ -169,6 +172,19 @@ let init_welcome () =
 let cover_up () =
   (draw_image (get_img "imgs/coverup.jpg")236 3;)
 
+let score p1 p2 =
+  draw_image (get_img "imgs/eraser.jpg") 330 42;
+  draw_image (get_img "imgs/eraser.jpg") 590 42;
+  print_endline "in score";
+  let juan = string_of_int p1 in
+  moveto 352 72;
+  set_color white;
+  Graphics.set_font "-*-fixed-medium-r-semicondensed--55-*-*-*-*-*-iso8859-1";
+  draw_string juan;
+  let tiu = string_of_int p2 in
+  moveto 617 72;
+  (draw_string tiu;)
+
 let play_board () =
   let event_lst = [Graphics.Button_up] in
   let mouse_status = wait_next_event event_lst  in
@@ -211,6 +227,8 @@ let play_board () =
   else ("place 1,1,1", (1,1))
 
 
+
+
 let repeat_cell x y =
   if x = 0 && y = 0 then (draw_image (get_img "imgs/no_x.jpg") 236 3;)
   else if x = 1 && y = 1 then (draw_image (get_img "imgs/stay.jpg") 236 3;)
@@ -220,6 +238,8 @@ let repeat_cell x y =
 let responsive_board str x y =
   let file_name = "imgs/" ^ str ^ ".jpg" in
   (draw_image (get_img file_name ) x y;)
+
+
 
 let highlight_curr_player str =
   if str = "python" then (rect_drawn_bblack 596 150 64 60; rect_drawn_cyan 334 145 62 65;)

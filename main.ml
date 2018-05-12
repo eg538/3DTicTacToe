@@ -31,12 +31,9 @@ let rec play st=
     let win_msg_and_stuff = get_result_message st in
     let win_msg = snd win_msg_and_stuff in
     print_endline win_msg;
-    print_endline "herhe";
-    (* raise GameEnd; *)
     print_endline (fst win_msg_and_stuff);
     (Gui.winner_winner_chicken_dinner (fst win_msg_and_stuff));
     ended ()
-    (* command = End *)
   else
   (print_endline "Please enter command";
   let playerr = match (State.curr_player st ) with
@@ -76,6 +73,9 @@ let rec play st=
       print_int x;
       print_int y;
       Gui.responsive_board playerr x y ;
+      let player1_score = p1_score newSt in
+      let player2_score = p2_score newSt in
+      Gui.score player1_score player2_score ;
       print_endline ("Score of player 1: "^(string_of_int (p1_score newSt))^"\n"^"Score of player 2: "^(string_of_int (p2_score newSt)));
     play newSt))
   | Hint -> (failwith "Unimplemented")
