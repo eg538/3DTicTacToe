@@ -30,7 +30,9 @@ let rec play st=
   let command = parse com in
   let newSt = do' command st in
   if game_ended newSt then
-    print_endline (get_result_message newSt)
+    let win_msg = get_result_message newSt in
+    print_endline win_msg;
+    (* print_endline (get_result_message newSt) *)
   else
   (*Remember to check for win*)
     match command with
@@ -56,6 +58,8 @@ let rec play st=
       let x = snd test |> fst in
       let y = snd test |> snd in
       Gui.cover_up ();
+      print_int x;
+      print_int y;
         Gui.responsive_board playerr x y ;
         print_endline ("Score of player 1: "^(string_of_int (p1_score newSt))^"\n"^"Score of player 2: "^(string_of_int (p2_score newSt)));
         play newSt

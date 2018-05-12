@@ -188,7 +188,7 @@ let play_board () =
   else if (x >= 418 && x <= 576) && (y >= 540 && y <= 590) then ("place 0,2,1", (475, 555))
   else if (x >= 583 && x <= 760) && (y >= 540 && y <= 590) then ("place 0,2,2", (645, 555))
 
-  else if (x >= 319 && x <= 428) && (y >= 494 && y <= 526) then ("place 1,0,0", (350, 492))
+  else if (x >= 319 && x <= 428) && (y >= 480 && y <= 520) then (print_endline "why is this not woring "; print_int (current_x ());"place 1,0,0", (350, 492))
   else if (x >= 439 && x <= 575) && (y >= 496 && y <= 524) then ("place 1,0,1", (475, 492))
   else if (x >= 577 && x <= 670) && (y >= 493 && y <= 528) then ("place 1,0,2", (605, 492))
   else if (x >= 300 && x <= 414) && (y >= 437 && y <= 489) then ("place 1,1,0", (340, 440))
@@ -217,6 +217,9 @@ let repeat_cell x y =
 
 
 let responsive_board str x y =
+  print_string "ex is: "; print_int x;
+  print_endline " ";
+  print_string "why is: "; print_int y;
   let file_name = "imgs/" ^ str ^ ".jpg" in
   (draw_image (get_img file_name ) x y;)
 
