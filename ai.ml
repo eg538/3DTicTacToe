@@ -74,12 +74,12 @@ let rec gt_gen_help b rem_cells mv scr plyr d s_thresh=
   let nd = {move = mv; available = rem_cells; taken = occupied_cells; h_score = scr} in
   if d <> 0 then
     let p = other_player plyr in 
-    Node (nd, placement_helper gt_gen_help b rem_cells (other_player p) (d - 1) [] s_thresh)
+    Node (nd, placement_helper gt_gen_help b rem_cells p (d - 1) [] s_thresh)
   else
     Node (nd, [Leaf])
 
 let game_tree_generate st d s_thresh = let b = board st in
-  let p = curr_player st in
+  let p = other_player (curr_player st) in
     gt_gen_help b (cells_left b) (-1, -1, -1) (min_int) p d s_thresh
 
 let rec tree_size t accum = 
@@ -224,4 +224,8 @@ let hard_ai_move st =
   else
     Place try_find
 
-let player_hint st plyr = failwith "Unimplemented"
+let player_hint st = let lvl = game_level st in
+  match lvl with
+  | Easy -> hard_ai_move st 
+  | Medium -> medium_ai_move st
+  | Hard -> medium_ai_move st
