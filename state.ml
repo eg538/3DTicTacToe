@@ -143,7 +143,8 @@ let accumulate_diag_wins diag_list st = (*cell list list *)
  * creates a three-in-a-row for the player that made the move*)
 let play_move st (pl, row, col) =
   make_move st (pl, row, col);
-  (*print_board st;*)
+  (* print_endline ((string_of_int pl)^", "^(string_of_int row)^", "^(string_of_int col)); *)
+  (* print_board st; *)
   if win_evaluation (find_cell st (pl, row, col)) st.tttBoard then
     (* updating st (pl, row, col) *)
     begin
@@ -170,7 +171,7 @@ let play_move st (pl, row, col) =
           if (st'.diagonals = st.diagonals) then st else inc_point st
         end
       | _ -> st
-       end
+      end
   else
     st
 
@@ -225,19 +226,10 @@ let do' c st =
     else
       {st with p2_num_tries = if st.p2_num_tries > 0 then st.p2_num_tries - 1 else 0}
   | Place (pl, row, col) ->
-    (* print_endline ("Move made: "^(string_of_int pl)^", "^(string_of_int row)^", "^(string_of_int col)); *)
+    (* print_endline ("Move made: "^(string_o22f_int pl)^", "^(string_of_int row)^", "^(string_of_int col)); *)
     begin
       try(
-<<<<<<< HEAD
         play_move st (pl, row, col) |> switch_players |> check_game_end
-=======
-<<<<<<< HEAD
-        play_move st (pl, row, col) |> switch_players;
-        (*if (mode<>"normal") then krazy_mode_bomb c st.tttBoard else ();*)
-=======
-        play_move st (pl, row, col) |> switch_players |> check_game_end
->>>>>>> ai
->>>>>>> krazy_mode
       )with
       | _ -> st
     end
