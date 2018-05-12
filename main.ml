@@ -9,7 +9,6 @@ open Gui
 
 exception Terminated
 exception Restart
-exception GameEnd
 
 (*[string_of_player p] is the string representation of [p]*)
 let string_of_player p = match p with
@@ -17,14 +16,14 @@ let string_of_player p = match p with
   | Caml -> "Caml"
   | None -> "None"
 
-              (* if game_ended newSt then
-                (
-                  let win_msg = get_result_message newSt in
-                  print_endline win_msg;
-                  play newSt
-                )
-                (*raise GameEnd*)
-              else *)
+let rec ended () =
+  let grab_GUI = Gui.play_board () in
+  let com = fst grab_GUI in
+  let command = parse com in
+  match command with
+  | Quit -> print_endline "You have chosen to quit game"
+  | Restart -> raise Restart
+  | _ -> ended ()
 
 (*[play st] is the helper function for play_game ()*)
 let rec play st=
@@ -36,6 +35,7 @@ let rec play st=
     (* raise GameEnd; *)
     print_endline (fst win_msg_and_stuff);
     (Gui.winner_winner_chicken_dinner (fst win_msg_and_stuff));
+    ended ()
     (* command = End *)
   else
   (print_endline "Please enter command";
@@ -49,17 +49,6 @@ let rec play st=
   let com = fst test in
   let command = parse com in
   let newSt = do' command st in
-  if game_ended newSt then
-    let win_msg_and_stuff = get_result_message newSt in
-    let win_msg = snd win_msg_and_stuff in
-    print_endline win_msg;
-    print_endline "herhe";
-    (* raise GameEnd; *)
-    print_endline (fst win_msg_and_stuff);
-    (Gui.winner_winner_chicken_dinner (fst win_msg_and_stuff));
-    (* command = End *)
-
-  else
   (*Remember to check for win*)
   match command with
   | Play str -> (print_endline "A game is currently is session. Please quit first.";
@@ -114,7 +103,6 @@ try (
     | Terminated -> print_endline "Bye!"
     | Restart -> (print_endline "You have chosen to restart this game";
                   f ())
-    | GameEnd -> print_endline "Game End"
     | _ -> print_endline "Error"
     end
   | _ -> print_endline "Invalid command. No ongoing game."
