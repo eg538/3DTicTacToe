@@ -119,7 +119,7 @@ let start_choice () =
 
 
 
-let init_welcome f =
+let init_welcome () =
   draw_image (get_img "imgs/background_crop.jpeg") 0 0;
 
   draw_image (get_img "imgs/wilkommen-logo.jpg") 270 330;
@@ -163,18 +163,36 @@ let play_board st =
   print_string "y is: "; print_int y; print_endline " ";
   print_endline " ";
 
-  let now_player =
+  (* let now_player =
   match (State.curr_player st) with
   | Caml -> "caml"
   | Python -> "python"
   | None -> "" in
   let file_name = "imgs/" ^ now_player ^ ".jpg" in
+  print_endline file_name; *)
+
+  if (x >= 331 && x <=426) && (y >= 649 && y <= 685 ) then ("place 0,0,0", (360, 666))
+  else if (x >= 438 && x <= 575) && (y >= 653 && y <= 685 ) then ("place 0,0,1", (475, 666))
+  else if (x >= 580 && x <= 696) && (y >= 651 && y <= 684) then ("place 0,0,2", (605, 666))
+  else if (x >= 296 && x <= 414) && (y >= 596 && y <= 645) then ("place 0,1,0", (340, 610))
+  else if (x >= 422 && x <= 574) && (y >= 597 && y <= 644) then ("place 0,1,1", (475, 610))
+  else if (x >= 585 && x <= 697) && (y >= 597 && y <= 645) then ("place 0,1,2", (625, 610))
+  else if (x >= 251 && x <= 401) && (y >= 541 && y <= 590) then (rect_drawn 251 541 150 49; "place 0,2,0", (320, 550))
+  else if (x >= 418 && x <= 576) && (y >= 540 && y <= 590) then ("place 0,2,1", (475, 555))
+  else if (x >= 583 && x <= 760) && (y >= 540 && y <= 590) then ("place 0,2,2", (645, 555))
+
+  else if (x >= 317 && x <= 428) && (y >= 494 && y <= 526) then (rect_drawn 317 494 111 32; "place 1,0,0", (390, 510))
+
+  else ("place 1,1,1", (0,0))
+
+let repeat_cell () =
+  (draw_image (get_img "imgs/msg2.jpg") 236 3;)
+
+
+let responsive_board str x y =
+  let file_name = "imgs/" ^ str ^ ".jpg" in
   print_endline file_name;
-
-  if (x >= 331 && x <=426) && (y >= 649 && y <= 685 )
-  then (( draw_image (get_img file_name) 360 666); "place 0,0,0")
-  else "place 1,0,1"
-
+  (draw_image (get_img file_name ) x y;)
 
 
 

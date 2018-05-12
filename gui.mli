@@ -24,10 +24,14 @@ val num_player : unit -> string
 val start_choice: unit -> unit
 
 
-(* Takes in a unit and will return a string command similar to what the user was
-   expected to write in when playing on the terminal. Will pass this string into play.
-   Hopefully will be able to then just use play to play the game. *)
-val play_board : state -> string
+
+val play_board : state -> string * (int * int)
+
+val responsive_board: string -> int -> int->  unit
+
+(* Takes care of the case when two players want to place their marker in the same cell.
+   An error message will appear *)
+val repeat_cell : unit -> unit
 
 (* val play_heavyduty: int -> int -> state -> state *)
 

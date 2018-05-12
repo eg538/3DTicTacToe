@@ -21,11 +21,12 @@ let rec play st=
   print_endline "in play now";
   print_endline "Please enter command";
   let playerr = match (State.curr_player st ) with
-    | Caml -> "camel"
+    | Caml -> "caml"
     | Python -> "python"
     | None -> "none"
-in print_endline playerr;
-  let com = Gui.play_board st in
+  in print_endline playerr;
+  let test = Gui.play_board st in
+  let com = fst test in
   let command = parse com in
   let newSt = do' command st in
   if game_ended newSt then
@@ -42,11 +43,18 @@ in print_endline playerr;
     | Restart -> raise Restart
     | Try (pl, x, y) -> failwith "Unimplemented"
     | Place (pl, x, y) ->
-        if newSt = st then
-          print_endline "Action impossible. Please try a different move."
-        else
-          print_board newSt;
-          print_endline ("Score of player 1: "^(string_of_int (p1_score newSt))^"\n"^"Score of player 2: "^(string_of_int (p2_score newSt)));
+      if newSt = st then
+        (Gui.repeat_cell ();
+         print_endline "here";
+        (print_endline "Action impossible. Please try a different move.";
+         play newSt);)
+      else
+        print_board newSt;
+      let x = snd test |> fst in
+      let y = snd test |> snd in
+        Gui.responsive_board playerr x y ;
+        print_endline "there";
+        print_endline ("Score of player 1: "^(string_of_int (p1_score newSt))^"\n"^"Score of player 2: "^(string_of_int (p2_score newSt)));
         play newSt
     | Hint -> failwith "Unimplemented"
     | Look -> print_board st; play newSt
@@ -82,15 +90,10 @@ try (
 let rec main () =
   ANSITerminal.(print_string [red]
                   "\n\nWelcome to 3D Tic Tac Toe.\n");
-  (* print_int([|[|black|];[|black|]|] |> Array.length); *)
   Graphics.open_graph " 1000x750";
   Graphics.set_window_title "3D Tic-Tac-Toe";
   let str = Gui.init_welcome() in
-  (* Gui.play_test_two str; *)
   play_game str main;
-  (* play_game () *)
-  (* print_endline "abvoe gui.play_board()"; *)
-  (* Gui.play_board() *)
   (print_endline "help";)
 
 let () = main ()
