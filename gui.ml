@@ -210,6 +210,7 @@ let play_board () =
 
   else ("place 1,1,1", (1,1))
 
+
 let repeat_cell x y =
   if x = 0 && y = 0 then (draw_image (get_img "imgs/no_x.jpg") 236 3;)
   else if x = 1 && y = 1 then (draw_image (get_img "imgs/stay.jpg") 236 3;)
@@ -217,9 +218,6 @@ let repeat_cell x y =
 
 
 let responsive_board str x y =
-  print_string "ex is: "; print_int x;
-  print_endline " ";
-  print_string "why is: "; print_int y;
   let file_name = "imgs/" ^ str ^ ".jpg" in
   (draw_image (get_img file_name ) x y;)
 

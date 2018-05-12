@@ -81,11 +81,11 @@ let rec play st=
        play newSt;)
     else
       (  print_board newSt;
-    let x = snd test |> fst in
-    let y = snd test |> snd in
-    Gui.cover_up ();
-    print_int x;
-    print_int y;
+      let x = snd test |> fst in
+      let y = snd test |> snd in
+      Gui.cover_up ();
+      print_int x;
+      print_int y;
       Gui.responsive_board playerr x y ;
       print_endline ("Score of player 1: "^(string_of_int (p1_score newSt))^"\n"^"Score of player 2: "^(string_of_int (p2_score newSt)));
     play newSt))
