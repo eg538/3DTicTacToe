@@ -12,7 +12,6 @@ let num_helper lvl =
 let init_state str =
   let i = parse_init str in
   {
-    result = None;
     tttBoard = copy empty_board;
     current_player = Python;
     curr_score_1 = 0;
@@ -25,8 +24,16 @@ let init_state str =
     p1_num_tries = num_helper (level i);
     p2_num_hints = num_helper (level i);
     p2_num_tries = num_helper (level i);
-    diagonals = []
+    diagonals = [];
+    winner = None;
+    game_end = false
   }
+
+let game_mode s = s.mode
+
+let game_num_plyrs s = s.num_players
+
+let game_level s = s.level
 
 let p1_score s = s.curr_score_1
 
@@ -44,19 +51,19 @@ let num_tries s = let check = s.p1_avatar in
   | check -> s.p1_num_tries
   | _ -> s.p2_num_tries
 
-let get_result s = s.result
+let get_result s = s.winner
 
 let get_result_message s =
   match s.num_players with
-  | Single -> begin
-    match s.result with
+  | Multi -> begin
+    match s.winner with
     | Caml -> "Caml wins!"
     | Python -> "Python wins!"
-    | None -> "No one won"
-  end
-  | Multi -> if s.result = s.p1_avatar then
+    | None -> "Draw! No one won"
+    end
+  | Single -> if s.winner = s.p1_avatar then
               "Congratulations! You won the Java cup!"
-            else if s.result <> None then
+            else if s.winner <> None then
               "Sad! You didn't win the Java cup, but try again next time for that steaming mug of Java!"
             else
               "Oh no! You were close to winning the Java cup!"
@@ -73,15 +80,10 @@ let hint s = failwith "Unimplemented"
 
 let board s = s.tttBoard
 
-let avatars s =
-  match s.p1_avatar with
-  | Caml -> [("player1", Caml); ("player2", Python)]
-  | Python -> [("player1", Python); ("player2", Caml)]
-  | None -> []
+let p1_avatar s = s.p1_avatar
 
 (*[inc_point st] increments the score of the current player of state [st]*)
 let inc_point st =
-  print_endline "win!";
   if (st.p1_avatar = Python && st.current_player = Python) || (st.p1_avatar = Caml && st.current_player = Caml) then
     {st with curr_score_1 = st.curr_score_1 + 1}
   else
@@ -115,7 +117,7 @@ let rec search st diag_cells_in_q diags_cell_list_only = (*let diags_cell_list_o
     | h::t -> (check diag_cells_in_question h) || (search st diag_cells_in_question t) *)
 
 let accumulate_diag_wins diag_list st = (*cell list list *)
-  print_endline "adding on a diag 3 level win";
+  (* print_endline "adding on a diag 3 level win"; *)
   let s = extract_cells_from_st st st.diagonals in (*(int int int) list list *)
   match (diag_list: cell list list) with
   | [] -> st
@@ -140,7 +142,10 @@ let accumulate_diag_wins diag_list st = (*cell list list *)
  * creates a three-in-a-row for the player that made the move*)
 let play_move st (pl, row, col) =
   make_move st (pl, row, col);
+<<<<<<< HEAD
   print_board st;
+=======
+>>>>>>> ai
   if win_evaluation (find_cell st (pl, row, col)) st.tttBoard then
     (* updating st (pl, row, col) *)
     begin
@@ -171,11 +176,30 @@ let play_move st (pl, row, col) =
   else
     st
 
+let other_player ply = 
+  match ply with
+  | Python -> Caml
+  | Caml -> Python
+  | None -> None
+
 (*[switch_players st] returns the opponent of the current player of state [st]*)
 let switch_players st = let _p1_av = st.p1_avatar in
 match st.current_player with
 | Python -> {st with current_player = Caml}
 | _ -> {st with current_player = Python}
+
+let check_game_end st = 
+  if cells_left st.tttBoard = [] then 
+    if st.curr_score_1 > st.curr_score_2 then
+      {st with winner = st.p1_avatar; game_end = true}
+    else if st.curr_score_2 > st.curr_score_1 then
+      {st with winner = other_player st.p1_avatar; game_end = true}
+    else
+      {st with game_end = true}
+  else
+    st
+
+let game_ended st = st.game_end
 
          (*
 let empty_diags =
@@ -203,10 +227,15 @@ let do' c st =
     else
       {st with p2_num_tries = if st.p2_num_tries > 0 then st.p2_num_tries - 1 else 0}
   | Place (pl, row, col) ->
+    (* print_endline ("Move made: "^(string_of_int pl)^", "^(string_of_int row)^", "^(string_of_int col)); *)
     begin
       try(
+<<<<<<< HEAD
         play_move st (pl, row, col) |> switch_players;
         (*if (mode<>"normal") then krazy_mode_bomb c st.tttBoard else ();*)
+=======
+        play_move st (pl, row, col) |> switch_players |> check_game_end
+>>>>>>> ai
       )with
       | _ -> st
     end

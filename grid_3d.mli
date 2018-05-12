@@ -61,15 +61,14 @@ val cells_left: board -> cell list
 
 val cells_occupied: board -> cell list
 
-(*[three_row_2d_cells c lst_of_cells] is the list of lists of cells
- *that create a three in a row with [c] in [lst_of_cells]*)
-(*val all_three_in_row_cells: cell -> board -> cell list list*)
-
 (*[get_the_win c current_player b] returns the cells that are of a newly
   found three-in-a-row instance including [c]
 *)
-
 val get_the_win: cell -> player -> board -> cell list list
+
+(*[three_row_2d_cells c lst_of_cells] is the list of lists of cells 
+ *that create a three in a row with [c] in [lst_of_cells]*)
+ val all_three_in_row_cells: cell -> board -> cell list list
 
 val diag_check: cell -> board -> (winType3D * winType3D)
 
