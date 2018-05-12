@@ -40,7 +40,8 @@ let num_hints s =
   | p1_avatar -> s.p1_num_hints
   | _ -> s.p2_num_hints
 
-let num_tries s = let check = s.p1_avatar in
+let num_tries s =
+  let check = s.p1_avatar in
   match s.current_player with
   | check -> s.p1_num_tries
   | _ -> s.p2_num_tries
