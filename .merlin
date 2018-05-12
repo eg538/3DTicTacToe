@@ -2,7 +2,6 @@ B _build
 PKG oUnit
 PKG YOJSon
 PKG ANSITerminal
-PKG YOJSon
 PKG Images
 PKG CAMLImages
 PKG Png

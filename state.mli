@@ -9,6 +9,15 @@ open Types
  *)
 val init_state: string -> state
 
+(*[game_mode st] is the mode of the game specified by [st]*)
+val game_mode: state -> mode
+
+(*[game_num_plyrs st] is the number of players in the game specified by [st]*)
+val game_num_plyrs: state -> num_players
+
+(*[game_level st] is the level of the game specified by [st]*)
+val game_level: state -> level
+
 (*[p1score st] is player 1's score when the game is in state [st].
  * Player 1 is the human player*)
 val p1_score: state -> int
@@ -46,6 +55,9 @@ val print_board: state -> unit
 (*[game_ended s] is whether the game specified by state [s] has terminated*)
 val game_ended: state -> bool
 
+(*[other_player ply] is the avatar of the opponent player of [ply]*)
+val other_player: player -> player
+
 (*[hint st] is the optimal move for the current player of [st] when game is
  * in state [st]*)
 val hint: state -> string
@@ -57,7 +69,7 @@ val board: state -> board
 
 (*[avatars st] is the assignment of the avatars when game is in state in the form
  * [("player1", player1's avatar); ("player2", player2's avatar)*)
-val avatars: state -> (string * player) list
+val p1_avatar: state -> player
 
 (*[do' c st] is [st'] if executing command [c] in state [st] results
  * in [st']. The following describe the valid commands and the result

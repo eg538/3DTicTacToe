@@ -3,6 +3,7 @@
 open Types
 open Command
 open State
+open Ai
 open Parse_init
 open ANSITerminal
 open Gui
@@ -16,6 +17,22 @@ let string_of_player p = match p with
   | Caml -> "Caml"
   | None -> "None"
 
+let computer_move_st newSt = 
+  print_endline "Please wait while computer moves...";
+  let comp_move = 
+    if game_level newSt = Easy then
+      easy_ai_move newSt
+    else if game_level newSt = Medium then
+      medium_ai_move newSt
+    else
+      hard_ai_move newSt
+  in
+    let newSt' = do' comp_move newSt in
+    print_board newSt';
+    print_endline ("Score of player 1: "^(string_of_int (p1_score newSt'))^
+                  "\n"^"Score of player 2: "^(string_of_int (p2_score newSt')));
+    newSt'
+
 let rec ended () =
   let grab_GUI = Gui.play_board () in
   let com = fst grab_GUI in
@@ -26,7 +43,7 @@ let rec ended () =
   | _ -> ended ()
 
 (*[play st] is the helper function for play_game ()*)
-let rec play st=
+let rec play single st=
   if game_ended st then
     let win_msg_and_stuff = get_result_message st in
     let win_msg = snd win_msg_and_stuff in
@@ -49,10 +66,10 @@ let rec play st=
   (*Remember to check for win*)
   match command with
   | Play str -> (print_endline "A game is currently is session. Please quit first.";
-                 play newSt)
+                 play single newSt)
   | Score ->
     (print_endline ("Score of player 1: "^(string_of_int (p1_score st))^"\n"^"Score of player 2: "^(string_of_int (p2_score st)));
-     play newSt)
+     play single newSt)
   | Quit -> (print_endline "yo what's up in this hole";exit 0)
   | Restart -> (raise Restart)
   | Try (pl, x, y) -> (failwith "Unimplemented")
@@ -64,7 +81,18 @@ let rec play st=
       print_int why;
       Gui.repeat_cell ex why;
       print_endline "Action impossible. Please try a different move.";
-       play newSt;)
+       play single newSt;)
+
+      (*if newSt = st then
+          print_endline "Action impossible. Please try a different move."
+        else
+          print_board newSt;
+          print_endline ("Score of player 1: "^(string_of_int (p1_score newSt))^"\n"^"Score of player 2: "^(string_of_int (p2_score newSt)));
+          if newSt <> st && single then
+            play single (computer_move_st newSt)
+          else
+            play single newSt*)
+
     else
       (  print_board newSt;
       let x = snd test |> fst in
@@ -77,14 +105,14 @@ let rec play st=
       let player2_score = p2_score newSt in
       Gui.score player1_score player2_score ;
       print_endline ("Score of player 1: "^(string_of_int (p1_score newSt))^"\n"^"Score of player 2: "^(string_of_int (p2_score newSt)));
-    play newSt))
+    play single newSt))
   | Hint -> (failwith "Unimplemented")
-  | Look -> (print_board st; play newSt)
+  | Look -> (print_board st; play single newSt)
   | CurrentPlayer ->
     (print_endline ("Current player: "^(string_of_player (curr_player st)));
-     play newSt)
+     play single newSt)
   | Invalid -> (print_endline "Action impossible. Please try a different move.";
-                play newSt)
+                play single newSt)
   )
 
 let rec play_game str f =
@@ -98,7 +126,7 @@ try (
     print_board init_st;
     begin
     try(
-      play init_st
+        play (game_num_plyrs init_st <> Multi) init_st
       ) with
     | Terminated -> print_endline "Bye!"
     | Restart -> (print_endline "You have chosen to restart this game";
