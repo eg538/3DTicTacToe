@@ -223,7 +223,12 @@ let do' c st =
   | Place (pl, row, col) ->
     begin
       try(
+<<<<<<< HEAD
         play_move st (pl, row, col) |> switch_players |> check_game_end
+=======
+        play_move st (pl, row, col) |> switch_players;
+        (*if (mode<>"normal") then krazy_mode_bomb c st.tttBoard else ();*)
+>>>>>>> krazy_mode
       )with
       | _ -> st
     end
