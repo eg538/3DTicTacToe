@@ -226,3 +226,11 @@ let responsive_board str x y =
 let highlight_curr_player str =
   if str = "python" then (rect_drawn_bblack 596 150 64 60; rect_drawn_cyan 334 145 62 65;)
   else (rect_drawn_bblack 334 145 62 65; rect_drawn_cyan 596 150 64 60;)
+
+let winner_winner_chicken_dinner str =
+  print_endline "in winner winner chicken dinner";
+  draw_image (get_img "imgs/win.jpg") 200 200;
+  if str = "win" then ((draw_image (get_img "imgs/win.jpg") 200 200);)
+  else if str = "draw" then ((draw_image (get_img "imgs/draw_img.jpg") 200 200);)
+  else if str = "lost" then ((draw_image (get_img "imgs/loss_img.jpg") 200 200);)
+  else set_color magenta; draw_string "bruhhhh";

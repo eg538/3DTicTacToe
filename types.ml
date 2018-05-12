@@ -49,5 +49,6 @@ type command =
   |Place of (int * int * int)
   |Hint
   |Look
-  | CurrentPlayer
+  |CurrentPlayer
   |Invalid
+  (* |End *)
