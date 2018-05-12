@@ -287,14 +287,6 @@ let col_check c b =
   let cell_2 = (find_vertical_cells c b) |> List.rev |> List.hd in
   (cell_1.player = c.player) && (cell_2.player = c.player)
   end
-        (*
-let all_three_in_row_cells c b =
-  let v = find_vertical_cells c b in
-  let h = vertical_3d_groups c b in
-  let h_3d = horizontal_3d_group c b in
-  let plane_2d_inst = three_row_2d_cells c b in
-  v::h::h_3d::plane_2d_inst
-*)
 
 let win_evaluation c b =
   let diag_check_truth =
@@ -329,3 +321,33 @@ let get_the_win c current_player b=
       end
     | _ -> [c ::(find_vertical_cells c b)](*[[c] @ (find_vertical_cells c b)] *)
   else []
+
+let get_all_win_inst st c =
+  let b = st.tttBoard in
+  let col_3d = find_vertical_cells c b in (*cell list list*)
+  let v_3d_diag = List.flatten (vertical_3d_groups c b) in (*cell list list*)
+  let h_3d_diag = List.flatten (horizontal_3d_group c b) in (*cell list list*)
+  let plane_2d_inst = List.flatten (three_row_2d_cells c b) in (*cell list list *)
+  col_3d @ v_3d_diag @ h_3d_diag @ plane_2d_inst
+
+let extract_cell_pos inst =
+  List.map (fun x -> x.cell) inst
+
+let krazy_recalc_score st b =
+  let win_inst_tracker = [] in
+  let occupied = cells_occupied b in
+  List.map (fun x -> get_all_win_inst st x) occupied
+  (*traverse through 2d *)
+  (*traverse through 3d*)
+
+let krazy_mode_bomb st c =
+  let b = st.tttBoard in
+  let col_3d = find_vertical_cells c b in (*cell list list*)
+  let v_3d_diag = List.flatten (vertical_3d_groups c b) in (*cell list list*)
+  let h_3d_diag = List.flatten (horizontal_3d_group c b) in (*cell list list*)
+  let plane_2d_inst = List.flatten (three_row_2d_cells c b) in (*cell list list *)
+  let instances = col_3d @ v_3d_diag @ h_3d_diag @ plane_2d_inst in
+  let inst_list = extract_cell_pos instances in
+  let b' = List.iter (fun i ->
+      Hashtbl.replace b (Hashtbl.find b i).cell {(Hashtbl.find b i) with player=None}) inst_list in
+  st (*tttBoard = b'*)

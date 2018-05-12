@@ -31,7 +31,7 @@ let rec play st =
     play newSt
   | Quit -> raise Terminated
   | Restart -> raise Restart
-  | Try (pl, x, y) -> failwith "Unimplemented"
+  | Try (pl, x, y) -> play newSt 
   | Place (pl, x, y) ->
       if newSt = st then
         print_endline "Action impossible. Please try a different move."

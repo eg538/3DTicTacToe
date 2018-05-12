@@ -205,7 +205,8 @@ let do' c st =
   | Place (pl, row, col) ->
     begin
       try(
-        play_move st (pl, row, col) |> switch_players
+        play_move st (pl, row, col) |> switch_players;
+        (*if (mode<>"normal") then krazy_mode_bomb c st.tttBoard else ();*)
       )with
       | _ -> st
     end
