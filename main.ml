@@ -34,7 +34,7 @@ let computer_move_st newSt =
     newSt'
 
 let rec ended () =
-  let grab_GUI = Gui.play_board "place" in
+  let grab_GUI = Gui.play_board () in
   let com = fst grab_GUI in
   let command = parse com in
   match command with
@@ -69,11 +69,8 @@ let rec play single st=
   Gui.rect_drawn_gray 149 627 69 44;
   Gui.rect_drawn_gray 800 625 93 40;
 
-  if (Gui.check_try_pressed () ) = true then (print_endline "try";)
-  else print_endline "place";
 
-
-  let test = Gui.play_board "place" in
+  let test = Gui.play_board () in
   let com = fst test in
   let command = parse com in
   let newSt = do' command st in

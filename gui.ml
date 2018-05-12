@@ -217,7 +217,7 @@ let check_try_pressed () =
 
 
 
-let play_board command =
+let play_board () =
   let event_lst = [Graphics.Button_up] in
   let mouse_status = wait_next_event event_lst  in
   let x = mouse_status.mouse_x in
@@ -225,6 +225,9 @@ let play_board command =
   print_string "x is: "; print_int x; print_endline " ";
   print_string "y is: "; print_int y; print_endline " ";
   print_endline " ";
+
+  let command = (if (check_try_pressed () ) = true then "try"
+  else "place") in
 
   if ((x >= 331 && x <=426) && (y >= 651 && y <= 685 )) then ((command^" 0,0,0"), (360, 666))
   else if ((x >= 438 && x <= 575) && (y >= 653 && y <= 685 )) then ((command^" 0,0,1"), (475, 666))

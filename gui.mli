@@ -35,7 +35,7 @@ val cover_up: unit -> unit
    coordinates to determine where the picture should be placed. Example of commands include:
    "place", "try"
 *)
-val play_board : string -> string * (int * int)
+val play_board : unit -> string * (int * int)
 
 (* Draws the python or caml picture (determined by the string parameter) at the location
    specified by the two ints
