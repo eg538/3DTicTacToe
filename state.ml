@@ -142,10 +142,7 @@ let accumulate_diag_wins diag_list st = (*cell list list *)
  * creates a three-in-a-row for the player that made the move*)
 let play_move st (pl, row, col) =
   make_move st (pl, row, col);
-<<<<<<< HEAD
-  print_board st;
-=======
->>>>>>> ai
+  (* print_board st; *)
   if win_evaluation (find_cell st (pl, row, col)) st.tttBoard then
     (* updating st (pl, row, col) *)
     begin
@@ -230,12 +227,7 @@ let do' c st =
     (* print_endline ("Move made: "^(string_of_int pl)^", "^(string_of_int row)^", "^(string_of_int col)); *)
     begin
       try(
-<<<<<<< HEAD
-        play_move st (pl, row, col) |> switch_players;
-        (*if (mode<>"normal") then krazy_mode_bomb c st.tttBoard else ();*)
-=======
         play_move st (pl, row, col) |> switch_players |> check_game_end
->>>>>>> ai
       )with
       | _ -> st
     end
