@@ -9,6 +9,7 @@ open Gui
 
 exception Terminated
 exception Restart
+exception GameEnd
 
 (*[string_of_player p] is the string representation of [p]*)
 let string_of_player p = match p with
@@ -30,9 +31,15 @@ let rec play st=
   let command = parse com in
   let newSt = do' command st in
   if game_ended newSt then
-    let win_msg = get_result_message newSt in
+    let win_msg_and_stuff = get_result_message newSt in
+    let win_msg = snd win_msg_and_stuff in
     print_endline win_msg;
-    (* print_endline (get_result_message newSt) *)
+    print_endline "herhe";
+    (* raise GameEnd; *)
+    print_endline (fst win_msg_and_stuff);
+    (Gui.winner_winner_chicken_dinner (fst win_msg_and_stuff));
+    (* command = End *)
+
   else
   (*Remember to check for win*)
   match command with
@@ -50,9 +57,9 @@ let rec play st=
         let why = snd test |> snd in
         print_int ex;
         print_int why;
-        (Gui.repeat_cell ex why;
+        Gui.repeat_cell ex why;
         (print_endline "Action impossible. Please try a different move.";
-         play newSt);)
+         play newSt);
       else
         print_board newSt;
       let x = snd test |> fst in
@@ -70,6 +77,7 @@ let rec play st=
       play newSt
     | Invalid -> print_endline "Action impossible. Please try a different move.";
       play newSt
+    (* | End -> raise GameEnd *)
 
 let rec play_game str f =
 try (
@@ -86,7 +94,8 @@ try (
       ) with
     | Terminated -> print_endline "Bye!"
     | Restart -> print_endline "You have chosen to restart this game";
-        f ()
+      f ()
+    | GameEnd -> print_endline "Game End!";
     | _ -> print_endline "Error"
     end
   | _ -> print_endline "Invalid command. No ongoing game."
