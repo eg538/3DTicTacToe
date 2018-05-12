@@ -8,7 +8,7 @@ open Types
 
 
 (* make the black colored backround color *)
-let bblack = rgb 20 20 20
+let bblack = rgb 32 32 32
 
 (* [round (x, y) transforms the floating point values of (x, y) into ints. ]*)
 let round (x, y) = int_of_float x, int_of_float y
