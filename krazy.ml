@@ -1,6 +1,12 @@
 open Types
 open Grid_3d
 (* open State *)
+let krazy_disappearing_sqs st c =
+  if (c=c) then (
+    Hashtbl.replace st.tttBoard c.cell {c with player = None}
+  ) else ()
+
+let krazy_cell_swap st c c1 c2 = failwith "unimplemented"
 
 let krazy_recalc_score st b =
   let win_inst_tracker = [] in

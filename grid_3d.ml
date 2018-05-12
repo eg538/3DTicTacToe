@@ -124,11 +124,15 @@ let thd (_,_,y) = y
 let diagonal_hardcode c lst_of_cells =
   match c.cell with
   | p,x,y when (x=y) ->
-    (List.filter (fun i -> ((i.cell |> thd) = (i.cell |> snd')) && (p = fst' c.cell)) lst_of_cells)
+    begin
+      let l1 = (List.filter (fun i -> ((i.cell |> thd) = (i.cell |> snd')) && (p = fst' c.cell)) lst_of_cells) in (*orig*)
+      let l2 = (List.filter (fun i -> (((i.cell |> thd = 2) && (i.cell |> snd' = 0)) || ((i.cell |> snd' = 2)  && (i.cell |> thd = 0))) && (p = fst' c.cell)) lst_of_cells) in
+      [l1;l2]
+    end
   | p,x,y when (x=0 && y=2) ->
-    (List.filter (fun i -> (((i.cell |> thd = 1)&&(i.cell |> snd' = 1)) || ((i.cell |> thd = 0)&&(i.cell |> snd' = 2))) && (p = fst' c.cell)) lst_of_cells) @ [c]
+    [(List.filter (fun i -> (((i.cell |> thd = 1)&&(i.cell |> snd' = 1)) || ((i.cell |> thd = 0)&&(i.cell |> snd' = 2))) && (p = fst' c.cell)) lst_of_cells) @ [c]]
   | p,x,y when (x=2 && y=0) ->
-    (List.filter (fun i -> (((i.cell |> thd = 1)&&(i.cell |> snd' = 1)) || ((i.cell |> thd = 2)&&(i.cell |> snd' = 0))) && (p = fst' c.cell)) lst_of_cells) @ [c]
+    [(List.filter (fun i -> (((i.cell |> thd = 1)&&(i.cell |> snd' = 1)) || ((i.cell |> thd = 2)&&(i.cell |> snd' = 0))) && (p = fst' c.cell)) lst_of_cells) @ [c]]
   | _ -> failwith "non-exhaustive match "
 
 (*[three_row_2d_cells c b] compiles a list of 3-in-a-row instances that are
@@ -146,11 +150,11 @@ let three_row_2d_cells c b =
   | (p,x,y) when (x<>1 && y<>1) ->
     (List.filter (fun i -> (thd (c.cell) = thd (i.cell))
     && (p = fst' c.cell)) lst_of_cells)::(List.filter (fun i -> (snd' (c.cell) = snd' (i.cell))
-    && (p = fst' c.cell)) lst_of_cells)::(diagonal_hardcode c lst_of_cells)::[]
+                                                                && (p = fst' c.cell)) lst_of_cells)::(List.nth (diagonal_hardcode c lst_of_cells) 0)::(List.nth (diagonal_hardcode c lst_of_cells) 1)::[]
   | (p,_,_) ->
     (List.filter (fun i -> (thd (c.cell) = thd (i.cell))
     &&(p = fst' c.cell)) lst_of_cells)::(List.filter (fun i -> (snd' (c.cell) = snd' (i.cell))
-    && (p = fst' c.cell)) lst_of_cells)::(diagonal_hardcode c lst_of_cells)::[]
+                                                               && (p = fst' c.cell)) lst_of_cells)::(List.nth (diagonal_hardcode c lst_of_cells) 0)::(List.nth (diagonal_hardcode c lst_of_cells) 1)::[]
 
 (*[victory_on_plane c possible_instances] traverses through [possible_instances]
   to check whether at least one of [possible_instances] has resulted in a win
