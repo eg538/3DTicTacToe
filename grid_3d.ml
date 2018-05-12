@@ -292,6 +292,8 @@ let col_check c b =
   (cell_1.player = c.player) && (cell_2.player = c.player)
   end
 
+let player_at_cell c = c.player
+
 let win_evaluation c b =
   let diag_check_truth =
     (((diag_check c b )|> fst) <> WinNone) || (((diag_check c b) |> snd) <> WinNone) in
@@ -308,8 +310,8 @@ let win_evaluation c b =
 
 let cells_occupied b =
   let lst_cells = board_list_of_cells b in
-  let whole_space = List.fold_left (fun a x -> x::a) [] lst_cells in
-  List.filter (fun cell -> cell.player <> None) whole_space
+  (* let whole_space = List.fold_left (fun a x -> x::a) [] lst_cells in *)
+  List.filter (fun cell -> cell.player <> None) lst_cells
 
 let get_the_win c current_player b=
   if (win_evaluation c b) then

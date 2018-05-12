@@ -140,7 +140,7 @@ let accumulate_diag_wins diag_list st = (*cell list list *)
  * creates a three-in-a-row for the player that made the move*)
 let play_move st (pl, row, col) =
   make_move st (pl, row, col);
-  print_endline "placed move";
+  print_board st;
   if win_evaluation (find_cell st (pl, row, col)) st.tttBoard then
     (* updating st (pl, row, col) *)
     begin
