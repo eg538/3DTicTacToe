@@ -51,16 +51,16 @@ let get_result_message s =
   match s.num_players with
   | Multi -> begin
     match s.winner with
-    | Caml -> "Caml wins!"
-    | Python -> "Python wins!"
-    | None -> "Draw! No one won"
+    | Caml -> ("caml","Caml wins!")
+    | Python -> ("python","Python wins!")
+    | None -> ("none", "Draw! No one won")
     end
   | Single -> if s.winner = s.p1_avatar then
-              "Congratulations! You won the Java cup!"
+              ("win", "Congratulations! You won the Java cup!")
             else if s.winner <> None then
-              "Sad! You didn't win the Java cup, but try again next time for that steaming mug of Java!"
+              ("draw", "Sad! You didn't win the Java cup, but try again next time for that steaming mug of Java!")
             else
-              "Oh no! You were close to winning the Java cup!"
+              ("lost", "Oh no! You were close to winning the Java cup!")
 
 let rec find_cell s (pl, x, y) = get_cell (pl, x, y) s.tttBoard
 
@@ -170,7 +170,7 @@ let play_move st (pl, row, col) =
   else
     st
 
-let other_player ply = 
+let other_player ply =
   match ply with
   | Python -> Caml
   | Caml -> Python
@@ -182,8 +182,8 @@ match st.current_player with
 | Python -> {st with current_player = Caml}
 | _ -> {st with current_player = Python}
 
-let check_game_end st = 
-  if cells_left st.tttBoard = [] then 
+let check_game_end st =
+  if cells_left st.tttBoard = [] then
     if st.curr_score_1 > st.curr_score_2 then
       {st with winner = st.p1_avatar; game_end = true}
     else if st.curr_score_2 > st.curr_score_1 then
@@ -224,6 +224,7 @@ let do' c st =
     begin
       try(
         play_move st (pl, row, col) |> switch_players |> check_game_end
+
       )with
       | _ -> st
     end

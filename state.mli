@@ -34,7 +34,7 @@ val get_result: state -> player
 
 (*[get_result_message s] is the message that is displayed when the result of the game
  * is determined*)
-val get_result_message: state -> string
+val get_result_message: state -> (string * string)
 
 (*[find_cell s coords] is the cells that is at the coordinates [coords]  in the board of the game
  * when the it is in state [s]*)

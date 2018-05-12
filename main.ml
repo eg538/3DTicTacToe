@@ -29,10 +29,14 @@ let string_of_player p = match p with
 (*[play st] is the helper function for play_game ()*)
 let rec play st=
   if game_ended st then
-    (
-      let win_msg = get_result_message st in
-      print_endline win_msg
-    )
+    let win_msg_and_stuff = get_result_message st in
+    let win_msg = snd win_msg_and_stuff in
+    print_endline win_msg;
+    print_endline "herhe";
+    (* raise GameEnd; *)
+    print_endline (fst win_msg_and_stuff);
+    (Gui.winner_winner_chicken_dinner (fst win_msg_and_stuff));
+    (* command = End *)
   else
   (print_endline "Please enter command";
   let playerr = match (State.curr_player st ) with
