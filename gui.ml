@@ -54,69 +54,72 @@ let get_img img =
  let rect_drawn x y width height =
   (set_color magenta;
     set_line_width 9;
-    draw_rect x y width height;)
+   draw_rect x y width height;)
 
-type choices = {mode : string; level : string; craziness: string; }
+let rect_drawn_white x y width height =
+  (set_color white;
+   set_line_width 9;
+   draw_rect x y width height;)
 
-let level_choice () =
-  let event_lst = [Graphics.Button_up] in
+type choices = {mode : string; level : string; num_p: string; }
+
+let get_coordinates_choices c =
+  if c = "easy" then rect_drawn_white 310 260 108 44
+  else if c = "medium" then rect_drawn_white 450 260 119 43
+  else if c = "hard" then rect_drawn_white 600 260 81 43
+  else if c = "normal" then rect_drawn_white 380 200 109 43
+  else if c = "krazy" then rect_drawn_white 520 200 93 44
+  else if c = "single" then rect_drawn_white 395 130 93 44
+  else if c = "multi" then rect_drawn_white 520 130 82 44
+  else ()
+    
+let rec get_choices ch =
+let event_lst = [Graphics.Button_up] in
+let mouse_status = wait_next_event event_lst  in
+let x = mouse_status.mouse_x in
+let y = mouse_status.mouse_y in
+
+if (x >= 310 && x <= (310 + 108)) && (y >= 260 && y <= (260 + 44))
+then (get_coordinates_choices ch.level;(rect_drawn 310 260 108 44); get_choices {ch with level = "easy"} )
+else if (x >= 450 && x <= (450 + 119)) && (y >= 260 && y <= (260 + 43))
+then (get_coordinates_choices ch.level;(rect_drawn 450 260 119 43); get_choices {ch with level ="medium"})
+else if (x >= 600 && x <= (600 + 81)) && (y >= 260 && y <= (260 + 43))
+then (get_coordinates_choices ch.level;(rect_drawn 600 260 81 43); get_choices {ch with level ="hard"})
+else if (x >= 380 && x <= (380 + 109)) && (y >= 200 && y <= (200 + 43))
+then (get_coordinates_choices ch.mode;(rect_drawn 380 200 109 43); get_choices {ch with mode ="normal"})
+else if (x >= 520 && x <= (520 + 93)) && (y >= 200 && y <= (200 + 44))
+then (get_coordinates_choices ch.mode;(rect_drawn 520 200 93 44); get_choices {ch with mode ="krazy"})
+else if (x >= 395 && x <= (395 + 93)) && (y >= 130 && y <= (130 + 44))
+then (get_coordinates_choices ch.num_p;(rect_drawn 395 130 93 44);get_choices{ch with num_p = "single"})
+else if (x >= 520 && x <= (520 + 82)) && (y >= 130 && y <= (130 + 44))
+then (get_coordinates_choices ch.num_p;(rect_drawn 520 130 82 44); get_choices{ch with num_p ="multi"})
+else if (not(x >= 380 && x <=(242+380)) && (y>=35 && y<=(35+69)))
+then get_choices ch
+else ch
+
+
+let rec start_game ch =
+
+  let event_lst = [Graphics.Button_down] in
   let mouse_status = wait_next_event event_lst  in
   let x = mouse_status.mouse_x in
   let y = mouse_status.mouse_y in
-  (* easy button *)
-  if (x >= 310 && x <= (310 + 108)) && (y >= 260 && y <= (260 + 44))
-  then ((rect_drawn 310 260 108 44); "easy")
-
-  (* medium button *)
-  else if (x >= 450 && x <= (450 + 119)) && (y >= 260 && y <= (260 + 43))
-  then ((rect_drawn 450 260 119 43); "medium")
-
-  (*hard button pressed *)
-  else if (x >= 600 && x <= (600 + 81)) && (y >= 260 && y <= (260 + 43))
-  then ((rect_drawn 600 260 81 43); "hard")
-
-  else "easy"
-
-let krazy_choice () =
-  let event_lst = [Graphics.Button_up] in
-  let mouse_status = wait_next_event event_lst  in
-  let x = mouse_status.mouse_x in
-  let y = mouse_status.mouse_y in
-  (* normal button pressed *)
-  if (x >= 380 && x <= (380 + 109)) && (y >= 200 && y <= (200 + 43))
-  then ((rect_drawn 380 200 109 43); "normal")
-
-  (* krazy button pressed *)
-  else if (x >= 520 && x <= (520 + 93)) && (y >= 200 && y <= (200 + 44))
-  then ((rect_drawn 520 200 93 44); "krazy")
-
-  else "normal"
-
-let num_player () =
-  let event_lst = [Graphics.Button_up] in
-  let mouse_status = wait_next_event event_lst  in
-  let x = mouse_status.mouse_x in
-  let y = mouse_status.mouse_y in
-  (* single button pressed *)
-  if (x >= 395 && x <= (395 + 93)) && (y >= 130 && y <= (130 + 44))
-  then ((rect_drawn 395 130 93 44); "single")
-
-  (* multi button pressed *)
-  else if (x >= 520 && x <= (520 + 82)) && (y >= 130 && y <= (130 + 44))
-  then ((rect_drawn 520 130 82 44); "multi")
-
-  else "single"
-
-
-let start_choice () =
-  let event_lst = [Graphics.Button_up] in
-  let mouse_status = wait_next_event event_lst  in
-  let x = mouse_status.mouse_x in
-  let y = mouse_status.mouse_y in
-  if (x >= 380 && x <=(242+380)) && (y>=35 && y<=(35+69)) then
-    (clear_graph(); draw_image (get_img "imgs/xxoo.jpg") 0 0;draw_image (get_img "imgs/TTTmain.jpg") 250 40;
-     draw_image(get_img "imgs/hint.jpg") 800 555; draw_image(get_img "imgs/try.jpg") 134 555;)
-
+  if(x >= 380 && x <=(242+380)) && (y>=35 && y<=(35+69)) then(
+    let play_str = "play " ^ ch.num_p ^ " " ^ "python " ^ ch.level ^ " " ^ ch.mode in
+    rect_drawn x y 90 90; clear_graph(); draw_image (get_img "imgs/xxoo.jpg") 0 0;draw_image (get_img "imgs/TTTmain.jpg") 250 40;
+    draw_image(get_img "imgs/hint.jpg") 800 555; draw_image(get_img "imgs/try.jpg") 134 555;
+    play_str) else (
+    let event_lst = [Graphics.Button_up] in
+    let mouse_status = wait_next_event event_lst  in
+    let x = mouse_status.mouse_x in
+    let y = mouse_status.mouse_y in
+    let choice = get_choices ch in
+    if(x >= 380 && x <=(242+380)) && (y>=35 && y<=(35+69)) then(
+      let play_str = "play " ^ choice.num_p ^ " " ^ "python " ^ choice.level ^ " " ^ choice.mode in
+      rect_drawn x y 90 90; clear_graph(); draw_image (get_img "imgs/xxoo.jpg") 0 0;draw_image (get_img "imgs/TTTmain.jpg") 250 40;
+      draw_image(get_img "imgs/hint.jpg") 800 555; draw_image(get_img "imgs/try.jpg") 134 555;
+      play_str)
+    else (start_game choice))
 
 
 let init_welcome () =
@@ -125,34 +128,29 @@ let init_welcome () =
   draw_image (get_img "imgs/wilkommen-logo.jpg") 270 330;
 
   draw_image (get_img "imgs/easy.jpg") 310 260;
+  rect_drawn 310 260 108 44;
 
   draw_image (get_img "imgs/medium.jpg") 450 260;
+  rect_drawn_white 450 260 119 43;
 
   draw_image (get_img "imgs/hard.jpg") 600 260;
+  rect_drawn_white 600 260 81 43;
 
   draw_image (get_img "imgs/g.jpg") 380 200;
+  rect_drawn 380 200 109 43;
 
   draw_image (get_img "imgs/krazy.jpg") 520 200;
+  rect_drawn_white 520 200 93 44;
 
   draw_image (get_img "imgs/single.jpg") 395 130;
+  rect_drawn_white 395 130 93 44;
 
   draw_image (get_img "imgs/multi.jpg") 520 130;
+  rect_drawn 520 130 82 44;
 
   draw_image (get_img "imgs/group.jpg") 380 35;
-
-
-
-  let level = level_choice() in
-
-  let mode = krazy_choice() in
-
-  let num = num_player() in
-
-  let play_str = "play " ^ num ^ " " ^ "python " ^ level ^ " " ^ mode in
-
-  start_choice();
-
-  play_str
+  let ch = {mode = "normal"; level = "easy"; num_p= "multi"; } in
+  start_game ch
 
 let play_board st =
   let event_lst = [Graphics.Button_up] in
