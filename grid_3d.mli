@@ -28,6 +28,9 @@ val get_cell: (int*int*int) -> board -> cell
 (*[cell_coords c] is the coordinates of the cell [c]*)
 val cell_coords: cell -> (int*int*int)
 
+(*[player c] is the player at cell [c]*)
+val player_at_cell: cell -> player
+
 (*[place c b plyr] modifies board so that the cell at coordinate [c] contains [plyr]
  * raise: InvalidCell failure if [c] is not valid cell*)
 val place : (int*int*int) -> board -> player -> unit
