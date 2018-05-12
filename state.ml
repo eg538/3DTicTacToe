@@ -170,7 +170,7 @@ let play_move st (pl, row, col) =
   else
     st
 
-let other_player ply = 
+let other_player ply =
   match ply with
   | Python -> Caml
   | Caml -> Python
@@ -182,8 +182,8 @@ match st.current_player with
 | Python -> {st with current_player = Caml}
 | _ -> {st with current_player = Python}
 
-let check_game_end st = 
-  if cells_left st.tttBoard = [] then 
+let check_game_end st =
+  if cells_left st.tttBoard = [] then
     if st.curr_score_1 > st.curr_score_2 then
       {st with winner = st.p1_avatar; game_end = true}
     else if st.curr_score_2 > st.curr_score_1 then
@@ -223,12 +223,7 @@ let do' c st =
   | Place (pl, row, col) ->
     begin
       try(
-<<<<<<< HEAD
         play_move st (pl, row, col) |> switch_players |> check_game_end
-=======
-        play_move st (pl, row, col) |> switch_players;
-        (*if (mode<>"normal") then krazy_mode_bomb c st.tttBoard else ();*)
->>>>>>> krazy_mode
       )with
       | _ -> st
     end

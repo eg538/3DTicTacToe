@@ -35,18 +35,6 @@ let rec play st=
     (* print_endline (get_result_message newSt) *)
   else
   (*Remember to check for win*)
-<<<<<<< HEAD
-    match command with
-    | Play str -> print_endline "A game is currently is session. Please quit first.";
-      play newSt
-    | Score ->
-      print_endline ("Score of player 1: "^(string_of_int (p1_score st))^"\n"^"Score of player 2: "^(string_of_int (p2_score st)));
-      play newSt
-    | Quit -> raise Terminated
-    | Restart -> raise Restart
-    | Try (pl, x, y) -> failwith "Unimplemented"
-    | Place (pl, x, y) ->
-=======
   match command with
   | Play str -> print_endline "A game is currently is session. Please quit first.";
     play newSt
@@ -55,9 +43,8 @@ let rec play st=
     play newSt
   | Quit -> raise Terminated
   | Restart -> raise Restart
-  | Try (pl, x, y) -> play newSt 
+  | Try (pl, x, y) -> play newSt
   | Place (pl, x, y) ->
->>>>>>> krazy_mode
       if newSt = st then
         let ex = snd test |> fst in
         let why = snd test |> snd in
