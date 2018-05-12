@@ -49,8 +49,18 @@ let rec play st=
   let com = fst test in
   let command = parse com in
   let newSt = do' command st in
-    (*Remember to check for win*)
-  print_endline "am i here?" ;
+  if game_ended newSt then
+    let win_msg_and_stuff = get_result_message newSt in
+    let win_msg = snd win_msg_and_stuff in
+    print_endline win_msg;
+    print_endline "herhe";
+    (* raise GameEnd; *)
+    print_endline (fst win_msg_and_stuff);
+    (Gui.winner_winner_chicken_dinner (fst win_msg_and_stuff));
+    (* command = End *)
+
+  else
+  (*Remember to check for win*)
   match command with
   | Play str -> (print_endline "A game is currently is session. Please quit first.";
                  play newSt)

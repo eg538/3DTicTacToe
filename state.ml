@@ -224,7 +224,6 @@ let do' c st =
     begin
       try(
         play_move st (pl, row, col) |> switch_players |> check_game_end
-
       )with
       | _ -> st
     end
