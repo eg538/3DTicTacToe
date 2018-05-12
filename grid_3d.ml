@@ -292,9 +292,10 @@ let win_evaluation c b =
   let diag_check_truth =
     (((diag_check c b )|> fst) <> WinNone) || (((diag_check c b) |> snd) <> WinNone) in
   let cases_3d = (diag_check_truth) || (col_check c b) in
-  let case_1 = victory_on_plane c (three_row_2d_cells c b) in
-  let case_2 = victory_on_plane c (three_row_2d_cells c b) in
-  let case_3 = victory_on_plane c (three_row_2d_cells c b) in
+  let modified_3_row_2d_cells = List.filter (fun x -> List.length x <> 2) (three_row_2d_cells c b) in
+  let case_1 = victory_on_plane c (modified_3_row_2d_cells) in
+  let case_2 = victory_on_plane c (modified_3_row_2d_cells) in
+  let case_3 = victory_on_plane c (modified_3_row_2d_cells) in
   match get_plane c.cell with
   | 0 -> case_1 || cases_3d
   | 1 -> case_2 || cases_3d
@@ -332,4 +333,3 @@ let get_all_win_inst st c =
 
 let extract_cell_pos inst =
   List.map (fun x -> x.cell) inst
-
