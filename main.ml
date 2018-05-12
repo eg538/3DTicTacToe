@@ -25,7 +25,10 @@ let rec play st=
     | Python -> "python"
     | None -> "none"
   in print_endline playerr;
-  let test = Gui.play_board st in
+  let test = Gui.play_board () in
+  print_endline "should highlight player";
+  Gui.highlight_curr_player playerr;
+  print_endline "highlighted player";
   let com = fst test in
   let command = parse com in
   let newSt = do' command st in
@@ -44,7 +47,11 @@ let rec play st=
     | Try (pl, x, y) -> failwith "Unimplemented"
     | Place (pl, x, y) ->
       if newSt = st then
-        (Gui.repeat_cell ();
+        let ex = snd test |> fst in
+        let why = snd test |> snd in
+        print_int ex;
+        print_int why;
+        (Gui.repeat_cell ex why;
          print_endline "here";
         (print_endline "Action impossible. Please try a different move.";
          play newSt);)
@@ -52,6 +59,7 @@ let rec play st=
         print_board newSt;
       let x = snd test |> fst in
       let y = snd test |> snd in
+      Gui.cover_up ();
         Gui.responsive_board playerr x y ;
         print_endline "there";
         print_endline ("Score of player 1: "^(string_of_int (p1_score newSt))^"\n"^"Score of player 2: "^(string_of_int (p2_score newSt)));

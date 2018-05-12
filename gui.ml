@@ -152,7 +152,10 @@ let init_welcome () =
   let ch = {mode = "normal"; level = "easy"; num_p= "multi"; } in
   start_game ch
 
-let play_board st =
+let cover_up () =
+  (draw_image (get_img "imgs/coverup.jpg")236 3;)
+
+let play_board () =
   let event_lst = [Graphics.Button_up] in
   let mouse_status = wait_next_event event_lst  in
   let x = mouse_status.mouse_x in
@@ -161,30 +164,42 @@ let play_board st =
   print_string "y is: "; print_int y; print_endline " ";
   print_endline " ";
 
-  (* let now_player =
-  match (State.curr_player st) with
-  | Caml -> "caml"
-  | Python -> "python"
-  | None -> "" in
-  let file_name = "imgs/" ^ now_player ^ ".jpg" in
-  print_endline file_name; *)
-
-  if (x >= 331 && x <=426) && (y >= 649 && y <= 685 ) then ("place 0,0,0", (360, 666))
+  if (x >= 331 && x <=426) && (y >= 651 && y <= 685 ) then ("place 0,0,0", (360, 666))
   else if (x >= 438 && x <= 575) && (y >= 653 && y <= 685 ) then ("place 0,0,1", (475, 666))
   else if (x >= 580 && x <= 696) && (y >= 651 && y <= 684) then ("place 0,0,2", (605, 666))
   else if (x >= 296 && x <= 414) && (y >= 596 && y <= 645) then ("place 0,1,0", (340, 610))
-  else if (x >= 422 && x <= 574) && (y >= 597 && y <= 644) then ("place 0,1,1", (475, 610))
+  else if (x >= 422 && x <= 574) && (y >= 597 && y <= 644) then ("place 0,1,1", (475, 615))
   else if (x >= 585 && x <= 697) && (y >= 597 && y <= 645) then ("place 0,1,2", (625, 610))
-  else if (x >= 251 && x <= 401) && (y >= 541 && y <= 590) then (rect_drawn 251 541 150 49; "place 0,2,0", (320, 550))
+  else if (x >= 251 && x <= 401) && (y >= 541 && y <= 590) then ("place 0,2,0", (320, 550))
   else if (x >= 418 && x <= 576) && (y >= 540 && y <= 590) then ("place 0,2,1", (475, 555))
   else if (x >= 583 && x <= 760) && (y >= 540 && y <= 590) then ("place 0,2,2", (645, 555))
 
-  else if (x >= 317 && x <= 428) && (y >= 494 && y <= 526) then (rect_drawn 317 494 111 32; "place 1,0,0", (390, 510))
+  else if (x >= 319 && x <= 428) && (y >= 494 && y <= 526) then ("place 1,0,0", (350, 492))
+  else if (x >= 439 && x <= 575) && (y >= 496 && y <= 524) then ("place 1,0,1", (475, 492))
+  else if (x >= 577 && x <= 670) && (y >= 493 && y <= 528) then ("place 1,0,2", (605, 492))
+  else if (x >= 300 && x <= 414) && (y >= 437 && y <= 489) then ("place 1,1,0", (340, 440))
+  else if (x >= 433 && x <= 575) && (y >= 440 && y <= 490) then ("place 1,1,1", (0,0))
+  else if (x >= 583 && x <= 726) && (y >= 439 && y <= 489) then ("place 1,1,2", (625, 440))
+  else if (x >= 251 && x <= 401) && (y >= 384 && y <= 434) then ("place 1,2,0", (320, 385))
+  else if (x >= 418 && x <= 579) && (y >= 383 && y <= 432) then ("place 1,2,1", (475, 390))
+  else if (x >= 583 && x <= 763) && (y >= 381 && y <= 432) then ("place 1,2,2", (645, 385))
 
-  else ("place 1,1,1", (0,0))
+  else if (x >= 316 && x <= 427) && (y >= 324 && y <= 361) then ("place 2,0,0", (360, 330))
+  else if (x >= 440 && x <= 575) && (y >= 324 && y <= 360) then ("place 2,0,1", (475, 330))
+  else if (x >= 580 && x <= 694) && (y >= 323 && y <= 360) then ("place 2,0,2", (605, 330))
+  else if (x >= 284 && x <= 414) && (y >= 269 && y <= 322) then ("place 2,1,0", (340, 280))
+  else if (x >= 430 && x <= 576) && (y >= 270 && y <= 318) then ("place 2,1,1", (475, 275))
+  else if (x >= 582 && x <= 730) && (y >= 270 && y <= 318) then ("place 2,1,2", (625, 280))
+  else if (x >= 252 && x <= 404) && (y >= 216 && y <= 265) then ("place 2,2,0", (320, 225))
+  else if (x >= 420 && x <= 580) && (y >= 215 && y <= 265) then ("place 2,2,1", (475, 225))
+  else if (x >= 585 && x <= 763) && (y >= 216 && y <= 266) then ("place 2,2,2", (645, 225))
 
-let repeat_cell () =
-  (draw_image (get_img "imgs/msg2.jpg") 236 3;)
+  else ("place 1,1,1", (1,1))
+
+let repeat_cell x y =
+  if x = 0 && y = 0 then (draw_image (get_img "imgs/no_x.jpg") 236 3;)
+  else if x = 1 && y = 1 then (draw_image (get_img "imgs/stay.jpg") 236 3;)
+  else (draw_image (get_img "imgs/msg2.jpg") 236 3;)
 
 
 let responsive_board str x y =
@@ -192,51 +207,8 @@ let responsive_board str x y =
   print_endline file_name;
   (draw_image (get_img file_name ) x y;)
 
-
-
-(* let play_test_two str =
-  Main.play_game str Main.main;
-  print_endline "in play_board";
-  let event_lst = [Graphics.Button_up] in
-  let mouse_status = wait_next_event event_lst  in
-  let x = mouse_status.mouse_x in
-  let y = mouse_status.mouse_y in
-
-  if (x >= 150 && x <=(60+150) && (y>=400 && y<=(400 + 69))) then draw_rect 150 400 60 69; *)
-
-
-     (*
-       let rec reaction =
-         let event_lst = [Graphics.Button_up] in
-         let mouse_status = wait_next_event event_lst  in
-         let x = mouse_status.mouse_x in
-         let y = mouse_status.mouse_y in
-
-           (* easy button *)
-           if (x >= 310 && x <= (310 + 260)) && (y >= 107 && y <= (107 + 44)) then (rect_drawn 310 107 260 44; reaction;)
-
-           (* medium button *)
-           else if (x >= 450 && x <= (450 + 119)) && (y >= 260 && y <= (260 + 43)) then (rect_drawn 450 260 119 43; reaction;)
-
-           (*hard button pressed *)
-           else if (x >= 600 && x <= (600 + 81)) && (y >= 260 && y <= (260 + 43)) then (rect_drawn 600 260 81 43; reaction;)
-
-           (* normal button pressed *)
-           else if (x >= 280 && x <= (280 + 109)) && (y >= 200 && y <= (200 + 43)) then (rect_drawn 380 200 109 43; reaction;)
-
-           (* krazy button pressed *)
-           else if (x >= 520 && x <= (520 + 93)) && (y >= 200 && y <= (200 + 44)) then (rect_drawn 520 200 93 44; reaction;)
-
-           (* single button pressed *)
-           else if (x >= 395 && x <= (395 + 93)) && (y >= 130 && y <= (130 + 44)) then (rect_drawn 395 130 93 44; reaction;)
-
-           (* multi button pressed *)
-           else if (x >= 520 && x <= (520 + 82)) && (y >= 130 && y <= (130 + 44)) then (rect_drawn 520 130 82 44; reaction;)
-
-           (* start was hit*)
-           else if (x >= 380 && x <=(242+380)) && (y>=35 && y<=(35+69)) then
-             (clear_graph(); draw_image (get_img "imgs/xxoo.jpg") 0 0;draw_image (get_img "imgs/TTTmain.jpg") 250 40;
-              draw_image(get_img "imgs/hint.jpg") 800 555; draw_image(get_img "imgs/try.jpg") 134 555;)
-
-           (* nothing was hit *)
-           else reaction; *)
+let highlight_curr_player str =
+  
+  print_endline "adjfls;";
+  if str = "caml" then (rect_drawn 331 145 40 40;)
+  else (rect_drawn 596 150 50 50;)

@@ -23,20 +23,22 @@ val rect_drawn : int -> int -> int -> int -> unit
 (* Will bring the player to the play screen when press start *)
 (*val start_choice: unit -> unit*)
 
+(* Causes the warning message (stay inside the lines, can't play in (1,1,1), etc ) to disappear *)
+val cover_up: unit -> unit
 
+(* returns the command telling the game to place a marker on a certain cell based on where the player
+   clicked on the gui and returns the coordinates where the python and caml images should be drawn
+*)
+val play_board : unit -> string * (int * int)
 
-val play_board : state -> string * (int * int)
-
+(* Draws the python or caml picture (determined by the string parameter) at the location
+   specified by the two ints
+*)
 val responsive_board: string -> int -> int->  unit
 
 (* Takes care of the case when two players want to place their marker in the same cell.
    An error message will appear *)
-val repeat_cell : unit -> unit
+val repeat_cell : int -> int -> unit
 
-(* val play_heavyduty: int -> int -> state -> state *)
-
-(* string is the starting string to produce the game. unit-> unit is main.
-   the last unit is what drawing the gui returns*)
-(* val play_board: string -> (unit-> unit)  -> unit *)
-
-(* val play_test_two: string -> unit *)
+(* Draws a rectangle around the image of the current player *)
+val highlight_curr_player: string -> unit
