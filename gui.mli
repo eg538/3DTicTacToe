@@ -8,8 +8,11 @@ type choices
 (*Draws the welcome screen, with the title of the game and creators*)
 val init_welcome : unit -> string
 
-(* Draws a magenta rectangle around the button the player presses*)
-val rect_drawn : int -> int -> int -> int -> unit
+(* Draws a gray rectangle around the button the player presses.
+   [rect_drawn_gray x y width height] draws a gray rectangle with lower left
+   corner at position (x,y) with width [width] and height [height]
+ *)
+val rect_drawn_gray : int -> int -> int -> int -> unit
 
 (* Will draw a rectangle around the level the player chooses and send that information *)
 (*val level_choice : unit -> string*)
@@ -28,8 +31,11 @@ val cover_up: unit -> unit
 
 (* returns the command telling the game to place a marker on a certain cell based on where the player
    clicked on the gui and returns the coordinates where the python and caml images should be drawn
+   [play_board command] will return the concatenated form of "[command] cell" and a tuple of
+   coordinates to determine where the picture should be placed. Example of commands include:
+   "place", "try"
 *)
-val play_board : unit -> string * (int * int)
+val play_board : string -> string * (int * int)
 
 (* Draws the python or caml picture (determined by the string parameter) at the location
    specified by the two ints
@@ -50,3 +56,17 @@ val score : int -> int -> unit
 
 (* Displays the win/lose/draw message *)
 val winner_winner_chicken_dinner: string -> unit
+
+(* Displays the number of tries left. int is the number of tries left *)
+val num_try_hint : int -> int -> int -> unit
+
+(* Let's the player try a position without actually changing anything.
+   [try playerr ex why] places a try picture of the marker onto the cell described
+   by player [playerr] at [ex] and [why]. Will be a helper function of play_board.
+*)
+val tried : string -> int -> int -> unit
+
+(* [check_try_pressed] is true if the user pressed within the try button and false
+   otherwise.
+ *)
+val check_try_pressed : unit -> bool

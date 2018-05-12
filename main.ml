@@ -17,9 +17,9 @@ let string_of_player p = match p with
   | Caml -> "Caml"
   | None -> "None"
 
-let computer_move_st newSt = 
+let computer_move_st newSt =
   print_endline "Please wait while computer moves...";
-  let comp_move = 
+  let comp_move =
     if game_level newSt = Easy then
       easy_ai_move newSt
     else if game_level newSt = Medium then
@@ -34,7 +34,7 @@ let computer_move_st newSt =
     newSt'
 
 let rec ended () =
-  let grab_GUI = Gui.play_board () in
+  let grab_GUI = Gui.play_board "place" in
   let com = fst grab_GUI in
   let command = parse com in
   match command with
@@ -59,7 +59,21 @@ let rec play single st=
     | None -> "none"
   in print_endline playerr;
   Gui.highlight_curr_player playerr;
-  let test = Gui.play_board () in
+  let hint_num = num_hints st in
+  let try_num = num_tries st in
+  Gui.num_try_hint hint_num 836 585;
+  Gui.num_try_hint try_num 171 585;
+  let player1_score = p1_score st in
+  let player2_score = p2_score st in
+  Gui.score player1_score player2_score ;
+  Gui.rect_drawn_gray 149 627 69 44;
+  Gui.rect_drawn_gray 800 625 93 40;
+
+  if (Gui.check_try_pressed () ) = true then (print_endline "try";)
+  else print_endline "place";
+
+
+  let test = Gui.play_board "place" in
   let com = fst test in
   let command = parse com in
   let newSt = do' command st in
@@ -104,6 +118,11 @@ let rec play single st=
       let player1_score = p1_score newSt in
       let player2_score = p2_score newSt in
       Gui.score player1_score player2_score ;
+      let hint_num = num_hints newSt in
+      let try_num = num_tries newSt in
+      Gui.num_try_hint try_num 836 587;
+      Gui.num_try_hint hint_num 171 593;
+
       print_endline ("Score of player 1: "^(string_of_int (p1_score newSt))^"\n"^"Score of player 2: "^(string_of_int (p2_score newSt)));
     play single newSt))
   | Hint -> (failwith "Unimplemented")

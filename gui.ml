@@ -77,7 +77,12 @@ let rect_drawn_cyan x y width height =
 let rect_drawn_bblack x y width height =
   (set_color bblack;
   set_line_width 9;
-  draw_rect x y width height;)
+   draw_rect x y width height;)
+
+let rect_drawn_gray x y width height =
+  (set_color gray;
+   set_line_width 2;
+  draw_rect x y width height)
 
 
 
@@ -126,7 +131,7 @@ let rec start_game ch =
   let y = mouse_status.mouse_y in
   if(x >= 380 && x <=(242+380)) && (y>=35 && y<=(35+69)) then(
     let play_str = "play " ^ ch.num_p ^ " " ^ "python " ^ ch.level ^ " " ^ ch.mode in
-    rect_drawn x y 90 90; clear_graph(); draw_image (get_img "imgs/xxoo.jpg") 0 0;draw_image (get_img "imgs/TTT.jpg") 250 40;
+    rect_drawn x y 90 90; clear_graph(); draw_image (get_img "imgs/xxoo.jpg") 0 0;draw_image (get_img "imgs/TTTmain.jpg") 250 40;
     draw_image(get_img "imgs/hint.jpg") 800 555; draw_image(get_img "imgs/try.jpg") 134 555;
     play_str) else (
     let event_lst = [Graphics.Button_up] in
@@ -188,7 +193,31 @@ let score p1 p2 =
   moveto 617 72;
   (draw_string tiu;)
 
-let play_board () =
+
+let num_try_hint num x y =
+  draw_image (get_img "imgs/eraser.jpg") (x-24) (y-52);
+  let str = string_of_int num in
+  moveto x y;
+  set_color white;
+  Graphics.set_font "-*-fixed-medium-r-semicondensed--35-*-*-*-*-*-iso8859-1";
+  (draw_string str;)
+
+let tried str ex why =
+  let file_name = str ^ "_try.jpg" in
+  (draw_image (get_img ("imgs/"^file_name)) why ex;)
+
+let check_try_pressed () =
+  let event_lst = [Graphics.Button_up] in
+  let mouse_status = wait_next_event event_lst  in
+  let x = mouse_status.mouse_x in
+  let y = mouse_status.mouse_y in
+
+  if (x >= 149 && x <= (149 + 69)) && (y >= 627 && y<= (627 + 44)) then true
+  else false
+
+
+
+let play_board command =
   let event_lst = [Graphics.Button_up] in
   let mouse_status = wait_next_event event_lst  in
   let x = mouse_status.mouse_x in
@@ -197,45 +226,42 @@ let play_board () =
   print_string "y is: "; print_int y; print_endline " ";
   print_endline " ";
 
-  if ((x >= 331 && x <=426) && (y >= 651 && y <= 685 )) then ("place 0,0,0", (360, 666))
-  else if ((x >= 438 && x <= 575) && (y >= 653 && y <= 685 )) then ("place 0,0,1", (475, 666))
-  else if ((x >= 580 && x <= 696) && (y >= 651 && y <= 684)) then ("place 0,0,2", (605, 666))
-  else if ((x >= 296 && x <= 414) && (y >= 596 && y <= 645)) then ("place 0,1,0", (340, 610))
-  else if ((x >= 422 && x <= 574) && (y >= 597 && y <= 644)) then ("place 0,1,1", (475, 615))
-  else if ((x >= 585 && x <= 697) && (y >= 597 && y <= 645)) then ("place 0,1,2", (625, 610))
-  else if ((x >= 251 && x <= 401) && (y >= 541 && y <= 590)) then ("place 0,2,0", (320, 550))
-  else if ((x >= 418 && x <= 576) && (y >= 540 && y <= 590)) then ("place 0,2,1", (475, 555))
-  else if ((x >= 583 && x <= 760) && (y >= 540 && y <= 590)) then ("place 0,2,2", (645, 555))
+  if ((x >= 331 && x <=426) && (y >= 651 && y <= 685 )) then ((command^" 0,0,0"), (360, 666))
+  else if ((x >= 438 && x <= 575) && (y >= 653 && y <= 685 )) then ((command^" 0,0,1"), (475, 666))
+  else if ((x >= 580 && x <= 696) && (y >= 651 && y <= 684)) then ((command^" 0,0,2"), (605, 666))
+  else if ((x >= 296 && x <= 414) && (y >= 596 && y <= 645)) then ((command^" 0,1,0"), (340, 610))
+  else if ((x >= 422 && x <= 574) && (y >= 597 && y <= 644)) then ((command^" 0,1,1"), (475, 615))
+  else if ((x >= 585 && x <= 697) && (y >= 597 && y <= 645)) then ((command^" 0,1,2"), (625, 610))
+  else if ((x >= 251 && x <= 401) && (y >= 541 && y <= 590)) then ((command^" 0,2,0"), (320, 550))
+  else if ((x >= 418 && x <= 576) && (y >= 540 && y <= 590)) then ((command^" 0,2,1"), (475, 555))
+  else if ((x >= 583 && x <= 760) && (y >= 540 && y <= 590)) then ((command^" 0,2,2"), (645, 555))
 
-  else if ((x >= 319 && x <= 428) && (y >= 480 && y <= 520)) then ("place 1,0,0", (350, 492))
-  else if ((x >= 439 && x <= 575) && (y >= 496 && y <= 524)) then ("place 1,0,1", (475, 492))
-  else if ((x >= 577 && x <= 670) && (y >= 493 && y <= 528)) then ("place 1,0,2", (605, 492))
-  else if ((x >= 300 && x <= 414) && (y >= 437 && y <= 489)) then ("place 1,1,0", (340, 440))
-  else if ((x >= 433 && x <= 575) && (y >= 440 && y <= 490)) then ("place 1,1,1", (0,0))
-  else if ((x >= 583 && x <= 726) && (y >= 439 && y <= 489)) then ("place 1,1,2", (625, 440))
-  else if ((x >= 251 && x <= 401) && (y >= 384 && y <= 434)) then ("place 1,2,0", (320, 385))
-  else if ((x >= 418 && x <= 579) && (y >= 383 && y <= 432)) then ("place 1,2,1", (475, 390))
-  else if ((x >= 583 && x <= 763) && (y >= 381 && y <= 432)) then ("place 1,2,2", (645, 385))
+  else if ((x >= 319 && x <= 428) && (y >= 480 && y <= 520)) then ((command^" 1,0,0"), (350, 492))
+  else if ((x >= 439 && x <= 575) && (y >= 496 && y <= 524)) then ((command^" 1,0,1"), (475, 492))
+  else if ((x >= 577 && x <= 670) && (y >= 493 && y <= 528)) then ((command^" 1,0,2"), (605, 492))
+  else if ((x >= 300 && x <= 414) && (y >= 437 && y <= 489)) then ((command^" 1,1,0"), (340, 440))
+  else if ((x >= 433 && x <= 575) && (y >= 440 && y <= 490)) then ((command^" 1,1,1"), (0,0))
+  else if ((x >= 583 && x <= 726) && (y >= 439 && y <= 489)) then ((command^" 1,1,2"), (625, 440))
+  else if ((x >= 251 && x <= 401) && (y >= 384 && y <= 434)) then ((command^" 1,2,0"), (320, 385))
+  else if ((x >= 418 && x <= 579) && (y >= 383 && y <= 432)) then ((command^" 1,2,1"), (475, 390))
+  else if ((x >= 583 && x <= 763) && (y >= 381 && y <= 432)) then ((command^" 1,2,2"), (645, 385))
 
-  else if ((x >= 316 && x <= 427) && (y >= 324 && y <= 361)) then ("place 2,0,0", (360, 330))
-  else if ((x >= 440 && x <= 575) && (y >= 324 && y <= 360)) then ("place 2,0,1", (475, 330))
-  else if ((x >= 580 && x <= 694) && (y >= 323 && y <= 360)) then ("place 2,0,2", (605, 330))
-  else if ((x >= 284 && x <= 414) && (y >= 269 && y <= 322)) then ("place 2,1,0", (340, 280))
-  else if ((x >= 430 && x <= 576) && (y >= 270 && y <= 318)) then ("place 2,1,1", (475, 275))
-  else if ((x >= 582 && x <= 730) && (y >= 270 && y <= 318)) then ("place 2,1,2", (625, 280))
-  else if ((x >= 252 && x <= 404) && (y >= 216 && y <= 265)) then ("place 2,2,0", (320, 225))
-  else if ((x >= 420 && x <= 580) && (y >= 215 && y <= 265)) then ("place 2,2,1", (475, 225))
-  else if ((x >= 585 && x <= 763) && (y >= 216 && y <= 266)) then ("place 2,2,2", (645, 225))
+  else if ((x >= 316 && x <= 427) && (y >= 324 && y <= 361)) then ((command^" 2,0,0"), (360, 330))
+  else if ((x >= 440 && x <= 575) && (y >= 324 && y <= 360)) then ((command^" 2,0,1"), (475, 330))
+  else if ((x >= 580 && x <= 694) && (y >= 323 && y <= 360)) then ((command^" 2,0,2"), (605, 330))
+  else if ((x >= 284 && x <= 414) && (y >= 269 && y <= 322)) then ((command^" 2,1,0"), (340, 280))
+  else if ((x >= 430 && x <= 576) && (y >= 270 && y <= 318)) then ((command^" 2,1,1"), (475, 275))
+  else if ((x >= 582 && x <= 730) && (y >= 270 && y <= 318)) then ((command^" 2,1,2"), (625, 280))
+  else if ((x >= 252 && x <= 404) && (y >= 216 && y <= 265)) then ((command^" 2,2,0"), (320, 225))
+  else if ((x >= 420 && x <= 580) && (y >= 215 && y <= 265)) then ((command^" 2,2,1"), (475, 225))
+  else if ((x >= 585 && x <= 763) && (y >= 216 && y <= 266)) then ((command^" 2,2,2"), (645, 225))
 
-  else ("place 1,1,1", (1,1))
-
-
-
+  else (command^" 1,1,1", (1,1))
 
 let repeat_cell x y =
-  if x = 0 && y = 0 then (draw_image (get_img "imgs/no_x.jpg") 236 3;)
-  else if x = 1 && y = 1 then (draw_image (get_img "imgs/stay.jpg") 236 3;)
-  else (draw_image (get_img "imgs/msg2.jpg") 236 3;)
+  if x = 0 && y = 0 then (draw_image (get_img "imgs/no_x.jpg") 236 0;)
+  else if x = 1 && y = 1 then (draw_image (get_img "imgs/stay.jpg") 236 0;)
+  else (draw_image (get_img "imgs/msg2.jpg") 236 0;)
 
 
 let responsive_board str x y =
