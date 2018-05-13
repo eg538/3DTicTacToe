@@ -91,9 +91,9 @@ let rec play single st=
   if com = "try 1,1,1" then play single st_modified else
   let command = parse com in
   let newSt = do' command st in
-  print_endline "length of list of 3-in-row:";
-  let lst = newSt.diagonals in 
-  print_int (List.length lst);
+  (* print_endline "length of list of 3-in-row:";
+  let lst = newSt.diagonals in
+  print_int (List.length lst); *)
   (*Remember to check for win*)
   match command with
   | Play str -> (print_endline "A game is currently is session. Please quit first.";
@@ -139,14 +139,17 @@ let rec play single st=
           Gui.cover_up ();
           print_int x;
           print_int y;
-          Gui.responsive_board playerr x y ;
-          let player1_score = p1_score newSt in
-          let player2_score = p2_score newSt in
-          Gui.score player1_score player2_score ;
-          let hint_num = num_hints newSt in
-          let try_num = num_tries newSt in
-          Gui.num_try_hint try_num 836 587;
-          Gui.num_try_hint hint_num 171 593;
+          Gui.responsive_board playerr x y ; (* x and y are the locations to draw the image *)
+          Gui.score (p1_score newSt) (p2_score newSt) ;
+          Gui.num_try_hint (num_tries newSt) 836 587;
+          Gui.num_try_hint (num_hints newSt) 171 593;
+          let recent_wins = (most_recent_wins newSt ) = [] in
+          print_endline " ";print_endline "recent_wins is empty"; print_endline (string_of_bool recent_wins); print_endline " ";
+          if (not recent_wins) then
+            Gui.draw_three_row (most_recent_wins newSt);
+          (* let recent_wins = most_recent_wins newSt in
+          if recent_wins <> [] then
+            Gui.draw_three_row recent_wins; *)
 
           print_endline ("Score of player 1: "^(string_of_int (p1_score newSt))^"\n"^"Score of player 2: "^(string_of_int (p2_score newSt)));
           play single newSt))

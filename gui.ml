@@ -373,3 +373,56 @@ let winner_winner_chicken_dinner str =
   else if str = "caml" then (winner_winner_chicken_appetizer "imgs/caml_wins.jpg";)
   else if str = "python" then (winner_winner_chicken_appetizer "imgs/python_wins.jpg";)
   else (winner_winner_chicken_appetizer "imgs/draw_img.jpg";)
+
+let mark_three x y =
+  set_color annoying_green;
+  Graphics.set_font "-*-fixed-medium-r-semicondensed--25-*-*-*-*-*-iso8859-1";
+  (draw_string "X";)
+
+(* let draw_three_row_helper_helper lst x y =
+  match lst with
+  | [] ->
+  | (pl,x,y)::t ->
+    begin
+      match (pl,x,y) with
+      | (0,0,0) -> (360, 666)
+      | (0,0,1) ->
+      | (0,0,2) ->
+      | (0,1,0) ->
+      | (0,1,1) ->
+      | (0,1,2) ->
+      | (0,2,0) ->
+      | (0,2,1) ->
+      | (0,2,2) ->
+      | (1,0,0) ->
+      | (1,0,1) ->
+      | (1,0,2) ->
+      | (1,1,0) ->
+      | (1,1,1) ->
+      | (1,1,2) ->
+      | (1,2,0) ->
+      | (1,2,1) ->
+      | (1,2,2) ->
+      | (2,0,0) ->
+      | (2,0,1) ->
+      | (2,0,2) ->
+      | (2,1,0) ->
+      | (2,1,1) ->
+      | (2,1,2) ->
+      | (2,2,0) ->
+      | (2,2,1) ->
+      | (2,2,2) ->
+
+
+    end *)
+
+(* let draw_three_row_helper hd_lst tl_lst =
+  match hd_lst with
+  | [] -> line_drawn
+  | lst -> draw_three_row_helper_helper (List.sort Pervasives.compare lst ) (); *)
+
+let draw_three_row recent_wins =
+  print_endline " "; print_endline "in Gui.draw_three_row"; print_endline " ";
+  match recent_wins with
+  | [] -> print_endline "impossible. shouldn't be given an empty list";
+  | h::t -> print_endline "yay";
