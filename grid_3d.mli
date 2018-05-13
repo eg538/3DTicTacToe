@@ -68,12 +68,16 @@ val get_the_win: cell -> player -> board -> cell list list
 
 (*[three_row_2d_cells c lst_of_cells] is the list of lists of cells 
  *that create a three in a row with [c] in [lst_of_cells]*)
- val all_three_in_row_cells: cell -> board -> cell list list
+val all_three_in_row_cells: cell -> board -> cell list list
+
+val threed_diag_wins: cell -> board -> cell list list
 
 val diag_check: cell -> board -> (winType3D * winType3D)
 
 val three_row_2d_cells: cell -> board -> cell list list
 
-val victory_on_plane: cell -> cell list list -> int -> int
+val victory_on_plane: cell -> cell list list -> cell list list -> cell list list
+
+val threed_col_win: cell -> board -> cell list
 
 val col_check: cell -> board -> bool

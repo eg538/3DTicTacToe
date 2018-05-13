@@ -182,7 +182,7 @@ let rec victory_on_plane c possible_instances acc =
   match possible_instances with
   | [] -> acc
   | h::t -> if List.for_all (fun m -> m.player = c.player) h then
-        victory_on_plane c t (acc + 1)
+        victory_on_plane c t (h::acc)
       else
         victory_on_plane c t acc
 
@@ -264,6 +264,27 @@ let vertical_3d_groups c b =
 | _ -> List.filter
          (fun a -> a.cell <> (0,2,1) && a.cell <> (1,2,0) && a.cell <> (2,2,1) && a.cell <> (1,2,2) && (a.cell |> thd = 0)) grid_space
 *)
+
+(*[diag_check c b] finds the respective diagonal and horizontal wins that cover
+  all three levels of the grid_space that relate to cell [c]
+*)
+let threed_diag_wins c b =
+  let diag_h = horizontal_3d_group c b in
+  let diag_v = vertical_3d_groups c b in
+  let verdict_h = (match diag_h with
+    | [] -> []
+    | h::[] -> if (List.for_all (fun x -> x.player = c.player) h) then [h] else []
+    | h1::h2::[] -> if (List.for_all (fun x -> x.player = c.player) h1) || (List.for_all (fun x -> x.player = c.player) h2) then [h1;h2] else []
+    | _ -> []
+    ) in
+  let verdict_v = (match diag_v with
+      | [] -> []
+      | h::[] -> if (List.for_all (fun x -> x.player = c.player) h) then [h] else []
+      | h1::h2::[] -> if (List.for_all (fun x -> x.player = c.player) h1) || (List.for_all (fun x -> x.player = c.player) h2) then [h1;h2] else []
+      | _ -> []
+  ) in
+  verdict_h @ verdict_v
+
 (*[diag_check c b] finds the respective diagonal and horizontal wins that cover
   all three levels of the grid_space that relate to cell [c]
 *)
@@ -301,6 +322,17 @@ let find_vertical_cells c b =
   List.filter
     (fun i -> (i.cell |> snd')=s && ((i.cell |> thd)=t) && (i<>c)) grid_space
 
+let threed_col_win c b =
+  if (((c.cell|> thd) = 1) && ((c.cell |> snd') = 1)) then [] else
+    begin
+  let cell_1 = (find_vertical_cells c b) |> List.hd in
+  let cell_2 = (find_vertical_cells c b) |> List.rev |> List.hd in
+  if (cell_1.player = c.player) && (cell_2.player = c.player) then
+    [cell_1; cell_2; c]
+  else
+    []
+  end
+
 (*[col_check c b] checks to see whether all the remaining cells in the column of
   [c] are taken by the same player that played [c] in [b]
 *)
@@ -319,13 +351,13 @@ let win_evaluation c b =
     (((diag_check c b )|> fst) <> WinNone) || (((diag_check c b) |> snd) <> WinNone) in
   let cases_3d = (diag_check_truth) || (col_check c b) in
   let modified_3_row_2d_cells = List.filter (fun x -> List.length x <> 2) (three_row_2d_cells c b) in
-  let case_1 = victory_on_plane c (modified_3_row_2d_cells) 0 in
-  let case_2 = victory_on_plane c (modified_3_row_2d_cells) 0 in
-  let case_3 = victory_on_plane c (modified_3_row_2d_cells) 0 in
+  let case_1 = victory_on_plane c (modified_3_row_2d_cells) [] in
+  let case_2 = victory_on_plane c (modified_3_row_2d_cells) [] in
+  let case_3 = victory_on_plane c (modified_3_row_2d_cells) [] in
   match get_plane c.cell with
-  | 0 -> (case_1 > 0) || cases_3d 
-  | 1 -> (case_2 > 0) || cases_3d
-  | 2 -> (case_3 > 0) || cases_3d
+  | 0 -> ((List.length case_1) > 0) || cases_3d 
+  | 1 -> ((List.length case_2) > 0) || cases_3d
+  | 2 -> ((List.length case_3) > 0) || cases_3d
   | _ -> failwith "impossible"
 
 let cells_occupied b =
