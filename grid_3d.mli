@@ -74,6 +74,6 @@ val diag_check: cell -> board -> (winType3D * winType3D)
 
 val three_row_2d_cells: cell -> board -> cell list list
 
-val victory_on_plane: cell -> cell list list -> bool
+val victory_on_plane: cell -> cell list list -> int -> int
 
 val col_check: cell -> board -> bool
