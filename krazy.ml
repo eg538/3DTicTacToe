@@ -1,12 +1,11 @@
 open Types
 open Grid_3d
- open State 
+open State
+
 let krazy_disappearing_sqs st c =
-  if (c=c) then (
+  if (c=st.k_disappearing_sqs) then (
     Hashtbl.replace st.tttBoard c.cell {c with player = None}
   ) else ()
-
-let krazy_cell_swap st c c1 c2 = failwith "unimplemented"
 
 let rec krazy_recalc_helper cellst st =
   match cellst with
