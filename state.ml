@@ -91,7 +91,7 @@ let inc_point inc_amt st =
     {st with curr_score_1 = st.curr_score_1 + inc_amt}
   else
     {st with curr_score_2 = st.curr_score_2 + inc_amt}
-(* 
+(*
  let rec extract_cells_from_st st st_diags =
   match st.diagonals with
   | [] -> []
@@ -176,18 +176,18 @@ let play_move st (pl, row, col) =
     let case_2d = victory_on_plane c instances [] in
     (* print_endline ("CASE 2D");
     print_endline (string_of_int (List.length case_2d)); *)
-    let case_3d = 
+    let case_3d =
     begin
-      if (threed_col_win c b) = [] then 
-        diag_check_lst 
-      else (threed_col_win c b)::diag_check_lst 
-    end  
+      if (threed_col_win c b) = [] then
+        diag_check_lst
+      else (threed_col_win c b)::diag_check_lst
+    end
     in
     (* print_endline ("CASE 3D");
     print_endline (string_of_int (List.length case_3d)); *)
     let inced_st = inc_point ((List.length case_2d) + (List.length case_3d)) st in
     let lst_win_coords = List.map (fun lst -> List.map (fun a -> a.cell) lst) (case_2d @ case_3d) in
-    (* print_endline (string_three_row (lst_win_coords) ""); *)
+    (* print_string "updateing most_recent_win"; print_endline (string_three_row (lst_win_coords) ""); *)
     {inced_st with most_recent_win = lst_win_coords}
     end
     (*match (case_2d, case_3d) with

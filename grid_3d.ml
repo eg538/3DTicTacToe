@@ -123,13 +123,13 @@ let thd (_,_,y) = y
 *)
 let diagonal_hardcode c lst_of_cells =
   match c.cell with
-  | p,x,y when (x=y) -> 
+  | p,x,y when (x=y) ->
     begin
       let l1 = (List.filter (fun i -> ((i.cell |> thd) = (i.cell |> snd')) && (p = fst' c.cell)) lst_of_cells) in (*orig*)
       let l2 = (List.filter (fun i -> (((i.cell |> thd = 2) && (i.cell |> snd' = 0)) || ((i.cell |> snd' = 2)  && (i.cell |> thd = 0))) && (p = fst' c.cell)) lst_of_cells) in
       [l1;l2]
     end
-  | p,x,y when (x=0 && y=2) || (x=2 && y=0) -> 
+  | p,x,y when (x=0 && y=2) || (x=2 && y=0) ->
     let l1 = (List.filter (fun i -> (((i.cell |> thd = 1)&&(i.cell |> snd' = 1)) || ((i.cell |> thd = 0)&&(i.cell |> snd' = 2))) && (p = fst' c.cell)) lst_of_cells) @ [c] in
     let l2 = (List.filter (fun i -> (((i.cell |> thd = 1)&&(i.cell |> snd' = 1)) || ((i.cell |> thd = 2)&&(i.cell |> snd' = 0))) && (p = fst' c.cell)) lst_of_cells) @ [c] in
     [l1; l2]
@@ -143,30 +143,30 @@ let three_row_2d_cells c b =
   let lst = board_list_of_cells b in
   let lst_of_cells = get_parent_plane c lst in
   match c.cell with
-  | (p,x,y) when (x=1 && y=1) -> print_endline "2d center cell";
+  | (p,x,y) when (x=1 && y=1) -> 
       let col = (List.filter (fun i -> (thd (c.cell) = thd (i.cell))) lst_of_cells) in
       let row = (List.filter (fun i -> (snd' (c.cell) = snd' (i.cell))) lst_of_cells) in
       let diag = diagonal_hardcode c lst_of_cells in
       let diag1 = List.nth diag 0 in
       let diag2 = List.nth diag 1 in
       col::row::diag1::diag2::[]
-  | (p,x,y) when (x=1 && y <> 1) || (x<>1 && y =1) -> print_endline "2d center of row or col";
+  | (p,x,y) when (x=1 && y <> 1) || (x<>1 && y =1) ->
       let col = (List.filter (fun i -> (thd (c.cell) = thd (i.cell))) lst_of_cells) in
       let row = (List.filter (fun i -> (snd' (c.cell) = snd' (i.cell))) lst_of_cells)::[] in
       col::row
-  | (p,x,y) when x = y -> print_endline "x = y corners";
+  | (p,x,y) when x = y -> 
       let col = (List.filter (fun i -> (thd (c.cell) = thd (i.cell))) lst_of_cells) in
       let row = (List.filter (fun i -> (snd' (c.cell) = snd' (i.cell))) lst_of_cells) in
       let diag = diagonal_hardcode c lst_of_cells in
       let diag1 = List.nth diag 0 in
       col::row::diag1::[]
-  | (p,x,y) when x = 2 && y = 0 -> print_endline "(2, 0) corner";
+  | (p,x,y) when x = 2 && y = 0 ->
       let col = (List.filter (fun i -> (thd (c.cell) = thd (i.cell))) lst_of_cells) in
       let row = (List.filter (fun i -> (snd' (c.cell) = snd' (i.cell))) lst_of_cells) in
       let diag = diagonal_hardcode c lst_of_cells in
       let diag1 = List.nth diag 1 in
       col::row::diag1::[]
-  | (p,x,y) when x = 0 && y = 2 -> print_endline "(0, 2) corner";
+  | (p,x,y) when x = 0 && y = 2 -> 
       let col = (List.filter (fun i -> (thd (c.cell) = thd (i.cell))) lst_of_cells) in
       let row = (List.filter (fun i -> (snd' (c.cell) = snd' (i.cell))) lst_of_cells) in
       let diag = diagonal_hardcode c lst_of_cells in
@@ -355,7 +355,7 @@ let win_evaluation c b =
   let case_2 = victory_on_plane c (modified_3_row_2d_cells) [] in
   let case_3 = victory_on_plane c (modified_3_row_2d_cells) [] in
   match get_plane c.cell with
-  | 0 -> ((List.length case_1) > 0) || cases_3d 
+  | 0 -> ((List.length case_1) > 0) || cases_3d
   | 1 -> ((List.length case_2) > 0) || cases_3d
   | 2 -> ((List.length case_3) > 0) || cases_3d
   | _ -> failwith "impossible"
