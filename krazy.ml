@@ -1,15 +1,6 @@
 open Types
 open Grid_3d
-<<<<<<< HEAD
 open State
-
-let krazy_disappearing_sqs st c =
-  if (c=st.k_disappearing_sqs) then (
-    Hashtbl.replace st.tttBoard c.cell {c with player = None}
-  ) else ()
-
-=======
-open State 
 
 (*[string_of_player p] is the string representation of [p]*)
 let string_of_player p = match p with
@@ -21,7 +12,7 @@ let string_of_mode m = match m with
   | Normal -> "normal"
   | Krazy -> "krazy"
 
-let string_of_num_p n = match n with 
+let string_of_num_p n = match n with
   | Single -> "single"
   | Multi -> "multi"
 
@@ -30,7 +21,17 @@ let string_of_level l = match l with
   | Medium -> "medium"
   | Hard -> "hard"
 
->>>>>>> e7ab3798b73c533ffc491bc1e9c651b96d36585b
+let random_cell_for_krazy st =
+  let all_cells = cells_left (board st) in
+  let index = (Random.int ((List.length all_cells)-1)) in
+  {st with k_disappearing_sqs = (List.nth (all_cells) index)}
+
+let krazy_disappearing_sqs st c =
+  if (c.cell=(st.k_disappearing_sqs).cell) then (
+    Hashtbl.replace st.tttBoard c.cell {c with player = None};
+    {st with tttBoard = st.tttBoard}
+  ) else st
+
 let rec krazy_recalc_helper cellst st =
   match cellst with
   | [] -> st
