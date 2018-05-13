@@ -77,3 +77,8 @@ val check_try_pressed : unit -> bool *)
    where the user pressed
 *)
 val which_command : unit -> string*int*int
+
+(* Draws a line through the most recent three in a rows *)
+val draw_three_row : (int*int*int) list list ->  unit
+
+val cell_coords_to_x_y: (int*int*int) -> (int*int)

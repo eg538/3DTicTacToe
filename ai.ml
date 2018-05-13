@@ -27,14 +27,12 @@ let move_heur_fn_helper (move: cell) (clst: cell list) (plyr: player) (acc: int)
   print_endline ("Curr_p: " ^ (string_of_int counts.curr_p));
   print_endline ("Opp: " ^ (string_of_int counts.opp)); *)
   if counts.curr_p = 2 then
-    10
+    3
   else if counts.opp = 2 then 
-    5
-  else if (counts.curr_p = 1 && counts.none = 2) then
     2
-  else if counts.none = 3 then
+  else if (counts.curr_p = 1 && counts.none = 2) then
     1
-  else
+  else 
     -1
 
 (* let rec move_heur_fn_helper (move: cell) (clst: cell list) (plyr: player) (acc: int) =
@@ -115,20 +113,35 @@ let easy_ai_move st =
   let mve = easy_ai_move_help rem (Random.int (List.length rem)) (List.hd rem |> cell_coords) in 
   Place mve
 
-let medium_ai_move st = 
-  let rem_cells = cells_left (board st) in
-  let thresh = (-1) * ((List.length rem_cells |> float_of_int) /. 6.0 +. 0.5 |> int_of_float) in
-  let depth = 30.0 /. (List.length rem_cells |> float_of_int) +. 0.5 |> int_of_float in
-  let game_tree = game_tree_generate st depth thresh in
-  match game_tree with 
-  | Leaf -> easy_ai_move st
-  | Node (nd, children) -> 
-    begin
-    match dfs children game_tree nd.h_score with 
+let rec med_ai_move_helper st rem_cells thresh = 
+  let game_tree = game_tree_generate st 5 thresh in
+  (* print_endline "medium level ai calculating move..."; *)
+  (* print_endline (string_of_int (List.length rem_cells)); *)
+  if List.length rem_cells = 1 then
+    (* (print_endline "One cell left"; *)
+    Place ((List.hd rem_cells).cell)
+  else
+    (print_endline "AYYY";
+    match game_tree with 
     | Leaf -> easy_ai_move st
-    | Node (mve, _) ->
-      Place mve.move
-    end
+    | Node (nd, children) -> if List.length children = 0 then 
+        med_ai_move_helper st rem_cells (thresh -1)
+      else
+      begin
+      print_endline "POOP";
+      match dfs children game_tree nd.h_score with 
+      | Leaf -> easy_ai_move st
+      | Node (mve, _) ->
+        Place mve.move
+      end)
+
+let medium_ai_move st = 
+  print_endline "HERE";
+  let rem_cells = cells_left (board st) in
+  (* let thresh = (-1) * ( 30.0 /. (List.length rem_cells |> float_of_int) -. 0.5 |> int_of_float) in *)
+  (* let depth = 30.0 /. (List.length rem_cells |> float_of_int) +. 0.5 |> int_of_float in *)
+  (* let thresh = if List.length rem_cells <= 3 then min_int else 0 in *)
+  med_ai_move_helper st rem_cells 0
   
 
 let get_node t = match t with 

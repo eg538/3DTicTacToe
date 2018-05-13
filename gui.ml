@@ -373,3 +373,54 @@ let winner_winner_chicken_dinner str =
   else if str = "caml" then (winner_winner_chicken_appetizer "imgs/caml_wins.jpg";)
   else if str = "python" then (winner_winner_chicken_appetizer "imgs/python_wins.jpg";)
   else (winner_winner_chicken_appetizer "imgs/draw_img.jpg";)
+
+let mark_three x y =
+  set_color annoying_green;
+  Graphics.set_font "-*-fixed-medium-r-semicondensed--25-*-*-*-*-*-iso8859-1";
+  (draw_string "X";)
+
+let cell_coords_to_x_y (pl, x, y)= 
+  match (pl,x,y) with
+  | (0,0,0) -> (360, 666)
+  | (0,0,1) -> (475, 666)
+  | (0,0,2) -> (605, 666)
+  | (0,1,0) -> (340, 610)
+  | (0,1,1) -> (475, 615)
+  | (0,1,2) -> (625, 610)
+  | (0,2,0) -> (320, 550)
+  | (0,2,1) -> (475, 555)
+  | (0,2,2) -> (645, 555)
+  | (1,0,0) -> (350, 492)
+  | (1,0,1) -> (475, 492)
+  | (1,0,2) -> (605, 492)
+  | (1,1,0) -> (340, 440)
+  | (1,1,1) -> (0,0)
+  | (1,1,2) -> (625, 440)
+  | (1,2,0) -> (320, 385)
+  | (1,2,1) -> (475, 390)
+  | (1,2,2) -> (645, 385)
+  | (2,0,0) -> (360, 330)
+  | (2,0,1) -> (475, 330)
+  | (2,0,2) -> (605, 330)
+  | (2,1,0) -> (340, 280)
+  | (2,1,1) -> (475, 275)
+  | (2,1,2) -> (625, 280)
+  | (2,2,0) -> (320, 225)
+  | (2,2,1) -> (475, 225)
+  | (2,2,2) -> (645, 225)
+
+(* let draw_three_row_helper_helper lst x y =
+  match lst with
+  | [] ->
+  | (pl,x,y)::t -> *)
+
+(* let draw_three_row_helper hd_lst tl_lst =
+  match hd_lst with
+  | [] -> line_drawn
+  | lst -> draw_three_row_helper_helper (List.sort Pervasives.compare lst ) (); *)
+
+let draw_three_row recent_wins =
+  print_endline " "; print_endline "in Gui.draw_three_row"; print_endline " ";
+  match recent_wins with
+  | [] -> print_endline "impossible. shouldn't be given an empty list";
+  | h::t -> print_endline "yay";
