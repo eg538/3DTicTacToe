@@ -123,13 +123,13 @@ let thd (_,_,y) = y
 *)
 let diagonal_hardcode c lst_of_cells =
   match c.cell with
-  | p,x,y when (x=y) -> print_endline "case 1";
+  | p,x,y when (x=y) -> 
     begin
       let l1 = (List.filter (fun i -> ((i.cell |> thd) = (i.cell |> snd')) && (p = fst' c.cell)) lst_of_cells) in (*orig*)
       let l2 = (List.filter (fun i -> (((i.cell |> thd = 2) && (i.cell |> snd' = 0)) || ((i.cell |> snd' = 2)  && (i.cell |> thd = 0))) && (p = fst' c.cell)) lst_of_cells) in
       [l1;l2]
     end
-  | p,x,y when (x=0 && y=2) || (x=2 && y=0) -> print_endline "case 2";
+  | p,x,y when (x=0 && y=2) || (x=2 && y=0) -> 
     let l1 = (List.filter (fun i -> (((i.cell |> thd = 1)&&(i.cell |> snd' = 1)) || ((i.cell |> thd = 0)&&(i.cell |> snd' = 2))) && (p = fst' c.cell)) lst_of_cells) @ [c] in
     let l2 = (List.filter (fun i -> (((i.cell |> thd = 1)&&(i.cell |> snd' = 1)) || ((i.cell |> thd = 2)&&(i.cell |> snd' = 0))) && (p = fst' c.cell)) lst_of_cells) @ [c] in
     [l1; l2]
@@ -333,7 +333,7 @@ let get_the_win c current_player b=
     | true  -> begin
         match diag_check c b with
         | WinNone, WinNone -> []
-        | WinH x, WinV y -> x @y
+        | WinH x, WinV y -> x @ y
         | WinH x, WinNone -> x
         | WinNone, WinV y -> y
         | _, _ -> []
