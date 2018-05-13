@@ -7,6 +7,7 @@ open Ai
 open Parse_init
 open ANSITerminal
 open Gui
+open Graphics
 
 exception Terminated
 exception Restart
@@ -40,10 +41,10 @@ let computer_move_st newSt =
     newSt'
 
 let rec ended () =
-  let input = Gui.which_command () in 
-  let commend = fst' input in 
-  let x = snd' input in 
-  let y = thd input in 
+  let input = Gui.which_command () in
+  let commend = fst' input in
+  let x = snd' input in
+  let y = thd input in
   let grab_GUI = Gui.play_board commend x y in
   let com = fst grab_GUI in
   let command = parse com in
@@ -76,12 +77,18 @@ let rec play single st=
   Gui.rect_drawn_gray 149 627 69 44;
   Gui.rect_drawn_gray 800 625 93 40;
   Gui.responsive_board playerr 0 700;
-  let input = Gui.which_command () in 
-  let commend = fst' input in 
-  let x = snd' input in 
-  let y = thd input in 
+
+  let input = Gui.which_command () in
+  let commend = fst' input in
+  let x = snd' input in
+  print_endline "x is";
+  print_int x;
+  let y = thd input in
+  print_endline "y is";
+  print_int y;
   let test = Gui.play_board commend x y in
   let com = fst test in
+  print_endline commend;
   print_endline com;
   let st_modified = (  if playerr = "python" then  {st with p1_num_tries = st.p1_num_tries - 1 }
   else  {st with p2_num_tries = st.p2_num_tries - 1}) in
@@ -97,38 +104,53 @@ let rec play single st=
      play single newSt)
   | Quit -> (print_endline "yo what's up in this hole";exit 0)
   | Restart -> (raise Restart)
-  | Try (pl, x, y) -> 
-      let x = snd test |> fst in
-      let y = snd test |> snd in
-      let tmp = playerr ^ "_try" in 
-      print_endline "here";
-      Gui.responsive_board tmp x y;
-  | Place (pl, x, y) ->
-    (if newSt = st then
+  | Try (pl, x, y) ->(
+      if newSt = st then
       (let ex = snd test |> fst in
       let why = snd test |> snd in
       Gui.repeat_cell ex why;
       print_endline "Action impossible. Please try a different move.";
-       play single newSt;)
+      play single newSt;)
+      else
+        (
+          print_board newSt;
+          let x = snd test |> fst in
+          let y = snd test |> snd in
+          (* let tmp = playerr ^ "_try" in *)
+          print_endline "here";
+          Gui.cover_up ();
+          print_int x;
+          print_int y;
+          Gui.tried playerr x y;
+          (* Gui.responsive_board tmp x y; *)
 
-    else
-      (  print_board newSt;
-      let x = snd test |> fst in
-      let y = snd test |> snd in
-      Gui.cover_up ();
-      print_int x;
-      print_int y;
-      Gui.responsive_board playerr x y ;
-      let player1_score = p1_score newSt in
-      let player2_score = p2_score newSt in
-      Gui.score player1_score player2_score ;
-      let hint_num = num_hints newSt in
-      let try_num = num_tries newSt in
-      Gui.num_try_hint try_num 836 587;
-      Gui.num_try_hint hint_num 171 593;
+          play single newSt))
+  | Place (pl, x, y) ->
+    (if newSt = st then
+       (let ex = snd test |> fst in
+        let why = snd test |> snd in
+        Gui.repeat_cell ex why;
+        print_endline "Action impossible. Please try a different move.";
+        play single newSt;)
 
-      print_endline ("Score of player 1: "^(string_of_int (p1_score newSt))^"\n"^"Score of player 2: "^(string_of_int (p2_score newSt)));
-    play single newSt))
+     else
+       (  print_board newSt;
+          let x = snd test |> fst in
+          let y = snd test |> snd in
+          Gui.cover_up ();
+          print_int x;
+          print_int y;
+          Gui.responsive_board playerr x y ;
+          let player1_score = p1_score newSt in
+          let player2_score = p2_score newSt in
+          Gui.score player1_score player2_score ;
+          let hint_num = num_hints newSt in
+          let try_num = num_tries newSt in
+          Gui.num_try_hint try_num 836 587;
+          Gui.num_try_hint hint_num 171 593;
+
+          print_endline ("Score of player 1: "^(string_of_int (p1_score newSt))^"\n"^"Score of player 2: "^(string_of_int (p2_score newSt)));
+          play single newSt))
   | Hint -> (failwith "Unimplemented")
   | Look -> (print_board st; play single newSt)
   | CurrentPlayer ->
