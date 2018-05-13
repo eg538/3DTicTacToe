@@ -295,7 +295,7 @@ let play_board command x y =
 let repeat_cell x y =
   if x = 0 && y = 0 then (draw_image (get_img "imgs/no_x.jpg") 236 0;)
   else if x = 1 && y = 1 then (draw_image (get_img "imgs/stay.jpg") 236 0;)
-  else (draw_image (get_img "imgs/msg2.jpg") 236 0;)
+  else (sound 440 1000; draw_image (get_img "imgs/msg2.jpg") 236 0;)
 
 
 let responsive_board str x y =

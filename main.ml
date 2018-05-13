@@ -91,6 +91,9 @@ let rec play single st=
   if com = "try 1,1,1" then play single st_modified else
   let command = parse com in
   let newSt = do' command st in
+  print_endline "length of list of 3-in-row:";
+  let lst = newSt.diagonals in 
+  print_int (List.length lst);
   (*Remember to check for win*)
   match command with
   | Play str -> (print_endline "A game is currently is session. Please quit first.";
