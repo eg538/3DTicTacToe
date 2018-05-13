@@ -35,7 +35,7 @@ type state = {
   p1_num_tries : int;
   p2_num_hints : int;
   p2_num_tries : int;
-  diagonals: cell list list;
+  most_recent_win: cell list list;
   winner: player;
   game_end: bool
 }

@@ -24,7 +24,7 @@ let init_state str =
     p1_num_tries = num_helper (level i);
     p2_num_hints = num_helper (level i);
     p2_num_tries = num_helper (level i);
-    diagonals = [];
+    most_recent_win = [];
     winner = None;
     game_end = false
   }
@@ -89,12 +89,12 @@ let inc_point inc_amt st =
     {st with curr_score_1 = st.curr_score_1 + inc_amt}
   else
     {st with curr_score_2 = st.curr_score_2 + inc_amt}
-
+(* 
  let rec extract_cells_from_st st st_diags =
   match st.diagonals with
   | [] -> []
   | [{cell=c1;player=_};{cell=c2;player=_};{cell=c3;player=_}]::t -> [c1;c2;c3]::(extract_cells_from_st st t)
-  | _ -> []
+  | _ -> [] *)
 
 let diag_cells_in_question diag_list =
   match diag_list with
@@ -117,7 +117,7 @@ let rec search st diag_cells_in_q diags_cell_list_only = (*let diags_cell_list_o
   | [] -> false
     | h::t -> (check diag_cells_in_question h) || (search st diag_cells_in_question t) *)
 
-let accumulate_diag_wins diag_list st = (*cell list list *)
+(* let accumulate_diag_wins diag_list st = (*cell list list *)
   (* print_endline "adding on a diag 3 level win"; *)
   let s = extract_cells_from_st st st.diagonals in (*(int int int) list list *)
   match (diag_list: cell list list) with
@@ -136,7 +136,7 @@ let accumulate_diag_wins diag_list st = (*cell list list *)
       else if not (search st h2' s) then {st with diagonals = h2 :: st.diagonals}
       else st
     end
-  | _ -> failwith "impossible"
+  | _ -> failwith "impossible" *)
 
 let rec string_3_row_h clst acc = 
   match clst with 
@@ -165,27 +165,21 @@ let play_move st (pl, row, col) =
     let c = find_cell st (pl,row,col) in
     let b = st.tttBoard in
     (* let diag_check_truth = (((diag_check c b)|> fst) <> WinNone) || (((diag_check c b) |> snd) <> WinNone) in *)
-    let diag_check_num = 
-      begin
-      match diag_check c b with
-      | (WinH _, WinV _) -> 2
-      | (WinH _, WinNone) -> 1
-      | (WinNone, WinV _) -> 1
-      | _ -> 0
-      end
-    in
+    let diag_check_lst = threed_diag_wins c b in
     (* print_endline ("DIAG_CHECK_NUM");
     print_endline (string_of_int diag_check_num); *)
     let instances = (three_row_2d_cells c b) in
     (* print_endline "THREE IN A ROWS 2D";
     print_endline (string_three_row instances ""); *)
-    let case_2d = victory_on_plane c instances 0 in
+    let case_2d = victory_on_plane c instances [] in
     (* print_endline ("CASE 2D");
     print_endline (string_of_int case_2d); *)
-    let case_3d = diag_check_num + (if col_check c b then 1 else 0) in
+    let case_3d = (threed_col_win c b)::diag_check_lst in
     (* print_endline ("CASE 3D");
     print_endline (string_of_int case_3d); *)
-    inc_point (case_2d + case_3d) st
+    let inced_st = inc_point ((List.length case_2d) + (List.length case_3d)) st in
+    print_endline (string_three_row (case_2d @ case_3d) "");
+    {inced_st with most_recent_win = case_2d @ case_3d}
     end
     (*match (case_2d, case_3d) with
       | true, true ->
@@ -207,7 +201,7 @@ let play_move st (pl, row, col) =
       | _ -> st
       end *)
   else
-    st
+    {st with most_recent_win = []}
 
 let other_player ply =
   match ply with
