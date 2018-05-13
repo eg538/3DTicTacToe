@@ -16,6 +16,18 @@ let score_color = rgb 0 255 205
 (* make color for rectangles *)
 let gray = rgb 151 151 151
 
+(* make color for try*)
+let annoying_green = rgb 0 255 0
+
+(* make color for top plane *)
+let top_plep = rgb 23 45 183
+
+(* make color for middle plane *)
+let mid_plep = rgb 71 0 140
+
+(* make color for bottom plane*)
+let bot_plep = rgb 139 37 61
+
 (* [round (x, y) transforms the floating point values of (x, y) into ints. ]*)
 let round (x, y) = int_of_float x, int_of_float y
 
@@ -125,7 +137,7 @@ else ch
 
 let rec start_game ch =
 
-  let event_lst = [Graphics.Button_down] in
+  let event_lst = [Graphics.Button_up] in
   let mouse_status = wait_next_event event_lst  in
   let x = mouse_status.mouse_x in
   let y = mouse_status.mouse_y in
@@ -178,7 +190,11 @@ let init_welcome () =
   start_game ch
 
 let cover_up () =
+  draw_image (get_img "imgs/coverup.jpg") 0 11;
+  draw_image (get_img "imgs/coverup.jpg") 0 3;
+  draw_image (get_img "imgs/coverup.jpg") 500 11;
   (draw_image (get_img "imgs/coverup.jpg")236 3;)
+
 
 let score p1 p2 =
   draw_image (get_img "imgs/eraser.jpg") 330 42;
@@ -202,32 +218,47 @@ let num_try_hint num x y =
   Graphics.set_font "-*-fixed-medium-r-semicondensed--35-*-*-*-*-*-iso8859-1";
   (draw_string str;)
 
-let tried str ex why =
-  let file_name = str ^ "_try.jpg" in
-  (draw_image (get_img ("imgs/"^file_name)) why ex;)
+  (* let file_name = str ^ "_try.jpg" in
+  (draw_image (get_img ("imgs/"^file_name)) why ex;) *)
 
-let check_try_pressed () =
-  let event_lst = [Graphics.Button_up] in
-  let mouse_status = wait_next_event event_lst  in
-  let x = mouse_status.mouse_x in
-  let y = mouse_status.mouse_y in
+  let fst' (y,_,_) = y
 
-  if (x >= 149 && x <= (149 + 69)) && (y >= 627 && y<= (627 + 44)) then true
-  else false
+  let snd' (_,y,_) = y
+
+  let thd (_,_,y) = y
+
+let which_command () =
+    let event_lst = [Graphics.Button_up] in
+    let mouse_status = wait_next_event event_lst  in
+    let x = mouse_status.mouse_x in
+    let y = mouse_status.mouse_y in
+    print_string "x is: "; print_int x; print_endline " ";
+    print_string "y is: "; print_int y; print_endline " ";
+    print_endline " ";
+
+    if (x >= 149 && x <= (149 + 69)) && (y >= 627 && y<= (627 + 44)) then
+      ( let ev = [Graphics.Button_up] in
+        let ms = wait_next_event ev in
+        let xx =  ms.mouse_x in
+        print_int xx;
+        let yy = ms.mouse_y in
+        print_int yy;
+        ("try" , xx, yy))
+    else ("place" , x, y)
 
 
-
-let play_board () =
-  let event_lst = [Graphics.Button_up] in
+let play_board command x y =
+  (* let event_lst = [Graphics.Button_up] in
   let mouse_status = wait_next_event event_lst  in
   let x = mouse_status.mouse_x in
   let y = mouse_status.mouse_y in
   print_string "x is: "; print_int x; print_endline " ";
   print_string "y is: "; print_int y; print_endline " ";
-  print_endline " ";
+  print_endline " "; *)
 
-  let command = (if (check_try_pressed () ) = true then "try"
-  else "place") in
+  (* let command = fst' input in
+  let x = snd' input in
+  let y = thd input in  *)
 
   if ((x >= 331 && x <=426) && (y >= 651 && y <= 685 )) then ((command^" 0,0,0"), (360, 666))
   else if ((x >= 438 && x <= 575) && (y >= 653 && y <= 685 )) then ((command^" 0,0,1"), (475, 666))
@@ -268,19 +299,34 @@ let repeat_cell x y =
 
 
 let responsive_board str x y =
-  let file_name = "imgs/" ^ str ^ ".jpg" in
-  (draw_image (get_img file_name ) x y;)
+  (let file_name = "imgs/" ^ str ^ ".jpg" in
+  print_endline file_name;
+  print_endline"do i reach here";
+  draw_image (get_img "imgs/caml_try.jpg" ) x y;
+  print_endline"am i here?";)
 
-
+let tried str ex why =
+  (moveto (ex+15) (why+4);
+   set_color annoying_green;
+   Graphics.set_font "-*-fixed-medium-r-semicondensed--17-*-*-*-*-*-iso8859-1";
+   if str = "python" then (draw_string "P";)
+   else draw_string "C";
+   draw_image (get_img "imgs/accept.jpg") 65 22;
+  )
 
 let highlight_curr_player str =
   if str = "python" then (rect_drawn_bblack 596 150 64 60; rect_drawn_cyan 334 145 62 65;)
   else (rect_drawn_bblack 334 145 62 65; rect_drawn_cyan 596 150 64 60;)
 
+let winner_winner_chicken_appetizer str =
+  draw_image (get_img str) 200 200; 
+  draw_image (get_img "imgs/quit.jpg") 225 425;
+  (draw_image (get_img "imgs/restart.jpg") 225 325;)
+
+
 let winner_winner_chicken_dinner str =
-  print_endline "in winner winner chicken dinner";
-  draw_image (get_img "imgs/win.jpg") 200 200;
-  if str = "win" then ((draw_image (get_img "imgs/win.jpg") 200 200);)
-  else if str = "draw" then ((draw_image (get_img "imgs/draw_img.jpg") 200 200);)
-  else if str = "lost" then ((draw_image (get_img "imgs/loss_img.jpg") 200 200);)
-  else set_color magenta; draw_string "bruhhhh";
+  if str = "win" then (winner_winner_chicken_appetizer "imgs/win.jpg";)
+  else if str = "lost" then (winner_winner_chicken_appetizer "imgs/loss_img.jpg";)
+  else if str = "caml" then (winner_winner_chicken_appetizer "imgs/caml_wins.jpg";)
+  else if str = "python" then (winner_winner_chicken_appetizer "imgs/python_wins.jpg";)
+  else (winner_winner_chicken_appetizer "imgs/draw_img.jpg";)
