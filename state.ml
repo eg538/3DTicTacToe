@@ -141,7 +141,7 @@ let accumulate_diag_wins diag_list st = (*cell list list *)
     end
   | _ -> failwith "impossible"
 
-let rec string_3_row_h clst acc = 
+let rec string_3_row_h clst acc =
   match clst with
   | [] -> acc
   | h::t -> let coords = h.cell in
@@ -236,6 +236,16 @@ let check_game_end st =
     st
 
 let game_ended st = st.game_end
+
+let rec extract_the_2d_win st acc modified =
+  match modified with
+  | [] -> acc
+  | h::t ->
+    begin
+      let possibly_new_win = not (List.mem h st.col_and_2d_grid_wins) in
+      let consistent_player_inst = (List.for_all (fun x -> x.player = st.current_player) h) in
+      h::(extract_the_2d_win st acc t)
+    end
 
          (*
 let empty_diags =
