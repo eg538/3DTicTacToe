@@ -272,9 +272,9 @@ let do' c st =
   | Restart -> st
   | Try (pl, row, col) ->
     if (st.p1_avatar = Python && st.current_player = Python) || (st.p1_avatar = Caml && st.current_player = Caml) then
-      {st with p1_num_tries = if st.p1_num_tries > 0 then st.p1_num_tries - 1 else 0}
+      ({st with p1_num_tries = if st.p1_num_tries > 0 then st.p1_num_tries - 1 else 0})
     else
-      {st with p2_num_tries = if st.p2_num_tries > 0 then st.p2_num_tries - 1 else 0}
+      (  {st with p2_num_tries = if st.p2_num_tries > 0 then st.p2_num_tries - 1 else 0})
   | Place (pl, row, col) ->
     (* print_endline ("Move made: "^(string_o22f_int pl)^", "^(string_of_int row)^", "^(string_of_int col)); *)
     begin

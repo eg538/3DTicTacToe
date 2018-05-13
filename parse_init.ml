@@ -1,26 +1,26 @@
 open Types
 
-let rec parse_init str = 
+let rec parse_init str =
   let lst = String.split_on_char ' ' (String.lowercase_ascii str) in
   {
-  info_players_num = 
+  info_players_num =
     if List.hd lst = "single" then
-      Single 
+      Single
     else
       Multi;
-  info_p1_avatar = 
+  info_p1_avatar =
     if List.hd (List.tl lst) = "caml" then
       Caml
     else if List.hd (List.tl lst) = "python" then
       Python
     else
       None;
-  info_mode = 
+  info_mode =
     if List.tl lst |> List.tl |> List.tl |> List.hd  = "normal" then
       Normal
     else
       Krazy;
-  info_level = 
+  info_level =
     match List.tl lst |> List.tl |> List.hd with
     | "easy" -> Easy
     | "medium" -> Medium

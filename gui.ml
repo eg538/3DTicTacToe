@@ -5,6 +5,7 @@ open Images
 open Jpeg
 open Command
 open Types
+open Grid_3d
 
 
 (* make the black colored backround color *)
@@ -211,8 +212,8 @@ let score p1 p2 =
 
 
 let num_try_hint num x y =
-  draw_image (get_img "imgs/eraser.jpg") (x-24) (y-52);
   let str = string_of_int num in
+  draw_image (get_img "imgs/eraser.jpg") (x-24) (y-52);
   moveto x y;
   set_color white;
   Graphics.set_font "-*-fixed-medium-r-semicondensed--35-*-*-*-*-*-iso8859-1";
@@ -240,9 +241,7 @@ let which_command () =
       ( let ev = [Graphics.Button_up] in
         let ms = wait_next_event ev in
         let xx =  ms.mouse_x in
-        print_int xx;
         let yy = ms.mouse_y in
-        print_int yy;
         ("try" , xx, yy))
     else ("place" , x, y)
 
@@ -284,10 +283,10 @@ let play_board command x y =
   else if ((x >= 440 && x <= 575) && (y >= 324 && y <= 360)) then ((command^" 2,0,1"), (475, 330))
   else if ((x >= 580 && x <= 694) && (y >= 323 && y <= 360)) then ((command^" 2,0,2"), (605, 330))
   else if ((x >= 284 && x <= 414) && (y >= 269 && y <= 322)) then ((command^" 2,1,0"), (340, 280))
-  else if ((x >= 430 && x <= 576) && (y >= 270 && y <= 318)) then ((command^" 2,1,1"), (475, 275))
+  else if ((x >= 430 && x <= 576) && (y >= 270 && y <= 318)) then ((command^" 2,1,1"), (475, 280))
   else if ((x >= 582 && x <= 730) && (y >= 270 && y <= 318)) then ((command^" 2,1,2"), (625, 280))
   else if ((x >= 252 && x <= 404) && (y >= 216 && y <= 265)) then ((command^" 2,2,0"), (320, 225))
-  else if ((x >= 420 && x <= 580) && (y >= 215 && y <= 265)) then ((command^" 2,2,1"), (475, 225))
+  else if ((x >= 420 && x <= 580) && (y >= 215 && y <= 265)) then ((command^" 2,2,1"), (475, 220))
   else if ((x >= 585 && x <= 763) && (y >= 216 && y <= 266)) then ((command^" 2,2,2"), (645, 225))
 
   else (command^" 1,1,1", (1,1))
@@ -301,28 +300,26 @@ let repeat_cell x y =
 let responsive_board str x y =
   (let file_name = "imgs/" ^ str ^ ".jpg" in
   print_endline file_name;
-  print_endline"do i reach here";
-  draw_image (get_img file_name ) x y;
-  print_endline"am i here?";)
+  draw_image (get_img file_name ) x y;)
 
 let choose_letter str =
   if str = "python" then (draw_string "P";)
-else (draw_string "C";)
+  else (draw_string "C";)
 
 let cover_try str ex why =
-  if (why >= 555 && why <= 666) then
+  if (why >= 500 && why <= 666) then
     (moveto (ex+15) (why+4);
-      set_color top_plep;
+     set_color top_plep;
      choose_letter str
     )
   else if (why >= 385 && why <= 492) then
     (moveto (ex+15) (why+4);
-      set_color mid_plep;
+     set_color mid_plep;
      choose_letter str
     )
   else if (why >= 225 && why <= 330) then
     (moveto (ex+15) (why+4);
-      set_color bot_plep;
+     set_color bot_plep;
      choose_letter str
     )
   else ()
@@ -331,30 +328,58 @@ let change_curr_player st=
   if st.current_player = Python then {st with current_player = Caml}
   else {st with current_player = Python}
 
+let tried str ex why st =
+  let (sy, (a,b)) = play_board "try" ex why in
+  let c1 = String.index sy ',' in
+  let pl = int_of_char (String.get sy (c1 - 1)) - 48 in
+  let xx = int_of_char (String.get sy (c1 + 1)) - 48 in
+  let yy = int_of_char (String.get sy (c1 + 3)) - 48 in
+  print_endline"what?";
+  print_int pl; print_int xx;print_int yy;
+  print_endline"the hell?";
+  let check = Grid_3d.is_taken (pl, xx, yy) st.tttBoard in
+  print_endline (string_of_bool check);
+  if (check) then
+    (
+      if(a <= 1 && b <= 1) then
+        (repeat_cell a b; change_curr_player st)
+      else
+        (moveto (ex+15) (why+4);
+         set_color annoying_green;
+         Graphics.set_font "-*-fixed-medium-r-semicondensed--17-*-*-*-*-*-iso8859-1";
+         choose_letter str;
+         draw_image (get_img "imgs/accept.jpg") 65 22;
+         let event_lst = [Graphics.Button_up] in
+         let mouse_status = wait_next_event event_lst  in
+         let x = mouse_status.mouse_x in
+         let y = mouse_status.mouse_y in
+         if ((x >= 66 && x <= 198)&& (y >= 22 && y <= 78)) then
+           ( print_endline "is it here?";
+             let (s, (a,b)) = play_board "place" ex why in
+             cover_try str ex why;
+             responsive_board str a b;
+             cover_up();
+             (*let c1 = String.index s ',' in
+               let pl = String.get s (c1 - 1) in
+               let xx = String.get s (c1 + 1) in
+               let yy = String.get s (c1 + 3) in
+               State.do' (Place(pl, xx, yy)) st
+               play_move st (pl, xx, yy) |> switch_players |> check_game_end*)
+             let comm = Command.parse s in
+             State.do' comm (st)
+           )
+         else
+           ( cover_try str ex why;
+             cover_up();
+             let (s, (a,b)) = play_board "place" x y in
+             responsive_board str a b;
+             let comm = Command.parse s in
+             let new_st = State.do' comm (st) in
+             new_st
+           )
+        ))else   ( draw_image(get_img "imgs/msg2.jpg") 236 0; st)
 
-let tried str ex why st=
-  moveto (ex+15) (why+4);
-   set_color annoying_green;
-   Graphics.set_font "-*-fixed-medium-r-semicondensed--17-*-*-*-*-*-iso8859-1";
-  choose_letter str;
-  draw_image (get_img "imgs/accept.jpg") 65 22;
-   let event_lst = [Graphics.Button_up] in
-   let mouse_status = wait_next_event event_lst  in
-   let x = mouse_status.mouse_x in
-   let y = mouse_status.mouse_y in
-   if ((x >= 66 && x <= 198)&& (y >= 22 && y <= 78)) then
-     ( print_endline "is it here?";
-       let (_, (a,b)) = play_board "place" ex why in
-       responsive_board str a b;
-     change_curr_player st)
-   else
-     ( print_endline "HEYEYEYEY";
-       print_int why;
-       cover_try str ex why;
-       let (s, (a,b)) = play_board "place" x y in
-       responsive_board str a b;
-change_curr_player st;
-     )
+
 
 
 let highlight_curr_player str =
@@ -379,7 +404,7 @@ let mark_three x y =
   Graphics.set_font "-*-fixed-medium-r-semicondensed--25-*-*-*-*-*-iso8859-1";
   (draw_string "X";)
 
-let cell_coords_to_x_y (pl, x, y)= 
+let cell_coords_to_x_y (pl, x, y)=
   match (pl,x,y) with
   | (0,0,0) -> (360, 666)
   | (0,0,1) -> (475, 666)

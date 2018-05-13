@@ -91,12 +91,12 @@ let cells_left b =
   let lst = board_list_of_cells b in
   List.filter (fun x -> x.player = None) lst
 
-(*[is_taken cell_pos b] checks to see whether the cell at coordinates [cell_pos]
-  has been played by a player in the board [b]
-*)
-let is_taken cell_pos b =
-  let lst = board_list_of_cells b in
-  List.exists (fun x -> ((x.cell = cell_pos) && (x.player = None)) ) lst
+  (*[is_taken cell_pos b] checks to see whether the cell at coordinates [cell_pos]
+    has been played by a player in the board [b]
+  *)
+  let is_taken cell_pos b =
+    let lst = board_list_of_cells b in
+    List.exists (fun x -> ((x.cell = cell_pos) && (x.player = None)) ) lst
 
 (*[cell_valid cell] checks to see whether the coordinates of [cell] are valid*)
 let cell_valid cell =
@@ -143,7 +143,7 @@ let three_row_2d_cells c b =
   let lst = board_list_of_cells b in
   let lst_of_cells = get_parent_plane c lst in
   match c.cell with
-  | (p,x,y) when (x=1 && y=1) -> 
+  | (p,x,y) when (x=1 && y=1) ->
       let col = (List.filter (fun i -> (thd (c.cell) = thd (i.cell))) lst_of_cells) in
       let row = (List.filter (fun i -> (snd' (c.cell) = snd' (i.cell))) lst_of_cells) in
       let diag = diagonal_hardcode c lst_of_cells in
@@ -154,7 +154,7 @@ let three_row_2d_cells c b =
       let col = (List.filter (fun i -> (thd (c.cell) = thd (i.cell))) lst_of_cells) in
       let row = (List.filter (fun i -> (snd' (c.cell) = snd' (i.cell))) lst_of_cells)::[] in
       col::row
-  | (p,x,y) when x = y -> 
+  | (p,x,y) when x = y ->
       let col = (List.filter (fun i -> (thd (c.cell) = thd (i.cell))) lst_of_cells) in
       let row = (List.filter (fun i -> (snd' (c.cell) = snd' (i.cell))) lst_of_cells) in
       let diag = diagonal_hardcode c lst_of_cells in
@@ -166,12 +166,13 @@ let three_row_2d_cells c b =
       let diag = diagonal_hardcode c lst_of_cells in
       let diag1 = List.nth diag 1 in
       col::row::diag1::[]
-  | (p,x,y) when x = 0 && y = 2 -> 
+  | (p,x,y) when x = 0 && y = 2 ->
       let col = (List.filter (fun i -> (thd (c.cell) = thd (i.cell))) lst_of_cells) in
       let row = (List.filter (fun i -> (snd' (c.cell) = snd' (i.cell))) lst_of_cells) in
       let diag = diagonal_hardcode c lst_of_cells in
       let diag1 = List.nth diag 0 in
       col::row::diag1::[]
+  |_ -> failwith "non-exhaustive match "
 
 
 (*[victory_on_plane c possible_instances] traverses through [possible_instances]
@@ -189,7 +190,8 @@ let rec victory_on_plane c possible_instances acc =
 let place (pl, row, col) b plyr =
   let c = get_cell (pl, row, col) b in
   if move_valid c b then
-    Hashtbl.replace b (pl, row, col) {c with player = plyr}
+    (
+    Hashtbl.replace b (pl, row, col) {c with player = plyr})
   else
     raise (Failure "InvalidCell")
 

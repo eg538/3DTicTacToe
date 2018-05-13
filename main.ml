@@ -36,9 +36,9 @@ let computer_move_st newSt =
       hard_ai_move newSt
   in
   let newSt' = do' comp_move newSt in
-  let coords_move = 
-    begin 
-      match comp_move with 
+  let coords_move =
+    begin
+      match comp_move with
       | Place (a, b, c) -> (a, b, c)
       | _ -> failwith "Unimplemented"
     end
@@ -90,13 +90,14 @@ let rec play single st=
   let playerr = string_of_player (State.curr_player st )
   in print_endline playerr;
   Gui.highlight_curr_player playerr;
-  Gui.num_try_hint (num_hints st) 836 585;
-  Gui.num_try_hint (num_tries st) 171 585;
   Gui.score (p1_score st) (p2_score st) ;
   Gui.rect_drawn_gray 149 627 69 44;
   Gui.rect_drawn_gray 800 625 93 40;
   Gui.responsive_board playerr 0 700;
-
+  let hint_num = num_hints st in
+  let try_num = num_tries st in
+  Gui.num_try_hint try_num 836 580;
+  Gui.num_try_hint hint_num 171 587;
   let input = Gui.which_command () in
   let commend = fst' input in
   let x = snd' input in
@@ -115,7 +116,7 @@ let rec play single st=
   let command = parse com in
   let newSt = do' command st in
   (* print_endline "length of list of 3-in-row:"; *)
-  (* let lst = newSt.diagonals in 
+  (* let lst = newSt.diagonals in
   print_int (List.length lst); *)
   (*Remember to check for win*)
   match command with
@@ -139,13 +140,11 @@ let rec play single st=
           let x = snd test |> fst in
           let y = snd test |> snd in
           (* let tmp = playerr ^ "_try" in *)
-          print_endline "here";
-          Gui.cover_up ();
           print_int x;
           print_int y;
           let s = Gui.tried playerr x y newSt in
           (* Gui.responsive_board tmp x y; *)
-          Gui.cover_up ();
+
           play single s))
   | Place (pl, x, y) ->
     (if newSt = st then
@@ -175,7 +174,7 @@ let rec play single st=
             Gui.draw_three_row recent_wins; *)
           else
             print_endline ("Score of player 1: "^(string_of_int (p1_score newSt))^"\n"^"Score of player 2: "^(string_of_int (p2_score newSt))) *)
-          if single then 
+          if single then
             (let comp_st = computer_move_st newSt in play single comp_st)
           else
             (play single newSt)

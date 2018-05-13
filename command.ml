@@ -33,13 +33,13 @@ let parse str =
   match action with
   | "play" -> Play obj
   | "start" -> Play str
-  | "place" -> 
+  | "place" ->
     begin
-      try Place (obj |> list_coords |> list_to_tup) 
+      try Place (obj |> list_coords |> list_to_tup)
       with
         | InvalidCommand -> Invalid
     end
-  | "try" -> 
+  | "try" ->
     begin
       try Try (obj |> list_coords |> list_to_tup)
       with

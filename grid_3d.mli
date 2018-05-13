@@ -54,6 +54,10 @@ val win_evaluation: cell -> board -> bool
 *)
 val cells_left: board -> cell list
 
+(* [is_taken cell b] determines whether [cell] is an available move in board
+   [b]*)
+val is_taken: (int * int * int) -> board -> bool
+
 (* [cells_occupied b] keeps track of the cells in the 3d grid space that
    have been played by a player. The accumulating list of cells would be of type
    [cell list] and you take in a board.
@@ -66,7 +70,7 @@ val cells_occupied: board -> cell list
 *)
 val get_the_win: cell -> player -> board -> cell list list
 
-(*[three_row_2d_cells c lst_of_cells] is the list of lists of cells 
+(*[three_row_2d_cells c lst_of_cells] is the list of lists of cells
  *that create a three in a row with [c] in [lst_of_cells]*)
 val all_three_in_row_cells: cell -> board -> cell list list
 
