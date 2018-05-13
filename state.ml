@@ -138,6 +138,18 @@ let accumulate_diag_wins diag_list st = (*cell list list *)
     end
   | _ -> failwith "impossible"
 
+let rec string_3_row_h clst acc = 
+  match clst with 
+  | [] -> acc
+  | h::t -> let coords = h.cell in 
+      ("(")^(string_of_int (fst' coords))^", "^(string_of_int (snd' coords))^", "^(string_of_int (thd coords))^")"
+      ^"   "^acc
+
+let rec string_three_row clstlst acc = 
+  match clstlst with 
+  | [] -> acc
+  | h::t -> (string_3_row_h h "")^"\n"^acc
+
 (*[play_move st coords] is the new state as a result of the current player of state [st]
  * making a move at coordinates [coords], updating the scores accordingly if the move
  * creates a three-in-a-row for the player that made the move*)
@@ -152,6 +164,7 @@ let play_move st (pl, row, col) =
     let b = st.tttBoard in
     let diag_check_truth = (((diag_check c b)|> fst) <> WinNone) || (((diag_check c b) |> snd) <> WinNone) in
     let instances = (three_row_2d_cells c b) in
+    print_endline (string_three_row instances "");
     let case_2d = victory_on_plane c instances in
     let case_3d = (diag_check_truth) || (col_check c b) in
     match (case_2d, case_3d) with
