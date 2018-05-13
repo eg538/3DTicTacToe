@@ -187,7 +187,7 @@ let play_move st (pl, row, col) =
     print_endline (string_of_int (List.length case_3d)); *)
     let inced_st = inc_point ((List.length case_2d) + (List.length case_3d)) st in
     let lst_win_coords = List.map (fun lst -> List.map (fun a -> a.cell) lst) (case_2d @ case_3d) in
-    print_endline (string_three_row (lst_win_coords) "");
+    (* print_endline (string_three_row (lst_win_coords) ""); *)
     {inced_st with most_recent_win = lst_win_coords}
     end
     (*match (case_2d, case_3d) with

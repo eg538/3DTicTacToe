@@ -117,18 +117,20 @@ let easy_ai_move st =
 
 let medium_ai_move st = 
   let rem_cells = cells_left (board st) in
-  let thresh = (-1) * ((List.length rem_cells |> float_of_int) /. 6.0 +. 0.5 |> int_of_float) in
-  let depth = 30.0 /. (List.length rem_cells |> float_of_int) +. 0.5 |> int_of_float in
-  let game_tree = game_tree_generate st depth thresh in
-  match game_tree with 
-  | Leaf -> easy_ai_move st
-  | Node (nd, children) -> 
-    begin
-    match dfs children game_tree nd.h_score with 
+  let thresh = if List.length rem_cells <= 3 then min_int else 0 in
+  let game_tree = game_tree_generate st 5 thresh in
+  if List.length rem_cells = 1 then
+    Place ((List.hd rem_cells).cell)
+  else
+    match game_tree with 
     | Leaf -> easy_ai_move st
-    | Node (mve, _) ->
-      Place mve.move
-    end
+    | Node (nd, children) -> 
+      begin
+      match dfs children game_tree nd.h_score with 
+      | Leaf -> easy_ai_move st
+      | Node (mve, _) ->
+        Place mve.move
+      end
   
 
 let get_node t = match t with 
