@@ -54,11 +54,6 @@ let krazy_recalc_score st =
   krazy_recalc_helper occupied new_st
   (* List.map (fun x -> get_all_win_inst st x) occupied *)
 
-let krazy_disappearing_sqs st c =
-  if (c=c) then (
-    Hashtbl.replace st.tttBoard c.cell {c with player = None}
-  ) else ()
-
 let krazy_cell_swap st coords1 coords2 =
   let orig_b = board st in
   let b = copy orig_b in
