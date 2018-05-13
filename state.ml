@@ -25,8 +25,11 @@ let init_state str =
     p2_num_hints = num_helper (level i);
     p2_num_tries = num_helper (level i);
     diagonals = [];
+    col_and_2d_grid_wins = [];
     winner = None;
-    game_end = false
+    game_end = false;
+    k_bomb = false;
+    k_disappearing_sqs = {cell=(0,0,0);player=None} (*hardcoded for init*)
   }
 
 let game_mode s = s.mode
@@ -234,6 +237,16 @@ let check_game_end st =
 
 let game_ended st = st.game_end
 
+let rec extract_the_2d_win st acc modified =
+  match modified with
+  | [] -> acc
+  | h::t ->
+    begin
+      let possibly_new_win = not (List.mem h st.col_and_2d_grid_wins) in
+      let consistent_player_inst = (List.for_all (fun x -> x.player = st.current_player) h) in
+      h::(extract_the_2d_win st acc t)
+    end
+
          (*
 let empty_diags =
   (*horizontal_3d *)
@@ -248,6 +261,7 @@ let empty_diags =
   let d8 = [{cell=(2,0,2);player=None};{cell=(1,1,2);player=None};{cell=(0,2,2);player=None}] in
   d1::d2::d3::d4::d5::d6::d7::d8::[]
 *)
+
 let do' c st =
   match c with
   | Play str -> st

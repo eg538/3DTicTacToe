@@ -36,8 +36,11 @@ type state = {
   p2_num_hints : int;
   p2_num_tries : int;
   diagonals: cell list list;
+  col_and_2d_grid_wins: cell list list;
   winner: player;
-  game_end: bool
+  game_end: bool;
+  k_bomb: bool;
+  k_disappearing_sqs: cell
 }
 
 type command =
