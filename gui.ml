@@ -206,29 +206,38 @@ let tried str ex why =
   let file_name = str ^ "_try.jpg" in
   (draw_image (get_img ("imgs/"^file_name)) why ex;)
 
-let check_try_pressed () =
-  let event_lst = [Graphics.Button_up] in
-  let mouse_status = wait_next_event event_lst  in
-  let x = mouse_status.mouse_x in
-  let y = mouse_status.mouse_y in
+  let fst' (y,_,_) = y
 
-  if (x >= 149 && x <= (149 + 69)) && (y >= 627 && y<= (627 + 44)) then true
-  else false
+  let snd' (_,y,_) = y
+  
+  let thd (_,_,y) = y
+
+  let which_command () = 
+    let event_lst = [Graphics.Button_up] in
+    let mouse_status = wait_next_event event_lst  in
+    let x = mouse_status.mouse_x in
+    let y = mouse_status.mouse_y in
+    print_string "x is: "; print_int x; print_endline " ";
+    print_string "y is: "; print_int y; print_endline " ";
+    print_endline " ";
+
+    if (x >= 149 && x <= (149 + 69)) && (y >= 627 && y<= (627 + 44)) then ("try", x, y)
+    else ("place" , x, y)
 
 
-
-let play_board () =
-  let event_lst = [Graphics.Button_up] in
+let play_board command x y =
+  (* let event_lst = [Graphics.Button_up] in
   let mouse_status = wait_next_event event_lst  in
   let x = mouse_status.mouse_x in
   let y = mouse_status.mouse_y in
   print_string "x is: "; print_int x; print_endline " ";
   print_string "y is: "; print_int y; print_endline " ";
-  print_endline " ";
+  print_endline " "; *)
 
-  let command = (if (check_try_pressed () ) = true then "try"
-  else "place") in
-
+  (* let command = fst' input in 
+  let x = snd' input in 
+  let y = thd input in  *)
+ 
   if ((x >= 331 && x <=426) && (y >= 651 && y <= 685 )) then ((command^" 0,0,0"), (360, 666))
   else if ((x >= 438 && x <= 575) && (y >= 653 && y <= 685 )) then ((command^" 0,0,1"), (475, 666))
   else if ((x >= 580 && x <= 696) && (y >= 651 && y <= 684)) then ((command^" 0,0,2"), (605, 666))
@@ -269,8 +278,8 @@ let repeat_cell x y =
 
 let responsive_board str x y =
   let file_name = "imgs/" ^ str ^ ".jpg" in
+  print_endline file_name;
   (draw_image (get_img file_name ) x y;)
-
 
 
 let highlight_curr_player str =

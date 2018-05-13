@@ -35,7 +35,7 @@ val cover_up: unit -> unit
    coordinates to determine where the picture should be placed. Example of commands include:
    "place", "try"
 *)
-val play_board : unit -> string * (int * int)
+val play_board : string -> int -> int -> string * (int * int)
 
 (* Draws the python or caml picture (determined by the string parameter) at the location
    specified by the two ints
@@ -66,7 +66,14 @@ val num_try_hint : int -> int -> int -> unit
 *)
 val tried : string -> int -> int -> unit
 
-(* [check_try_pressed] is true if the user pressed within the try button and false
+(* (* [check_try_pressed] is true if the user pressed within the try button and false
    otherwise.
  *)
-val check_try_pressed : unit -> bool
+val check_try_pressed : unit -> bool *)
+
+(* Returns which a triple where the first element is the string version
+   of command depending on whether or not the user has pressed the try button, 
+   and the second and third element are the x and y coordinates, respectively of 
+   where the user pressed
+*)
+val which_command : unit -> string*int*int

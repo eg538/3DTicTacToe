@@ -11,11 +11,17 @@ open Gui
 exception Terminated
 exception Restart
 
+let fst' (y,_,_) = y
+
+let snd' (_,y,_) = y
+
+let thd (_,_,y) = y
+
 (*[string_of_player p] is the string representation of [p]*)
 let string_of_player p = match p with
-  | Python -> "Python"
-  | Caml -> "Caml"
-  | None -> "None"
+  | Python -> "python"
+  | Caml -> "caml"
+  | None -> "none"
 
 let computer_move_st newSt =
   print_endline "Please wait while computer moves...";
@@ -34,7 +40,11 @@ let computer_move_st newSt =
     newSt'
 
 let rec ended () =
-  let grab_GUI = Gui.play_board () in
+  let input = Gui.which_command () in 
+  let commend = fst' input in 
+  let x = snd' input in 
+  let y = thd input in 
+  let grab_GUI = Gui.play_board commend x y in
   let com = fst grab_GUI in
   let command = parse com in
   match command with
@@ -53,10 +63,7 @@ let rec play single st=
     ended ()
   else
   (print_endline "Please enter command";
-  let playerr = match (State.curr_player st ) with
-    | Caml -> "caml"
-    | Python -> "python"
-    | None -> "none"
+  let playerr = string_of_player (State.curr_player st )
   in print_endline playerr;
   Gui.highlight_curr_player playerr;
   let hint_num = num_hints st in
@@ -68,10 +75,17 @@ let rec play single st=
   Gui.score player1_score player2_score ;
   Gui.rect_drawn_gray 149 627 69 44;
   Gui.rect_drawn_gray 800 625 93 40;
-
-
-  let test = Gui.play_board () in
+  Gui.responsive_board playerr 0 700;
+  let input = Gui.which_command () in 
+  let commend = fst' input in 
+  let x = snd' input in 
+  let y = thd input in 
+  let test = Gui.play_board commend x y in
   let com = fst test in
+  print_endline com;
+  let st_modified = (  if playerr = "python" then  {st with p1_num_tries = st.p1_num_tries - 1 }
+  else  {st with p2_num_tries = st.p2_num_tries - 1}) in
+  if com = "try 1,1,1" then play single st_modified else
   let command = parse com in
   let newSt = do' command st in
   (*Remember to check for win*)
@@ -83,26 +97,19 @@ let rec play single st=
      play single newSt)
   | Quit -> (print_endline "yo what's up in this hole";exit 0)
   | Restart -> (raise Restart)
-  | Try (pl, x, y) -> (failwith "Unimplemented")
+  | Try (pl, x, y) -> 
+      let x = snd test |> fst in
+      let y = snd test |> snd in
+      let tmp = playerr ^ "_try" in 
+      print_endline "here";
+      Gui.responsive_board tmp x y;
   | Place (pl, x, y) ->
     (if newSt = st then
       (let ex = snd test |> fst in
       let why = snd test |> snd in
-      print_int ex;
-      print_int why;
       Gui.repeat_cell ex why;
       print_endline "Action impossible. Please try a different move.";
        play single newSt;)
-
-      (*if newSt = st then
-          print_endline "Action impossible. Please try a different move."
-        else
-          print_board newSt;
-          print_endline ("Score of player 1: "^(string_of_int (p1_score newSt))^"\n"^"Score of player 2: "^(string_of_int (p2_score newSt)));
-          if newSt <> st && single then
-            play single (computer_move_st newSt)
-          else
-            play single newSt*)
 
     else
       (  print_board newSt;
