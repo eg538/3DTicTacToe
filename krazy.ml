@@ -1,6 +1,6 @@
 open Types
 open Grid_3d
-open State 
+open State
 
 (*[string_of_player p] is the string representation of [p]*)
 let string_of_player p = match p with
@@ -12,7 +12,7 @@ let string_of_mode m = match m with
   | Normal -> "normal"
   | Krazy -> "krazy"
 
-let string_of_num_p n = match n with 
+let string_of_num_p n = match n with
   | Single -> "single"
   | Multi -> "multi"
 
@@ -20,6 +20,17 @@ let string_of_level l = match l with
   | Easy -> "easy"
   | Medium -> "medium"
   | Hard -> "hard"
+
+let random_cell_for_krazy st =
+  let all_cells = cells_left (board st) in
+  let index = (Random.int ((List.length all_cells)-1)) in
+  {st with k_disappearing_sqs = (List.nth (all_cells) index)}
+
+let krazy_disappearing_sqs st c =
+  if (c.cell=(st.k_disappearing_sqs).cell) then (
+    Hashtbl.replace st.tttBoard c.cell {c with player = None};
+    {st with tttBoard = st.tttBoard}
+  ) else st
 
 let rec krazy_recalc_helper cellst st =
   match cellst with
@@ -42,11 +53,6 @@ let krazy_recalc_score st =
   let new_st = init_state info_str in
   krazy_recalc_helper occupied new_st
   (* List.map (fun x -> get_all_win_inst st x) occupied *)
-
-let krazy_disappearing_sqs st c =
-  if (c=c) then (
-    Hashtbl.replace st.tttBoard c.cell {c with player = None}
-  ) else ()
 
 let krazy_cell_swap st coords1 coords2 =
   let orig_b = board st in

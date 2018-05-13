@@ -37,7 +37,9 @@ type state = {
   p2_num_tries : int;
   most_recent_win: cell list list;
   winner: player;
-  game_end: bool
+  game_end: bool;
+  k_bomb: bool;
+  k_disappearing_sqs: cell
 }
 
 type command =

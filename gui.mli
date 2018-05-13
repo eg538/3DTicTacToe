@@ -64,7 +64,7 @@ val num_try_hint : int -> int -> int -> unit
    [try playerr ex why] places a try picture of the marker onto the cell described
    by player [playerr] at [ex] and [why]. Will be a helper function of play_board.
 *)
-val tried : string -> int -> int -> unit
+val tried : string -> int -> int -> state -> state
 
 (* (* [check_try_pressed] is true if the user pressed within the try button and false
    otherwise.
@@ -72,8 +72,8 @@ val tried : string -> int -> int -> unit
 val check_try_pressed : unit -> bool *)
 
 (* Returns which a triple where the first element is the string version
-   of command depending on whether or not the user has pressed the try button, 
-   and the second and third element are the x and y coordinates, respectively of 
+   of command depending on whether or not the user has pressed the try button,
+   and the second and third element are the x and y coordinates, respectively of
    where the user pressed
 *)
 val which_command : unit -> string*int*int
