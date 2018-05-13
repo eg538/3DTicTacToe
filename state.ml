@@ -84,11 +84,11 @@ let board s = s.tttBoard
 let p1_avatar s = s.p1_avatar
 
 (*[inc_point st] increments the score of the current player of state [st]*)
-let inc_point st =
+let inc_point inc_amt st =
   if (st.p1_avatar = Python && st.current_player = Python) || (st.p1_avatar = Caml && st.current_player = Caml) then
-    {st with curr_score_1 = st.curr_score_1 + 1}
+    {st with curr_score_1 = st.curr_score_1 + inc_amt}
   else
-    {st with curr_score_2 = st.curr_score_2 + 1}
+    {st with curr_score_2 = st.curr_score_2 + inc_amt}
 
  let rec extract_cells_from_st st st_diags =
   match st.diagonals with
@@ -138,6 +138,20 @@ let accumulate_diag_wins diag_list st = (*cell list list *)
     end
   | _ -> failwith "impossible"
 
+let rec string_3_row_h clst acc = 
+  match clst with 
+  | [] -> acc
+  | h::t -> let coords = h.cell in 
+      let str = ("(")^(string_of_int (fst' coords))^", "^(string_of_int (snd' coords))^", "^(string_of_int (thd coords))^")"
+      ^"   "^acc in
+      string_3_row_h t str
+
+let rec string_three_row clstlst acc = 
+  match clstlst with 
+  | [] -> acc
+  | h::t -> let str = (string_3_row_h h "")^"\n"^acc in
+    string_three_row t str
+
 (*[play_move st coords] is the new state as a result of the current player of state [st]
  * making a move at coordinates [coords], updating the scores accordingly if the move
  * creates a three-in-a-row for the player that made the move*)
@@ -150,16 +164,35 @@ let play_move st (pl, row, col) =
     begin
     let c = find_cell st (pl,row,col) in
     let b = st.tttBoard in
-    let diag_check_truth = (((diag_check c b)|> fst) <> WinNone) || (((diag_check c b) |> snd) <> WinNone) in
+    (* let diag_check_truth = (((diag_check c b)|> fst) <> WinNone) || (((diag_check c b) |> snd) <> WinNone) in *)
+    let diag_check_num = 
+      begin
+      match diag_check c b with
+      | (WinH _, WinV _) -> 2
+      | (WinH _, WinNone) -> 1
+      | (WinNone, WinV _) -> 1
+      | _ -> 0
+      end
+    in
+    (* print_endline ("DIAG_CHECK_NUM");
+    print_endline (string_of_int diag_check_num); *)
     let instances = (three_row_2d_cells c b) in
-    let case_2d = victory_on_plane c instances in
-    let case_3d = (diag_check_truth) || (col_check c b) in
-    match (case_2d, case_3d) with
+    (* print_endline "THREE IN A ROWS 2D";
+    print_endline (string_three_row instances ""); *)
+    let case_2d = victory_on_plane c instances 0 in
+    (* print_endline ("CASE 2D");
+    print_endline (string_of_int case_2d); *)
+    let case_3d = diag_check_num + (if col_check c b then 1 else 0) in
+    (* print_endline ("CASE 3D");
+    print_endline (string_of_int case_3d); *)
+    inc_point (case_2d + case_3d) st
+    end
+    (*match (case_2d, case_3d) with
       | true, true ->
         begin
-          inc_point st;
-          let st' = (accumulate_diag_wins (get_the_win (find_cell st (pl,row,col)) st.current_player st.tttBoard) st) in (*cell list list*)
-          if (st'.diagonals = st.diagonals) then st else inc_point st
+          inc_point st |> inc_point
+          (* let st' = (accumulate_diag_wins (get_the_win (find_cell st (pl,row,col)) st.current_player st.tttBoard) st) in (*cell list list*)
+          if (st'.diagonals = st.diagonals) then st else inc_point st *)
         end
       | true, false ->
         begin
@@ -167,11 +200,12 @@ let play_move st (pl, row, col) =
         end
       | false, true ->
         begin
-          let st' = (accumulate_diag_wins (get_the_win (find_cell st (pl,row,col)) st.current_player st.tttBoard) st) in
-          if (st'.diagonals = st.diagonals) then st else inc_point st
+          inc_point st
+          (* let st' = (accumulate_diag_wins (get_the_win (find_cell st (pl,row,col)) st.current_player st.tttBoard) st) in
+          if (st'.diagonals = st.diagonals) then st else inc_point st *)
         end
       | _ -> st
-      end
+      end *)
   else
     st
 
