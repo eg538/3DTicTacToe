@@ -117,10 +117,10 @@ let rec play single st=
           Gui.cover_up ();
           print_int x;
           print_int y;
-          Gui.tried playerr x y;
+          let s = Gui.tried playerr x y newSt in
           (* Gui.responsive_board tmp x y; *)
-
-          play single newSt))
+          Gui.cover_up ();
+          play single s))
   | Place (pl, x, y) ->
     (if newSt = st then
        (let ex = snd test |> fst in

@@ -138,16 +138,16 @@ let accumulate_diag_wins diag_list st = (*cell list list *)
     end
   | _ -> failwith "impossible"
 
-let rec string_3_row_h clst acc = 
-  match clst with 
+let rec string_3_row_h clst acc =
+  match clst with
   | [] -> acc
-  | h::t -> let coords = h.cell in 
+  | h::t -> let coords = h.cell in
       let str = ("(")^(string_of_int (fst' coords))^", "^(string_of_int (snd' coords))^", "^(string_of_int (thd coords))^")"
       ^"   "^acc in
       string_3_row_h t str
 
-let rec string_three_row clstlst acc = 
-  match clstlst with 
+let rec string_three_row clstlst acc =
+  match clstlst with
   | [] -> acc
   | h::t -> let str = (string_3_row_h h "")^"\n"^acc in
     string_three_row t str
@@ -165,7 +165,7 @@ let play_move st (pl, row, col) =
     let c = find_cell st (pl,row,col) in
     let b = st.tttBoard in
     (* let diag_check_truth = (((diag_check c b)|> fst) <> WinNone) || (((diag_check c b) |> snd) <> WinNone) in *)
-    let diag_check_num = 
+    let diag_check_num =
       begin
       match diag_check c b with
       | (WinH _, WinV _) -> 2

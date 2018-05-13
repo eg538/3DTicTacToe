@@ -302,24 +302,67 @@ let responsive_board str x y =
   (let file_name = "imgs/" ^ str ^ ".jpg" in
   print_endline file_name;
   print_endline"do i reach here";
-  draw_image (get_img "imgs/caml_try.jpg" ) x y;
+  draw_image (get_img file_name ) x y;
   print_endline"am i here?";)
 
-let tried str ex why =
-  (moveto (ex+15) (why+4);
+let choose_letter str =
+  if str = "python" then (draw_string "P";)
+else (draw_string "C";)
+
+let cover_try str ex why =
+  if (why >= 555 && why <= 666) then
+    (moveto (ex+15) (why+4);
+      set_color top_plep;
+     choose_letter str
+    )
+  else if (why >= 385 && why <= 492) then
+    (moveto (ex+15) (why+4);
+      set_color mid_plep;
+     choose_letter str
+    )
+  else if (why >= 225 && why <= 330) then
+    (moveto (ex+15) (why+4);
+      set_color bot_plep;
+     choose_letter str
+    )
+  else ()
+
+let change_curr_player st=
+  if st.current_player = Python then {st with current_player = Caml}
+  else {st with current_player = Python}
+
+
+let tried str ex why st=
+  moveto (ex+15) (why+4);
    set_color annoying_green;
    Graphics.set_font "-*-fixed-medium-r-semicondensed--17-*-*-*-*-*-iso8859-1";
-   if str = "python" then (draw_string "P";)
-   else draw_string "C";
-   draw_image (get_img "imgs/accept.jpg") 65 22;
-  )
+  choose_letter str;
+  draw_image (get_img "imgs/accept.jpg") 65 22;
+   let event_lst = [Graphics.Button_up] in
+   let mouse_status = wait_next_event event_lst  in
+   let x = mouse_status.mouse_x in
+   let y = mouse_status.mouse_y in
+   if ((x >= 66 && x <= 198)&& (y >= 22 && y <= 78)) then
+     ( print_endline "is it here?";
+       let (_, (a,b)) = play_board "place" ex why in
+       responsive_board str a b;
+     change_curr_player st)
+   else
+     ( print_endline "HEYEYEYEY";
+       print_int why;
+       cover_try str ex why;
+       let (s, (a,b)) = play_board "place" x y in
+       responsive_board str a b;
+change_curr_player st;
+     )
+
 
 let highlight_curr_player str =
   if str = "python" then (rect_drawn_bblack 596 150 64 60; rect_drawn_cyan 334 145 62 65;)
   else (rect_drawn_bblack 334 145 62 65; rect_drawn_cyan 596 150 64 60;)
 
 let winner_winner_chicken_appetizer str =
-  draw_image (get_img str) 200 200; 
+  draw_image (get_img str) 200 200;
   draw_image (get_img "imgs/quit.jpg") 225 425;
   (draw_image (get_img "imgs/restart.jpg") 225 325;)
 
