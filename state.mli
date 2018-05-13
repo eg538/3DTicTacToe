@@ -73,7 +73,7 @@ val p1_avatar: state -> player
 
 (*[most_recent_win st] is the list of three-in-a-rows associated the most recent 
  * action taken to get state [st]*)
- val most_recent_wins: state -> cell list list
+ val most_recent_wins: state -> (int*int*int) list list
 
 (*[do' c st] is [st'] if executing command [c] in state [st] results
  * in [st']. The following describe the valid commands and the result

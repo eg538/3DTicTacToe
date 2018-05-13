@@ -35,7 +35,7 @@ type state = {
   p1_num_tries : int;
   p2_num_hints : int;
   p2_num_tries : int;
-  most_recent_win: cell list list;
+  most_recent_win: (int*int*int) list list;
   winner: player;
   game_end: bool;
   k_bomb: bool;

@@ -143,7 +143,7 @@ let rec search st diag_cells_in_q diags_cell_list_only = (*let diags_cell_list_o
 let rec string_3_row_h clst acc =
   match clst with
   | [] -> acc
-  | h::t -> let coords = h.cell in
+  | coords::t -> (*let coords = h.cell in*)
       let str = ("(")^(string_of_int (fst' coords))^", "^(string_of_int (snd' coords))^", "^(string_of_int (thd coords))^")"
       ^"   "^acc in
       string_3_row_h t str
@@ -186,8 +186,9 @@ let play_move st (pl, row, col) =
     (* print_endline ("CASE 3D");
     print_endline (string_of_int (List.length case_3d)); *)
     let inced_st = inc_point ((List.length case_2d) + (List.length case_3d)) st in
-    print_endline (string_three_row (case_2d @ case_3d) "");
-    {inced_st with most_recent_win = case_2d @ case_3d}
+    let lst_win_coords = List.map (fun lst -> List.map (fun a -> a.cell) lst) (case_2d @ case_3d) in
+    print_endline (string_three_row (lst_win_coords) "");
+    {inced_st with most_recent_win = lst_win_coords}
     end
     (*match (case_2d, case_3d) with
       | true, true ->
@@ -211,7 +212,7 @@ let play_move st (pl, row, col) =
   else
     {st with most_recent_win = []}
 
-let most_recent_wins st = st.most_recent_wins
+let most_recent_wins st = st.most_recent_win
 
 let other_player ply =
   match ply with
