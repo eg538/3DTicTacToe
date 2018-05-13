@@ -178,11 +178,13 @@ let three_row_2d_cells c b =
   to check whether at least one of [possible_instances] has resulted in a win
   for the player who has played [c]
 *)
-let rec victory_on_plane c possible_instances =
+let rec victory_on_plane c possible_instances acc =
   match possible_instances with
-  | [] -> false
-  | h::t ->
-    (List.for_all (fun m -> m.player = c.player) h) || (victory_on_plane c t)
+  | [] -> acc
+  | h::t -> if List.for_all (fun m -> m.player = c.player) h then
+        victory_on_plane c t (acc + 1)
+      else
+        victory_on_plane c t acc
 
 let place (pl, row, col) b plyr =
   let c = get_cell (pl, row, col) b in
@@ -317,13 +319,13 @@ let win_evaluation c b =
     (((diag_check c b )|> fst) <> WinNone) || (((diag_check c b) |> snd) <> WinNone) in
   let cases_3d = (diag_check_truth) || (col_check c b) in
   let modified_3_row_2d_cells = List.filter (fun x -> List.length x <> 2) (three_row_2d_cells c b) in
-  let case_1 = victory_on_plane c (modified_3_row_2d_cells) in
-  let case_2 = victory_on_plane c (modified_3_row_2d_cells) in
-  let case_3 = victory_on_plane c (modified_3_row_2d_cells) in
+  let case_1 = victory_on_plane c (modified_3_row_2d_cells) 0 in
+  let case_2 = victory_on_plane c (modified_3_row_2d_cells) 0 in
+  let case_3 = victory_on_plane c (modified_3_row_2d_cells) 0 in
   match get_plane c.cell with
-  | 0 -> case_1 || cases_3d
-  | 1 -> case_2 || cases_3d
-  | 2 -> case_3 || cases_3d
+  | 0 -> (case_1 > 0) || cases_3d 
+  | 1 -> (case_2 > 0) || cases_3d
+  | 2 -> (case_3 > 0) || cases_3d
   | _ -> failwith "impossible"
 
 let cells_occupied b =
