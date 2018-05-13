@@ -175,10 +175,16 @@ let play_move st (pl, row, col) =
     print_endline (string_three_row instances ""); *)
     let case_2d = victory_on_plane c instances [] in
     (* print_endline ("CASE 2D");
-    print_endline (string_of_int case_2d); *)
-    let case_3d = (threed_col_win c b)::diag_check_lst in
+    print_endline (string_of_int (List.length case_2d)); *)
+    let case_3d = 
+    begin
+      if (threed_col_win c b) = [] then 
+        diag_check_lst 
+      else (threed_col_win c b)::diag_check_lst 
+    end  
+    in
     (* print_endline ("CASE 3D");
-    print_endline (string_of_int case_3d); *)
+    print_endline (string_of_int (List.length case_3d)); *)
     let inced_st = inc_point ((List.length case_2d) + (List.length case_3d)) st in
     print_endline (string_three_row (case_2d @ case_3d) "");
     {inced_st with most_recent_win = case_2d @ case_3d}
@@ -205,6 +211,8 @@ let play_move st (pl, row, col) =
   else
     {st with most_recent_win = []}
 
+let most_recent_wins st = st.most_recent_wins
+
 let other_player ply =
   match ply with
   | Python -> Caml
@@ -230,7 +238,7 @@ let check_game_end st =
 
 let game_ended st = st.game_end
 
-let rec extract_the_2d_win st acc modified =
+(* let rec extract_the_2d_win st acc modified =
   match modified with
   | [] -> acc
   | h::t ->
@@ -238,7 +246,7 @@ let rec extract_the_2d_win st acc modified =
       let possibly_new_win = not (List.mem h st.col_and_2d_grid_wins) in
       let consistent_player_inst = (List.for_all (fun x -> x.player = st.current_player) h) in
       h::(extract_the_2d_win st acc t)
-    end
+    end *)
 
          (*
 let empty_diags =
