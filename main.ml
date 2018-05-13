@@ -66,13 +66,9 @@ let rec play single st=
   let playerr = string_of_player (State.curr_player st )
   in print_endline playerr;
   Gui.highlight_curr_player playerr;
-  let hint_num = num_hints st in
-  let try_num = num_tries st in
-  Gui.num_try_hint hint_num 836 585;
-  Gui.num_try_hint try_num 171 585;
-  let player1_score = p1_score st in
-  let player2_score = p2_score st in
-  Gui.score player1_score player2_score ;
+  Gui.num_try_hint (num_hints st) 836 585;
+  Gui.num_try_hint (num_tries st) 171 585;
+  Gui.score (p1_score st) (p2_score st) ;
   Gui.rect_drawn_gray 149 627 69 44;
   Gui.rect_drawn_gray 800 625 93 40;
   Gui.responsive_board playerr 0 700;

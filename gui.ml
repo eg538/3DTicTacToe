@@ -125,7 +125,7 @@ else ch
 
 let rec start_game ch =
 
-  let event_lst = [Graphics.Button_down] in
+  let event_lst = [Graphics.Button_up] in
   let mouse_status = wait_next_event event_lst  in
   let x = mouse_status.mouse_x in
   let y = mouse_status.mouse_y in
@@ -286,10 +286,15 @@ let highlight_curr_player str =
   if str = "python" then (rect_drawn_bblack 596 150 64 60; rect_drawn_cyan 334 145 62 65;)
   else (rect_drawn_bblack 334 145 62 65; rect_drawn_cyan 596 150 64 60;)
 
+let winner_winner_chicken_appetizer str =
+  draw_image (get_img str) 200 200; 
+  draw_image (get_img "imgs/quit.jpg") 225 425;
+  (draw_image (get_img "imgs/restart.jpg") 225 325;)
+
+
 let winner_winner_chicken_dinner str =
-  print_endline "in winner winner chicken dinner";
-  draw_image (get_img "imgs/win.jpg") 200 200;
-  if str = "win" then ((draw_image (get_img "imgs/win.jpg") 200 200);)
-  else if str = "draw" then ((draw_image (get_img "imgs/draw_img.jpg") 200 200);)
-  else if str = "lost" then ((draw_image (get_img "imgs/loss_img.jpg") 200 200);)
-  else set_color magenta; draw_string "bruhhhh";
+  if str = "win" then (winner_winner_chicken_appetizer "imgs/win.jpg";)
+  else if str = "lost" then (winner_winner_chicken_appetizer "imgs/loss_img.jpg";)
+  else if str = "caml" then (winner_winner_chicken_appetizer "imgs/caml_wins.jpg";)
+  else if str = "python" then (winner_winner_chicken_appetizer "imgs/python_wins.jpg";)
+  else (winner_winner_chicken_appetizer "imgs/draw_img.jpg";)
