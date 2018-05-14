@@ -104,6 +104,12 @@ let rect_drawn_red x y  =
    set_line_width 3;
    draw_rect x y 50 50 ;)
 
+let mouse_up () =
+  let event_lst = [Graphics.Button_up] in
+  let mouse_status = wait_next_event event_lst  in
+  let x = mouse_status.mouse_x in
+  let y = mouse_status.mouse_y in
+  (x,y)
 
 
 type choices = {mode : string; level : string; num_p: string; }
@@ -118,54 +124,43 @@ let get_coordinates_choices c =
   else if c = "multi" then rect_drawn_white 520 130 82 44
   else ()
 
-let rec get_choices ch =
-let event_lst = [Graphics.Button_up] in
-let mouse_status = wait_next_event event_lst  in
-let x = mouse_status.mouse_x in
-let y = mouse_status.mouse_y in
+let rec get_choices ch x y =
 
 if (x >= 310 && x <= (310 + 108)) && (y >= 260 && y <= (260 + 44))
-then (get_coordinates_choices ch.level;(rect_drawn 310 260 108 44); get_choices {ch with level = "easy"} )
+then (get_coordinates_choices ch.level;(rect_drawn 310 260 108 44); get_choices {ch with level = "easy"} (fst mouse_up()) (snd mouse_up()))
 else if (x >= 450 && x <= (450 + 119)) && (y >= 260 && y <= (260 + 43))
-then (get_coordinates_choices ch.level;(rect_drawn 450 260 119 43); get_choices {ch with level ="medium"})
+then (get_coordinates_choices ch.level;(rect_drawn 450 260 119 43); get_choices {ch with level ="medium"}(fst mouse_up()) (snd mouse_up()))
 else if (x >= 600 && x <= (600 + 81)) && (y >= 260 && y <= (260 + 43))
-then (get_coordinates_choices ch.level;(rect_drawn 600 260 81 43); get_choices {ch with level ="hard"})
+then (get_coordinates_choices ch.level;(rect_drawn 600 260 81 43); get_choices {ch with level ="hard"}(fst mouse_up()) (snd mouse_up()))
 else if (x >= 380 && x <= (380 + 109)) && (y >= 200 && y <= (200 + 43))
-then (get_coordinates_choices ch.mode;(rect_drawn 380 200 109 43); get_choices {ch with mode ="normal"})
+then (get_coordinates_choices ch.mode;(rect_drawn 380 200 109 43); get_choices {ch with mode ="normal"}(fst mouse_up()) (snd mouse_up()))
 else if (x >= 520 && x <= (520 + 93)) && (y >= 200 && y <= (200 + 44))
-then (get_coordinates_choices ch.mode;(rect_drawn 520 200 93 44); get_choices {ch with mode ="krazy"})
+then (get_coordinates_choices ch.mode;(rect_drawn 520 200 93 44); get_choices {ch with mode ="krazy"}(fst mouse_up()) (snd mouse_up()))
 else if (x >= 395 && x <= (395 + 93)) && (y >= 130 && y <= (130 + 44))
-then (get_coordinates_choices ch.num_p;(rect_drawn 395 130 93 44);get_choices{ch with num_p = "single"})
+then (get_coordinates_choices ch.num_p;(rect_drawn 395 130 93 44);get_choices{ch with num_p = "single"}(fst mouse_up()) (snd mouse_up()))
 else if (x >= 520 && x <= (520 + 82)) && (y >= 130 && y <= (130 + 44))
-then (get_coordinates_choices ch.num_p;(rect_drawn 520 130 82 44); get_choices{ch with num_p ="multi"})
+then (get_coordinates_choices ch.num_p;(rect_drawn 520 130 82 44); get_choices{ch with num_p ="multi"}(fst mouse_up()) (snd mouse_up()))
 else if (not(x >= 380 && x <=(242+380)) && (y>=35 && y<=(35+69)))
-then get_choices ch
+then get_choices ch x y
 else ch
 
 
-let rec start_game ch =
+let rec start_game ch x y=
 
-  let event_lst = [Graphics.Button_up] in
-  let mouse_status = wait_next_event event_lst  in
-  let x = mouse_status.mouse_x in
-  let y = mouse_status.mouse_y in
+
   if(x >= 380 && x <=(242+380)) && (y>=35 && y<=(35+69)) then(
     let play_str = "play " ^ ch.num_p ^ " " ^ "python " ^ ch.level ^ " " ^ ch.mode in
-    rect_drawn x y 90 90;clear_graph(); 
+    rect_drawn x y 90 90;clear_graph();
     draw_image (get_img "imgs/xxoo.jpg") 0 0;draw_image (get_img "imgs/TTTmain.jpg") 250 40;
     draw_image(get_img "imgs/hint.jpg") 800 555; draw_image(get_img "imgs/try.jpg") 134 555;
     play_str) else (
-    let event_lst = [Graphics.Button_up] in
-    let mouse_status = wait_next_event event_lst  in
-    let x = mouse_status.mouse_x in
-    let y = mouse_status.mouse_y in
-    let choice = get_choices ch in
+    let choice = get_choices ch x y in
     if(x >= 380 && x <=(242+380)) && (y>=35 && y<=(35+69)) then(
       let play_str = "play " ^ choice.num_p ^ " " ^ "python " ^ choice.level ^ " " ^ choice.mode in
       rect_drawn x y 90 90; clear_graph(); draw_image (get_img "imgs/xxoo.jpg") 0 0;draw_image (get_img "imgs/TTTmain.jpg") 250 40;
       draw_image(get_img "imgs/hint.jpg") 800 555; draw_image(get_img "imgs/try.jpg") 134 555;
       play_str)
-    else (start_game choice))
+    else (start_game choice x y))
 
 
 let init_welcome () =
