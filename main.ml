@@ -3,6 +3,7 @@
 open Types
 open Command
 open State
+open Krazy
 open Ai
 open Parse_init
 open ANSITerminal
@@ -29,7 +30,7 @@ let rec iterate lst f =
   | [] -> ();
   | h::t -> (f h; iterate t f;)
 
-let computer_move_st newSt =
+let computer_move_st do_mode newSt =
   print_endline "Please wait while computer moves...";
   let playerr = string_of_player (State.curr_player newSt) in
   let comp_move =
@@ -40,7 +41,8 @@ let computer_move_st newSt =
     else
       hard_ai_move newSt
   in
-  let newSt' = do' comp_move newSt in
+  let newSt' = do_mode comp_move newSt in
+  if newSt'
   let coords_move =
     begin
       match comp_move with
@@ -48,25 +50,18 @@ let computer_move_st newSt =
       | _ -> failwith "Unimplemented"
     end
   in
-  let x = fst (cell_coords_to_x_y coords_move) in
-  let y = snd (cell_coords_to_x_y coords_move) in
-  Gui.responsive_board playerr x y ; (* x and y are the locations to draw the image *)
-  Gui.score (p1_score newSt') (p2_score newSt') ;
-          (* Gui.num_try_hint (num_tries newSt') 836 587;
-          Gui.num_try_hint (num_hints newSt') 171 593; *)
-  (* let recent_wins = (most_recent_wins newSt' ) = [] in *)
-  (* print_endline " ";print_endline "recent_wins is empty"; print_endline (string_of_bool recent_wins); print_endline " "; *)
-  (* if (not recent_wins) then
-    Gui.draw_three_row (most_recent_wins newSt);
-          (* let recent_wins = most_recent_wins newSt in
-          if recent_wins <> [] then
-            Gui.draw_three_row recent_wins; *)
-
-          print_endline ("Score of player 1: "^(string_of_int (p1_score newSt))^"\n"^"Score of player 2: "^(string_of_int (p2_score newSt))); *)
+  (if krazy_happ_st then
+    ()
+  else
+    let x = fst (cell_coords_to_x_y coords_move) in
+    let y = snd (cell_coords_to_x_y coords_move) in
+    Gui.responsive_board playerr x y ; 
+    Gui.score (p1_score newSt') (p2_score newSt') ;
     print_board newSt';
     print_endline ("Score of player 1: "^(string_of_int (p1_score newSt'))^
-                  "\n"^"Score of player 2: "^(string_of_int (p2_score newSt')));
-    newSt'
+                    "\n"^"Score of player 2: "^(string_of_int (p2_score newSt')))
+  );
+  newSt'
 
 let rec ended () =
   let input = Gui.which_command () in
@@ -82,7 +77,7 @@ let rec ended () =
   | _ -> ended ()
 
 (*[play st] is the helper function for play_game ()*)
-let rec play single st=
+let rec play single do_mode st=
   if game_ended st then
     let win_msg_and_stuff = get_result_message st in
     let win_msg = snd win_msg_and_stuff in
@@ -106,8 +101,6 @@ let rec play single st=
   let recent_wins = (most_recent_wins st ) = [] in
   print_endline " ";print_endline "recent_wins is empty"; print_endline (string_of_bool recent_wins); print_endline " ";
   if not recent_wins then Graphics.remember_mode false; iterate (most_recent_wins st) Gui.draw_three_row;
-
-
   let input = Gui.which_command () in
   let commend = fst' input in
   let x = snd' input in
@@ -124,7 +117,7 @@ let rec play single st=
                        else (print_endline "caml";print_int st.p2_num_tries;   {st with p2_num_tries = st.p2_num_tries - 1})) in *)
   if com = "try 1,1,1" then play single st else
   let command = parse com in
-  let newSt = do' command st in
+  let newSt = do_mode command st in
   (* print_endline "length of list of 3-in-row:"; *)
   (* let lst = newSt.diagonals in
   print_int (List.length lst); *)
@@ -160,9 +153,9 @@ let rec play single st=
         Gui.num_try_hint (num_tries newSt) 836 587;
         Gui.num_try_hint (num_hints newSt) 171 593;
         if (clicked_accept) then (
-          let place_st = do' (Place (pl, x, y)) newSt in
+          let place_st = do_mode (Place (pl, x, y)) newSt in
           if single then (
-            let comp_st = computer_move_st place_st in play single comp_st
+            let comp_st = computer_move_st do_mode place_st in play single comp_st
           )
           else (
             play single place_st
@@ -172,7 +165,7 @@ let rec play single st=
           let test = Gui.play_board "place" xa ya in
           let com = fst test in
           let command = parse com in
-          let news = do' command newSt in
+          let news = do_mode command newSt in
           if news = newSt then (
             let ex = snd test |> fst in
             let why = snd test |> snd in
@@ -193,7 +186,7 @@ let rec play single st=
             Gui.cover_try playerr xx yy;
             Gui.cover_up();
             if single then
-              (let comp_st = computer_move_st news in play single comp_st)
+              (let comp_st = computer_move_st do_mode news in play single comp_st)
             else
               (play single news)
           )
@@ -209,27 +202,25 @@ let rec play single st=
         play single newSt;)
 
      else
-       (  print_board newSt;
-          let x = snd test |> fst in
-          let y = snd test |> snd in
-          Gui.cover_up ();
-          print_int x;
-          print_int y;
-          Gui.responsive_board playerr x y ; (* x and y are the locations to draw the image *)
-          Gui.score (p1_score newSt) (p2_score newSt) ;
-          Gui.num_try_hint (num_tries newSt) 836 587;
-          Gui.num_try_hint (num_hints newSt) 171 593;
-          let recent_wins = (most_recent_wins newSt ) = [] in
-          print_endline " ";print_endline "recent_wins is empty"; print_endline (string_of_bool recent_wins); print_endline " ";
-          (* if (not recent_wins) then
-            Gui.draw_three_row (most_recent_wins newSt);
-          (* let recent_wins = most_recent_wins newSt in
-          if recent_wins <> [] then
-            Gui.draw_three_row recent_wins; *)
-          else
-            print_endline ("Score of player 1: "^(string_of_int (p1_score newSt))^"\n"^"Score of player 2: "^(string_of_int (p2_score newSt))) *)
+       (  (if not (krazy_happ_st newSt) then(
+            print_board newSt;
+            let x = snd test |> fst in
+            let y = snd test |> snd in
+            Gui.cover_up ();
+            print_int x;
+            print_int y;
+            Gui.responsive_board playerr x y ; (* x and y are the locations to draw the image *)
+            Gui.score (p1_score newSt) (p2_score newSt) ;
+            Gui.num_try_hint (num_tries newSt) 836 587;
+            Gui.num_try_hint (num_hints newSt) 171 593;
+            let recent_wins = (most_recent_wins newSt ) = [] in
+            print_endline " ";print_endline "recent_wins is empty"; print_endline (string_of_bool recent_wins); print_endline " "
+          )
+          else 
+            ()
+          );
           if single then
-            (let comp_st = computer_move_st newSt in play single comp_st)
+            (let comp_st = computer_move_st do_mode newSt in play single comp_st)
           else
             (play single newSt)
           ))
@@ -244,14 +235,15 @@ let rec play single st=
       in
       let x = fst (cell_coords_to_x_y coord_move) in
       let y = snd (cell_coords_to_x_y coord_move) in
-      let newSt' = do' hint_move newSt in
-      Gui.responsive_board playerr x y ; (* x and y are the locations to draw the image *)
-      Gui.score (p1_score newSt) (p2_score newSt);
+      let newSt' = do_mode hint_move newSt in
+      (if not (krazy_happ_st newSt' )then
+        Gui.responsive_board playerr x y ; (* x and y are the locations to draw the image *)
+        Gui.score (p1_score newSt) (p2_score newSt);
+      else ());
       if single then
-        (let comp_st = computer_move_st newSt' in play single comp_st)
+        (let comp_st = computer_move_st do_mode newSt' in play single comp_st)
       else
         (play single newSt')
-
   | Look -> (print_board st; play single newSt)
   | CurrentPlayer ->
     (print_endline ("Current player: "^(string_of_player (curr_player st)));
@@ -259,6 +251,16 @@ let rec play single st=
   | Invalid -> (print_endline "Action impossible. Please try a different move.";
                 play single st)
   )
+
+let do_kray_w_GUI c st = 
+  let st' = do_krazy c st in
+  if krazy_happ_st st' then (
+    (*redraw*)
+  )
+  else (
+    ()
+  );
+  st'
 
 let rec play_game str f =
 try (
@@ -271,7 +273,8 @@ try (
     print_board init_st;
     begin
     try(
-        play (game_num_plyrs init_st <> Multi) init_st
+        play (game_num_plyrs init_st <> Multi) 
+            (if game_mode init_st = Krazy then do_kray_w_GUI else do') init_st
       ) with
     | Terminated -> print_endline "Bye!"
     | Restart -> (print_endline "You have chosen to restart this game";
