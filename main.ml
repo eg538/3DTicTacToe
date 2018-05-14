@@ -253,10 +253,34 @@ let rec play single do_mode st=
                 play single do_mode st)
   )
 
+let rec draw_all_moves cllst = 
+  match cllst with
+  | [] -> ()
+  | h::t -> let (x, y) = cell_coords_to_x_y (h.cell) in
+      let plyr = string_of_player h.player in
+      Gui.responsive_board plyr x y;
+      draw_all_moves t
+
 let do_kray_w_GUI (c:command) st = 
   let st' = do_krazy c st in
   if krazy_happ_st st' then (
-    ()(*redraw*)
+    (*redraw*)
+    if krazy_bomb_happ_st st' then (
+      (*animation*)
+    )
+    else (
+      (*Act I*)
+      clear_graph();
+      draw_image (get_img "imgs/xxoo.jpg") 0 0;
+      draw_image (get_img "imgs/TTTmain.jpg") 250 40;
+      draw_image (get_img "imgs/hint.jpg") 800 555; 
+      draw_image (get_img "imgs/try.jpg") 134 555;
+
+      (*Intermission*)
+      cells_occ st' |> draw_all_moves;
+      
+      (*Act 2*)
+    )
   )
   else (
     ()
