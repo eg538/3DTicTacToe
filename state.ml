@@ -85,7 +85,7 @@ let make_move s (pl, x, y) = place (pl, x, y) s.tttBoard s.current_player
 
 let try_move s (pl, x, y) = let copy_b = copy s.tttBoard in
   place (pl, x, y) copy_b s.current_player;
-  {s with tttBoard = copy_b}
+  s
 
 let hint s = failwith "Unimplemented"
 
@@ -231,14 +231,13 @@ let do' c st =
   | Try (pl, row, col) ->
     begin
       try(
-
         let st = if (st.current_player = Python) then
             (if (st.p1_num_tries > 0) then {st with p1_num_tries = st.p1_num_tries - 1 }
              else {st with p1_num_tries = 0} )
           else
             (  if (st.p2_num_tries > 0) then {st with p2_num_tries = st.p2_num_tries - 1 }
           else {st with p2_num_tries = 0})  in
-        try_move st (pl, row, col) |> switch_players 
+        try_move st (pl, row, col)
       )with
       | _ -> st
     end
