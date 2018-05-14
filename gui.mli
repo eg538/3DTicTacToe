@@ -60,12 +60,17 @@ val winner_winner_chicken_dinner: string -> unit
 (* Displays the number of tries left. int is the number of tries left *)
 val num_try_hint : int -> int -> int -> unit
 
+val cover_try : string -> int -> int -> unit
+
+
+val try_responsive_board: string -> int -> int-> (int * int * int)-> (bool* int * int)
+
 (* Let's the player try a position without actually changing anything.
    [try playerr ex why] places a try picture of the marker onto the cell described
    by player [playerr] at [ex] and [why]. Will be a helper function of play_board.
 *)
-val tried : string -> int -> int -> state -> state
-
+(*val tried : string -> int -> int -> state -> state
+*)
 (* (* [check_try_pressed] is true if the user pressed within the try button and false
    otherwise.
  *)
@@ -82,3 +87,6 @@ val which_command : unit -> string*int*int
 val draw_three_row : (int*int*int) list list ->  unit
 
 val cell_coords_to_x_y: (int*int*int) -> (int*int)
+
+
+val get_img:string -> image

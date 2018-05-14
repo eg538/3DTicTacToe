@@ -96,8 +96,8 @@ let rec play single st=
   Gui.responsive_board playerr 0 700;
   let hint_num = num_hints st in
   let try_num = num_tries st in
-  Gui.num_try_hint try_num 836 580;
-  Gui.num_try_hint hint_num 171 587;
+  Gui.num_try_hint hint_num 836 580;
+  Gui.num_try_hint try_num 171 587;
   let input = Gui.which_command () in
   let commend = fst' input in
   let x = snd' input in
@@ -110,8 +110,8 @@ let rec play single st=
   let com = fst test in
   print_endline commend;
   print_endline com;
-  let st_modified = (  if playerr = "python" then  {st with p1_num_tries = st.p1_num_tries - 1 }
-  else  {st with p2_num_tries = st.p2_num_tries - 1}) in
+  let st_modified = (  if playerr = "python" then (print_endline "python";print_int st.p1_num_tries;  {st with p1_num_tries = st.p1_num_tries - 1 })
+                       else (print_endline "caml";print_int st.p2_num_tries;   {st with p2_num_tries = st.p2_num_tries - 1})) in
   if com = "try 1,1,1" then play single st_modified else
   let command = parse com in
   let newSt = do' command st in
@@ -127,7 +127,40 @@ let rec play single st=
      play single newSt)
   | Quit -> (print_endline "yo what's up in this hole";exit 0)
   | Restart -> (raise Restart)
-  | Try (pl, x, y) ->(
+  | Try (pl, x, y) ->(print_board newSt;
+                      if newSt = st then
+                        (let ex = snd test |> fst in
+                         let why = snd test |> snd in
+                         Gui.repeat_cell ex why;
+                         print_endline "Action impossible. Please try a different move.";
+                         if ((playerr = "python" && newSt.p1_num_tries <= 0) ||(playerr = "caml" && newSt.p2_num_tries <= 0)) then draw_image (Gui.get_img "imgs/tries_loss.jpg") 236 0;
+                         play single newSt;)
+                      else
+                     (let xx = snd test |> fst in
+                     let yy = snd test |> snd in
+                     Gui.cover_up ();
+                     print_int xx;
+                     print_int yy;
+                     let (clicked_accept, xa, ya) = Gui.try_responsive_board playerr xx yy (pl, x, y) in(* xx and yy are the locations to draw the image *)
+                     Gui.score (p1_score newSt) (p2_score newSt) ;
+                     Gui.num_try_hint (num_tries newSt) 836 587;
+                     Gui.num_try_hint (num_hints newSt) 171 593;
+                     if (clicked_accept) then
+                       play single newSt
+                     else
+                       let test = Gui.play_board "place" xa ya in
+                       let com = fst test in
+                       let command = parse com in
+                       let news = do' command st in
+                       let aa = snd test |> fst in
+                       let bb = snd test |> snd in
+                       Gui.responsive_board playerr aa bb;
+                       moveto (xx+15) (yy+4);
+                       Graphics.set_font "-*-fixed-medium-r-semicondensed--17-*-*-*-*-*-iso8859-1";
+                       Gui.cover_try playerr xx yy;
+                       Gui.cover_up();
+                       play single news))
+                        (*
       if newSt = st then
       (let ex = snd test |> fst in
       let why = snd test |> snd in
@@ -145,7 +178,7 @@ let rec play single st=
           let s = Gui.tried playerr x y newSt in
           (* Gui.responsive_board tmp x y; *)
 
-          play single s))
+          play single s)*)
   | Place (pl, x, y) ->
     (if newSt = st then
        (let ex = snd test |> fst in
