@@ -1,16 +1,5 @@
 exception InvalidCommand
 open Types
-(* type command =
-  |Play of string
-  |Score
-  |Quit
-  |Restart
-  |Try of (int * int * int)
-  |Place of (int * int * int)
-  |Hint
-  |Look
-  | CurrentPlayer
-  |Invalid *)
 
 let list_coords obj = try (String.split_on_char ',' obj
       |> List.map (fun a -> String.trim a)

@@ -28,7 +28,7 @@ let random_cell_for_krazy st =
 
 (* let new_krazy_st st = let b = copy empty_board in
   {st with tttBoard = b; curr_score_1 = 0; curr_score_2 = *)
-  
+
   let rec krazy_recalc_helper cellst st =
   match cellst with
   | [] -> st
@@ -48,9 +48,9 @@ let krazy_recalc_score st =
   let win_inst_tracker = [] in
   let occupied = cells_occupied (board st) in
   let st' = init_state info_str in
-  let new_st = 
+  let new_st =
     {st' with p1_num_hints = st.p1_num_hints;
-              p1_num_tries = st.p1_num_tries; 
+              p1_num_tries = st.p1_num_tries;
               p2_num_hints = st.p2_num_hints;
               p2_num_tries = st.p2_num_tries} in
   krazy_recalc_helper occupied {new_st with moves_made = st.moves_made}
@@ -97,11 +97,11 @@ let inc_moves st = {st with moves_made = st.moves_made + 1}
 
 let up_krazy_happ boole st = {st with krazy_happ = boole}
 
-let do_krazy c st = 
+let do_krazy c st =
   let st' = do' c st |> inc_moves in
-  let new_st = 
-    if st'.krazy_bomb_happ then 
-      {st' with krazy_bomb_happ = false} 
+  let new_st =
+    if st'.krazy_bomb_happ then
+      {st' with krazy_bomb_happ = false}
     else st' in
   if new_st.moves_made = new_st.move_num_dispr then (
     print_endline "disappearing square";
@@ -117,8 +117,8 @@ let do_krazy c st =
     krazy_cell_swap new_st rand_cell1 rand_cell2 |> up_krazy_happ true
   ) else if new_st.moves_made = new_st.move_num_switch_pl then (
     print_endline "switch planes";
-    let pl1 = Random.int 3 in
-    let rand2 = Random.int 3 in
+    let pl1 = (Random.int 3) in
+    let rand2 = (Random.int 3) in
     let pl2 = if pl1 = rand2 then abs (2 - pl1) else rand2 in
     print_endline ((string_of_int pl1)^", "^(string_of_int pl2));
     krazy_switch_planes new_st pl1 pl2 |> up_krazy_happ true
