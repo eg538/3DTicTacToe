@@ -290,14 +290,10 @@ let st11_bool = st11_bomb_bef <> st11_bomb_aft
 
 let st12 = init_state "single python easy krazy"
 let st12 = {st12 with move_num_dispr = 12; move_num_swap = 11;
-                      move_num_switch_pl = 14; move_num_bomb = 6}
-
+                      move_num_switch_pl = 14; move_num_bomb = 3}
 let st12 = do_krazy (Place (0,0,0)) st12
-let st12 = do_krazy (Place (0,1,0)) st12
-let st12 = do_krazy (Place (2,0,1)) st12
-let st12 = do_krazy (Place (1,1,2)) st12
-let st12 = do_krazy (Place (2,2,2)) st12
-let st12 = do_krazy (Place (0,0,2)) st12
+let st12 = do_krazy (Place (2,2,0)) st12
+let st12 = do_krazy (Place (1,1,0)) st12
 
 let st13a = init_state "single python easy krazy"
 let st13b = init_state "single python easy krazy"
@@ -309,6 +305,31 @@ let plyr_1 = (get_cell (0,0,0) st13b.tttBoard).player
 let plyr_2 = (get_cell (0,2,0) st13b.tttBoard).player
 let st13b_bool_expr = (((get_cell (0,0,0) st13b.tttBoard).player = None) || ((get_cell (0,2,0) st13b.tttBoard).player = None)) && (plyr_1 <> plyr_2)
 
+let st14 = init_state "single python easy krazy"
+let st14 = {st14 with move_num_dispr = 20; move_num_swap = 21;
+                       move_num_switch_pl = 19; move_num_bomb = 18}
+let st14 = do_krazy (Place (0,0,0)) st14
+let st14 = do_krazy (Place (0,0,2)) st14
+let st14 = do_krazy (Place (0,1,0)) st14
+let st14 = do_krazy (Place (0,1,2)) st14
+let st14 = do_krazy (Place (0,2,0)) st14
+let st14 = do_krazy (Place (0,2,2)) st14
+let st14 = do_krazy (Place (1,0,0)) st14
+let st14 = do_krazy (Place (1,0,2)) st14
+let st14 = do_krazy(Place (1,1,0)) st14
+let st14 = do_krazy (Place (1,1,2)) st14
+let st14 = do_krazy (Place (1,2,0)) st14
+let st14 = do_krazy (Place (1,2,2)) st14
+let st14 = do_krazy (Place (2,0,0)) st14
+let st14 = do_krazy (Place (2,0,2)) st14
+let st14 = do_krazy (Place (2,1,0)) st14
+let st14 = do_krazy (Place (2,1,2)) st14
+let st14 = do_krazy (Place (2,2,0)) st14
+let st14_bef = ((cells_occupied st14.tttBoard), (st14.curr_score_1, st14.curr_score_2))
+let st14 = do_krazy (Place (2,2,2)) st14
+let st14_aft = ((cells_occupied st14.tttBoard), (st14.curr_score_1, st14.curr_score_2))
+let st14_bool1 = st14_bef <> st14_aft
+let st14_bool2 = ((st14_bef |> snd |> snd) <> (st14_aft |> snd |> snd)) || ((st14_bef |> snd |> fst) <> (st14_aft |> snd |> fst))
 (*let st13c = init_state "single python easy krazy"
 let st13c = {st13c with move_num_dispr = 2; move_num_swap = 16;
                         move_num_switch_pl = 14; move_num_bomb = 19}
@@ -323,7 +344,15 @@ let tests_wins_krazy = [
   (*single bomb feature*)
   "single_krazy_bomb1" >:: (fun _ -> assert_equal true st11.krazy_happ);
   "single_krazy_bomb2" >:: (fun _ -> assert_equal true st11_bool);
-  (*"single_krazy_bomb2" >:: (fun _ -> assert_equal st11.moves_made st11.move_num_switch_pl); *)
+
+  (*bomb feature causing an empty board (all on 1 grid slice)*)
+  "single_krazy_bomb3" >:: (fun _ -> assert_equal true st12.krazy_happ);
+  "single_krazy_bomb4" >:: (fun _ -> assert_equal empty_board st12.tttBoard);
+
+  (*bomb feature causing the score to actually be different*)
+  "single_krazy_bomb_plyrs_5" >:: (fun _ -> assert_equal true (st14_bool2 && st14_bool1));
+  "single_krazy_bomb_6" >:: (fun _ -> assert_equal true st14.krazy_happ);
+
   (*
     (*(*only disappearing squares - single cell placement*)*)
   "single_krazy_dispr_sq1" >:: (fun _ -> assert_equal st13a.tttBoard st13b.tttBoard);
