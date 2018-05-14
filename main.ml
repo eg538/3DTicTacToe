@@ -120,9 +120,9 @@ let rec play single st=
   let com = fst test in
   print_endline commend;
   print_endline com;
-  let st_modified = (  if playerr = "python" then (print_endline "python";print_int st.p1_num_tries;  {st with p1_num_tries = st.p1_num_tries - 1 })
-                       else (print_endline "caml";print_int st.p2_num_tries;   {st with p2_num_tries = st.p2_num_tries - 1})) in
-  if com = "try 1,1,1" then play single st_modified else
+  (* let st_modified = (  if playerr = "python" then (print_endline "python";print_int st.p1_num_tries;  {st with p1_num_tries = st.p1_num_tries - 1 })
+                       else (print_endline "caml";print_int st.p2_num_tries;   {st with p2_num_tries = st.p2_num_tries - 1})) in *)
+  if com = "try 1,1,1" then play single st else
   let command = parse com in
   let newSt = do' command st in
   (* print_endline "length of list of 3-in-row:"; *)
@@ -139,6 +139,7 @@ let rec play single st=
   | Restart -> (raise Restart)
   | Try (pl, x, y) -> (
       print_board newSt;
+      print_endline "IN TRY";
       if newSt = st then (
         print_endline "POOP";
         let ex = snd test |> fst in
@@ -146,7 +147,7 @@ let rec play single st=
         Gui.repeat_cell ex why;
         print_endline "Action impossible. Please try a different move.";
         if ((playerr = "python" && newSt.p1_num_tries = 0) ||(playerr = "caml" && newSt.p2_num_tries = 0)) then draw_image (Gui.get_img "imgs/tries_loss.jpg") 236 0;
-        play single newSt;
+        play single st;
       )
       else (
         let xx = snd test |> fst in
@@ -199,25 +200,6 @@ let rec play single st=
         )
       )
     )
-                        (*
-      if newSt = st then
-      (let ex = snd test |> fst in
-      let why = snd test |> snd in
-      Gui.repeat_cell ex why;
-      print_endline "Action impossible. Please try a different move.";
-      play single newSt;)
-      else
-        (
-          print_board newSt;
-          let x = snd test |> fst in
-          let y = snd test |> snd in
-          (* let tmp = playerr ^ "_try" in *)
-          print_int x;
-          print_int y;
-          let s = Gui.tried playerr x y newSt in
-          (* Gui.responsive_board tmp x y; *)
-
-          play single s)*)
   | Place (pl, x, y) ->
     (if newSt = st then
        (let ex = snd test |> fst in
@@ -275,7 +257,7 @@ let rec play single st=
     (print_endline ("Current player: "^(string_of_player (curr_player st)));
      play single newSt)
   | Invalid -> (print_endline "Action impossible. Please try a different move.";
-                play single newSt)
+                play single st)
   )
 
 let rec play_game str f =
