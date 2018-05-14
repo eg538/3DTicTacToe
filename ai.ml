@@ -204,6 +204,7 @@ let rec minimax_move_helper st h_val children =
   | (Node (mve, _))::t -> if mve.h_score = h_val then
       Place mve.move
     else minimax_move_helper st h_val t
+  | _ -> failwith "Nop"
 
 let rec minimax_move st h_val tree =
   match tree with

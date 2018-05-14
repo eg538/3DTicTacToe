@@ -7,6 +7,8 @@ open Command
 open Types
 open Grid_3d
 
+(* make the black background color for rules*)
+let bbblack = rgb 3 3 3
 
 (* make the black colored backround color *)
 let bblack = rgb 32 32 32
@@ -149,7 +151,9 @@ let rec start_game ch =
   let y = mouse_status.mouse_y in
   if(x >= 380 && x <=(242+380)) && (y>=35 && y<=(35+69)) then(
     let play_str = "play " ^ ch.num_p ^ " " ^ "python " ^ ch.level ^ " " ^ ch.mode in
-    rect_drawn x y 90 90; clear_graph(); draw_image (get_img "imgs/xxoo.jpg") 0 0;draw_image (get_img "imgs/TTTmain.jpg") 250 40;
+    rect_drawn x y 90 90;clear_graph(); set_color bbblack; draw_rect 0 0 1000 750; fill_rect 0 0 1000 750;
+    draw_image (get_img "imgs/rules.jpg") 0 100; let _ = wait_next_event event_lst in
+    draw_image (get_img "imgs/xxoo.jpg") 0 0;draw_image (get_img "imgs/TTTmain.jpg") 250 40;
     draw_image(get_img "imgs/hint.jpg") 800 555; draw_image(get_img "imgs/try.jpg") 134 555;
     play_str) else (
     let event_lst = [Graphics.Button_up] in
