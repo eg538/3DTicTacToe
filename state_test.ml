@@ -38,8 +38,9 @@ let init_tests = [
   "init_most_recent_win" >:: (fun _ -> assert_equal [] st.most_recent_win);
   "init_winner" >:: (fun _ -> assert_equal None st.winner);
   "init_game_end" >:: (fun _ -> assert_equal false st.game_end);
-  "init_k_bomb" >:: (fun _ -> assert_equal false st.k_bomb);
-  "init_k_disappearing_sqs" >:: (fun _ -> assert_equal {cell=(0,0,0);player=None} st.k_disappearing_sqs);
+  "init_krazy_happ" >:: (fun _ -> assert_equal false st.krazy_happ);
+  "init_krazy_bomb" >:: (fun _ -> assert_equal false st.krazy_bomb_happ);
+  "init_moves_made" >:: (fun _ -> assert_equal 0 st.moves_made);
 
   "add_icon_p" >:: (fun _ -> assert_equal p (Hashtbl.find st0.tttBoard (0,0,0)));
   "add_icon_c" >:: (fun _ -> assert_equal c (Hashtbl.find st0.tttBoard (1,2,0)));
@@ -170,6 +171,21 @@ let st8' = do' (Place (2,2,2)) st8'
 let win8' = [[(2,2,2);(2,0,2);(2,1,2)];
              [(0,2,2);(1,2,2);(2,2,2)];
              [(2,2,2);(1,1,2);(0,0,2)]]
+
+(*make sure that (1,1,1) is inactive*)
+let st9a = init_state "single python easy normal"
+let st9a = do' (Place (0,0,0)) st9a
+let st9a = do' (Place (1,2,0)) st9a
+let st9a = do' (Place (2,2,2)) st9a
+let st9b = init_state "single python easy normal"
+let st9b = do' (Place (1,1,0)) st9b
+let st9b = do' (Place (1,0,1)) st9b
+let st9b = do' (Place (1,1,2)) st9b
+let st9c = init_state "single python easy normal"
+let st9c = do' (Place (1,0,1)) st9c
+let st9c = do' (Place (1,1,0)) st9c
+let st9c = do' (Place (1,2,1)) st9c
+
 (*single python easy normal*)
 let tests_wins = [
   (*simple 2d diagonal win *)
@@ -222,6 +238,15 @@ let tests_wins = [
   "3d_vertical_slice_p2b" >:: (fun _ -> assert_equal 8 (st8'.curr_score_2));
   "3d_vertical_slice_recent_winb" >:: (fun _ -> assert_equal win8' st8'.most_recent_win);
 
+  (*(1,1,1) tests inactive *)
+  "inactive_111_horz_p1" >:: (fun _ -> assert_equal 8 (st8'.curr_score_1));
+  "inactive_111_horz_p2" >:: (fun _ -> assert_equal 8 (st8'.curr_score_2));
+
+  "inactive_111_vert_p1" >:: ();
+  "inactive_111_vert_p2" >:: ();
+
+  "inactive_111_3d_diag_p1" >:: ();
+  "inactive_111_3d_diag_p2" >:: ();
   (*one horizontal slice (localized 2d grid instance)*)
 
 ]
