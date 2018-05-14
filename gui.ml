@@ -338,8 +338,8 @@ let try_responsive_board str x y (pl, ex, why)=
     let yy = int_of_char (String.get sy (c1 + 3)) - 48 in
     print_endline(string_of_bool (why = yy));
     if ((p = pl && ex = xx && why = yy)||((xa >= 66 && xa <= 198)&& (ya >= 22 && ya <= 78) )) then
-      ( if (p = pl && ex = xx && why = yy) then (responsive_board str a b; cover_up(); (true, a, b);)else
-          (responsive_board str a b; cover_up();(true, a, b);)) else ((false, xa, ya);)
+      ( if (p = pl && ex = xx && why = yy) then (cover_up(); (true, a, b);)else
+          (responsive_board str x y; cover_up();(true, a, b);)) else ((false, xa, ya);)
 
 let highlight_curr_player str =
   if str = "python" then (rect_drawn_bblack 596 150 64 60; rect_drawn_cyan 334 145 62 65;)
