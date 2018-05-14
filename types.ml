@@ -38,8 +38,13 @@ type state = {
   most_recent_win: (int*int*int) list list;
   winner: player;
   game_end: bool;
-  k_bomb: bool;
-  k_disappearing_sqs: cell
+  krazy_happ: bool;
+  krazy_bomb_happ: bool;
+  moves_made: int;
+  move_num_dispr: int;
+  move_num_swap: int;
+  move_num_switch_pl: int;
+  move_num_bomb: int
 }
 
 type command =

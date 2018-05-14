@@ -27,8 +27,13 @@ let init_state str =
     most_recent_win = [];
     winner = None;
     game_end = false;
-    k_bomb = false;
-    k_disappearing_sqs = {cell=(0,0,0);player=None} (*hardcoded for init*)
+    krazy_happ = false;
+    krazy_bomb_happ = false;
+    moves_made = 0;
+    move_num_dispr = Random.int 5 + 5;
+    move_num_swap = Random.int 5 + 5;
+    move_num_switch_pl = Random.int 5 + 5;
+    move_num_bomb = Random.int 5 + 5
   }
 
 let game_mode s = s.mode
@@ -242,31 +247,6 @@ let check_game_end st =
 
 let game_ended st = st.game_end
 
-(* let rec extract_the_2d_win st acc modified =
-  match modified with
-  | [] -> acc
-  | h::t ->
-    begin
-      let possibly_new_win = not (List.mem h st.col_and_2d_grid_wins) in
-      let consistent_player_inst = (List.for_all (fun x -> x.player = st.current_player) h) in
-      h::(extract_the_2d_win st acc t)
-    end *)
-
-         (*
-let empty_diags =
-  (*horizontal_3d *)
-  let d1 = [{cell=(0,0,0);player=None};{cell=(1,0,1);player=None;{cell=(2,0,2);player=None}] in
-  let d2 = [{cell=(0,0,2);player=None};{cell=(1,0,1);player=None};{cell=(2,0,0);player=None}] in
-  let d3 = [{cell=(0,2,0);player=None};{cell=(1,2,1);player=None};{cell=(2,2,2);player=None}] in
-  let d4 = [{cell=(0,2,2);player=None};{cell=(1,2,1);player=None};{cell=(2,2,0);player=None}] in
-  (*vertical_3d *)
-  let d5 = [{cell=(0,0,0);player=None};{cell=(1,1,0);player=None};{cell=(2,2,0);player=None}] in
-  let d6 = [{cell=(2,0,0);player=None};{cell=(1,1,0);player=None};{cell=(0,0,2);player=None}] in
-  let d7 = [{cell=(0,0,2);player=None};{cell=(1,1,2);player=None};{cell=(2,2,2);player=None}] in
-  let d8 = [{cell=(2,0,2);player=None};{cell=(1,1,2);player=None};{cell=(0,2,2);player=None}] in
-  d1::d2::d3::d4::d5::d6::d7::d8::[]
-*)
-
 let do' c st =
   match c with
   | Play str -> st
@@ -274,10 +254,6 @@ let do' c st =
   | Quit -> st
   | Restart -> st
   | Try (pl, row, col) ->
-    (*if (st.p1_avatar = Python && st.current_player = Python) || (st.p1_avatar = Caml && st.current_player = Caml) then
-      ({st with p1_num_tries = if st.p1_num_tries > 0 then st.p1_num_tries - 1 else 0})
-      else
-      (  {st with p2_num_tries = if st.p2_num_tries > 0 then st.p2_num_tries - 1 else 0})*)
     begin
       try(
 

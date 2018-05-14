@@ -85,3 +85,11 @@ val victory_on_plane: cell -> cell list list -> cell list list -> cell list list
 val threed_col_win: cell -> board -> cell list
 
 val col_check: cell -> board -> bool
+
+val find_vertical_cells: cell -> board -> cell list
+
+val vertical_3d_groups: cell -> board -> cell list list
+
+val horizontal_3d_group: cell -> board -> cell list list
+
+val extract_cell_pos: cell list -> (int*int*int) list
