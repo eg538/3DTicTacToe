@@ -141,11 +141,6 @@ let st8 = do' (Place (1,1,2)) st8
 let st8 = do' (Place (1,2,0)) st8
 let st8 = do' (Place (1,2,2)) st8
 let st8 = do' (Place (2,0,0)) st8
-(* let st8 = do' (Place (2,0,2)) st8
-let st8 = do' (Place (2,1,0)) st8
-let st8 = do' (Place (2,1,2)) st8
-let st8 = do' (Place (2,2,0)) st8
-let st8 = do' (Place (2,2,2)) st8 *)
 let win8 = [[(1,0,0);(0,0,0);(2,0,0)];[(0,2,0);(2,0,0);(1,1,0)]]
 
 (*can most_recent_win contain multiple lists*)
@@ -185,6 +180,29 @@ let st9c = init_state "single python easy normal"
 let st9c = do' (Place (1,0,1)) st9c
 let st9c = do' (Place (1,1,0)) st9c
 let st9c = do' (Place (1,2,1)) st9c
+
+let st10 = init_state "single python easy normal"
+let st10 = do' (Place (0,0,0)) st10
+let st10 = do' (Place (1,0,0)) st10
+let st10 = do' (Place (0,0,1)) st10
+let st10 = do' (Place (1,0,1)) st10
+let st10 = do' (Place (0,0,2)) st10
+let st10 = do' (Place (1,0,2)) st10
+let st10 = do' (Place (0,1,0)) st10
+let st10 = do' (Place (1,1,2)) st10
+let st10 = do' (Place (0,1,2)) st10
+let st10 = do' (Place (1,1,0)) st10
+let st10 = do' (Place (0,2,0)) st10
+let st10 = do' (Place (2,1,0)) st10
+let st10 = do' (Place (0,2,2)) st10
+let st10 = do' (Place (2,1,2)) st10
+let st10 = do' (Place (0,2,1)) st10
+let st10 = do' (Place (2,2,1)) st10
+let st10 = do' (Place (0,1,1)) st10
+let win10 = [[(0,2,0);(0,1,1);(0,0,2)];
+             [(0,2,2);(0,1,1);(0,0,0)];
+             [(0,1,0);(0,1,2);(0,1,1)];
+             [(0,0,1);(0,2,1);(0,1,1)]]
 
 (*single python easy normal*)
 let tests_wins = [
@@ -239,16 +257,21 @@ let tests_wins = [
   "3d_vertical_slice_recent_winb" >:: (fun _ -> assert_equal win8' st8'.most_recent_win);
 
   (*(1,1,1) tests inactive *)
-  "inactive_111_horz_p1" >:: (fun _ -> assert_equal 8 (st8'.curr_score_1));
-  "inactive_111_horz_p2" >:: (fun _ -> assert_equal 8 (st8'.curr_score_2));
+  "inactive_111_horz_p1" >:: (fun _ -> assert_equal 0 (st9a.curr_score_1));
+  "inactive_111_horz_p2" >:: (fun _ -> assert_equal 0 (st9a.curr_score_2));
 
-  "inactive_111_vert_p1" >:: ();
-  "inactive_111_vert_p2" >:: ();
+  "inactive_111_vert_p1" >:: (fun _ -> assert_equal 0 (st9a.curr_score_1));
+  "inactive_111_vert_p2" >:: (fun _ -> assert_equal 0 (st9a.curr_score_2));
 
-  "inactive_111_3d_diag_p1" >:: ();
-  "inactive_111_3d_diag_p2" >:: ();
+  "inactive_111_3d_diag_p1" >:: (fun _ -> assert_equal 0 (st9a.curr_score_1));
+  "inactive_111_3d_diag_p2" >:: (fun _ -> assert_equal 0 (st9a.curr_score_2));
+
   (*one horizontal slice (localized 2d grid instance)*)
+  "2d_horz_plane_p1" >:: (fun _ -> assert_equal 8 (st10.curr_score_1));
+  "2d_horz_plane_p2" >:: (fun _ -> assert_equal 1 (st10.curr_score_2));
+  "2d_horz_plane_recent_win" >:: (fun _ -> assert_equal win10 st10.most_recent_win);
 
+  
 ]
 
 let game_play_edge_cases = []
