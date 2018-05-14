@@ -72,7 +72,7 @@ let rec play_game ai1 ai2 str n acc =
   else 
     print_endline (string_stats acc)
 
-let rec start ai1 ai 2 n =
+let rec start ai1 ai2 n =
   play_game ai1 ai2 "multi python easy normal" n {python = 0; caml = 0; none = 0}
 
 (* let () = start easy_ai_move hard_ai_move 1000 *)
