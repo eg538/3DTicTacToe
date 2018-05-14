@@ -296,13 +296,56 @@ let repeat_cell x y =
   else if x = 1 && y = 1 then (draw_image (get_img "imgs/stay.jpg") 236 0;)
   else (sound 440 1000; draw_image (get_img "imgs/msg2.jpg") 236 0;)
 
-
 let responsive_board str x y =
   (let file_name = "imgs/" ^ str ^ ".jpg" in
-  print_endline file_name;
-  draw_image (get_img file_name ) x y;)
+   print_endline file_name;
+   draw_image (get_img file_name ) x y;)
 
 let choose_letter str =
+  if str = "python" then (draw_string "P";)
+  else (draw_string "C";)
+
+let cover_try str ex why =
+  if (why >= 500 && why <= 666) then
+    (moveto (ex+15) (why+4);
+     set_color top_plep;
+     choose_letter str
+    )
+  else if (why >= 385 && why <= 492) then
+    (moveto (ex+15) (why+4);
+     set_color mid_plep;
+     choose_letter str
+    )
+  else if (why >= 225 && why <= 330) then
+    (moveto (ex+15) (why+4);
+     set_color bot_plep;
+     choose_letter str
+    )
+  else ()
+
+let try_responsive_board str x y (pl, ex, why)=
+    moveto (x+15) (y+4);
+    set_color annoying_green;
+    Graphics.set_font "-*-fixed-medium-r-semicondensed--17-*-*-*-*-*-iso8859-1";
+     choose_letter str;
+    draw_image (get_img "imgs/accept.jpg") 65 22;
+    let event_lst = [Graphics.Button_up] in
+     let mouse_status = wait_next_event event_lst  in
+     let xa = mouse_status.mouse_x in
+     let ya = mouse_status.mouse_y in
+     let (sy, (a, b)) = play_board "try" xa ya in
+     let c1 = String.index sy ',' in
+    let p = int_of_char (String.get sy (c1 - 1)) - 48 in
+    print_endline(string_of_bool (p = pl));
+    let xx = int_of_char (String.get sy (c1 + 1)) - 48 in
+    print_endline(string_of_bool (ex = xx));
+    let yy = int_of_char (String.get sy (c1 + 3)) - 48 in
+    print_endline(string_of_bool (why = yy));
+    if ((p = pl && ex = xx && why = yy)||((xa >= 66 && xa <= 198)&& (ya >= 22 && ya <= 78) )) then
+      ( if (p = pl && ex = xx && why = yy) then (responsive_board str a b; cover_up(); (true, a, b);)else
+          (responsive_board str a b; cover_up();(true, a, b);)) else ((false, xa, ya);)
+
+(*let choose_letter str =
   if str = "python" then (draw_string "P";)
   else (draw_string "C";)
 
@@ -380,7 +423,7 @@ let tried str ex why st =
         ))else   ( draw_image(get_img "imgs/msg2.jpg") 236 0; st)
 
 
-
+*)
 
 let highlight_curr_player str =
   if str = "python" then (rect_drawn_bblack 596 150 64 60; rect_drawn_cyan 334 145 62 65;)
@@ -433,6 +476,7 @@ let cell_coords_to_x_y (pl, x, y)=
   | (2,2,0) -> (320, 225)
   | (2,2,1) -> (475, 225)
   | (2,2,2) -> (645, 225)
+  | _ -> failwith "Nop"
 
 (* let draw_three_row_helper_helper lst x y =
   match lst with

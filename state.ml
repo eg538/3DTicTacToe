@@ -49,9 +49,8 @@ let num_hints s =
   | _ -> s.p2_num_hints
 
 let num_tries s =
-  let check = s.p1_avatar in
   match s.current_player with
-  | check -> s.p1_num_tries
+  | Python ->  s.p1_num_tries
   | _ -> s.p2_num_tries
 
 let get_result s = s.winner
@@ -78,6 +77,10 @@ let print_board st = print_string (asciiBoard st.tttBoard)
 (*[make_move s coords] places a move at the cell at coordinates [coords]
  * for the current player of state [s]*)
 let make_move s (pl, x, y) = place (pl, x, y) s.tttBoard s.current_player
+
+let try_move s (pl, x, y) = let copy_b = copy s.tttBoard in
+  place (pl, x, y) copy_b s.current_player;
+  {s with tttBoard = copy_b}
 
 let hint s = failwith "Unimplemented"
 
@@ -271,10 +274,23 @@ let do' c st =
   | Quit -> st
   | Restart -> st
   | Try (pl, row, col) ->
-    if (st.p1_avatar = Python && st.current_player = Python) || (st.p1_avatar = Caml && st.current_player = Caml) then
+    (*if (st.p1_avatar = Python && st.current_player = Python) || (st.p1_avatar = Caml && st.current_player = Caml) then
       ({st with p1_num_tries = if st.p1_num_tries > 0 then st.p1_num_tries - 1 else 0})
-    else
-      (  {st with p2_num_tries = if st.p2_num_tries > 0 then st.p2_num_tries - 1 else 0})
+      else
+      (  {st with p2_num_tries = if st.p2_num_tries > 0 then st.p2_num_tries - 1 else 0})*)
+    begin
+      try(
+
+        let st = if (st.current_player = Python) then
+            (if (st.p1_num_tries > 0) then {st with p1_num_tries = st.p1_num_tries - 1 }
+             else {st with p1_num_tries = 0} )
+          else
+            (  if (st.p2_num_tries > 0) then {st with p2_num_tries = st.p2_num_tries - 1 }
+          else {st with p2_num_tries = 0})  in
+        try_move st (pl, row, col) |> switch_players
+      )with
+      | _ -> st
+    end
   | Place (pl, row, col) ->
     (* print_endline ("Move made: "^(string_o22f_int pl)^", "^(string_of_int row)^", "^(string_of_int col)); *)
     begin
@@ -283,11 +299,11 @@ let do' c st =
       )with
       | _ -> st
     end
-  | Hint ->
-    if (st.p1_avatar = Python && st.current_player = Python) || (st.p1_avatar = Caml && st.current_player = Caml) then
+  | Hint -> failwith "Unimplemented";
+    (* if (st.p1_avatar = Python && st.current_player = Python) || (st.p1_avatar = Caml && st.current_player = Caml) then
       {st with p1_num_hints = if st.p1_num_hints > 0 then st.p1_num_hints - 1 else 0}
     else
-      {st with p2_num_hints = if st.p2_num_hints > 0 then st.p2_num_hints - 1 else 0}
+      {st with p2_num_hints = if st.p2_num_hints > 0 then st.p2_num_hints - 1 else 0}*)
   | Look -> st
   | CurrentPlayer -> st
   | Invalid -> st

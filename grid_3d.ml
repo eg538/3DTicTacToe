@@ -190,8 +190,7 @@ let rec victory_on_plane c possible_instances acc =
 let place (pl, row, col) b plyr =
   let c = get_cell (pl, row, col) b in
   if move_valid c b then
-    (
-    Hashtbl.replace b (pl, row, col) {c with player = plyr})
+    (Hashtbl.replace b (pl, row, col) {c with player = plyr})
   else
     raise (Failure "InvalidCell")
 
