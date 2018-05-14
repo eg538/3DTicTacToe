@@ -156,20 +156,32 @@ let rec play single st=
                      Gui.num_try_hint (num_tries newSt) 836 587;
                      Gui.num_try_hint (num_hints newSt) 171 593;
                      if (clicked_accept) then
-                       play single newSt
+                       (play single newSt)
                      else
-                       let test = Gui.play_board "place" xa ya in
+                       (let test = Gui.play_board "place" xa ya in
                        let com = fst test in
                        let command = parse com in
-                       let news = do' command st in
-                       let aa = snd test |> fst in
+                        let news = do' command st in
+                        if news = st then
+                          (let ex = snd test |> fst in
+                           let why = snd test |> snd in
+                           Gui.cover_up();
+                           Gui.repeat_cell ex why;
+                           print_endline "Action impossible. Please try a different move.";
+                           moveto (xx+15) (yy+4);
+                           Graphics.set_font "-*-fixed-medium-r-semicondensed--17-*-*-*-*-*-iso8859-1";
+                           Gui.cover_try playerr xx yy;
+                           if ((playerr = "python" && newSt.p1_num_tries <= 0) ||(playerr = "caml" && newSt.p2_num_tries <= 0)) then draw_image (Gui.get_img "imgs/tries_loss.jpg") 236 0;
+                           play single news;)
+                        else
+                       (let aa = snd test |> fst in
                        let bb = snd test |> snd in
                        Gui.responsive_board playerr aa bb;
                        moveto (xx+15) (yy+4);
                        Graphics.set_font "-*-fixed-medium-r-semicondensed--17-*-*-*-*-*-iso8859-1";
                        Gui.cover_try playerr xx yy;
                        Gui.cover_up();
-                       play single news))
+                       play single news))))
                         (*
       if newSt = st then
       (let ex = snd test |> fst in
