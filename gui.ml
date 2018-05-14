@@ -38,6 +38,7 @@ let bot_plep = rgb 139 37 61
 (* [round (x, y) transforms the floating point values of (x, y) into ints. ]*)
 let round (x, y) = int_of_float x, int_of_float y
 
+
 (* [round_list lst transforms the floating point values of lst into ints. ]*)
 let rec round_list = function
   | [] -> []
@@ -77,6 +78,12 @@ let array_of_image img =
 (* [get_img img] returns an image according to input file name. *)
 let get_img img =
   Jpeg.load img [] |> array_of_image |> make_image
+
+(* Tells the player to please wait as the computer calculates the next best move*)
+let draw_wait_mgs () =
+  (* Graphics.remember_mode false; *)
+  (print_endline "in draw_wait_mgs";
+  draw_image (get_img "imgs/pls_wait.jpg") 236 0;)
 
 let rect_drawn x y width height =
   (set_color magenta;
@@ -215,7 +222,6 @@ let cover_up () =
 let score p1 p2 =
   draw_image (get_img "imgs/eraser.jpg") 330 42;
   draw_image (get_img "imgs/eraser.jpg") 590 42;
-  print_endline "in score";
   let juan = string_of_int p1 in
   moveto 352 72;
   set_color white;
@@ -249,7 +255,7 @@ let which_command () =
     print_string "y is: "; print_int y; print_endline " ";
     print_endline " ";
 
-    Graphics.synchronize (); Graphics.remember_mode true;
+    (* Graphics.synchronize (); Graphics.remember_mode true; *)
 
     if ((x >= 149 && x <= (149 + 69)) && (y >= 627 && y<= (627 + 44))) then
       ( let ev = [Graphics.Button_up] in
@@ -257,7 +263,8 @@ let which_command () =
         let xx =  ms.mouse_x in
         let yy = ms.mouse_y in
         ("try" , xx, yy)) else if ((x >= 801 && x <= 894)&&( y >= 624 && y <= 664)) then
-      ("hint", x, y)else if ((x >= 850 && x <= (850 + 110)) && (y >= 313 && y<= (313 + 49))) then ("quit", x, y)
+      (Graphics.remember_mode false; draw_wait_mgs(); ("hint", x, y))
+    else if ((x >= 850 && x <= (850 + 110)) && (y >= 313 && y<= (313 + 49))) then ("quit", x, y)
     else if ((x >= 50 && x <= (50 + 134)) && (y >= 313 && y<= (313 + 61))) then ("restart", x, y)
     else ("place" , x, y)
 
@@ -381,10 +388,6 @@ let winner_winner_chicken_dinner str =
   else (winner_winner_chicken_appetizer "imgs/draw_img.jpg";
         quit_restart_check())
 
-let mark_three x y =
-  set_color annoying_green;
-  Graphics.set_font "-*-fixed-medium-r-semicondensed--25-*-*-*-*-*-iso8859-1";
-  (draw_string "X";)
 
 let cell_coords_to_x_y (pl, x, y)=
   match (pl,x,y) with

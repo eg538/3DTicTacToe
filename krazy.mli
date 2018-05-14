@@ -10,4 +10,4 @@ val krazy_switch_planes: state -> int -> int -> state
 
 val krazy_bomb: state -> cell -> state
 
-val do_krazy: cell -> state -> state 
+val do_krazy: command -> state -> state 

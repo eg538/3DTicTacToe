@@ -75,6 +75,10 @@ val p1_avatar: state -> player
  * action taken to get state [st]*)
  val most_recent_wins: state -> (int*int*int) list list
 
+val krazy_happ_st: state -> bool
+
+val krazy_bomb_happ_st: state -> bool
+
 (*[do' c st] is [st'] if executing command [c] in state [st] results
  * in [st']. The following describe the valid commands and the result
  * that [do'] should return for each one when applied to a state [st]
