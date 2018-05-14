@@ -242,7 +242,8 @@ let which_command () =
         let ms = wait_next_event ev in
         let xx =  ms.mouse_x in
         let yy = ms.mouse_y in
-        ("try" , xx, yy))
+        ("try" , xx, yy)) else if ((x >= 801 && x <= 894)&&( y >= 624 && y <= 664)) then
+      ("hint", x, y)
     else ("place" , x, y)
 
 
