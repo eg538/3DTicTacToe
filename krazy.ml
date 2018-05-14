@@ -26,12 +26,6 @@ let random_cell_for_krazy st =
   let index = (Random.int ((List.length all_cells)-1)) in
   {st with k_disappearing_sqs = (List.nth (all_cells) index)}
 
-let krazy_disappearing_sqs st c =
-  if (c.cell=(st.k_disappearing_sqs).cell) then (
-    Hashtbl.replace st.tttBoard c.cell {c with player = None};
-    {st with tttBoard = st.tttBoard}
-  ) else st
-
 let rec krazy_recalc_helper cellst st =
   match cellst with
   | [] -> st
@@ -53,6 +47,12 @@ let krazy_recalc_score st =
   let new_st = init_state info_str in
   krazy_recalc_helper occupied new_st
   (* List.map (fun x -> get_all_win_inst st x) occupied *)
+
+  let krazy_disappearing_sqs st c =
+    if (c.cell=(st.k_disappearing_sqs).cell) then (
+      Hashtbl.replace st.tttBoard c.cell {c with player = None};
+      {st with tttBoard = st.tttBoard} |> krazy_recalc_score
+    ) else st
 
 let krazy_cell_swap st coords1 coords2 =
   let orig_b = board st in

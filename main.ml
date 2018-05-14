@@ -214,7 +214,7 @@ let rec play single st=
           ))
   | Hint ->
       let hint_move = player_hint newSt in
-      let coord_move = 
+      let coord_move =
         begin
         match hint_move with
         | Place (a, b, c) -> (a, b, c)
@@ -230,7 +230,7 @@ let rec play single st=
         (let comp_st = computer_move_st newSt' in play single comp_st)
       else
         (play single newSt')
-      
+
   | Look -> (print_board st; play single newSt)
   | CurrentPlayer ->
     (print_endline ("Current player: "^(string_of_player (curr_player st)));
