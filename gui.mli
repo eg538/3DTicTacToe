@@ -3,6 +3,9 @@ open State
 open Camlimages
 open Types
 
+exception Restart
+exception Quit
+
 type choices
 
 (*Draws the welcome screen, with the title of the game and creators*)

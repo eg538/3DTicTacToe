@@ -9,8 +9,6 @@ open ANSITerminal
 open Gui
 open Graphics
 
-exception Terminated
-exception Restart
 
 let fst' (y,_,_) = y
 
@@ -77,8 +75,8 @@ let rec ended () =
   let com = fst grab_GUI in
   let command = parse com in
   match command with
-  | Quit -> print_endline "You have chosen to quit game"
-  | Restart -> raise Restart
+  | Quit -> raise Gui.Quit
+  | Restart -> raise Gui.Restart
   | _ -> ended ()
 
 (*[play st] is the helper function for play_game ()*)
@@ -135,8 +133,8 @@ let rec play single st=
   | Score ->
     (print_endline ("Score of player 1: "^(string_of_int (p1_score st))^"\n"^"Score of player 2: "^(string_of_int (p2_score st)));
      play single newSt)
-  | Quit -> (print_endline "yo what's up in this hole";exit 0)
-  | Restart -> (raise Restart)
+  | Quit -> (raise Gui.Quit)
+  | Restart -> (raise Gui.Restart)
   | Try (pl, x, y) -> (
       print_board newSt;
       if newSt = st then (
@@ -166,7 +164,7 @@ let rec play single st=
           else (
             play single place_st
           )
-        ) 
+        )
         else (
           let test = Gui.play_board "place" xa ya in
           let com = fst test in
@@ -182,7 +180,7 @@ let rec play single st=
             Graphics.set_font "-*-fixed-medium-r-semicondensed--17-*-*-*-*-*-iso8859-1";
             Gui.cover_try playerr xx yy;
             play single news
-          ) 
+          )
           else (
             let aa = snd test |> fst in
             let bb = snd test |> snd in
@@ -291,8 +289,8 @@ try (
     try(
         play (game_num_plyrs init_st <> Multi) init_st
       ) with
-    | Terminated -> print_endline "Bye!"
-    | Restart -> (print_endline "You have chosen to restart this game";
+    | Gui.Quit -> print_endline "Bye!"; exit 0;
+    | Gui.Restart -> (print_endline "You have chosen to restart this game";
                   f ())
     | _ -> print_endline "Error"
     end
