@@ -1,13 +1,5 @@
 open Parse_init
 open Types
-(* type cell = {cell: (int*int*int); player: player}
-
-type winType3D =
-  | WinV of cell list list
-  | WinH of cell list list
-  | WinNone
-
-type board = ((int*int*int), cell) Hashtbl.t *)
 
 let empty_board =
 let hash = Hashtbl.create 123456 in
@@ -275,11 +267,11 @@ let threed_diag_wins c b =
   let verdict_h = (match diag_h with
     | [] -> []
     | h::[] -> if (List.for_all (fun x -> x.player = c.player) h) then [h] else []
-    | h1::h2::[] -> if (List.for_all (fun x -> x.player = c.player) h1) && (List.for_all (fun x -> x.player = c.player) h2) then 
-          [h1;h2] 
-        else if (List.for_all (fun x -> x.player = c.player) h1) then 
-          [h1] 
-        else if (List.for_all (fun x -> x.player = c.player) h2) then 
+    | h1::h2::[] -> if (List.for_all (fun x -> x.player = c.player) h1) && (List.for_all (fun x -> x.player = c.player) h2) then
+          [h1;h2]
+        else if (List.for_all (fun x -> x.player = c.player) h1) then
+          [h1]
+        else if (List.for_all (fun x -> x.player = c.player) h2) then
           [h2]
         else
           []
@@ -288,11 +280,11 @@ let threed_diag_wins c b =
   let verdict_v = (match diag_v with
       | [] -> []
       | h::[] -> if (List.for_all (fun x -> x.player = c.player) h) then [h] else []
-      | h1::h2::[] -> if (List.for_all (fun x -> x.player = c.player) h1) && (List.for_all (fun x -> x.player = c.player) h2) then 
-            [h1;h2] 
-          else if (List.for_all (fun x -> x.player = c.player) h1) then 
-            [h1] 
-          else if (List.for_all (fun x -> x.player = c.player) h2) then 
+      | h1::h2::[] -> if (List.for_all (fun x -> x.player = c.player) h1) && (List.for_all (fun x -> x.player = c.player) h2) then
+            [h1;h2]
+          else if (List.for_all (fun x -> x.player = c.player) h1) then
+            [h1]
+          else if (List.for_all (fun x -> x.player = c.player) h2) then
             [h2]
           else
             []
@@ -318,9 +310,7 @@ let diag_check c b =
       | h1::h2::[] -> (List.for_all (fun x -> x.player = c.player) h1) || (List.for_all (fun x -> x.player = c.player) h2)
       | _ -> false
   ) in
-    (*(if diag_h <> [] then (List.for_all (fun x -> x.player = c.player) diag_h)
-      else false) in *)
-  (*let verdict_v = (List.for_all (fun x -> x.player = c.player) diag_v) in *)
+
   match (verdict_h, verdict_v) with
   | true, true -> WinH diag_h, WinV diag_v
   | true, false -> WinH diag_h, WinNone
@@ -365,21 +355,12 @@ let win_evaluation c b =
   let diag_check_truth =
     (((diag_check c b )|> fst) <> WinNone) || (((diag_check c b) |> snd) <> WinNone) in
   let cases_3d = (diag_check_truth) || (col_check c b) in
-  (* let modified_3_row_2d_cells = List.filter (fun x -> List.length x <> 2) (three_row_2d_cells c b) in *)
   let modified_3_row_2d_cells = three_row_2d_cells c b in
   let twod_case = victory_on_plane c (modified_3_row_2d_cells) [] in
-  (* let case_2 = victory_on_plane c (modified_3_row_2d_cells) [] in
-  let case_3 = victory_on_plane c (modified_3_row_2d_cells) [] in *)
   ((List.length twod_case) > 0) || cases_3d
-  (* match get_plane c.cell with
-  | 0 -> ((List.length case_1) > 0) || cases_3d
-  | 1 -> ((List.length case_2) > 0) || cases_3d
-  | 2 -> ((List.length case_3) > 0) || cases_3d
-  | _ -> failwith "impossible" *)
 
 let cells_occupied b =
   let lst_cells = board_list_of_cells b in
-  (* let whole_space = List.fold_left (fun a x -> x::a) [] lst_cells in *)
   List.filter (fun cell -> cell.player <> None) lst_cells
 
 let all_three_in_row_cells c b =
@@ -402,15 +383,15 @@ let get_the_win c current_player b=
         | WinNone, WinV y -> y
         | _, _ -> []
       end
-    | _ -> [c ::(find_vertical_cells c b)](*[[c] @ (find_vertical_cells c b)] *)
+    | _ -> [c ::(find_vertical_cells c b)]
   else []
 
 let get_all_win_inst st c =
   let b = st.tttBoard in
-  let col_3d = find_vertical_cells c b in (*cell list list*)
-  let v_3d_diag = List.flatten (vertical_3d_groups c b) in (*cell list list*)
-  let h_3d_diag = List.flatten (horizontal_3d_group c b) in (*cell list list*)
-  let plane_2d_inst = List.flatten (three_row_2d_cells c b) in (*cell list list *)
+  let col_3d = find_vertical_cells c b in
+  let v_3d_diag = List.flatten (vertical_3d_groups c b) in
+  let h_3d_diag = List.flatten (horizontal_3d_group c b) in
+  let plane_2d_inst = List.flatten (three_row_2d_cells c b) in
   col_3d @ v_3d_diag @ h_3d_diag @ plane_2d_inst
 
 let extract_cell_pos inst =

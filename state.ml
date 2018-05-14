@@ -173,6 +173,8 @@ let krazy_bomb_happ_st st = st.krazy_bomb_happ
 
 let most_recent_wins st = st.most_recent_win
 
+let cells_occ st = cells_occupied (board st)
+
 let other_player ply =
   match ply with
   | Python -> Caml

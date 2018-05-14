@@ -8,6 +8,7 @@ open Parse_init
 open ANSITerminal
 open Gui
 open Graphics
+open Krazy
 
 let empty_b = empty_board
 let st = init_state "single python easy normal"
@@ -41,6 +42,7 @@ let init_tests = [
   "init_krazy_happ" >:: (fun _ -> assert_equal false st.krazy_happ);
   "init_krazy_bomb" >:: (fun _ -> assert_equal false st.krazy_bomb_happ);
   "init_moves_made" >:: (fun _ -> assert_equal 0 st.moves_made);
+  (*)"init_moves_made_st0" >:: (fun _ -> assert_equal 2 st0.moves_made); *)
 
   "add_icon_p" >:: (fun _ -> assert_equal p (Hashtbl.find st0.tttBoard (0,0,0)));
   "add_icon_c" >:: (fun _ -> assert_equal c (Hashtbl.find st0.tttBoard (1,2,0)));
@@ -141,11 +143,6 @@ let st8 = do' (Place (1,1,2)) st8
 let st8 = do' (Place (1,2,0)) st8
 let st8 = do' (Place (1,2,2)) st8
 let st8 = do' (Place (2,0,0)) st8
-(* let st8 = do' (Place (2,0,2)) st8
-let st8 = do' (Place (2,1,0)) st8
-let st8 = do' (Place (2,1,2)) st8
-let st8 = do' (Place (2,2,0)) st8
-let st8 = do' (Place (2,2,2)) st8 *)
 let win8 = [[(1,0,0);(0,0,0);(2,0,0)];[(0,2,0);(2,0,0);(1,1,0)]]
 
 (*can most_recent_win contain multiple lists*)
@@ -186,8 +183,31 @@ let st9c = do' (Place (1,0,1)) st9c
 let st9c = do' (Place (1,1,0)) st9c
 let st9c = do' (Place (1,2,1)) st9c
 
+let st10 = init_state "single python easy normal"
+let st10 = do' (Place (0,0,0)) st10
+let st10 = do' (Place (1,0,0)) st10
+let st10 = do' (Place (0,0,1)) st10
+let st10 = do' (Place (1,0,1)) st10
+let st10 = do' (Place (0,0,2)) st10
+let st10 = do' (Place (1,0,2)) st10
+let st10 = do' (Place (0,1,0)) st10
+let st10 = do' (Place (1,1,2)) st10
+let st10 = do' (Place (0,1,2)) st10
+let st10 = do' (Place (1,1,0)) st10
+let st10 = do' (Place (0,2,0)) st10
+let st10 = do' (Place (2,1,0)) st10
+let st10 = do' (Place (0,2,2)) st10
+let st10 = do' (Place (2,1,2)) st10
+let st10 = do' (Place (0,2,1)) st10
+let st10 = do' (Place (2,2,1)) st10
+let st10 = do' (Place (0,1,1)) st10
+let win10 = [[(0,2,0);(0,1,1);(0,0,2)];
+             [(0,2,2);(0,1,1);(0,0,0)];
+             [(0,1,0);(0,1,2);(0,1,1)];
+             [(0,0,1);(0,2,1);(0,1,1)]]
+
 (*single python easy normal*)
-let tests_wins = [
+let tests_wins_normal = [
   (*simple 2d diagonal win *)
   "2d_diag_win_p1" >:: (fun _ -> assert_equal 1 (st1.curr_score_1));
   "2d_diag_win_p2" >:: (fun _ -> assert_equal 0 (st1.curr_score_2));
@@ -239,22 +259,88 @@ let tests_wins = [
   "3d_vertical_slice_recent_winb" >:: (fun _ -> assert_equal win8' st8'.most_recent_win);
 
   (*(1,1,1) tests inactive *)
-  "inactive_111_horz_p1" >:: (fun _ -> assert_equal 8 (st8'.curr_score_1));
-  "inactive_111_horz_p2" >:: (fun _ -> assert_equal 8 (st8'.curr_score_2));
+  "inactive_111_horz_p1" >:: (fun _ -> assert_equal 0 (st9a.curr_score_1));
+  "inactive_111_horz_p2" >:: (fun _ -> assert_equal 0 (st9a.curr_score_2));
 
-  "inactive_111_vert_p1" >:: ();
-  "inactive_111_vert_p2" >:: ();
+  "inactive_111_vert_p1" >:: (fun _ -> assert_equal 0 (st9a.curr_score_1));
+  "inactive_111_vert_p2" >:: (fun _ -> assert_equal 0 (st9a.curr_score_2));
 
-  "inactive_111_3d_diag_p1" >:: ();
-  "inactive_111_3d_diag_p2" >:: ();
+  "inactive_111_3d_diag_p1" >:: (fun _ -> assert_equal 0 (st9a.curr_score_1));
+  "inactive_111_3d_diag_p2" >:: (fun _ -> assert_equal 0 (st9a.curr_score_2));
+
   (*one horizontal slice (localized 2d grid instance)*)
+  "2d_horz_plane_p1" >:: (fun _ -> assert_equal 8 (st10.curr_score_1));
+  "2d_horz_plane_p2" >:: (fun _ -> assert_equal 1 (st10.curr_score_2));
+  "2d_horz_plane_recent_win" >:: (fun _ -> assert_equal win10 st10.most_recent_win);
+]
+
+    (*Krazy bomb feature configurations*)
+let st11 = init_state "single python easy krazy"
+let st11 = {st11 with move_num_dispr = 12; move_num_swap = 11;
+                      move_num_switch_pl = 6; move_num_bomb = 19}
+let st11 = do_krazy (Place (0,0,0)) st11
+let st11 = do_krazy (Place (0,1,0)) st11
+let st11 = do_krazy (Place (2,0,1)) st11
+let st11 = do_krazy (Place (1,1,2)) st11
+let st11 = do_krazy (Place (2,2,2)) st11
+let st11_bomb_bef = List.length (cells_occupied st11.tttBoard)
+let st11 = do_krazy (Place (0,0,2)) st11
+let st11_bomb_aft = List.length (cells_occupied st11.tttBoard)
+let st11_bool = st11_bomb_bef <> st11_bomb_aft
+
+let st12 = init_state "single python easy krazy"
+let st12 = {st12 with move_num_dispr = 12; move_num_swap = 11;
+                      move_num_switch_pl = 14; move_num_bomb = 6}
+
+let st12 = do_krazy (Place (0,0,0)) st12
+let st12 = do_krazy (Place (0,1,0)) st12
+let st12 = do_krazy (Place (2,0,1)) st12
+let st12 = do_krazy (Place (1,1,2)) st12
+let st12 = do_krazy (Place (2,2,2)) st12
+let st12 = do_krazy (Place (0,0,2)) st12
+
+let st13a = init_state "single python easy krazy"
+let st13b = init_state "single python easy krazy"
+let st13b = {st13b with move_num_dispr = 2; move_num_swap = 16;
+                        move_num_switch_pl = 14; move_num_bomb = 19}
+let st13b = do_krazy (Place (0,0,0)) st13b
+let st13b = do_krazy (Place (0,2,0)) st13b
+let plyr_1 = (get_cell (0,0,0) st13b.tttBoard).player
+let plyr_2 = (get_cell (0,2,0) st13b.tttBoard).player
+let st13b_bool_expr = (((get_cell (0,0,0) st13b.tttBoard).player = None) || ((get_cell (0,2,0) st13b.tttBoard).player = None)) && (plyr_1 <> plyr_2)
+
+(*let st13c = init_state "single python easy krazy"
+let st13c = {st13c with move_num_dispr = 2; move_num_swap = 16;
+                        move_num_switch_pl = 14; move_num_bomb = 19}
+  let st13c = do_krazy (Place (1,2,0)) st13c *)
+(*let st13c = do_krazy (Place (2,2,2)) st13c *)
+(*let cell1 = (get_cell (1,2,0) st13c.tttBoard).player
+let cell2 = (get_cell (2,2,2) st13c.tttBoard).player
+  let st13c_bool_expr = ((cell1 = None) || (cell2=None)) && (cell1 <> cell2) *)
+
+let tests_wins_krazy = [
+  "init_krazy_test" >:: (fun _ -> assert_equal Krazy st11.mode);
+  (*single bomb feature*)
+  "single_krazy_bomb1" >:: (fun _ -> assert_equal true st11.krazy_happ);
+  "single_krazy_bomb2" >:: (fun _ -> assert_equal true st11_bool);
+  (*"single_krazy_bomb2" >:: (fun _ -> assert_equal st11.moves_made st11.move_num_switch_pl); *)
+  (*
+    (*(*only disappearing squares - single cell placement*)*)
+  "single_krazy_dispr_sq1" >:: (fun _ -> assert_equal st13a.tttBoard st13b.tttBoard);
+  "single_krazy_dispr_sq2" >:: (fun _ -> assert_equal true st13b.krazy_happ);
+
+  (*only disappearing squares*)
+  "single_krazy_dispr_sq3" >:: (fun _ -> assert_equal false st13c_bool_expr);
+  "single_krazy_dispr_sq4" >:: (fun _ -> assert_equal true st13c.krazy_happ); *)
+  "single_krazy_dispr_sq3" >:: (fun _ -> assert_equal true st13b_bool_expr);
+  "single_krazy_dispr_sq4" >:: (fun _ -> assert_equal true st13b.krazy_happ);
 
 ]
 
 let game_play_edge_cases = []
 
 let suite =
-  "Adventure test suite"
-  >::: List.flatten [init_tests;tests_wins]
+  "3D Tic Tac Toe test suite"
+  >::: List.flatten [init_tests;tests_wins_normal;tests_wins_krazy]
 
 let _ = run_test_tt_main suite
