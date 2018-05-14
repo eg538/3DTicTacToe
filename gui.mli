@@ -80,3 +80,7 @@ val cell_coords_to_x_y: (int*int*int) -> (int*int)
 
 
 val get_img:string -> image
+
+(* Draws a message asking the user to please wait as the computer calculates
+   the best move *)
+val draw_wait_mgs : unit -> unit

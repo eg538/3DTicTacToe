@@ -50,6 +50,7 @@ let computer_move_st newSt =
   in
   let x = fst (cell_coords_to_x_y coords_move) in
   let y = snd (cell_coords_to_x_y coords_move) in
+    Graphics.synchronize(); Graphics.remember_mode true;
   Gui.responsive_board playerr x y ; (* x and y are the locations to draw the image *)
   Gui.score (p1_score newSt') (p2_score newSt') ;
           (* Gui.num_try_hint (num_tries newSt') 836 587;
@@ -83,6 +84,8 @@ let rec ended () =
 
 (*[play st] is the helper function for play_game ()*)
 let rec play single st=
+  (* Graphics.synchronize (); print_endline "graphs synchronzied"; Graphics.remember_mode true; *)
+  (* Graphics.synchronize (); Graphics.remember_mode true; *)
   if game_ended st then
     let win_msg_and_stuff = get_result_message st in
     let win_msg = snd win_msg_and_stuff in
@@ -104,10 +107,8 @@ let rec play single st=
   Gui.num_try_hint hint_num 836 580;
   Gui.num_try_hint try_num 171 587;
   let recent_wins = (most_recent_wins st ) = [] in
-  print_endline " ";print_endline "recent_wins is empty"; print_endline (string_of_bool recent_wins); print_endline " ";
-  if not recent_wins then Graphics.remember_mode false; iterate (most_recent_wins st) Gui.draw_three_row;
-
-
+  if not recent_wins then
+    Graphics.remember_mode false; iterate (most_recent_wins st) Gui.draw_three_row;
   let input = Gui.which_command () in
   let commend = fst' input in
   let x = snd' input in
@@ -125,10 +126,6 @@ let rec play single st=
   if com = "try 1,1,1" then play single st else
   let command = parse com in
   let newSt = do' command st in
-  (* print_endline "length of list of 3-in-row:"; *)
-  (* let lst = newSt.diagonals in
-  print_int (List.length lst); *)
-  (*Remember to check for win*)
   match command with
   | Play str -> (print_endline "A game is currently is session. Please quit first.";
                  play single newSt)
@@ -167,7 +164,7 @@ let rec play single st=
           else (
             play single place_st
           )
-        ) 
+        )
         else (
           let test = Gui.play_board "place" xa ya in
           let com = fst test in
@@ -183,7 +180,7 @@ let rec play single st=
             Graphics.set_font "-*-fixed-medium-r-semicondensed--17-*-*-*-*-*-iso8859-1";
             Gui.cover_try playerr xx yy;
             play single news
-          ) 
+          )
           else (
             let aa = snd test |> fst in
             let bb = snd test |> snd in
@@ -215,21 +212,16 @@ let rec play single st=
           Gui.cover_up ();
           print_int x;
           print_int y;
+          Graphics.synchronize(); Graphics.remember_mode true;
           Gui.responsive_board playerr x y ; (* x and y are the locations to draw the image *)
           Gui.score (p1_score newSt) (p2_score newSt) ;
           Gui.num_try_hint (num_tries newSt) 836 587;
           Gui.num_try_hint (num_hints newSt) 171 593;
-          let recent_wins = (most_recent_wins newSt ) = [] in
-          print_endline " ";print_endline "recent_wins is empty"; print_endline (string_of_bool recent_wins); print_endline " ";
-          (* if (not recent_wins) then
-            Gui.draw_three_row (most_recent_wins newSt);
-          (* let recent_wins = most_recent_wins newSt in
-          if recent_wins <> [] then
-            Gui.draw_three_row recent_wins; *)
-          else
-            print_endline ("Score of player 1: "^(string_of_int (p1_score newSt))^"\n"^"Score of player 2: "^(string_of_int (p2_score newSt))) *)
+
           if single then
-            (let comp_st = computer_move_st newSt in play single comp_st)
+            (Graphics.remember_mode false;
+              Gui.draw_wait_mgs();
+             let comp_st = computer_move_st newSt in play single comp_st)
           else
             (play single newSt)
           ))
@@ -239,13 +231,17 @@ let rec play single st=
         begin
         match hint_move with
         | Place (a, b, c) -> (a, b, c)
-        | _ -> failwith "Unimplemented"
+        | _ -> failwith "Impossible"
         end
       in
       let x = fst (cell_coords_to_x_y coord_move) in
       let y = snd (cell_coords_to_x_y coord_move) in
+      print_endline "in hint";
+      (* Gui.draw_wait_mgs(); *)
       let newSt' = do' hint_move newSt in
-      Gui.responsive_board playerr x y ; (* x and y are the locations to draw the image *)
+      Graphics.synchronize (); Graphics.remember_mode true;
+      Gui.responsive_board playerr x y ;
+      (* x and y are the locations to draw the image *)
       Gui.score (p1_score newSt) (p2_score newSt);
       if single then
         (let comp_st = computer_move_st newSt' in play single comp_st)

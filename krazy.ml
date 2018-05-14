@@ -47,7 +47,12 @@ let krazy_recalc_score st =
   let info_str = num_p^" "^p1_av^" "^lvl^" "^mode in
   let win_inst_tracker = [] in
   let occupied = cells_occupied (board st) in
-  let new_st = init_state info_str in
+  let st' = init_state info_str in
+  let new_st = 
+    {st' with p1_num_hints = st.p1_num_hints;
+              p1_num_tries = st.p1_num_tries; 
+              p2_num_hints = st.p2_num_hints;
+              p2_num_tries = st.p2_num_tries} in
   krazy_recalc_helper occupied {new_st with moves_made = st.moves_made}
   (* List.map (fun x -> get_all_win_inst st x) occupied *)
 
