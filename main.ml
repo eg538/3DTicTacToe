@@ -55,6 +55,8 @@ let computer_move_st do_mode newSt =
   else
     let x = fst (cell_coords_to_x_y coords_move) in
     let y = snd (cell_coords_to_x_y coords_move) in
+    Graphics.synchronize(); 
+    Graphics.remember_mode true;
     Gui.responsive_board playerr x y ; 
     Gui.score (p1_score newSt') (p2_score newSt') ;
     print_board newSt';
@@ -99,8 +101,8 @@ let rec play single do_mode st=
   Gui.num_try_hint hint_num 836 580;
   Gui.num_try_hint try_num 171 587;
   let recent_wins = (most_recent_wins st ) = [] in
-  print_endline " ";print_endline "recent_wins is empty"; print_endline (string_of_bool recent_wins); print_endline " ";
-  if not recent_wins then Graphics.remember_mode false; iterate (most_recent_wins st) Gui.draw_three_row;
+  if not recent_wins then
+    Graphics.remember_mode false; iterate (most_recent_wins st) Gui.draw_three_row;
   let input = Gui.which_command () in
   let commend = fst' input in
   let x = snd' input in
@@ -118,10 +120,6 @@ let rec play single do_mode st=
   if com = "try 1,1,1" then play single st else
   let command = parse com in
   let newSt = do_mode command st in
-  (* print_endline "length of list of 3-in-row:"; *)
-  (* let lst = newSt.diagonals in
-  print_int (List.length lst); *)
-  (*Remember to check for win*)
   match command with
   | Play str -> (print_endline "A game is currently is session. Please quit first.";
                  play single newSt)
@@ -160,7 +158,7 @@ let rec play single do_mode st=
           else (
             play single place_st
           )
-        ) 
+        )
         else (
           let test = Gui.play_board "place" xa ya in
           let com = fst test in
@@ -176,7 +174,7 @@ let rec play single do_mode st=
             Graphics.set_font "-*-fixed-medium-r-semicondensed--17-*-*-*-*-*-iso8859-1";
             Gui.cover_try playerr xx yy;
             play single news
-          ) 
+          )
           else (
             let aa = snd test |> fst in
             let bb = snd test |> snd in
@@ -209,6 +207,7 @@ let rec play single do_mode st=
             Gui.cover_up ();
             print_int x;
             print_int y;
+            Graphics.synchronize(); Graphics.remember_mode true;
             Gui.responsive_board playerr x y ; (* x and y are the locations to draw the image *)
             Gui.score (p1_score newSt) (p2_score newSt) ;
             Gui.num_try_hint (num_tries newSt) 836 587;
@@ -220,7 +219,9 @@ let rec play single do_mode st=
             ()
           );
           if single then
-            (let comp_st = computer_move_st do_mode newSt in play single comp_st)
+            (Graphics.remember_mode false;
+              Gui.draw_wait_mgs();
+              let comp_st = computer_move_st do_mode newSt in play single comp_st)
           else
             (play single newSt)
           ))
@@ -230,13 +231,14 @@ let rec play single do_mode st=
         begin
         match hint_move with
         | Place (a, b, c) -> (a, b, c)
-        | _ -> failwith "Unimplemented"
+        | _ -> failwith "Impossible"
         end
       in
       let x = fst (cell_coords_to_x_y coord_move) in
       let y = snd (cell_coords_to_x_y coord_move) in
       let newSt' = do_mode hint_move newSt in
       (if not (krazy_happ_st newSt' )then
+        Graphics.synchronize (); Graphics.remember_mode true;
         Gui.responsive_board playerr x y ; (* x and y are the locations to draw the image *)
         Gui.score (p1_score newSt) (p2_score newSt);
       else ());
