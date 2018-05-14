@@ -146,30 +146,37 @@ let rec play single st=
                          if ((playerr = "python" && newSt.p1_num_tries <= 0) ||(playerr = "caml" && newSt.p2_num_tries <= 0)) then draw_image (Gui.get_img "imgs/tries_loss.jpg") 236 0;
                          play single newSt;)
                       else
-                     (let xx = snd test |> fst in
-                     let yy = snd test |> snd in
-                     Gui.cover_up ();
-                     print_int xx;
-                     print_int yy;
-                     let (clicked_accept, xa, ya) = Gui.try_responsive_board playerr xx yy (pl, x, y) in(* xx and yy are the locations to draw the image *)
-                     Gui.score (p1_score newSt) (p2_score newSt) ;
-                     Gui.num_try_hint (num_tries newSt) 836 587;
-                     Gui.num_try_hint (num_hints newSt) 171 593;
-                     if (clicked_accept) then
-                       play single newSt
-                     else
-                       let test = Gui.play_board "place" xa ya in
-                       let com = fst test in
-                       let command = parse com in
-                       let news = do' command st in
-                       let aa = snd test |> fst in
-                       let bb = snd test |> snd in
-                       Gui.responsive_board playerr aa bb;
-                       moveto (xx+15) (yy+4);
-                       Graphics.set_font "-*-fixed-medium-r-semicondensed--17-*-*-*-*-*-iso8859-1";
-                       Gui.cover_try playerr xx yy;
-                       Gui.cover_up();
-                       play single news))
+                        (let xx = snd test |> fst in
+                        let yy = snd test |> snd in
+                        Gui.cover_up ();
+                        print_int xx;
+                        print_int yy;
+                        let (clicked_accept, xa, ya) = Gui.try_responsive_board playerr xx yy (pl, x, y) in(* xx and yy are the locations to draw the image *)
+                        Gui.score (p1_score newSt) (p2_score newSt) ;
+                        Gui.num_try_hint (num_tries newSt) 836 587;
+                        Gui.num_try_hint (num_hints newSt) 171 593;
+                        if (clicked_accept) then
+                        (if single then
+                            (let comp_st = computer_move_st newSt in play single comp_st)
+                          else
+                            (play single newSt))
+                        else
+                          let test = Gui.play_board "place" xa ya in
+                          let com = fst test in
+                          let command = parse com in
+                          let news = do' command st in
+                          let aa = snd test |> fst in
+                          let bb = snd test |> snd in
+                          Gui.responsive_board playerr aa bb;
+                          moveto (xx+15) (yy+4);
+                          Graphics.set_font "-*-fixed-medium-r-semicondensed--17-*-*-*-*-*-iso8859-1";
+                          Gui.cover_try playerr xx yy;
+                          Gui.cover_up();
+                          if single then
+                            (let comp_st = computer_move_st news in play single comp_st)
+                          else
+                            (play single news)
+                          ))
                         (*
       if newSt = st then
       (let ex = snd test |> fst in
