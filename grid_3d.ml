@@ -182,7 +182,7 @@ let three_row_2d_cells c b =
 let rec victory_on_plane c possible_instances acc =
   match possible_instances with
   | [] -> acc
-  | h::t -> if List.for_all (fun m -> m.player = c.player) h then
+  | h::t -> if List.for_all (fun m -> m.player = c.player) h && (List.length h = 3) then
         victory_on_plane c t (h::acc)
       else
         victory_on_plane c t acc
@@ -367,14 +367,15 @@ let win_evaluation c b =
   let cases_3d = (diag_check_truth) || (col_check c b) in
   (* let modified_3_row_2d_cells = List.filter (fun x -> List.length x <> 2) (three_row_2d_cells c b) in *)
   let modified_3_row_2d_cells = three_row_2d_cells c b in
-  let case_1 = victory_on_plane c (modified_3_row_2d_cells) [] in
-  let case_2 = victory_on_plane c (modified_3_row_2d_cells) [] in
-  let case_3 = victory_on_plane c (modified_3_row_2d_cells) [] in
-  match get_plane c.cell with
+  let twod_case = victory_on_plane c (modified_3_row_2d_cells) [] in
+  (* let case_2 = victory_on_plane c (modified_3_row_2d_cells) [] in
+  let case_3 = victory_on_plane c (modified_3_row_2d_cells) [] in *)
+  ((List.length twod_case) > 0) || cases_3d
+  (* match get_plane c.cell with
   | 0 -> ((List.length case_1) > 0) || cases_3d
   | 1 -> ((List.length case_2) > 0) || cases_3d
   | 2 -> ((List.length case_3) > 0) || cases_3d
-  | _ -> failwith "impossible"
+  | _ -> failwith "impossible" *)
 
 let cells_occupied b =
   let lst_cells = board_list_of_cells b in

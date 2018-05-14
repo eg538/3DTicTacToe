@@ -30,10 +30,10 @@ let init_state str =
     krazy_happ = false;
     krazy_bomb_happ = false;
     moves_made = 0;
-    move_num_dispr = Random.int 5 + 5;
-    move_num_swap = Random.int 5 + 5;
-    move_num_switch_pl = Random.int 5 + 5;
-    move_num_bomb = Random.int 5 + 5
+    move_num_dispr = Random.int 26 + 5;
+    move_num_swap = Random.int 26 + 5;
+    move_num_switch_pl = Random.int 26 + 5;
+    move_num_bomb = Random.int 26 + 5
   }
 
 let game_mode s = s.mode
@@ -123,31 +123,6 @@ let rec search st diag_cells_in_q diags_cell_list_only = (*let diags_cell_list_o
   | h::t -> (check diag_cells_in_q h) || (search st diag_cells_in_q t)
   | _ -> false
 
-  (*match (diags_cell_list_only: ((int*int*int) list list)) with
-  | [] -> false
-    | h::t -> (check diag_cells_in_question h) || (search st diag_cells_in_question t) *)
-
-(* let accumulate_diag_wins diag_list st = (*cell list list *)
-  (* print_endline "adding on a diag 3 level win"; *)
-  let s = extract_cells_from_st st st.diagonals in (*(int int int) list list *)
-  match (diag_list: cell list list) with
-  | [] -> st
-  | (h:cell list)::[] ->
-    begin
-      let d_cells = [diag_cells_in_question h] in (*int int int list*)
-      if (search st (d_cells) s) then st else {st with diagonals = h :: st.diagonals}
-    end
-  | (h1:cell list)::h2::[] ->
-    begin
-      let h1' = [diag_cells_in_question h1] in
-      let h2' = [diag_cells_in_question h2] in
-      if (not (search st h1' s)) && (not (search st h2' s)) then {st with diagonals = h1 :: h2 :: st.diagonals}
-      else if not (search st h1' s) then {st with diagonals = h1 :: st.diagonals}
-      else if not (search st h2' s) then {st with diagonals = h2 :: st.diagonals}
-      else st
-    end
-  | _ -> failwith "impossible" *)
-
 let rec string_3_row_h clst acc =
   match clst with
   | [] -> acc
@@ -182,8 +157,8 @@ let play_move st (pl, row, col) =
     (* print_endline "THREE IN A ROWS 2D";
     print_endline (string_three_row instances ""); *)
     let case_2d = victory_on_plane c instances [] in
-    (* print_endline ("CASE 2D");
-    print_endline (string_three_row (List.map (fun lst -> List.map (fun a -> a.cell) lst) case_2d) ""); *)
+    print_endline ("CASE 2D");
+    print_endline (string_three_row (List.map (fun lst -> List.map (fun a -> a.cell) lst) case_2d) "");
     let case_3d =
     begin
       if (threed_col_win c b) = [] then
