@@ -238,7 +238,7 @@ let do' c st =
           else
             (  if (st.p2_num_tries > 0) then {st with p2_num_tries = st.p2_num_tries - 1 }
           else {st with p2_num_tries = 0})  in
-        try_move st (pl, row, col) |> switch_players
+        try_move st (pl, row, col) |> switch_players 
       )with
       | _ -> st
     end
@@ -250,7 +250,7 @@ let do' c st =
       )with
       | _ -> st
     end
-  | Hint -> 
+  | Hint ->
     if (st.p1_avatar = Python && st.current_player = Python) || (st.p1_avatar = Caml && st.current_player = Caml) then
       if st.p1_num_hints > 0 then
         {st with p1_num_hints = st.p1_num_hints - 1}
@@ -259,7 +259,7 @@ let do' c st =
     else
       if st.p2_num_hints > 0 then
         {st with p2_num_hints = st.p2_num_hints - 1}
-      else 
+      else
         st
   | Look -> st
   | CurrentPlayer -> st

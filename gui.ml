@@ -338,7 +338,7 @@ let try_responsive_board str x y (pl, ex, why)=
     let yy = int_of_char (String.get sy (c1 + 3)) - 48 in
     print_endline(string_of_bool (why = yy));
     if ((p = pl && ex = xx && why = yy)||((xa >= 66 && xa <= 198)&& (ya >= 22 && ya <= 78) )) then
-      ( if (p = pl && ex = xx && why = yy) then (responsive_board str xa ya;cover_up(); (true, a, b);)else
+      ( if (p = pl && ex = xx && why = yy) then (responsive_board str x y;cover_up(); (true, a, b);)else
           (responsive_board str x y; cover_up();(true, a, b);)) else ((false, xa, ya);)
 
 let highlight_curr_player str =
