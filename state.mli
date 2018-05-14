@@ -71,7 +71,7 @@ val board: state -> board
  * [("player1", player1's avatar); ("player2", player2's avatar)*)
 val p1_avatar: state -> player
 
-(*[most_recent_win st] is the list of three-in-a-rows associated the most recent 
+(*[most_recent_win st] is the list of three-in-a-rows associated the most recent
  * action taken to get state [st]*)
  val most_recent_wins: state -> (int*int*int) list list
 
