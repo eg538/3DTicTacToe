@@ -97,6 +97,11 @@ let rect_drawn_gray x y width height =
    set_line_width 2;
   draw_rect x y width height)
 
+let rect_drawn_red x y  =
+  (set_color red;
+  set_line_width 3;
+  draw_rect x y 50 50 ;)
+
 
 
 type choices = {mode : string; level : string; num_p: string; }
@@ -219,9 +224,6 @@ let num_try_hint num x y =
   Graphics.set_font "-*-fixed-medium-r-semicondensed--35-*-*-*-*-*-iso8859-1";
   (draw_string str;)
 
-  (* let file_name = str ^ "_try.jpg" in
-  (draw_image (get_img ("imgs/"^file_name)) why ex;) *)
-
   let fst' (y,_,_) = y
 
   let snd' (_,y,_) = y
@@ -237,6 +239,8 @@ let which_command () =
     print_string "y is: "; print_int y; print_endline " ";
     print_endline " ";
 
+    Graphics.synchronize (); Graphics.remember_mode true;
+
     if (x >= 149 && x <= (149 + 69)) && (y >= 627 && y<= (627 + 44)) then
       ( let ev = [Graphics.Button_up] in
         let ms = wait_next_event ev in
@@ -248,17 +252,6 @@ let which_command () =
 
 
 let play_board command x y =
-  (* let event_lst = [Graphics.Button_up] in
-  let mouse_status = wait_next_event event_lst  in
-  let x = mouse_status.mouse_x in
-  let y = mouse_status.mouse_y in
-  print_string "x is: "; print_int x; print_endline " ";
-  print_string "y is: "; print_int y; print_endline " ";
-  print_endline " "; *)
-
-  (* let command = fst' input in
-  let x = snd' input in
-  let y = thd input in  *)
 
   if ((x >= 331 && x <=426) && (y >= 651 && y <= 685 )) then ((command^" 0,0,0"), (360, 666))
   else if ((x >= 438 && x <= 575) && (y >= 653 && y <= 685 )) then ((command^" 0,0,1"), (475, 666))
@@ -298,9 +291,8 @@ let repeat_cell x y =
   else (sound 440 1000; draw_image (get_img "imgs/msg2.jpg") 236 0;)
 
 let responsive_board str x y =
-  (let file_name = "imgs/" ^ str ^ ".jpg" in
-   print_endline file_name;
-   draw_image (get_img file_name ) x y;)
+  let file_name = "imgs/" ^ str ^ ".jpg" in
+  (draw_image (get_img file_name ) x y;)
 
 let choose_letter str =
   if str = "python" then (draw_string "P";)
@@ -427,7 +419,8 @@ let tried str ex why st =
 *)
 
 let highlight_curr_player str =
-  if str = "python" then (rect_drawn_bblack 596 150 64 60; rect_drawn_cyan 334 145 62 65;)
+  if str = "python" then (rect_drawn_bblack 596 150 64 60;
+                          rect_drawn_cyan 334 145 62 65;)
   else (rect_drawn_bblack 334 145 62 65; rect_drawn_cyan 596 150 64 60;)
 
 let winner_winner_chicken_appetizer str =
@@ -442,11 +435,6 @@ let winner_winner_chicken_dinner str =
   else if str = "caml" then (winner_winner_chicken_appetizer "imgs/caml_wins.jpg";)
   else if str = "python" then (winner_winner_chicken_appetizer "imgs/python_wins.jpg";)
   else (winner_winner_chicken_appetizer "imgs/draw_img.jpg";)
-
-let mark_three x y =
-  set_color annoying_green;
-  Graphics.set_font "-*-fixed-medium-r-semicondensed--25-*-*-*-*-*-iso8859-1";
-  (draw_string "X";)
 
 let cell_coords_to_x_y (pl, x, y)=
   match (pl,x,y) with
@@ -479,18 +467,25 @@ let cell_coords_to_x_y (pl, x, y)=
   | (2,2,2) -> (645, 225)
   | _ -> failwith "Nop"
 
-(* let draw_three_row_helper_helper lst x y =
-  match lst with
-  | [] ->
-  | (pl,x,y)::t -> *)
+let mark_three move_x move_y =
+( print_endline "mark_three";
+  rect_drawn_red move_x move_y;)
 
-(* let draw_three_row_helper hd_lst tl_lst =
-  match hd_lst with
-  | [] -> line_drawn
-  | lst -> draw_three_row_helper_helper (List.sort Pervasives.compare lst ) (); *)
+let rec draw_three_row_helper lst =
+  match lst with
+  | [] -> (print_endline "no more cells in this triple");
+  | h::t -> (let (move_x, move_y) = cell_coords_to_x_y h in
+            mark_three move_x move_y; draw_three_row_helper t;)
+
 
 let draw_three_row recent_wins =
   print_endline " "; print_endline "in Gui.draw_three_row"; print_endline " ";
   match recent_wins with
-  | [] -> print_endline "impossible. shouldn't be given an empty list";
-  | h::t -> print_endline "yay";
+  | [] -> print_endline "HEREHEHE";
+  | xs -> (draw_three_row_helper (List.sort Pervasives.compare xs); )
+
+(* let rec iterate_through_wins lst =
+  print_endline "in iterate";
+  match lst with
+  | [] ->  ();
+  | h::t ->  draw_three_row h;  iterate_through_wins t; *)

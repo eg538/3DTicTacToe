@@ -24,6 +24,12 @@ let string_of_player p = match p with
   | Caml -> "caml"
   | None -> "none"
 
+let rec iterate_through_wins lst =
+  print_endline "in iterate";
+  match lst with
+  | [] ->  ();
+  | h::t ->  Gui.draw_three_row h;  iterate_through_wins t;
+
 let computer_move_st newSt =
   print_endline "Please wait while computer moves...";
   let playerr = string_of_player (State.curr_player newSt) in
@@ -35,7 +41,7 @@ let computer_move_st newSt =
     else
       hard_ai_move newSt
   in
-  let newSt' = do' comp_move newSt in
+  let newSt' = State.do' comp_move newSt in
   let coords_move =
     begin
       match comp_move with
@@ -43,8 +49,8 @@ let computer_move_st newSt =
       | _ -> failwith "Unimplemented"
     end
   in
-  let x = fst (cell_coords_to_x_y coords_move) in
-  let y = snd (cell_coords_to_x_y coords_move) in
+  let x = fst (Gui.cell_coords_to_x_y coords_move) in
+  let y = snd (Gui.cell_coords_to_x_y coords_move) in
   Gui.responsive_board playerr x y ; (* x and y are the locations to draw the image *)
   Gui.score (p1_score newSt') (p2_score newSt') ;
           (* Gui.num_try_hint (num_tries newSt') 836 587;
@@ -58,7 +64,7 @@ let computer_move_st newSt =
             Gui.draw_three_row recent_wins; *)
 
           print_endline ("Score of player 1: "^(string_of_int (p1_score newSt))^"\n"^"Score of player 2: "^(string_of_int (p2_score newSt))); *)
-    print_board newSt';
+    print_char newSt';
     print_endline ("Score of player 1: "^(string_of_int (p1_score newSt'))^
                   "\n"^"Score of player 2: "^(string_of_int (p2_score newSt')));
     newSt'
@@ -98,6 +104,11 @@ let rec play single st=
   let try_num = num_tries st in
   Gui.num_try_hint hint_num 836 580;
   Gui.num_try_hint try_num 171 587;
+  Gui.num_try_hint (num_hints st) 171 593;
+let recent_wins = (most_recent_wins st ) = [] in
+print_endline " ";print_endline "recent_wins is empty"; print_endline (string_of_bool recent_wins); print_endline " ";
+if not recent_wins then Graphics.remember_mode false; iterate_through_wins (most_recent_wins newSt) Gui.draw_three_row;
+
   let input = Gui.which_command () in
   let commend = fst' input in
   let x = snd' input in
@@ -214,7 +225,7 @@ let rec play single st=
           ))
   | Hint ->
       let hint_move = player_hint newSt in
-      let coord_move = 
+      let coord_move =
         begin
         match hint_move with
         | Place (a, b, c) -> (a, b, c)
@@ -230,7 +241,7 @@ let rec play single st=
         (let comp_st = computer_move_st newSt' in play single comp_st)
       else
         (play single newSt')
-      
+
   | Look -> (print_board st; play single newSt)
   | CurrentPlayer ->
     (print_endline ("Current player: "^(string_of_player (curr_player st)));
