@@ -75,9 +75,16 @@ val p1_avatar: state -> player
  * action taken to get state [st]*)
  val most_recent_wins: state -> (int*int*int) list list
 
+(*[krazy_happ_st st] is whether the last move has caused something special to happen
+ * if the game is in krazy mode*)
 val krazy_happ_st: state -> bool
 
+(*[krazy_bomb_happ_st st] is whether the last move has caused a bomb if the 
+ * game is in krazy mode*)
 val krazy_bomb_happ_st: state -> bool
+
+(*[cells_occ st] is the list of cells that are occupied in the board of [st]*)
+val cells_occ: state -> cell list
 
 (*[do' c st] is [st'] if executing command [c] in state [st] results
  * in [st']. The following describe the valid commands and the result

@@ -97,7 +97,7 @@ let inc_moves st = {st with moves_made = st.moves_made + 1}
 
 let up_krazy_happ boole st = {st with krazy_happ = boole}
 
-let do_krazy c st = 
+let do_krazy c st =
   let st' =
     begin
     match c with
