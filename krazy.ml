@@ -27,9 +27,9 @@ let random_cell_for_krazy st =
   (List.nth (all_cells) index)
 
 (* let new_krazy_st st = let b = copy empty_board in
-  {st with tttBoard = b; curr_score_1 = 0; curr_score_2 = 0} *)
-
-let rec krazy_recalc_helper cellst st =
+  {st with tttBoard = b; curr_score_1 = 0; curr_score_2 = *)
+  
+  let rec krazy_recalc_helper cellst st =
   match cellst with
   | [] -> st
   | h::t -> let mod_st = {st with current_player = player_at_cell h} in

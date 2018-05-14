@@ -65,16 +65,6 @@ val cover_try : string -> int -> int -> unit
 
 val try_responsive_board: string -> int -> int-> (int * int * int)-> (bool* int * int)
 
-(* Let's the player try a position without actually changing anything.
-   [try playerr ex why] places a try picture of the marker onto the cell described
-   by player [playerr] at [ex] and [why]. Will be a helper function of play_board.
-*)
-(*val tried : string -> int -> int -> state -> state
-*)
-(* (* [check_try_pressed] is true if the user pressed within the try button and false
-   otherwise.
- *)
-val check_try_pressed : unit -> bool *)
 
 (* Returns which a triple where the first element is the string version
    of command depending on whether or not the user has pressed the try button,
@@ -84,7 +74,7 @@ val check_try_pressed : unit -> bool *)
 val which_command : unit -> string*int*int
 
 (* Draws a line through the most recent three in a rows *)
-val draw_three_row : (int*int*int) list list ->  unit
+val draw_three_row : (int*int*int)  list ->  unit
 
 val cell_coords_to_x_y: (int*int*int) -> (int*int)
 

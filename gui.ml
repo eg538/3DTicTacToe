@@ -95,7 +95,12 @@ let rect_drawn_bblack x y width height =
 let rect_drawn_gray x y width height =
   (set_color gray;
    set_line_width 2;
-  draw_rect x y width height)
+   draw_rect x y width height)
+
+let rect_drawn_red x y  =
+  (set_color red;
+   set_line_width 3;
+   draw_rect x y 50 50 ;)
 
 
 
@@ -219,9 +224,6 @@ let num_try_hint num x y =
   Graphics.set_font "-*-fixed-medium-r-semicondensed--35-*-*-*-*-*-iso8859-1";
   (draw_string str;)
 
-  (* let file_name = str ^ "_try.jpg" in
-  (draw_image (get_img ("imgs/"^file_name)) why ex;) *)
-
   let fst' (y,_,_) = y
 
   let snd' (_,y,_) = y
@@ -237,6 +239,8 @@ let which_command () =
     print_string "y is: "; print_int y; print_endline " ";
     print_endline " ";
 
+    Graphics.synchronize (); Graphics.remember_mode true;
+
     if (x >= 149 && x <= (149 + 69)) && (y >= 627 && y<= (627 + 44)) then
       ( let ev = [Graphics.Button_up] in
         let ms = wait_next_event ev in
@@ -248,17 +252,6 @@ let which_command () =
 
 
 let play_board command x y =
-  (* let event_lst = [Graphics.Button_up] in
-  let mouse_status = wait_next_event event_lst  in
-  let x = mouse_status.mouse_x in
-  let y = mouse_status.mouse_y in
-  print_string "x is: "; print_int x; print_endline " ";
-  print_string "y is: "; print_int y; print_endline " ";
-  print_endline " "; *)
-
-  (* let command = fst' input in
-  let x = snd' input in
-  let y = thd input in  *)
 
   if ((x >= 331 && x <=426) && (y >= 651 && y <= 685 )) then ((command^" 0,0,0"), (360, 666))
   else if ((x >= 438 && x <= 575) && (y >= 653 && y <= 685 )) then ((command^" 0,0,1"), (475, 666))
@@ -346,86 +339,6 @@ let try_responsive_board str x y (pl, ex, why)=
       ( if (p = pl && ex = xx && why = yy) then (responsive_board str a b; cover_up(); (true, a, b);)else
           (responsive_board str a b; cover_up();(true, a, b);)) else ((false, xa, ya);)
 
-(*let choose_letter str =
-  if str = "python" then (draw_string "P";)
-  else (draw_string "C";)
-
-let cover_try str ex why =
-  if (why >= 500 && why <= 666) then
-    (moveto (ex+15) (why+4);
-     set_color top_plep;
-     choose_letter str
-    )
-  else if (why >= 385 && why <= 492) then
-    (moveto (ex+15) (why+4);
-     set_color mid_plep;
-     choose_letter str
-    )
-  else if (why >= 225 && why <= 330) then
-    (moveto (ex+15) (why+4);
-     set_color bot_plep;
-     choose_letter str
-    )
-  else ()
-
-let change_curr_player st=
-  if st.current_player = Python then {st with current_player = Caml}
-  else {st with current_player = Python}
-
-let tried str ex why st =
-  let (sy, (a,b)) = play_board "try" ex why in
-  let c1 = String.index sy ',' in
-  let pl = int_of_char (String.get sy (c1 - 1)) - 48 in
-  let xx = int_of_char (String.get sy (c1 + 1)) - 48 in
-  let yy = int_of_char (String.get sy (c1 + 3)) - 48 in
-  print_endline"what?";
-  print_int pl; print_int xx;print_int yy;
-  print_endline"the hell?";
-  let check = Grid_3d.is_taken (pl, xx, yy) st.tttBoard in
-  print_endline (string_of_bool check);
-  if (check) then
-    (
-      if(a <= 1 && b <= 1) then
-        (repeat_cell a b; change_curr_player st)
-      else
-        (moveto (ex+15) (why+4);
-         set_color annoying_green;
-         Graphics.set_font "-*-fixed-medium-r-semicondensed--17-*-*-*-*-*-iso8859-1";
-         choose_letter str;
-         draw_image (get_img "imgs/accept.jpg") 65 22;
-         let event_lst = [Graphics.Button_up] in
-         let mouse_status = wait_next_event event_lst  in
-         let x = mouse_status.mouse_x in
-         let y = mouse_status.mouse_y in
-         if ((x >= 66 && x <= 198)&& (y >= 22 && y <= 78)) then
-           ( print_endline "is it here?";
-             let (s, (a,b)) = play_board "place" ex why in
-             cover_try str ex why;
-             responsive_board str a b;
-             cover_up();
-             (*let c1 = String.index s ',' in
-               let pl = String.get s (c1 - 1) in
-               let xx = String.get s (c1 + 1) in
-               let yy = String.get s (c1 + 3) in
-               State.do' (Place(pl, xx, yy)) st
-               play_move st (pl, xx, yy) |> switch_players |> check_game_end*)
-             let comm = Command.parse s in
-             State.do' comm (st)
-           )
-         else
-           ( cover_try str ex why;
-             cover_up();
-             let (s, (a,b)) = play_board "place" x y in
-             responsive_board str a b;
-             let comm = Command.parse s in
-             let new_st = State.do' comm (st) in
-             new_st
-           )
-        ))else   ( draw_image(get_img "imgs/msg2.jpg") 236 0; st)
-
-
-*)
-
 let highlight_curr_player str =
   if str = "python" then (rect_drawn_bblack 596 150 64 60; rect_drawn_cyan 334 145 62 65;)
   else (rect_drawn_bblack 334 145 62 65; rect_drawn_cyan 596 150 64 60;)
@@ -479,18 +392,20 @@ let cell_coords_to_x_y (pl, x, y)=
   | (2,2,2) -> (645, 225)
   | _ -> failwith "Nop"
 
-(* let draw_three_row_helper_helper lst x y =
-  match lst with
-  | [] ->
-  | (pl,x,y)::t -> *)
 
-(* let draw_three_row_helper hd_lst tl_lst =
-  match hd_lst with
-  | [] -> line_drawn
-  | lst -> draw_three_row_helper_helper (List.sort Pervasives.compare lst ) (); *)
+let mark_three move_x move_y =
+  ( print_endline "mark_three";
+    rect_drawn_red move_x move_y;)
+
+let rec draw_three_row_helper lst =
+  match lst with
+  | [] -> (print_endline "no more cells in this triple");
+  | h::t -> (let (move_x, move_y) = cell_coords_to_x_y h in
+             mark_three move_x move_y; draw_three_row_helper t;)
+
 
 let draw_three_row recent_wins =
   print_endline " "; print_endline "in Gui.draw_three_row"; print_endline " ";
   match recent_wins with
-  | [] -> print_endline "impossible. shouldn't be given an empty list";
-  | h::t -> print_endline "yay";
+  | [] -> print_endline "HEREHEHE";
+  | xs -> (draw_three_row_helper (List.sort Pervasives.compare xs); )
