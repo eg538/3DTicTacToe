@@ -16,7 +16,7 @@ val easy_ai_move: state -> command
 val medium_ai_move: state -> command
 
 (*[hard_ai_move st] is the move the ai makes given the game is in state [st] with
- * the level being hard. Returns a move based on the result of a minimax algorithm 
+ * the level being hard. Returns a move based on the result of a minimax algorithm
  * with alpha-beta pruning*)
 val hard_ai_move: state -> command
 
