@@ -212,7 +212,7 @@ let rec play single st=
           else
             (play single newSt)
           ))
-  | Hint -> let hint_move = player_hint newSt in 
+  | Hint -> let hint_move = player_hint newSt in
       do' hint_move newSt |> play single
   | Look -> (print_board st; play single newSt)
   | CurrentPlayer ->
