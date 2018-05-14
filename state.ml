@@ -169,7 +169,7 @@ let play_move st (pl, row, col) =
 
 let krazy_happ_st st = st.krazy_happ
 
-let krazy_bomb_happ_st st = st.krazy_bomb_happs
+let krazy_bomb_happ_st st = st.krazy_bomb_happ
 
 let most_recent_wins st = st.most_recent_win
 
