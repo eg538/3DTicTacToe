@@ -29,17 +29,18 @@ let random_cell_for_krazy st =
 (* let new_krazy_st st = let b = copy empty_board in
   {st with tttBoard = b; curr_score_1 = 0; curr_score_2 = *)
 
-  let rec krazy_recalc_helper cellst st =
-  match cellst with
-  | [] -> st
-  | h::t -> let mod_st = {st with current_player = player_at_cell h} in
-      let move = cell_coords h in
-      let com = Place move in
-      let st' = do' com mod_st in
-      krazy_recalc_helper t st'
+let rec krazy_recalc_helper cellst st =
+match cellst with
+| [] -> st
+| h::t -> let mod_st = {st with current_player = player_at_cell h} in
+    let move = cell_coords h in
+    let com = Place move in
+    let st' = do' com mod_st in
+    krazy_recalc_helper t st'
 
 
 let krazy_recalc_score st =
+  let curr_p_st = curr_player st in
   let num_p = string_of_num_p (game_num_plyrs st) in
   let p1_av = string_of_player (p1_avatar st) in
   let lvl = string_of_level (game_level st) in
@@ -53,7 +54,8 @@ let krazy_recalc_score st =
               p1_num_tries = st.p1_num_tries;
               p2_num_hints = st.p2_num_hints;
               p2_num_tries = st.p2_num_tries} in
-  krazy_recalc_helper occupied {new_st with moves_made = st.moves_made}
+  let new_st2 = krazy_recalc_helper occupied {new_st with moves_made = st.moves_made} in
+  {new_st2 with current_player = curr_p_st}
   (* List.map (fun x -> get_all_win_inst st x) occupied *)
 
 
