@@ -212,8 +212,25 @@ let rec play single st=
           else
             (play single newSt)
           ))
-  | Hint -> let hint_move = player_hint newSt in
-      do' hint_move newSt |> play single
+  | Hint ->
+      let hint_move = player_hint newSt in
+      let coord_move = 
+        begin
+        match hint_move with
+        | Place (a, b, c) -> (a, b, c)
+        | _ -> failwith "Unimplemented"
+        end
+      in
+      let x = fst (cell_coords_to_x_y coord_move) in
+      let y = snd (cell_coords_to_x_y coord_move) in
+      let newSt' = do' hint_move newSt in
+      Gui.responsive_board playerr x y ; (* x and y are the locations to draw the image *)
+      Gui.score (p1_score newSt) (p2_score newSt);
+      if single then
+        (let comp_st = computer_move_st newSt' in play single comp_st)
+      else
+        (play single newSt')
+      
   | Look -> (print_board st; play single newSt)
   | CurrentPlayer ->
     (print_endline ("Current player: "^(string_of_player (curr_player st)));
