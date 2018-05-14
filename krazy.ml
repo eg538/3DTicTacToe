@@ -125,8 +125,8 @@ let do_krazy c st =
   )
   else if new_st.moves_made = new_st.move_num_switch_pl then ( (*switching planes*)
     print_endline "switch planes";
-    let pl1 = Random.int 3 in
-    let rand2 = Random.int 3 in
+    let pl1 = (Random.int 3) in
+    let rand2 = (Random.int 3) in
     let pl2 = if pl1 = rand2 then abs (2 - pl1) else rand2 in
     print_endline ((string_of_int pl1)^", "^(string_of_int pl2));
     krazy_switch_planes new_st pl1 pl2 |> up_krazy_happ true

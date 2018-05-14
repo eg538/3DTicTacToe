@@ -10,8 +10,6 @@ open ANSITerminal
 open Gui
 open Graphics
 
-exception Terminated
-exception Restart
 
 let fst' (y,_,_) = y
 
@@ -73,8 +71,8 @@ let rec ended () =
   let com = fst grab_GUI in
   let command = parse com in
   match command with
-  | Quit -> print_endline "You have chosen to quit game"
-  | Restart -> raise Restart
+  | Quit -> raise Gui.Quit
+  | Restart -> raise Gui.Restart
   | _ -> ended ()
 
 (*[play st] is the helper function for play_game ()*)
@@ -117,9 +115,9 @@ let rec play single do_mode st=
                  play single do_mode newSt)
   | Score ->
     (print_endline ("Score of player 1: "^(string_of_int (p1_score st))^"\n"^"Score of player 2: "^(string_of_int (p2_score st)));
-     play single do_mode newSt)
-  | Quit -> (print_endline "yo what's up in this hole";exit 0)
-  | Restart -> (raise Restart)
+  play single do_mode newSt)
+  | Quit -> (raise Gui.Quit)
+  | Restart -> (raise Gui.Restart)
   | Try (pl, x, y) -> (
       print_board newSt;
       print_endline "IN TRY";
@@ -270,8 +268,8 @@ try (
         play (game_num_plyrs init_st <> Multi)
             (if game_mode init_st = Krazy then do_kray_w_GUI else do') init_st
       ) with
-    | Terminated -> print_endline "Bye!"
-    | Restart -> (print_endline "You have chosen to restart this game";
+    | Gui.Quit -> print_endline "Bye!"; exit 0;
+    | Gui.Restart -> (print_endline "You have chosen to restart this game";
                   f ())
     | _ -> print_endline "Error"
     end

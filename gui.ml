@@ -7,6 +7,10 @@ open Command
 open Types
 open Grid_3d
 
+
+exception Restart
+exception Quit
+
 (* make the black background color for rules*)
 let bbblack = rgb 3 3 3
 
@@ -156,13 +160,15 @@ let rec start_game ch x y=
     rect_drawn x y 90 90;clear_graph();
     draw_image (get_img "imgs/xxoo.jpg") 0 0;draw_image (get_img "imgs/TTTmain.jpg") 250 40;
     draw_image(get_img "imgs/hint.jpg") 800 555; draw_image(get_img "imgs/try.jpg") 134 555;
-    play_str) else (
+    draw_image(get_img "imgs/quit.jpg") 850 313; draw_image(get_img "imgs/restart.jpg") 50 313;
+    play_str) else if ((x>= 700 && x <= 810 ) &&(y >= 40 && y <= 89))then (clear_graph(); exit 0) else (
     let (choice, xa, ya) = get_choices ch x y in
     if ((xa >= 380 && xa <=(242+380)) && (ya>=35 && ya<=(35+69))) then(
       let play_str = "play " ^ choice.num_p ^ " " ^ "python " ^ choice.level ^ " " ^ choice.mode in
       rect_drawn x y 90 90; clear_graph(); draw_image (get_img "imgs/xxoo.jpg") 0 0;
       draw_image (get_img "imgs/TTTmain.jpg") 250 40;
       draw_image(get_img "imgs/hint.jpg") 800 555; draw_image(get_img "imgs/try.jpg") 134 555;
+      draw_image(get_img "imgs/quit.jpg") 850 313; draw_image(get_img "imgs/restart.jpg") 50 313;
       play_str)
     else (let (xx, yy) = mouse_up() in start_game choice xx yy))
 
@@ -175,6 +181,8 @@ let init_welcome () =
   draw_image (get_img "imgs/background_crop.jpeg") 0 0;
 
   draw_image (get_img "imgs/wilkommen-logo.jpg") 270 330;
+
+  draw_image (get_img "imgs/quit.jpg") 700 40;
 
   draw_image (get_img "imgs/easy.jpg") 310 260;
   rect_drawn 310 260 108 44;
@@ -249,13 +257,15 @@ let which_command () =
 
     (* Graphics.synchronize (); Graphics.remember_mode true; *)
 
-    if (x >= 149 && x <= (149 + 69)) && (y >= 627 && y<= (627 + 44)) then
+    if ((x >= 149 && x <= (149 + 69)) && (y >= 627 && y<= (627 + 44))) then
       ( let ev = [Graphics.Button_up] in
         let ms = wait_next_event ev in
         let xx =  ms.mouse_x in
         let yy = ms.mouse_y in
         ("try" , xx, yy)) else if ((x >= 801 && x <= 894)&&( y >= 624 && y <= 664)) then
       (Graphics.remember_mode false; draw_wait_mgs(); ("hint", x, y))
+    else if ((x >= 850 && x <= (850 + 110)) && (y >= 313 && y<= (313 + 49))) then ("quit", x, y)
+    else if ((x >= 50 && x <= (50 + 134)) && (y >= 313 && y<= (313 + 61))) then ("restart", x, y)
     else ("place" , x, y)
 
 
@@ -292,6 +302,14 @@ let play_board command x y =
   else if ((x >= 585 && x <= 763) && (y >= 216 && y <= 266)) then ((command^" 2,2,2"), (645, 225))
 
   else (command^" 1,1,1", (1,1))
+
+let quit_restart_check () = let (x, y) = mouse_up() in
+  print_endline("ttttt");
+  if ((x >= 225 && x <= 335) && ( y >= 425 && y <= 474)) then (
+    print_endline"yup yup33";
+    clear_graph(); raise Quit)else if ((x >= 225 && x <= 359) && ( y >= 325 && y <= 386)) then (clear_graph(); raise Restart)
+  else ()
+
 
 let repeat_cell x y =
   if x = 0 && y = 0 then (draw_image (get_img "imgs/no_x.jpg") 236 0;)
@@ -358,11 +376,17 @@ let winner_winner_chicken_appetizer str =
 
 
 let winner_winner_chicken_dinner str =
-  if str = "win" then (winner_winner_chicken_appetizer "imgs/win.jpg";)
-  else if str = "lost" then (winner_winner_chicken_appetizer "imgs/loss_img.jpg";)
-  else if str = "caml" then (winner_winner_chicken_appetizer "imgs/caml_wins.jpg";)
-  else if str = "python" then (winner_winner_chicken_appetizer "imgs/python_wins.jpg";)
-  else (winner_winner_chicken_appetizer "imgs/draw_img.jpg";)
+  if str = "win" then (winner_winner_chicken_appetizer "imgs/win.jpg";
+                       quit_restart_check())
+  else if str = "lost" then (winner_winner_chicken_appetizer "imgs/loss_img.jpg";
+                             quit_restart_check())
+  else if str = "caml" then (winner_winner_chicken_appetizer "imgs/caml_wins.jpg";
+                             quit_restart_check())
+  else if str = "python" then (winner_winner_chicken_appetizer "imgs/python_wins.jpg";
+                               print_endline"yup yup";
+                               quit_restart_check())
+  else (winner_winner_chicken_appetizer "imgs/draw_img.jpg";
+        quit_restart_check())
 
 
 let cell_coords_to_x_y (pl, x, y)=
