@@ -24,6 +24,11 @@ let string_of_player p = match p with
   | Caml -> "caml"
   | None -> "none"
 
+let rec iterate lst f =
+  match lst with
+  | [] -> ();
+  | h::t -> (f h; iterate t f;)
+
 let computer_move_st newSt =
   print_endline "Please wait while computer moves...";
   let playerr = string_of_player (State.curr_player newSt) in
@@ -98,6 +103,11 @@ let rec play single st=
   let try_num = num_tries st in
   Gui.num_try_hint hint_num 836 580;
   Gui.num_try_hint try_num 171 587;
+  let recent_wins = (most_recent_wins st ) = [] in
+  print_endline " ";print_endline "recent_wins is empty"; print_endline (string_of_bool recent_wins); print_endline " ";
+  if not recent_wins then Graphics.remember_mode false; iterate (most_recent_wins st) Gui.draw_three_row;
+
+
   let input = Gui.which_command () in
   let commend = fst' input in
   let x = snd' input in
