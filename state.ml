@@ -176,14 +176,14 @@ let play_move st (pl, row, col) =
     let b = st.tttBoard in
     (* let diag_check_truth = (((diag_check c b)|> fst) <> WinNone) || (((diag_check c b) |> snd) <> WinNone) in *)
     let diag_check_lst = threed_diag_wins c b in
-    (* print_endline ("DIAG_CHECK_NUM");
-    print_endline (string_of_int diag_check_num); *)
+    (* print_endline ("DIAG_CHECK_LST");
+    print_endline (string_of_int (List.length (diag_check_lst))); *)
     let instances = (three_row_2d_cells c b) in
     (* print_endline "THREE IN A ROWS 2D";
     print_endline (string_three_row instances ""); *)
     let case_2d = victory_on_plane c instances [] in
     (* print_endline ("CASE 2D");
-    print_endline (string_of_int (List.length case_2d)); *)
+    print_endline (string_three_row (List.map (fun lst -> List.map (fun a -> a.cell) lst) case_2d) ""); *)
     let case_3d =
     begin
       if (threed_col_win c b) = [] then
@@ -195,7 +195,7 @@ let play_move st (pl, row, col) =
     print_endline (string_of_int (List.length case_3d)); *)
     let inced_st = inc_point ((List.length case_2d) + (List.length case_3d)) st in
     let lst_win_coords = List.map (fun lst -> List.map (fun a -> a.cell) lst) (case_2d @ case_3d) in
-    (* print_string "updateing most_recent_win"; print_endline (string_three_row (lst_win_coords) ""); *)
+    (* print_string "updating most_recent_win"; print_endline (string_three_row (lst_win_coords) ""); *)
     {inced_st with most_recent_win = lst_win_coords}
     end
     (*match (case_2d, case_3d) with

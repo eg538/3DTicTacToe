@@ -126,7 +126,7 @@ let diagonal_hardcode c lst_of_cells =
   | p,x,y when (x=y) ->
     begin
       let l1 = (List.filter (fun i -> ((i.cell |> thd) = (i.cell |> snd')) && (p = fst' c.cell)) lst_of_cells) in (*orig*)
-      let l2 = (List.filter (fun i -> (((i.cell |> thd = 2) && (i.cell |> snd' = 0)) || ((i.cell |> snd' = 2)  && (i.cell |> thd = 0))) && (p = fst' c.cell)) lst_of_cells) in
+      let l2 = (List.filter (fun i -> (((i.cell |> thd = 1)&&(i.cell |> snd' = 1)) || ((i.cell |> thd = 2) && (i.cell |> snd' = 0)) || ((i.cell |> snd' = 2)  && (i.cell |> thd = 0))) && (p = fst' c.cell)) lst_of_cells) in
       [l1;l2]
     end
   | p,x,y when (x=0 && y=2) || (x=2 && y=0) ->
@@ -275,13 +275,27 @@ let threed_diag_wins c b =
   let verdict_h = (match diag_h with
     | [] -> []
     | h::[] -> if (List.for_all (fun x -> x.player = c.player) h) then [h] else []
-    | h1::h2::[] -> if (List.for_all (fun x -> x.player = c.player) h1) || (List.for_all (fun x -> x.player = c.player) h2) then [h1;h2] else []
+    | h1::h2::[] -> if (List.for_all (fun x -> x.player = c.player) h1) && (List.for_all (fun x -> x.player = c.player) h2) then 
+          [h1;h2] 
+        else if (List.for_all (fun x -> x.player = c.player) h1) then 
+          [h1] 
+        else if (List.for_all (fun x -> x.player = c.player) h2) then 
+          [h2]
+        else
+          []
     | _ -> []
     ) in
   let verdict_v = (match diag_v with
       | [] -> []
       | h::[] -> if (List.for_all (fun x -> x.player = c.player) h) then [h] else []
-      | h1::h2::[] -> if (List.for_all (fun x -> x.player = c.player) h1) || (List.for_all (fun x -> x.player = c.player) h2) then [h1;h2] else []
+      | h1::h2::[] -> if (List.for_all (fun x -> x.player = c.player) h1) && (List.for_all (fun x -> x.player = c.player) h2) then 
+            [h1;h2] 
+          else if (List.for_all (fun x -> x.player = c.player) h1) then 
+            [h1] 
+          else if (List.for_all (fun x -> x.player = c.player) h2) then 
+            [h2]
+          else
+            []
       | _ -> []
   ) in
   verdict_h @ verdict_v
@@ -351,7 +365,8 @@ let win_evaluation c b =
   let diag_check_truth =
     (((diag_check c b )|> fst) <> WinNone) || (((diag_check c b) |> snd) <> WinNone) in
   let cases_3d = (diag_check_truth) || (col_check c b) in
-  let modified_3_row_2d_cells = List.filter (fun x -> List.length x <> 2) (three_row_2d_cells c b) in
+  (* let modified_3_row_2d_cells = List.filter (fun x -> List.length x <> 2) (three_row_2d_cells c b) in *)
+  let modified_3_row_2d_cells = three_row_2d_cells c b in
   let case_1 = victory_on_plane c (modified_3_row_2d_cells) [] in
   let case_2 = victory_on_plane c (modified_3_row_2d_cells) [] in
   let case_3 = victory_on_plane c (modified_3_row_2d_cells) [] in
