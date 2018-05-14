@@ -54,9 +54,9 @@ let computer_move_st do_mode newSt =
   else
     let x = fst (cell_coords_to_x_y coords_move) in
     let y = snd (cell_coords_to_x_y coords_move) in
-    Graphics.synchronize(); 
+    Graphics.synchronize();
     Graphics.remember_mode true;
-    Gui.responsive_board playerr x y ; 
+    Gui.responsive_board playerr x y ;
     Gui.score (p1_score newSt') (p2_score newSt') ;
     print_board newSt';
     print_endline ("Score of player 1: "^(string_of_int (p1_score newSt'))^
@@ -88,32 +88,25 @@ let rec play single do_mode st=
     ended ()
   else
   (print_endline "Please enter command";
-  let playerr = string_of_player (State.curr_player st )
-  in print_endline playerr;
-  Gui.highlight_curr_player playerr;
-  Gui.score (p1_score st) (p2_score st) ;
-  Gui.rect_drawn_gray 149 627 69 44;
-  Gui.rect_drawn_gray 800 625 93 40;
-  Gui.responsive_board playerr 0 700;
+  let playerr = string_of_player (State.curr_player st ) in
+  let p1_score0 = p1_score st in
+  let p2_score0 = p2_score st in
   let hint_num = num_hints st in
   let try_num = num_tries st in
-  Gui.num_try_hint hint_num 836 580;
-  Gui.num_try_hint try_num 171 587;
-  let recent_wins = (most_recent_wins st ) = [] in
-  if not recent_wins then
-    Graphics.remember_mode false; iterate (most_recent_wins st) Gui.draw_three_row;
+  let recent_wins = (most_recent_wins st ) in
+  Gui.draw_act_two playerr p1_score0 p2_score0 hint_num try_num recent_wins;
   let input = Gui.which_command () in
   let commend = fst' input in
-  let x = snd' input in
-  print_endline "x is";
-  print_int x;
-  let y = thd input in
-  print_endline "y is";
-  print_int y;
-  let test = Gui.play_board commend x y in
-  let com = fst test in
-  print_endline commend;
-  print_endline com;
+    let x = snd' input in
+    print_endline "x is";
+    print_int x;
+    let y = thd input in
+    print_endline "y is";
+    print_int y;
+    let test = Gui.play_board commend x y in
+    let com = fst test in
+    print_endline commend;
+    print_endline com;
   (* let st_modified = (  if playerr = "python" then (print_endline "python";print_int st.p1_num_tries;  {st with p1_num_tries = st.p1_num_tries - 1 })
                        else (print_endline "caml";print_int st.p2_num_tries;   {st with p2_num_tries = st.p2_num_tries - 1})) in *)
   if com = "try 1,1,1" then play single do_mode st else
@@ -214,7 +207,7 @@ let rec play single do_mode st=
             let recent_wins = (most_recent_wins newSt ) = [] in
             print_endline " ";print_endline "recent_wins is empty"; print_endline (string_of_bool recent_wins); print_endline " "
           )
-          else 
+          else
             ()
           );
           if single then
@@ -253,7 +246,7 @@ let rec play single do_mode st=
                 play single do_mode st)
   )
 
-let do_kray_w_GUI (c:command) st = 
+let do_kray_w_GUI (c:command) st =
   let st' = do_krazy c st in
   if krazy_happ_st st' then (
     ()(*redraw*)
@@ -274,7 +267,7 @@ try (
     print_board init_st;
     begin
     try(
-        play (game_num_plyrs init_st <> Multi) 
+        play (game_num_plyrs init_st <> Multi)
             (if game_mode init_st = Krazy then do_kray_w_GUI else do') init_st
       ) with
     | Terminated -> print_endline "Bye!"

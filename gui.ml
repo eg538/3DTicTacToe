@@ -413,3 +413,19 @@ let draw_three_row recent_wins =
   match recent_wins with
   | [] -> print_endline "HEREHEHE";
   | xs -> (draw_three_row_helper (List.sort Pervasives.compare xs); )
+
+let rec iterate lst f =
+  match lst with
+  | [] -> ();
+  | h::t -> (f h; iterate t f;)
+
+let draw_act_two playerr p1_score p2_score hint_num num_tries recent_wins_lst =
+  highlight_curr_player playerr;
+  score p1_score p2_score;
+  rect_drawn_gray 149 627 69 44;
+  rect_drawn_gray 800 625 93 40;
+  responsive_board playerr 0 700;
+  num_try_hint hint_num 836 580;
+  num_try_hint num_tries 171 587;
+  if not (recent_wins_lst = []) then Graphics.remember_mode false; iterate recent_wins_lst draw_three_row;
+  

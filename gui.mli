@@ -84,3 +84,8 @@ val get_img:string -> image
 (* Draws a message asking the user to please wait as the computer calculates
    the best move *)
 val draw_wait_mgs : unit -> unit
+
+(* [draw_act_two playerr p1_score p2_score hint_num num_tries recent_wins lst] draws the
+   the playing board  with all the necessary information
+*)
+val draw_act_two : string -> int -> int -> int -> int -> (int*int*int) list list -> unit

@@ -275,11 +275,11 @@ let threed_diag_wins c b =
   let verdict_h = (match diag_h with
     | [] -> []
     | h::[] -> if (List.for_all (fun x -> x.player = c.player) h) then [h] else []
-    | h1::h2::[] -> if (List.for_all (fun x -> x.player = c.player) h1) && (List.for_all (fun x -> x.player = c.player) h2) then 
-          [h1;h2] 
-        else if (List.for_all (fun x -> x.player = c.player) h1) then 
-          [h1] 
-        else if (List.for_all (fun x -> x.player = c.player) h2) then 
+    | h1::h2::[] -> if (List.for_all (fun x -> x.player = c.player) h1) && (List.for_all (fun x -> x.player = c.player) h2) then
+          [h1;h2]
+        else if (List.for_all (fun x -> x.player = c.player) h1) then
+          [h1]
+        else if (List.for_all (fun x -> x.player = c.player) h2) then
           [h2]
         else
           []
@@ -288,11 +288,11 @@ let threed_diag_wins c b =
   let verdict_v = (match diag_v with
       | [] -> []
       | h::[] -> if (List.for_all (fun x -> x.player = c.player) h) then [h] else []
-      | h1::h2::[] -> if (List.for_all (fun x -> x.player = c.player) h1) && (List.for_all (fun x -> x.player = c.player) h2) then 
-            [h1;h2] 
-          else if (List.for_all (fun x -> x.player = c.player) h1) then 
-            [h1] 
-          else if (List.for_all (fun x -> x.player = c.player) h2) then 
+      | h1::h2::[] -> if (List.for_all (fun x -> x.player = c.player) h1) && (List.for_all (fun x -> x.player = c.player) h2) then
+            [h1;h2]
+          else if (List.for_all (fun x -> x.player = c.player) h1) then
+            [h1]
+          else if (List.for_all (fun x -> x.player = c.player) h2) then
             [h2]
           else
             []
