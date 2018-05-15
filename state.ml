@@ -52,8 +52,9 @@ let p2_score s = s.curr_score_2
 
 let curr_player s = s.current_player
 
-let num_hints s =
-  match s.current_player with
+let num_hints s = 
+  let curr_p = s.current_player in
+  match curr_p with
   | p1_avatar -> s.p1_num_hints
   | _ -> s.p2_num_hints
 
@@ -90,8 +91,6 @@ let make_move s (pl, x, y) = place (pl, x, y) s.tttBoard s.current_player
 let try_move s (pl, x, y) = let copy_b = copy s.tttBoard in
   place (pl, x, y) copy_b s.current_player;
   s
-
-let hint s = failwith "Unimplemented"
 
 let board s = s.tttBoard
 
