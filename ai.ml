@@ -23,6 +23,7 @@ let rec three_count move clst plyr acc =
     in
     three_count move t plyr new_acc
 
+(*[move_heur_fn_helper move clst plyr acc] is a helper function for move_heur_fn*)
 let move_heur_fn_helper (move: cell) (clst: cell list) (plyr: player) (acc: int) =
   let counts = three_count move clst plyr {none = 0; curr_p = 0; opp = 0} in
   if counts.curr_p = 2 then
@@ -34,6 +35,13 @@ let move_heur_fn_helper (move: cell) (clst: cell list) (plyr: player) (acc: int)
   else
     -1
 
+(*[move_heur_fn move b clstlst plyr acc] is the value of [move] for [plyr] in 
+ * board [b] according to the heuristic function h(move) = 3 f2 (move) + 2 g2 (move) + e2 (move) - (A),
+ * where f2 (move) returns the triples that would result in a three-in-a-row win for 
+ * player p if they took [move], g2 (move) returns the triples that would result in a three-in-a-row 
+ * win for the opponent if they had taken [move]], e2 (move) returns the number of triples whose other 
+ * 2 cells apart from the one filled by action a are empty and no players have yet made a move at 
+ * their locations, and A represent all other circumstances*)
 let rec move_heur_fn move b clstlst plyr acc =
   match clstlst with
   | [] -> acc
@@ -218,7 +226,8 @@ let hard_ai_move st =
   else
     Place try_find
 
-let player_hint st = let lvl = game_level st in
+let player_hint st = 
+  let lvl = game_level st in
   match lvl with
   | Easy -> hard_ai_move st
   | Medium -> medium_ai_move st

@@ -150,15 +150,16 @@ let rec play single do_mode st=
   | Try (pl, x, y) -> (
       print_board newSt;
       print_endline "IN TRY";
-      if newSt = st then (
+      if equal newSt st (game_mode newSt) then (
         print_endline "POOP";
         let ex = snd test |> fst in
         let why = snd test |> snd in
         Gui.repeat_cell ex why;
         print_endline "Action impossible. Please try a different move.";
-        if ((playerr = "python" && newSt.p1_num_tries = 0) ||(playerr = "caml" && newSt.p2_num_tries = 0)) then draw_image (Gui.get_img "imgs/tries_loss.jpg") 236 0;
+        (* if ((playerr = "python" && newSt.p1_num_tries = 0) ||(playerr = "caml" && newSt.p2_num_tries = 0)) then  *)
+        draw_image (Gui.get_img "imgs/tries_loss.jpg") 236 0;
         Graphics.remember_mode false;
-        play single do_mode st;
+        play single do_mode st
       )
       else (
         let xx = snd test |> fst in
@@ -255,31 +256,44 @@ let rec play single do_mode st=
             play single do_mode newSt)
           ))
   | Hint ->
-
-    let hint_move = player_hint newSt in
-    Graphics.remember_mode false;
-      let coord_move =
-        begin
-        match hint_move with
-        | Place (a, b, c) -> (a, b, c)
-        | _ -> failwith "Impossible"
-        end
-      in
-      let x = fst (cell_coords_to_x_y coord_move) in
-      let y = snd (cell_coords_to_x_y coord_move) in
-      let newSt' = do_mode hint_move newSt in
-      (if (not (krazy_happ_st newSt' )) then
-         (
-          Graphics.auto_synchronize true;
-          print_endline"did i call from here?";
-          Gui.responsive_board playerr x y ; (* x and y are the locations to draw the image *)
-          Gui.cover_up();
-        Gui.score (p1_score newSt) (p2_score newSt))
-      else ());
-      if single then
-        (let comp_st = computer_move_st do_mode newSt' in Graphics.remember_mode false ; play single do_mode comp_st)
-      else
-        ( Graphics.remember_mode false; play single do_mode newSt')
+    if equal newSt st (game_mode newSt) then (
+      print_endline "NO MORE HINTS";
+      Gui.cover_up ();
+      Graphics.remember_mode true;
+      draw_image (Gui.get_img "imgs/hints_loss.jpg") 236 0;
+      print_endline "AFTER DRAWING NO MORE HINTS";
+      play single do_mode newSt
+    ) else (
+      print_endline "CALCULATING HINT...";
+      let hint_move = player_hint newSt in
+      Graphics.remember_mode false;
+        let coord_move =
+          begin
+          match hint_move with
+          | Place (a, b, c) -> (a, b, c)
+          | _ -> failwith "Impossible"
+          end
+        in
+        let x = fst (cell_coords_to_x_y coord_move) in
+        let y = snd (cell_coords_to_x_y coord_move) in
+        let newSt' = do_mode hint_move newSt in
+        (if (not (krazy_happ_st newSt' )) then
+          (
+            Graphics.auto_synchronize true;
+            print_endline"did i call from here?";
+            Gui.responsive_board playerr x y ; (* x and y are the locations to draw the image *)
+            Gui.cover_up();
+          Gui.score (p1_score newSt) (p2_score newSt))
+        else ());
+        if single then
+          (let comp_st = computer_move_st do_mode newSt' in 
+          (* Graphics.remember_mode false ;  *)
+          play single do_mode comp_st)
+        else
+          ( 
+            (* Graphics.remember_mode false;  *)
+          play single do_mode newSt') 
+    )
   | Look -> (print_board st; play single do_mode newSt)
   | CurrentPlayer ->
     (print_endline ("Current player: "^(string_of_player (curr_player st)));

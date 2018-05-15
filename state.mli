@@ -58,10 +58,6 @@ val game_ended: state -> bool
 (*[other_player ply] is the avatar of the opponent player of [ply]*)
 val other_player: player -> player
 
-(*[hint st] is the optimal move for the current player of [st] when game is
- * in state [st]*)
-val hint: state -> string
-
 (*[board st] is information regarding which spots in the board are filled and
  * with which player's move
  * TODO: figure out what type this function should return*)
