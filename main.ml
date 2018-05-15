@@ -108,7 +108,9 @@ let rec play single do_mode st=
   (* let st_modified = (  if playerr = "python" then (print_endline "python";print_int st.p1_num_tries;  {st with p1_num_tries = st.p1_num_tries - 1 })
                        else (print_endline "caml";print_int st.p2_num_tries;   {st with p2_num_tries = st.p2_num_tries - 1})) in *)
   if com = "try 1,1,1" then play single do_mode st else
-  let command = parse com in
+    let command = parse com in
+    Graphics.remember_mode true;
+    Graphics.synchronize();
   let newSt = do_mode command st in
   match command with
   | Play str -> (print_endline "A game is currently is session. Please quit first.";
@@ -128,6 +130,7 @@ let rec play single do_mode st=
         Gui.repeat_cell ex why;
         print_endline "Action impossible. Please try a different move.";
         if ((playerr = "python" && newSt.p1_num_tries = 0) ||(playerr = "caml" && newSt.p2_num_tries = 0)) then draw_image (Gui.get_img "imgs/tries_loss.jpg") 236 0;
+        Graphics.remember_mode false;
         play single do_mode st;
       )
       else (
@@ -146,6 +149,7 @@ let rec play single do_mode st=
             let comp_st = computer_move_st do_mode place_st in play single do_mode comp_st
           )
           else (
+            Graphics.remember_mode false;
             play single do_mode place_st
           )
         )
@@ -163,6 +167,7 @@ let rec play single do_mode st=
             moveto (xx+15) (yy+4);
             Graphics.set_font "-*-fixed-medium-r-semicondensed--17-*-*-*-*-*-iso8859-1";
             Gui.cover_try playerr xx yy;
+            Graphics.remember_mode false;
             play single do_mode news
           )
           else (
@@ -174,9 +179,9 @@ let rec play single do_mode st=
             Gui.cover_try playerr xx yy;
             Gui.cover_up();
             if single then
-              (let comp_st = computer_move_st do_mode news in play single do_mode comp_st)
+              (let comp_st = computer_move_st do_mode news in Graphics.remember_mode false;play single do_mode comp_st)
             else
-              (play single do_mode news)
+              (Graphics.remember_mode false;play single do_mode news)
           )
         )
       )
@@ -187,6 +192,7 @@ let rec play single do_mode st=
         let why = snd test |> snd in
         Gui.repeat_cell ex why;
         print_endline "Action impossible. Please try a different move.";
+        Graphics.remember_mode false;
         play single do_mode newSt;)
 
      else
@@ -197,7 +203,7 @@ let rec play single do_mode st=
             Gui.cover_up ();
             print_int x;
             print_int y;
-            Graphics.synchronize(); Graphics.remember_mode true;
+            (*Graphics.synchronize(); Graphics.remember_mode true;*)
             Gui.responsive_board playerr x y ; (* x and y are the locations to draw the image *)
             Gui.score (p1_score newSt) (p2_score newSt) ;
             Gui.num_try_hint (num_tries newSt) 836 587;
@@ -213,10 +219,12 @@ let rec play single do_mode st=
               Gui.draw_wait_mgs();
               let comp_st = computer_move_st do_mode newSt in play single do_mode comp_st)
           else
-            (play single do_mode newSt)
+            (Graphics.remember_mode false;play single do_mode newSt)
           ))
   | Hint ->
-      let hint_move = player_hint newSt in
+
+    let hint_move = player_hint newSt in
+    Graphics.remember_mode false;
       let coord_move =
         begin
         match hint_move with
@@ -227,15 +235,17 @@ let rec play single do_mode st=
       let x = fst (cell_coords_to_x_y coord_move) in
       let y = snd (cell_coords_to_x_y coord_move) in
       let newSt' = do_mode hint_move newSt in
-      (if not (krazy_happ_st newSt' ) then
-        (Graphics.synchronize (); Graphics.remember_mode true;
+      (if (not (krazy_happ_st newSt' )) then
+         (
+          Graphics.synchronize ();Graphics.remember_mode true;
+          print_endline"did i call from here?";
         Gui.responsive_board playerr x y ; (* x and y are the locations to draw the image *)
         Gui.score (p1_score newSt) (p2_score newSt))
       else ());
       if single then
-        (let comp_st = computer_move_st do_mode newSt' in play single do_mode comp_st)
+        (let comp_st = computer_move_st do_mode newSt' in Graphics.remember_mode false; play single do_mode comp_st)
       else
-        (play single do_mode newSt')
+        (Graphics.synchronize(); Graphics.remember_mode false; play single do_mode newSt')
   | Look -> (print_board st; play single do_mode newSt)
   | CurrentPlayer ->
     (print_endline ("Current player: "^(string_of_player (curr_player st)));
@@ -244,7 +254,7 @@ let rec play single do_mode st=
                 play single do_mode st)
   )
 
-let rec draw_all_moves cllst = 
+let rec draw_all_moves cllst =
   match cllst with
   | [] -> ()
   | h::t -> let (x, y) = cell_coords_to_x_y (h.cell) in
@@ -252,7 +262,7 @@ let rec draw_all_moves cllst =
       Gui.responsive_board plyr x y;
       draw_all_moves t
 
-let do_kray_w_GUI (c:command) st = 
+let do_kray_w_GUI (c:command) st =
   let st' = do_krazy c st in
   if krazy_happ_st st' then (
     (*redraw*)
@@ -264,12 +274,12 @@ let do_kray_w_GUI (c:command) st =
       clear_graph();
       draw_image (get_img "imgs/xxoo.jpg") 0 0;
       draw_image (get_img "imgs/TTTmain.jpg") 250 40;
-      draw_image (get_img "imgs/hint.jpg") 800 555; 
+      draw_image (get_img "imgs/hint.jpg") 800 555;
       draw_image (get_img "imgs/try.jpg") 134 555;
 
       (*Intermission*)
       cells_occ st' |> draw_all_moves;
-      
+
       (*Act 2*)
     )
   )
