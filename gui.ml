@@ -564,7 +564,6 @@ let draw_act_two playerr p1_score p2_score hint_num num_tries recent_wins_lst =
   score p1_score p2_score;
   rect_drawn_gray 149 627 69 44;
   rect_drawn_gray 800 625 93 40;
-  responsive_board playerr 0 700;
   num_try_hint hint_num 836 580;
   num_try_hint num_tries 171 587;
   if not (recent_wins_lst = []) then
