@@ -44,6 +44,7 @@ let rec iterate lst f =
 let computer_move_st do_mode newSt =
   print_endline "Please wait while computer moves...";
   let playerr = string_of_player (State.curr_player newSt) in
+  highlight_curr_player playerr;
   let comp_move =
     if game_level newSt = Easy then
       easy_ai_move newSt
