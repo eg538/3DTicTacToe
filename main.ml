@@ -19,7 +19,7 @@ let thd (_,_,y) = y
 let rec string_3_row_h clst acc =
   match clst with
   | [] -> acc
-  | coords::t -> (*let coords = h.cell in*)
+  | coords::t ->
       let str = ("(")^(string_of_int (fst' coords))^", "^(string_of_int (snd' coords))^", "^(string_of_int (thd coords))^")"
       ^"   "^acc in
       string_3_row_h t str
@@ -43,7 +43,6 @@ let rec iterate lst f =
 
 let computer_move_st do_mode newSt =
   print_endline "Please wait while computer moves...";
-  (* let playerr = string_of_player (State.curr_player newSt) in *)
   let playerr = string_of_player (State.curr_player newSt ) in
   let p1_score0 = p1_score newSt in
   let p2_score0 = p2_score newSt in
@@ -61,7 +60,6 @@ let computer_move_st do_mode newSt =
       hard_ai_move newSt
     in
     let newSt' = do_mode comp_move newSt in
-    (* Graphics.synchronize();Graphics.remember_mode true; *)
     let coords_move =
       begin
         match comp_move with
@@ -136,8 +134,6 @@ let rec play single do_mode st=
   let com = fst test in
   print_endline commend;
   print_endline com;
-  (* let st_modified = (  if playerr = "python" then (print_endline "python";print_int st.p1_num_tries;  {st with p1_num_tries = st.p1_num_tries - 1 })
-                       else (print_endline "caml";print_int st.p2_num_tries;   {st with p2_num_tries = st.p2_num_tries - 1})) in *)
   if com = "try 1,1,1" then play single do_mode st else
     let command = parse com in
     Graphics.remember_mode true;
@@ -230,7 +226,7 @@ let rec play single do_mode st=
         play single do_mode newSt;)
 
      else
-       (  
+       (
          (if not (krazy_happ_st newSt) then(
             print_board newSt;
             print_endline (string_three_row [List.map (fun a -> a.cell) (cells_occ st)] "");
@@ -239,14 +235,12 @@ let rec play single do_mode st=
             Gui.cover_up ();
             print_int x;
             print_int y;
-            (* Graphics.synchronize(); Graphics.remember_mode true; *)
             Gui.responsive_board playerr x y ; (* x and y are the locations to draw the image *)
             Gui.score (p1_score newSt) (p2_score newSt) ;
             Gui.num_try_hint (num_tries newSt) 836 587;
             Gui.num_try_hint (num_hints newSt) 171 593;
             let recent_wins = (most_recent_wins newSt ) = [] in
             print_endline ("MOST RECENT WIN:" ^ (string_three_row (most_recent_wins newSt) ""));
-            (* print_endline " ";print_endline "recent_wins is empty"; print_endline (string_of_bool recent_wins); print_endline " " *)
           )
           else
             ()
@@ -304,7 +298,6 @@ let rec draw_all_moves cllst =
       draw_all_moves t
 
 let do_kray_w_GUI (c:command) st =
-  print_endline "++++++++++++++";
   print_endline (string_three_row [List.map (fun a -> a.cell) (cells_occ st)] "");
   let st' = do_krazy c st in
   Graphics.remember_mode true;
@@ -342,12 +335,10 @@ let do_kray_w_GUI (c:command) st =
     print_endline "No krazy happened!"
   ));
   print_endline (string_three_row [List.map (fun a -> a.cell) (cells_occ st')] "");
-  print_endline "++++++++++++++";
   st'
 
 let rec play_game str f =
 try (
-  print_endline str;
   let command = parse str in
   begin
   match command with

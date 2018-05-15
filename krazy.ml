@@ -26,9 +26,6 @@ let random_cell_for_krazy st =
   let index = (Random.int ((List.length all_cells)-1)) in
   (List.nth (all_cells) index)
 
-(* let new_krazy_st st = let b = copy empty_board in
-  {st with tttBoard = b; curr_score_1 = 0; curr_score_2 = *)
-
 let rec krazy_recalc_helper cellst st =
 match cellst with
 | [] -> st
@@ -56,7 +53,6 @@ let krazy_recalc_score st =
               p2_num_tries = st.p2_num_tries} in
   let new_st2 = krazy_recalc_helper occupied {new_st with moves_made = st.moves_made} in
   {new_st2 with current_player = curr_p_st}
-  (* List.map (fun x -> get_all_win_inst st x) occupied *)
 
 
 let krazy_disappearing_sqs st c =
@@ -140,11 +136,4 @@ let do_krazy c st =
     let bomb_state = krazy_bomb new_st rand_cell |> up_krazy_happ true in
     {bomb_state with krazy_bomb_happ = true}
   )
-  (* else if new_st.krazy_happ then new_st |> up_krazy_happ false *)
   else new_st
-
-  (* else if new_st.krazy_happ then new_st |> up_krazy_happ false *)
-(* let do_krazy c st = 
-  let curr_p = curr_player st in
-  let st' = do_krazy_helper c st in
-  {st' with current_player = curr_p |> other_player} *)
