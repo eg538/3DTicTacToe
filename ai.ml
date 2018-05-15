@@ -23,9 +23,6 @@ let rec three_count move clst plyr acc =
 
 let move_heur_fn_helper (move: cell) (clst: cell list) (plyr: player) (acc: int) =
   let counts = three_count move clst plyr {none = 0; curr_p = 0; opp = 0} in
-  (* print_endline ("None: " ^ (string_of_int counts.none));
-  print_endline ("Curr_p: " ^ (string_of_int counts.curr_p));
-  print_endline ("Opp: " ^ (string_of_int counts.opp)); *)
   if counts.curr_p = 2 then
     3
   else if counts.opp = 2 then
@@ -34,19 +31,6 @@ let move_heur_fn_helper (move: cell) (clst: cell list) (plyr: player) (acc: int)
     1
   else
     -1
-
-(* let rec move_heur_fn_helper (move: cell) (clst: cell list) (plyr: player) (acc: int) =
-  match clst with
-  | [] -> acc
-  | h::t -> if cell_coords h <> cell_coords move then
-      begin
-      match player_at_cell h with
-      | plyr -> move_heur_fn_helper move t plyr (acc + 2)
-      | None -> move_heur_fn_helper move t plyr (acc + 1)
-      | _ -> move_heur_fn_helper move t plyr (acc + 0)
-      end
-    else
-    move_heur_fn_helper move t plyr acc *)
 
 let rec move_heur_fn move b clstlst plyr acc =
   match clstlst with
@@ -115,10 +99,7 @@ let easy_ai_move st =
 
 let rec med_ai_move_helper st rem_cells thresh =
   let game_tree = game_tree_generate st 5 thresh in
-  (* print_endline "medium level ai calculating move..."; *)
-  (* print_endline (string_of_int (List.length rem_cells)); *)
   if List.length rem_cells = 1 then
-    (* (print_endline "One cell left"; *)
     Place ((List.hd rem_cells).cell)
   else
     (print_endline "AYYY";
@@ -138,9 +119,6 @@ let rec med_ai_move_helper st rem_cells thresh =
 let medium_ai_move st =
   print_endline "HERE";
   let rem_cells = cells_left (board st) in
-  (* let thresh = (-1) * ( 30.0 /. (List.length rem_cells |> float_of_int) -. 0.5 |> int_of_float) in *)
-  (* let depth = 30.0 /. (List.length rem_cells |> float_of_int) +. 0.5 |> int_of_float in *)
-  (* let thresh = if List.length rem_cells <= 3 then min_int else 0 in *)
   med_ai_move_helper st rem_cells 0
 
 

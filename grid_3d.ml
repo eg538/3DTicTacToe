@@ -209,20 +209,6 @@ let horizontal_3d_group c b =
     end
   else []
 
-  (*
-  match c.cell with
-  | (x,0,z) when (x=z) -> List.filter (fun a -> ((a.cell |> fst')=(a.cell |> thd)) && ((a.cell |> snd')=0)) grid_space (*cell list of length 2*)
-  | _,0,_ -> List.filter (*cell list of length 2*)
-               (fun a -> (a.cell = (2,0,0)) || (a.cell = (1,0,1)) || (a.cell = (0,0,2))) grid_space
-  | x,1,z when (x=z) -> []
-  | _,1,_ -> []
-  | x,2,z when (x=z) -> List.filter (fun a -> ((a.cell |> fst')=(a.cell |> thd)) && (a.cell |> snd' = 2)) grid_space
-  | _ -> List.filter
-           (fun a -> a.cell = (2,2,0) || a.cell = (1,2,1) || a.cell = (0,2,2)) grid_space
-*)
-(*[vertical_3d_groups c b] extracts the diagonal instances that [c] is part of,
-  by slicing the 3D grid space represented by hashtable board [b] horizontally
-*)
 let vertical_3d_groups c b =
   let grid_space = board_list_of_cells b in
   if (c.cell = (0,0,0) || c.cell = (2,2,0)) then [(List.filter (fun a -> a.cell = (0,0,0) || a.cell = (1,1,0) || a.cell = (2,2,0)) grid_space)]
@@ -242,21 +228,7 @@ let vertical_3d_groups c b =
       [l1;l2]
     end
   else []
-(*match c.cell with
-| 1,1,0 -> (List.filter (fun a -> a.cell = (0,0,0) || a.cell = (1,1,0) || a.cell = (2,2,0)) grid_space)::(List.filter
-                        (fun a -> a.cell = (2,0,0) || a.cell = (1,1,0) || a.cell = (0,2,0)) grid_space)
-| 1,1,2 -> (List.filter (fun a -> a.cell = (0,0,2) || a.cell = (1,1,2) || a.cell = (2,2,2)) grid_space)::(List.filter
-                        (fun a -> a.cell = (2,0,2) || a.cell = (1,1,2) || a.cell = (0,2,2)) grid_space)
-| x,0,z when (x=z) -> List.filter (fun a -> (a.cell |> fst')=(a.cell |> thd)) grid_space
-| 0,_,_ -> List.filter
-          (fun a -> a.cell <> (0,0,1) && a.cell <> (1,0,0) && a.cell <> (2,0,1) && a.cell <> (1,0,2)) grid_space
-| x,1,z when (x=z) -> List.filter (fun a -> (a.cell |> fst')=(a.cell |> thd)) grid_space
-| 1,_,_ -> List.filter
-              (fun a -> a.cell <> (0,0,1) && a.cell <> (1,1,0) && a.cell <> (1,1,2) && a.cell <> (2,1,1)) grid_space
-| x,2,z when (x=z) -> List.filter (fun a -> (a.cell |> fst')=(a.cell |> thd) && (a.cell |> snd' = 2)) grid_space
-| _ -> List.filter
-         (fun a -> a.cell <> (0,2,1) && a.cell <> (1,2,0) && a.cell <> (2,2,1) && a.cell <> (1,2,2) && (a.cell |> thd = 0)) grid_space
-*)
+
 
 (*[diag_check c b] finds the respective diagonal and horizontal wins that cover
   all three levels of the grid_space that relate to cell [c]
