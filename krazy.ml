@@ -101,7 +101,8 @@ let krazy_bomb st c =
   let instances = col_3d @ v_3d_diag @ h_3d_diag @ plane_2d_inst in
   let inst_list = extract_cell_pos instances in
   let _ = List.iter (fun i ->
-      Hashtbl.replace b (Hashtbl.find b i).cell {(Hashtbl.find b i) with player=None}) inst_list in
+      Hashtbl.replace b (Hashtbl.find b i).cell 
+        {(Hashtbl.find b i) with player=None}) inst_list in
   {st with tttBoard = b} |> krazy_recalc_score
 
 (*[inc_movces st] is [st] with the number of moves made so far incremented*)

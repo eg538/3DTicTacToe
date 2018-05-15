@@ -74,11 +74,11 @@ let get_result_message s =
     | None -> ("none", "Draw! No one won")
     end
   | Single -> if s.winner = s.p1_avatar then
-              ("win", "Congratulations! You won the Java cup!")
-            else if s.winner <> None then
-              ("draw", "Sad! You didn't win the Java cup, but try again next time for that steaming mug of Java!")
-            else
-              ("lost", "Oh no! You were close to winning the Java cup!")
+      ("win", "Congratulations! You won the Java cup!")
+    else if s.winner <> None then
+      ("draw", "Sad! You didn't win the Java cup, but try again next time for that steaming mug of Java!")
+    else
+      ("lost", "Oh no! You were close to winning the Java cup!")
 
 let rec find_cell s (pl, x, y) = get_cell (pl, x, y) s.tttBoard
 
@@ -92,8 +92,7 @@ let make_move s (pl, x, y) = place (pl, x, y) s.tttBoard s.current_player
  * for the current player of state [s] but doesn't actually modify
  * [s] itself*)
 let try_move s (pl, x, y) = let copy_b = copy s.tttBoard in
-  place (pl, x, y) copy_b s.current_player;
-  s
+  place (pl, x, y) copy_b s.current_player; s
 
 let board s = s.tttBoard
 
@@ -101,7 +100,8 @@ let p1_avatar s = s.p1_avatar
 
 (*[inc_point st] increments the score of the current player of state [st]*)
 let inc_point inc_amt st =
-  if (st.p1_avatar = Python && st.current_player = Python) || (st.p1_avatar = Caml && st.current_player = Caml) then
+  if (st.p1_avatar = Python && st.current_player = Python) || 
+    (st.p1_avatar = Caml && st.current_player = Caml) then
     {st with curr_score_1 = st.curr_score_1 + inc_amt}
   else
     {st with curr_score_2 = st.curr_score_2 + inc_amt}
@@ -217,7 +217,8 @@ let do' c st =
       | _ -> st
     end
   | Hint ->
-    if (st.p1_avatar = Python && st.current_player = Python) || (st.p1_avatar = Caml && st.current_player = Caml) then
+    if (st.p1_avatar = Python && st.current_player = Python) || 
+      (st.p1_avatar = Caml && st.current_player = Caml) then
       if st.p1_num_hints > 0 then
         {st with p1_num_hints = st.p1_num_hints - 1}
       else
