@@ -217,7 +217,7 @@ let rec play single do_mode st=
       )))
   | Hint ->
     if equal newSt st (game_mode newSt) then (
-      Gui.cover_up ();
+      (* Gui.cover_up (); *)
       Graphics.auto_synchronize true;
       draw_image (Gui.get_img "imgs/hints_loss.jpg") 236 0;
       play single do_mode newSt
@@ -236,11 +236,10 @@ let rec play single do_mode st=
         let newSt' = do_mode hint_move newSt in
         (if not (krazy_happ_st newSt' ) then (
             Graphics.auto_synchronize true;
-            print_endline"did i call from here?";
             (* x and y are the locations to draw the image *)
             Gui.responsive_board playerr x y;
             Gui.cover_up();
-          Gui.score (p1_score newSt) (p2_score newSt)
+            Gui.score (p1_score newSt) (p2_score newSt)
         ) else ());
         if single then (
           let comp_st = computer_move_st do_mode newSt' in
