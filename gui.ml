@@ -44,7 +44,9 @@ let rec round_list = function
   | [] -> []
   | h :: t -> (h |> fst |> int_of_float, h |> snd |> int_of_float) :: round_list t
 
-(* [array_of_image img] transforms a given image to a color color array. *)
+(* [array_of_image img] transforms a given image to a color color array.
+   Citation:  Camlimages library
+*)
 let array_of_image img =
   match img with
   | Images.Index8 bitmap ->
@@ -81,8 +83,7 @@ let get_img img =
 
 (* [draw_wait_mgs ()] Tells the player to please wait as the computer calculates the next best move*)
 let draw_wait_mgs () =
-  (print_endline "in draw_wait_mgs";
-   draw_image (get_img "imgs/pls_wait.jpg") 236 0;print_endline"it happened";)
+  (draw_image (get_img "imgs/pls_wait.jpg") 236 0;)
 
 (* [rect_drawn x y width height] method used to draw the rectangle (magenta)
  * with the bottom left corner of the box starting at x and y with provided
@@ -290,30 +291,16 @@ let num_try_hint num x y =
   let thd (_,_,y) = y
 
 let which_command () =
-
-    let event_lst = [Graphics.Button_up] in
-    let mouse_status = wait_next_event event_lst  in
-    let x = mouse_status.mouse_x in
-    let y = mouse_status.mouse_y in
-    print_string "x is: "; print_int x; print_endline " ";
-    print_string "y is: "; print_int y; print_endline " ";
-    print_endline " ";
-
-
+  let (x,y) = mouse_up () in
     if ((x >= 149 && x <= (149 + 69)) && (y >= 627 && y<= (627 + 44))) then
-      ( let ev = [Graphics.Button_up] in
-        let ms = wait_next_event ev in
-        let xx =  ms.mouse_x in
-        let yy = ms.mouse_y in
+      ( let (xx,yy) = mouse_up () in
         ("try" , xx, yy)) else if ((x >= 801 && x <= 894)&&( y >= 624 && y <= 664)) then
       (  Graphics.auto_synchronize false; draw_wait_mgs();Graphics.remember_mode true;("hint", x, y) )
     else if ((x >= 850 && x <= (850 + 110)) && (y >= 313 && y<= (313 + 49))) then ("quit", x, y)
     else if ((x >= 50 && x <= (50 + 134)) && (y >= 313 && y<= (313 + 61))) then ("restart", x, y)
     else ("place" , x, y)
 
-
 let play_board command x y =
-
   if ((x >= 331 && x <=426) && (y >= 651 && y <= 685 )) then ((command^" 0,0,0"), (360, 666))
   else if ((x >= 438 && x <= 575) && (y >= 653 && y <= 685 )) then ((command^" 0,0,1"), (475, 666))
   else if ((x >= 580 && x <= 696) && (y >= 651 && y <= 684)) then ((command^" 0,0,2"), (605, 666))
@@ -350,7 +337,6 @@ let quit_restart_check () = let (x, y) = mouse_up() in
   if ((x >= 225 && x <= 335) && ( y >= 425 && y <= 474)) then (
     clear_graph(); raise Quit)else if ((x >= 225 && x <= 359) && ( y >= 325 && y <= 386)) then (clear_graph(); raise Restart)
   else ()
-
 
 let repeat_cell x y =
   if x = 0 && y = 0 then (draw_image (get_img "imgs/no_x.jpg") 236 0;)
@@ -389,10 +375,8 @@ let try_responsive_board str x y (pl, ex, why)=
     Graphics.set_font "-*-fixed-medium-r-semicondensed--17-*-*-*-*-*-iso8859-1";
      choose_letter str;
     draw_image (get_img "imgs/accept.jpg") 65 22;
-    let event_lst = [Graphics.Button_up] in
-    let mouse_status = wait_next_event event_lst  in
-    let xa = mouse_status.mouse_x in
-    let ya = mouse_status.mouse_y in
+
+    let (xa,ya) = mouse_up () in
     let (sy, (a, b)) = play_board "try" xa ya in
     let c1 = String.index sy ',' in
     let p = int_of_char (String.get sy (c1 - 1)) - 48 in
@@ -488,7 +472,6 @@ let draw_act_two playerr p1_score p2_score hint_num num_tries recent_wins_lst =
   if not (recent_wins_lst = []) then (Graphics.remember_mode false; iterate recent_wins_lst draw_three_row;)
 
 let rec bomb_boom orig x y =
-  (* print_endline "in bomb boom"; *)
   if (Unix.time()) = orig +. 1. then
     (responsive_board "explode" x y;
      bomb_boom orig x y;)
@@ -502,9 +485,7 @@ let rec bomb_boom orig x y =
   else (bomb_boom orig x y;)
 
 let bomb_animation () =
-(  print_endline "in bomb animation";
-  draw_image (get_img "imgs/bomb.jpg") 250 170;
-  print_endline "draw pict";
+  (draw_image (get_img "imgs/bomb.jpg") 250 170;
     let orig = Unix.time()  in
     bomb_boom orig 250 170;)
 

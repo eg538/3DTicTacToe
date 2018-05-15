@@ -46,7 +46,8 @@ let rec iterate lst f =
  * player mode after the computer has made its move depending on the AI level of the game
  * (easy, medium, or hard)*)
 let computer_move_st do_mode newSt =
-  print_endline "Please wait while computer moves...";
+  Graphics.remember_mode false;
+  Gui.draw_wait_mgs();
   let playerr = string_of_player (State.curr_player newSt ) in
   let p1_score0 = p1_score newSt in
   let p2_score0 = p2_score newSt in
@@ -81,8 +82,6 @@ let computer_move_st do_mode newSt =
       Gui.responsive_board playerr x y ;
       Gui.score (p1_score newSt') (p2_score newSt') ;
       print_board newSt';
-      print_endline ("Score of player 1: "^(string_of_int (p1_score newSt'))^
-                      "\n"^"Score of player 2: "^(string_of_int (p2_score newSt')))
     );
     newSt')
     else
@@ -91,7 +90,6 @@ let computer_move_st do_mode newSt =
 (* [ended ()] method is used to parse the commands and check whether we
  * reached the end of the game and checked if the user has chosed to Quit or Restart the game. *)
 let rec ended () =
-  print_endline "Ended";
   let input = Gui.which_command () in
   let commend = fst' input in
   let x = snd' input in
@@ -117,13 +115,10 @@ let equal st1 st2 mode =
 let rec play single do_mode st=
   if game_ended st then
     (let win_msg_and_stuff = get_result_message st in
-    let win_msg = snd win_msg_and_stuff in
-    print_endline win_msg;
-    print_endline (fst win_msg_and_stuff);
     (Gui.winner_winner_chicken_dinner (fst win_msg_and_stuff));
     ended ())
   else
-  (print_endline "Please enter command";
+  (
   let playerr = string_of_player (State.curr_player st ) in
   let p1_score0 = p1_score st in
   let p2_score0 = p2_score st in
@@ -134,39 +129,26 @@ let rec play single do_mode st=
   let input = Gui.which_command () in
   let commend = fst' input in
   let x = snd' input in
-  print_endline "x is";
-  print_int x;
   let y = thd input in
-  print_endline "y is";
-  print_int y;
   let test = Gui.play_board commend x y in
   let com = fst test in
-  print_endline commend;
-  print_endline com;
   if com = "try 1,1,1" then play single do_mode st else
     let command = parse com in
     Graphics.remember_mode true;
     Graphics.synchronize();
   let newSt = do_mode command st in
   match command with
-  | Play str -> (print_endline "A game is currently is session. Please quit first.";
-                 play single do_mode newSt)
-  | Score ->
-    (print_endline ("Score of player 1: "^(string_of_int (p1_score st))^"\n"^"Score of player 2: "^(string_of_int (p2_score st)));
-  play single do_mode newSt)
+  | Play str -> play single do_mode newSt
+  | Score -> play single do_mode newSt
   | Quit -> (raise Gui.Quit)
   | Restart -> (raise Gui.Restart)
   | Try (pl, x, y) -> (
       print_board newSt;
-      print_endline "IN TRY";
       if equal newSt st (game_mode newSt) then (
-        print_endline "POOP";
         let ex = snd test |> fst in
         let why = snd test |> snd in
         Gui.repeat_cell ex why;
-        print_endline "Action impossible. Please try a different move.";
-        (* if ((playerr = "python" && newSt.p1_num_tries = 0) ||(playerr = "caml" && newSt.p2_num_tries = 0)) then  *)
-        draw_image (Gui.get_img "imgs/tries_loss.jpg") 236 0;
+        if ((playerr = "python" && newSt.p1_num_tries = 0) ||(playerr = "caml" && newSt.p2_num_tries = 0)) then draw_image (Gui.get_img "imgs/tries_loss.jpg") 236 0;
         Graphics.remember_mode false;
         play single do_mode st
       )
@@ -174,8 +156,6 @@ let rec play single do_mode st=
         let xx = snd test |> fst in
         let yy = snd test |> snd in
         Gui.cover_up ();
-        print_int xx;
-        print_int yy;
         let (clicked_accept, xa, ya) = Gui.try_responsive_board playerr xx yy (pl, x, y) in(* xx and yy are the locations to draw the image *)
         Gui.score (p1_score newSt) (p2_score newSt) ;
         Gui.num_try_hint (num_tries newSt) 836 587;
@@ -203,7 +183,6 @@ let rec play single do_mode st=
             let why = snd test |> snd in
             Gui.cover_up();
             Gui.repeat_cell ex why;
-            print_endline "Action impossible. Please try a different move.";
             moveto (xx+15) (yy+4);
             Graphics.set_font "-*-fixed-medium-r-semicondensed--17-*-*-*-*-*-iso8859-1";
             Gui.cover_try playerr xx yy;
@@ -231,7 +210,6 @@ let rec play single do_mode st=
        (let ex = snd test |> fst in
         let why = snd test |> snd in
         Gui.repeat_cell ex why;
-        print_endline "Action impossible. Please try a different move.";
         Graphics.remember_mode false;
         play single do_mode newSt;)
 
@@ -239,12 +217,9 @@ let rec play single do_mode st=
        (
          (if not (krazy_happ_st newSt) then(
             print_board newSt;
-            print_endline (string_three_row [List.map (fun a -> a.cell) (cells_occ st)] "");
             let x = snd test |> fst in
             let y = snd test |> snd in
             Gui.cover_up ();
-            print_int x;
-            print_int y;
             Gui.responsive_board playerr x y ; (* x and y are the locations to draw the image *)
             Gui.score (p1_score newSt) (p2_score newSt) ;
             Gui.num_try_hint (num_tries newSt) 836 587;
@@ -255,8 +230,6 @@ let rec play single do_mode st=
           );
           if single then
             (
-              Graphics.remember_mode false;
-              Gui.draw_wait_mgs();
               let comp_st = computer_move_st do_mode newSt in play single do_mode comp_st)
           else
             (Graphics.remember_mode false;
@@ -264,14 +237,11 @@ let rec play single do_mode st=
           ))
   | Hint ->
     if equal newSt st (game_mode newSt) then (
-      print_endline "NO MORE HINTS";
       Gui.cover_up ();
-      Graphics.remember_mode true;
+      Graphics.auto_synchronize true;
       draw_image (Gui.get_img "imgs/hints_loss.jpg") 236 0;
-      print_endline "AFTER DRAWING NO MORE HINTS";
       play single do_mode newSt
     ) else (
-      print_endline "CALCULATING HINT...";
       let hint_move = player_hint newSt in
       Graphics.remember_mode false;
         let coord_move =
@@ -288,25 +258,22 @@ let rec play single do_mode st=
           (
             Graphics.auto_synchronize true;
             print_endline"did i call from here?";
-            Gui.responsive_board playerr x y ; (* x and y are the locations to draw the image *)
+            Gui.responsive_board playerr x y; (* x and y are the locations to draw the image *)
             Gui.cover_up();
           Gui.score (p1_score newSt) (p2_score newSt))
         else ());
         if single then
           (let comp_st = computer_move_st do_mode newSt' in
-          (* Graphics.remember_mode false ;  *)
+          Graphics.remember_mode false ;
           play single do_mode comp_st)
         else
-          (
-            (* Graphics.remember_mode false;  *)
+          (Graphics.remember_mode false;
           play single do_mode newSt')
     )
   | Look -> (print_board st; play single do_mode newSt)
   | CurrentPlayer ->
-    (print_endline ("Current player: "^(string_of_player (curr_player st)));
-     play single do_mode newSt)
-  | Invalid -> (print_endline "Action impossible. Please try a different move.";
-                play single do_mode st)
+    (play single do_mode newSt)
+  | Invalid -> play single do_mode st
   )
 
 (* [draw_all_moves cllst] helper method for [do_kray_w_GUI] to redraw new game state
@@ -322,12 +289,10 @@ let rec draw_all_moves cllst =
 (* [do_kray_w_GUI c st] returns the state of the game
  * after the animations for the krazy mode occur*)
 let do_kray_w_GUI (c:command) st =
-  print_endline (string_three_row [List.map (fun a -> a.cell) (cells_occ st)] "");
   let st' = do_krazy c st in
   Graphics.remember_mode true;
   (if krazy_happ_st st' then (
     (*redraw*)
-    print_endline "krazy happened!";
     (if krazy_bomb_happ_st st' then (
         (*animation*)
         Gui.bomb_animation ();
@@ -348,10 +313,7 @@ let do_kray_w_GUI (c:command) st =
     let recent_wins_lst = most_recent_wins st' in
     draw_act_two playerr p1_sc p2_sc hint_num num_trys recent_wins_lst;)
 
-  else (
-    print_endline "No krazy happened!"
-  ));
-  print_endline (string_three_row [List.map (fun a -> a.cell) (cells_occ st')] "");
+  else ());
   st'
 
 (* [play_game str f] accepts the command to either start playing the game, quit or restart *)
@@ -368,25 +330,23 @@ try (
         play (game_num_plyrs init_st <> Multi)
             (if game_mode init_st = Krazy then do_kray_w_GUI else do') init_st
       ) with
-    | Gui.Quit -> print_endline "Bye!"; exit 0;
-    | Gui.Restart -> (print_endline "You have chosen to restart this game"; clear_graph(); Graphics.auto_synchronize true;
+    | Gui.Quit -> exit 0;
+    | Gui.Restart -> ( clear_graph(); Graphics.auto_synchronize true;
         f ())
-    | _ -> print_endline "Error"
+    | _ -> ()
     end
-  | _ -> print_endline "Invalid command. No ongoing game."
+  | _ -> ()
   end
 ) with
-| _ -> (print_endline "Invalid")
+| _ -> ()
 
 (* [main ()] starts the REPL, which prompts for a game to play.
  * It displays the window for where the graphics would be displayed for game play.*)
 let rec main () =
-  ANSITerminal.(print_string [red]
-                  "\n\nWelcome to 3D Tic Tac Toe.\n");
   Graphics.open_graph " 1000x750";
   Graphics.set_window_title "3D Tic-Tac-Toe";
   let str = Gui.init_welcome() in
-  play_game str main;
-  (print_endline "help";)
+  (play_game str main;)
+
 
 let () = main ()

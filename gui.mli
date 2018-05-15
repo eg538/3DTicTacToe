@@ -8,52 +8,34 @@ exception Quit
 
 type choices
 
-(*Draws the welcome screen, with the title of the game and creators*)
+(*[init_welcome] Draws the welcome screen, with the title of the game and creators
+  RETURNS: a string to start the game *)
 val init_welcome : unit -> string
-
 
 (* [begin_game x y] draws the game screen*)
 val begin_game : unit -> unit
-  
-(* Draws a gray rectangle around the button the player presses.
-   [rect_drawn_gray x y width height] draws a gray rectangle with lower left
-   corner at position (x,y) with width [width] and height [height]
- *)
-val rect_drawn_gray : int -> int -> int -> int -> unit
-
-(* Will draw a rectangle around the level the player chooses and send that information *)
-(*val level_choice : unit -> string*)
-
-(* will draw a rectangle around the krazy/normal mode the player chooses and send that information *)
-(*val krazy_choice : unit -> string*)
-
-(*Will draw a rectangel around the number of people playing and send that information *)
-(*val num_player : unit -> string*)
-
-(* Will bring the player to the play screen when press start *)
-(*val start_choice: unit -> unit*)
 
 (* Causes the warning message (stay inside the lines, can't play in (1,1,1), etc ) to disappear *)
 val cover_up: unit -> unit
 
-(* returns the command telling the game to place a marker on a certain cell based on where the player
-   clicked on the gui and returns the coordinates where the python and caml images should be drawn
-   [play_board command] will return the concatenated form of "[command] cell" and a tuple of
+(* [play_board command x y] will return the concatenated form of "[command] cell" and a tuple of
    coordinates to determine where the picture should be placed. Example of commands include:
    "place", "try"
 *)
 val play_board : string -> int -> int -> string * (int * int)
 
-(* Draws the python or caml picture (determined by the string parameter) at the location
-   specified by the two ints
+(* [responsive_board x y] Draws the python or caml picture (determined by the
+   string parameter) at the location specified by [x] and [y]
 *)
 val responsive_board: string -> int -> int->  unit
 
-(* Takes care of the case when two players want to place their marker in the same cell.
-   An error message will appear *)
+(* [repeat_cell x y] will display an error message depending on the [x] and [y]
+   coordinates of where the user touched. These messages include: stay in the
+   lines, cell already taken, and forbidden cell *)
 val repeat_cell : int -> int -> unit
 
-(* Draws a rectangle around the image of the current player *)
+(* [hightligh_curr_player playerr] Draws a rectangle around the image of the
+   current player [playerr] *)
 val highlight_curr_player: string -> unit
 
 (* Draws the current score for each player. The first int is player1's score and
@@ -61,15 +43,28 @@ val highlight_curr_player: string -> unit
 *)
 val score : int -> int -> unit
 
-(* Displays the win/lose/draw message *)
+(* [winner_winner_chicken_dinner winner] Displays the win/lose/draw message based
+   on what [winner] corresponds to
+  *)
 val winner_winner_chicken_dinner: string -> unit
 
-(* Displays the number of tries left. int is the number of tries left *)
+(* [num_try_hint num x y] displays the [num] of hints and tries left at location
+   [x],[y]
+   REQUIRES: int x and int y that is within range of the GUI window
+*)
 val num_try_hint : int -> int -> int -> unit
 
+(* [cover_try playerr x y] covers the [playerr]'s try at location [x],[y] *)
 val cover_try : string -> int -> int -> unit
 
-
+(* [try_responsive_board playerr x y (pl,ex,why)] returns (true, xx, yy) if
+   the player accepts the tried move (by either pressing on the accept button or
+   the same square)It returns (false, xx yy) if [playerr] decides to not accept
+   the location and presses anywhere else. (xx, yy) are the coordinates of where
+   the player pressed.
+   REQUIRES: string version of a player, int x and int y that is within range
+            of the GUI window, a valid cell
+*)
 val try_responsive_board: string -> int -> int-> (int * int * int)-> (bool* int * int)
 
 
@@ -80,20 +75,29 @@ val try_responsive_board: string -> int -> int-> (int * int * int)-> (bool* int 
 *)
 val which_command : unit -> string*int*int
 
-(* Draws a line through the most recent three in a rows *)
+(* [draw_three_row most_recent_wins] draws a red box around the cells in
+   most_recent_wins
+   REQUIRES: most_recent_wins is a list of the cells that make a three in a row
+*)
 val draw_three_row : (int*int*int)  list ->  unit
 
+(* [cell_coords_to_x_y cell] returns the (x,y) location of where the playerr's
+   icon will be placed according to cell [cell]
+   REQUIRES: a valid cell
+*)
 val cell_coords_to_x_y: (int*int*int) -> (int*int)
 
 
-val get_img:string -> image
+(* [get_img filename] returns an image according to [filename] *)
+val get_img: string -> image
 
 (* Draws a message asking the user to please wait as the computer calculates
-   the best move *)
+   the best move
+*)
 val draw_wait_mgs : unit -> unit
 
-(* [draw_act_two playerr p1_score p2_score hint_num num_tries recent_wins lst] draws the
-   the playing board  with all the necessary information
+(* [draw_act_two playerr p1_score p2_score hint_num num_tries recent_wins lst]
+   draws the playing board  with all the necessary information
 *)
 val draw_act_two : string -> int -> int -> int -> int -> (int*int*int) list list -> unit
 

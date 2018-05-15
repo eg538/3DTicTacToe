@@ -75,7 +75,7 @@ val p1_avatar: state -> player
  * if the game is in krazy mode*)
 val krazy_happ_st: state -> bool
 
-(*[krazy_bomb_happ_st st] is whether the last move has caused a bomb if the 
+(*[krazy_bomb_happ_st st] is whether the last move has caused a bomb if the
  * game is in krazy mode*)
 val krazy_bomb_happ_st: state -> bool
 

@@ -52,7 +52,7 @@ let p2_score s = s.curr_score_2
 
 let curr_player s = s.current_player
 
-let num_hints s = 
+let num_hints s =
   let curr_p = s.current_player in
   match curr_p with
   | p1_avatar -> s.p1_num_hints
@@ -85,9 +85,12 @@ let rec find_cell s (pl, x, y) = get_cell (pl, x, y) s.tttBoard
 let print_board st = print_string (asciiBoard st.tttBoard)
 
 (*[make_move s coords] places a move at the cell at coordinates [coords]
- * for the current player of state [s]*)
+ * for the current player of state [s]. Modifies [s]*)
 let make_move s (pl, x, y) = place (pl, x, y) s.tttBoard s.current_player
 
+(*[make_move s coords] places a move at the cell at coordinates [coords]
+ * for the current player of state [s] but doesn't actually modify
+ * [s] itself*)
 let try_move s (pl, x, y) = let copy_b = copy s.tttBoard in
   place (pl, x, y) copy_b s.current_player;
   s
@@ -103,36 +106,28 @@ let inc_point inc_amt st =
   else
     {st with curr_score_2 = st.curr_score_2 + inc_amt}
 
+(*[diag_cells_in_question diag_list] is the coordinates of the cells in [diag_list]
+ * if [diag_list] has length of 3. Otherwise, return empty list.*)
 let diag_cells_in_question diag_list =
   match diag_list with
   | [] -> []
   | (h1:cell)::h2::h3::[] -> (h1.cell)::(h2.cell)::(h3.cell)::[]
   | _ -> []
 
+(*[check diag_cells_in_question h] is whether all the coords in [diag_cells_in_question]
+ * are equal to [h]*)
 let rec check diag_cells_in_question h =
   match diag_cells_in_question with
   | [] -> true
-  | head::tail -> (head=h) && (check tail h)
+  | head::tail -> (head = h) && (check tail h)
   | _ -> false
 
-let rec search st diag_cells_in_q diags_cell_list_only = (*let diags_cell_list_only = extract_cells_from_st st.diagonals*)
+(*[search st diag_cells_in_q diags_cell_list_only] is whether all the cells in 
+ * [diag_cells_in_q] are equivalent to those in [diags_cell_list_only]*)
+let rec search st diag_cells_in_q diags_cell_list_only = 
   match (diags_cell_list_only:(int*int*int) list list) with
   | h::t -> (check diag_cells_in_q h) || (search st diag_cells_in_q t)
   | _ -> false
-
-let rec string_3_row_h clst acc =
-  match clst with
-  | [] -> acc
-  | coords::t -> (*let coords = h.cell in*)
-      let str = ("(")^(string_of_int (fst' coords))^", "^(string_of_int (snd' coords))^", "^(string_of_int (thd coords))^")"
-      ^"   "^acc in
-      string_3_row_h t str
-
-let rec string_three_row clstlst acc =
-  match clstlst with
-  | [] -> acc
-  | h::t -> let str = (string_3_row_h h "")^"\n"^acc in
-    string_three_row t str
 
 (*[play_move st coords] is the new state as a result of the current player of state [st]
  * making a move at coordinates [coords], updating the scores accordingly if the move
@@ -146,8 +141,6 @@ let play_move st (pl, row, col) =
     let diag_check_lst = threed_diag_wins c b in
     let instances = (three_row_2d_cells c b) in
     let case_2d = victory_on_plane c instances [] in
-    print_endline ("CASE 2D");
-    print_endline (string_three_row (List.map (fun lst -> List.map (fun a -> a.cell) lst) case_2d) "");
     let case_3d =
     begin
       if (threed_col_win c b) = [] then
@@ -182,6 +175,8 @@ match st.current_player with
 | Python -> {st with current_player = Caml}
 | _ -> {st with current_player = Python}
 
+(*[check_game_end st] returns [st] with whether the game it specifies has ended
+ * updated accordingly*)
 let check_game_end st =
   if cells_left st.tttBoard = [] then
     if st.curr_score_1 > st.curr_score_2 then
@@ -215,7 +210,6 @@ let do' c st =
       | _ -> st
     end
   | Place (pl, row, col) ->
-    (* print_endline ("Move made: "^(string_o22f_int pl)^", "^(string_of_int row)^", "^(string_of_int col)); *)
     begin
       try(
         play_move st (pl, row, col) |> switch_players |> check_game_end
