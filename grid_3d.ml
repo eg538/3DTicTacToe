@@ -54,7 +54,8 @@ let rec asciiBoard_helper (a, b, c) s acc =
             else
               asciiBoard_helper (a, b, c + 1) s (acc ^ spot)
       end) with
-    | _ -> "Not found: " ^ (string_of_int a) ^ ", " ^ (string_of_int b) ^ ", " ^ (string_of_int c)
+    | _ -> "Not found: " ^ (string_of_int a) ^ ", " ^ (string_of_int b) ^
+         ", " ^ (string_of_int c)
 
 let asciiBoard b = asciiBoard_helper (0, 0, 0) b ""
 
@@ -83,8 +84,8 @@ let cells_left b =
   let lst = board_list_of_cells b in
   List.filter (fun x -> x.player = None) lst
 
-  (*[is_taken cell_pos b] checks to see whether the cell at coordinates [cell_pos]
-    has been played by a player in the board [b]
+(*[is_taken cell_pos b] checks to see whether the cell at coordinates
+  [cell_pos] has been played by a player in the board [b]
   *)
   let is_taken cell_pos b =
     let lst = board_list_of_cells b in
@@ -99,8 +100,7 @@ let cell_valid cell =
     else true
 
 (*[move_valid cell b] determines whether [cell] is an available move in board
-  [b]
-*)
+  [b]*)
 let move_valid cell b =
   (cell_valid cell) && (is_taken cell.cell b)
 
@@ -117,13 +117,22 @@ let diagonal_hardcode c lst_of_cells =
   match c.cell with
   | p,x,y when (x=y) ->
     begin
-      let l1 = (List.filter (fun i -> ((i.cell |> thd) = (i.cell |> snd')) && (p = fst' c.cell)) lst_of_cells) in (*orig*)
-      let l2 = (List.filter (fun i -> (((i.cell |> thd = 1)&&(i.cell |> snd' = 1)) || ((i.cell |> thd = 2) && (i.cell |> snd' = 0)) || ((i.cell |> snd' = 2)  && (i.cell |> thd = 0))) && (p = fst' c.cell)) lst_of_cells) in
+      let l1 = (List.filter (fun i -> ((i.cell |> thd) = (i.cell |> snd')) &&
+                                      (p = fst' c.cell)) lst_of_cells) in
+      let l2 = (List.filter (fun i -> (((i.cell |> thd = 1)&&
+                            (i.cell |> snd' = 1)) || ((i.cell |> thd = 2) &&
+                            (i.cell |> snd' = 0)) || ((i.cell |> snd' = 2)  &&
+                            (i.cell |> thd = 0))) && (p = fst' c.cell))
+                            lst_of_cells) in
       [l1;l2]
     end
   | p,x,y when (x=0 && y=2) || (x=2 && y=0) ->
-    let l1 = (List.filter (fun i -> (((i.cell |> thd = 1)&&(i.cell |> snd' = 1)) || ((i.cell |> thd = 0)&&(i.cell |> snd' = 2))) && (p = fst' c.cell)) lst_of_cells) @ [c] in
-    let l2 = (List.filter (fun i -> (((i.cell |> thd = 1)&&(i.cell |> snd' = 1)) || ((i.cell |> thd = 2)&&(i.cell |> snd' = 0))) && (p = fst' c.cell)) lst_of_cells) @ [c] in
+    let l1 = (List.filter (fun i -> (((i.cell |> thd = 1)&&(i.cell |> snd' = 1))
+                          || ((i.cell |> thd = 0)&& (i.cell |> snd' = 2))) &&
+                          (p = fst' c.cell)) lst_of_cells) @ [c] in
+    let l2 = (List.filter (fun i -> (((i.cell |> thd = 1)&&(i.cell |> snd' = 1))
+                          || ((i.cell |> thd = 2)&& (i.cell |> snd' = 0))) &&
+                          (p = fst' c.cell)) lst_of_cells) @ [c] in
     [l1; l2]
   | _ -> failwith "non-exhaustive match "
 
@@ -136,45 +145,55 @@ let three_row_2d_cells c b =
   let lst_of_cells = get_parent_plane c lst in
   match c.cell with
   | (p,x,y) when (x=1 && y=1) ->
-      let col = (List.filter (fun i -> (thd (c.cell) = thd (i.cell))) lst_of_cells) in
-      let row = (List.filter (fun i -> (snd' (c.cell) = snd' (i.cell))) lst_of_cells) in
+      let col = (List.filter (fun i -> (thd (c.cell) = thd (i.cell)))
+                 lst_of_cells) in
+      let row = (List.filter (fun i -> (snd' (c.cell) = snd' (i.cell)))
+                 lst_of_cells) in
       let diag = diagonal_hardcode c lst_of_cells in
       let diag1 = List.nth diag 0 in
       let diag2 = List.nth diag 1 in
       col::row::diag1::diag2::[]
   | (p,x,y) when (x=1 && y <> 1) || (x<>1 && y =1) ->
-      let col = (List.filter (fun i -> (thd (c.cell) = thd (i.cell))) lst_of_cells) in
-      let row = (List.filter (fun i -> (snd' (c.cell) = snd' (i.cell))) lst_of_cells)::[] in
+      let col = (List.filter (fun i ->
+        (thd (c.cell) = thd (i.cell))) lst_of_cells) in
+      let row = (List.filter (fun i -> (snd' (c.cell) = snd' (i.cell)))
+        lst_of_cells)::[] in
       col::row
   | (p,x,y) when x = y ->
-      let col = (List.filter (fun i -> (thd (c.cell) = thd (i.cell))) lst_of_cells) in
-      let row = (List.filter (fun i -> (snd' (c.cell) = snd' (i.cell))) lst_of_cells) in
+      let col = (List.filter (fun i -> (thd (c.cell) = thd (i.cell)))
+                 lst_of_cells) in
+      let row = (List.filter (fun i -> (snd' (c.cell) = snd' (i.cell)))
+                 lst_of_cells) in
       let diag = diagonal_hardcode c lst_of_cells in
       let diag1 = List.nth diag 0 in
       col::row::diag1::[]
   | (p,x,y) when x = 2 && y = 0 ->
-      let col = (List.filter (fun i -> (thd (c.cell) = thd (i.cell))) lst_of_cells) in
-      let row = (List.filter (fun i -> (snd' (c.cell) = snd' (i.cell))) lst_of_cells) in
+      let col = (List.filter (fun i -> (thd (c.cell) = thd (i.cell)))
+                 lst_of_cells) in
+      let row = (List.filter (fun i -> (snd' (c.cell) = snd' (i.cell)))
+                lst_of_cells) in
       let diag = diagonal_hardcode c lst_of_cells in
       let diag1 = List.nth diag 1 in
       col::row::diag1::[]
   | (p,x,y) when x = 0 && y = 2 ->
-      let col = (List.filter (fun i -> (thd (c.cell) = thd (i.cell))) lst_of_cells) in
-      let row = (List.filter (fun i -> (snd' (c.cell) = snd' (i.cell))) lst_of_cells) in
+      let col = (List.filter (fun i -> (thd (c.cell) = thd (i.cell)))
+                lst_of_cells) in
+      let row = (List.filter (fun i -> (snd' (c.cell) = snd' (i.cell)))
+                lst_of_cells) in
       let diag = diagonal_hardcode c lst_of_cells in
       let diag1 = List.nth diag 0 in
       col::row::diag1::[]
   |_ -> failwith "non-exhaustive match "
 
-
-(*[victory_on_plane c possible_instances ] traverses through [possible_instances]
-  to check whether at least one of [possible_instances] has resulted in a win
-  for the player who has played [c]
+(*[victory_on_plane c possible_instances ] traverses through
+  [possible_instances]to check whether at least one of [possible_instances] has
+  resulted in a win for the player who has played [c]
 *)
 let rec victory_on_plane c possible_instances acc =
   match possible_instances with
   | [] -> acc
-  | h::t -> if List.for_all (fun m -> m.player = c.player) h && (List.length h = 3) then
+  | h::t -> if List.for_all (fun m -> m.player = c.player) h &&
+               (List.length h = 3) then
         victory_on_plane c t (h::acc)
       else
         victory_on_plane c t acc
@@ -195,20 +214,32 @@ let place (pl, row, col) b plyr =
 *)
 let horizontal_3d_group c b =
   let grid_space = board_list_of_cells b in
-  if (c.cell = (0,0,0) || (c.cell = (2,0,2))) then [(List.filter (fun a -> a.cell = (0,0,0) || a.cell = (1,0,1) || a.cell = (2,0,2)) grid_space)]
-  else if (c.cell = (2,0,0)) || (c.cell = (0,0,2)) then [(List.filter (fun a -> a.cell = (2,0,0) || a.cell = (1,0,1) || a.cell = (0,0,2)) grid_space)]
-  else if (c.cell = (0,2,0)) || (c.cell = (2,2,2)) then [(List.filter (fun a -> a.cell = (0,2,0) || a.cell = (1,2,1) || a.cell = (2,2,2)) grid_space)]
-  else if ((c.cell = (2,2,0)) || (c.cell = (0,2,2))) then [(List.filter (fun a -> a.cell = (2,2,0) || a.cell = (1,2,1) || a.cell = (0,2,2)) grid_space)]
+  if (c.cell = (0,0,0) || (c.cell = (2,0,2))) then [(List.filter
+     (fun a -> a.cell = (0,0,0) || a.cell = (1,0,1) || a.cell = (2,0,2))
+     grid_space)]
+  else if (c.cell = (2,0,0)) || (c.cell = (0,0,2)) then [(List.filter
+     (fun a -> a.cell = (2,0,0) || a.cell = (1,0,1) || a.cell = (0,0,2))
+     grid_space)]
+  else if (c.cell = (0,2,0)) || (c.cell = (2,2,2)) then [(List.filter
+     (fun a -> a.cell = (0,2,0) || a.cell = (1,2,1) || a.cell = (2,2,2))
+     grid_space)]
+  else if ((c.cell = (2,2,0)) || (c.cell = (0,2,2))) then [(List.filter
+     (fun a -> a.cell = (2,2,0) || a.cell = (1,2,1) || a.cell = (0,2,2))
+     grid_space)]
   else if (c.cell = (1,2,1)) then
     begin
-      let l1 = (List.filter (fun a -> a.cell = (0,2,0) || a.cell = (1,2,1) || a.cell = (2,2,2)) grid_space) in
-      let l2 = (List.filter (fun a -> (a.cell = (2,2,0)) || (a.cell = (1,2,1)) || (a.cell = (0,2,2))) grid_space) in
+      let l1 = (List.filter (fun a -> a.cell = (0,2,0) || a.cell = (1,2,1) ||
+                                      a.cell = (2,2,2)) grid_space) in
+      let l2 = (List.filter (fun a -> (a.cell = (2,2,0)) || (a.cell = (1,2,1))
+                                      || (a.cell = (0,2,2))) grid_space) in
       [l1;l2]
     end
   else if (c.cell = (1,0,1)) then
     begin
-      let l1 = (List.filter (fun a -> a.cell = (0,0,0) || a.cell = (1,0,1) || a.cell = (2,0,2)) grid_space) in
-      let l2 = (List.filter (fun a -> a.cell = (2,0,0) || a.cell = (1,0,1) || a.cell = (0,0,2)) grid_space) in
+      let l1 = (List.filter (fun a -> a.cell = (0,0,0) || a.cell = (1,0,1) ||
+                                      a.cell = (2,0,2)) grid_space) in
+      let l2 = (List.filter (fun a -> a.cell = (2,0,0) || a.cell = (1,0,1) ||
+                                      a.cell = (0,0,2)) grid_space) in
       [l1;l2]
     end
   else []
@@ -218,20 +249,32 @@ let horizontal_3d_group c b =
 *)
 let vertical_3d_groups c b =
   let grid_space = board_list_of_cells b in
-  if (c.cell = (0,0,0) || c.cell = (2,2,0)) then [(List.filter (fun a -> a.cell = (0,0,0) || a.cell = (1,1,0) || a.cell = (2,2,0)) grid_space)]
-  else if (c.cell = (0,2,0) || c.cell = (2,0,0)) then [(List.filter (fun a -> a.cell = (2,0,0) || a.cell = (1,1,0) || a.cell = (0,2,0)) grid_space)]
+  if (c.cell = (0,0,0) || c.cell = (2,2,0)) then [(List.filter
+     (fun a -> a.cell = (0,0,0) || a.cell = (1,1,0) || a.cell = (2,2,0))
+     grid_space)]
+  else if (c.cell = (0,2,0) || c.cell = (2,0,0)) then [(List.filter
+     (fun a -> a.cell = (2,0,0) || a.cell = (1,1,0) || a.cell = (0,2,0))
+     grid_space)]
   else if (c.cell = (1,1,0)) then
     begin
-      let l1 = (List.filter (fun a -> a.cell = (0,0,0) || a.cell = (1,1,0) || a.cell = (2,2,0)) grid_space) in
-      let l2 = (List.filter (fun a -> a.cell = (2,0,0) || a.cell = (1,1,0) || a.cell = (0,2,0)) grid_space) in
+      let l1 = (List.filter (fun a -> a.cell = (0,0,0) || a.cell = (1,1,0) ||
+                                      a.cell = (2,2,0)) grid_space) in
+      let l2 = (List.filter (fun a -> a.cell = (2,0,0) || a.cell = (1,1,0) ||
+                                      a.cell = (0,2,0)) grid_space) in
       [l1;l2]
     end
-  else if (c.cell = (0,0,2) || (c.cell = (2,2,2))) then [(List.filter (fun a -> a.cell = (0,0,2) || a.cell = (1,1,2) || a.cell = (2,2,2)) grid_space)]
-  else if (c.cell = (2,0,2) || c.cell = (0,2,2)) then [List.filter (fun a -> a.cell = (2,0,2) || a.cell = (1,1,2) || a.cell = (0,2,2)) grid_space]
+  else if (c.cell = (0,0,2) || (c.cell = (2,2,2))) then [(List.filter
+    (fun a -> a.cell = (0,0,2) || a.cell = (1,1,2) || a.cell = (2,2,2))
+    grid_space)]
+  else if (c.cell = (2,0,2) || c.cell = (0,2,2)) then [List.filter
+    (fun a -> a.cell = (2,0,2) || a.cell = (1,1,2) || a.cell = (0,2,2))
+    grid_space]
   else if (c.cell = (1,1,2)) then
     begin
-      let l1 = (List.filter (fun a -> a.cell = (0,0,2) || a.cell = (1,1,2) || a.cell = (2,2,2)) grid_space) in
-      let l2 = (List.filter (fun a -> a.cell = (2,0,2) || a.cell = (1,1,2) || a.cell = (0,2,2)) grid_space) in
+      let l1 = (List.filter (fun a -> a.cell = (0,0,2) || a.cell = (1,1,2) ||
+                                      a.cell = (2,2,2)) grid_space) in
+      let l2 = (List.filter (fun a -> a.cell = (2,0,2) || a.cell = (1,1,2) ||
+                                      a.cell = (0,2,2)) grid_space) in
       [l1;l2]
     end
   else []
@@ -241,28 +284,28 @@ let threed_diag_wins c b =
   let diag_v = vertical_3d_groups c b in
   let verdict_h = (match diag_h with
     | [] -> []
-    | h::[] -> if (List.for_all (fun x -> x.player = c.player) h) then [h] else []
-    | h1::h2::[] -> if (List.for_all (fun x -> x.player = c.player) h1) && (List.for_all (fun x -> x.player = c.player) h2) then
+    | h::[] -> if (List.for_all (fun x -> x.player = c.player) h) then [h]
+               else []
+    | h1::h2::[] -> if (List.for_all (fun x -> x.player = c.player) h1) &&
+                       (List.for_all (fun x -> x.player = c.player) h2) then
           [h1;h2]
         else if (List.for_all (fun x -> x.player = c.player) h1) then
           [h1]
         else if (List.for_all (fun x -> x.player = c.player) h2) then
           [h2]
-        else
-          []
+        else []
     | _ -> []
     ) in
   let verdict_v = (match diag_v with
       | [] -> []
-      | h::[] -> if (List.for_all (fun x -> x.player = c.player) h) then [h] else []
-      | h1::h2::[] -> if (List.for_all (fun x -> x.player = c.player) h1) && (List.for_all (fun x -> x.player = c.player) h2) then
-            [h1;h2]
-          else if (List.for_all (fun x -> x.player = c.player) h1) then
-            [h1]
-          else if (List.for_all (fun x -> x.player = c.player) h2) then
-            [h2]
-          else
-            []
+      | h::[] -> if (List.for_all (fun x -> x.player = c.player) h) then [h]
+                 else []
+      | h1::h2::[] -> if (List.for_all (fun x -> x.player = c.player) h1) &&
+                         (List.for_all (fun x -> x.player = c.player) h2)
+                      then [h1;h2]
+          else if (List.for_all (fun x -> x.player = c.player) h1) then [h1]
+          else if (List.for_all (fun x -> x.player = c.player) h2) then [h2]
+          else []
       | _ -> []
   ) in
   verdict_h @ verdict_v
@@ -276,13 +319,15 @@ let diag_check c b =
   let verdict_h = (match diag_h with
     | [] -> false
     | h::[] -> (List.for_all (fun x -> x.player = c.player) h)
-    | h1::h2::[] -> (List.for_all (fun x -> x.player = c.player) h1) || (List.for_all (fun x -> x.player = c.player) h2)
+    | h1::h2::[] -> (List.for_all (fun x -> x.player = c.player) h1) ||
+                    (List.for_all (fun x -> x.player = c.player) h2)
     | _ -> false
     ) in
   let verdict_v = (match diag_v with
       | [] -> false
       | h::[] -> (List.for_all (fun x -> x.player = c.player) h)
-      | h1::h2::[] -> (List.for_all (fun x -> x.player = c.player) h1) || (List.for_all (fun x -> x.player = c.player) h2)
+      | h1::h2::[] -> (List.for_all (fun x -> x.player = c.player) h1) ||
+                      (List.for_all (fun x -> x.player = c.player) h2)
       | _ -> false
   ) in
 
@@ -331,8 +376,8 @@ let col_check c b =
 let player_at_cell c = c.player
 
 let win_evaluation c b =
-  let diag_check_truth =
-    (((diag_check c b )|> fst) <> WinNone) || (((diag_check c b) |> snd) <> WinNone) in
+  let diag_check_truth = (((diag_check c b )|> fst) <> WinNone) ||
+                         (((diag_check c b) |> snd) <> WinNone) in
   let cases_3d = (diag_check_truth) || (col_check c b) in
   let modified_3_row_2d_cells = three_row_2d_cells c b in
   let twod_case = victory_on_plane c (modified_3_row_2d_cells) [] in
@@ -351,8 +396,8 @@ let all_three_in_row_cells c b =
 
 let get_the_win c current_player b=
   if (win_evaluation c b) then
-    let diag_check_truth =
-      (((diag_check c b )|> fst) <> WinNone) && (((diag_check c b) |> snd) <> WinNone) in
+    let diag_check_truth = (((diag_check c b )|> fst) <> WinNone) &&
+                           (((diag_check c b) |> snd) <> WinNone) in
     match (diag_check_truth) with
     | true  -> begin
         match diag_check c b with
