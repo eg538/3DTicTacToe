@@ -22,12 +22,6 @@ let string_of_player p = match p with
   | Caml -> "caml"
   | None -> "none"
 
-(* [iterate lst f] helper method for Gui.draw_three_in_a_row *)
-let rec iterate lst f =
-  match lst with
-  | [] -> ();
-  | h::t -> (f h; iterate t f;)
-
 (* [computer_move_st do_mode newSt] returns the state of the game in the single
  * player mode after the computer has made its move depending on the AI level of the game
  * (easy, medium, or hard)*)

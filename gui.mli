@@ -111,6 +111,7 @@ val draw_act_two : string -> int -> int -> int -> int -> (int*int*int) list list
 val bomb_animation : unit -> unit
 
 (* [krazy_ocur_animation x y] flashes a message telling the user that something
-   crazy happened at location x y
+   crazy happened at location x y and will call a helper function (kray_kray)
+   and will aimate a bomb booming
 *)
 val krazy_ocur_animation : unit -> unit

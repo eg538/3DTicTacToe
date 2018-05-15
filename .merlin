@@ -4,5 +4,4 @@ PKG YOJSon
 PKG ANSITerminal
 PKG Images
 PKG CAMLImages
-PKG Png
 PKG Jpeg
