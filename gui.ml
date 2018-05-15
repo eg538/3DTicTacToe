@@ -159,10 +159,10 @@ let get_coordinates_choices c =
 (* [get_choices ch x y] returns the choice of game the user wants to play and
  * the coordinates of the next mouse event *)
 let rec get_choices ch x y=
-  if (x >= 310 && x <= (310 + 108)) && (y >= 260 && y <= (260 + 44)) then
+  if ((x >= 310 && x <= (310 + 108)) && (y >= 260 && y <= (260 + 44))) then
     (get_coordinates_choices ch.level;(rect_drawn 310 260 108 44);
-    let (xx, yy) = mouse_up () in get_choices {ch with level = "easy"} xx yy )
-  else if (x >= 450 && x <= (450 + 119)) && (y >= 260 && y <= (260 + 43)) then
+     let (xx, yy) = mouse_up () in get_choices {ch with level = "easy"} xx yy )
+  else if ((x >= 450 && x <= (450 + 119)) && (y >= 260 && y <= (260 + 43))) then
     (get_coordinates_choices ch.level;(rect_drawn 450 260 119 43);
     let (xx, yy) = mouse_up () in get_choices {ch with level ="medium"} xx yy)
   else if (x >= 600 && x <= (600 + 81)) && (y >= 260 && y <= (260 + 43))then
@@ -177,9 +177,11 @@ let rec get_choices ch x y=
   else if (x >= 395 && x <= (395 + 93)) && (y >= 130 && y <= (130 + 44))then
     (get_coordinates_choices ch.num_p;(rect_drawn 395 130 93 44);
     let (xx, yy) = mouse_up () in get_choices{ch with num_p = "single"} xx yy)
-  else if (x >= 520 && x <= (520 + 82)) && (y >= 130 && y <= (130 + 44))then
+  else if ((x >= 520 && x <= (520 + 82)) && (y >= 130 && y <= (130 + 44)))then
     (get_coordinates_choices ch.num_p;(rect_drawn 520 130 82 44);
-    let (xx, yy) = mouse_up() in get_choices{ch with num_p ="multi"} xx yy)
+     let (xx, yy) = mouse_up() in get_choices{ch with num_p ="multi"} xx yy)
+  else if ((x >= 700 && x <= (700 + 110)) && (x >= 40 && y <= (89))) then
+    (ch, -1, -1)
   else if (not((x >= 380 && x <=(242+380)) && (y>=35 && y<=(35+69))))then
     (let (xx, yy) = mouse_up() in get_choices ch xx yy)
   else
@@ -212,7 +214,8 @@ let rec start_game ch x y=
        (let play_str = "play " ^ choice.num_p ^ " " ^ "python " ^ choice.level ^ " " ^ choice.mode in
           rect_drawn x y 90 90;
           begin_game ();
-      play_str)
+          play_str)
+     else if ( xa = -1 && ya = -1) then (clear_graph(); exit 0)
      else
        (let (xx, yy) = mouse_up() in start_game choice xx yy))
 
