@@ -340,12 +340,13 @@ try (
     print_board init_st;
     begin
     try(
+        Graphics.remember_mode false;
         play (game_num_plyrs init_st <> Multi)
             (if game_mode init_st = Krazy then do_kray_w_GUI else do') init_st
       ) with
     | Gui.Quit -> print_endline "Bye!"; exit 0;
     | Gui.Restart -> (print_endline "You have chosen to restart this game";
-                  f ())
+        f ())
     | _ -> print_endline "Error"
     end
   | _ -> print_endline "Invalid command. No ongoing game."
