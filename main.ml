@@ -61,7 +61,6 @@ let computer_move_st do_mode newSt =
       Graphics.remember_mode true;
       Gui.responsive_board playerr x y ;
       Gui.score (p1_score newSt') (p2_score newSt') ;
-      print_board newSt'
     );
     newSt')
     else
@@ -122,7 +121,6 @@ let rec play single do_mode st=
   | Quit -> raise Gui.Quit
   | Restart -> raise Gui.Restart
   | Try (pl, x, y) -> (
-      print_board newSt;
       if equal newSt st (game_mode newSt) then (
         let ex = snd test |> fst in
         let why = snd test |> snd in
@@ -199,7 +197,6 @@ let rec play single do_mode st=
       play single do_mode newSt;
     ) else(
       (if not (krazy_happ_st newSt) then(
-        print_board newSt;
         let x = snd test |> fst in
         let y = snd test |> snd in
         Gui.cover_up ();
@@ -251,7 +248,7 @@ let rec play single do_mode st=
           Graphics.remember_mode false;
           play single do_mode newSt'
         ))
-  | Look -> print_board st; play single do_mode newSt
+  | Look -> play single do_mode newSt
   | CurrentPlayer -> play single do_mode newSt
   | Invalid -> play single do_mode st)
 
@@ -292,7 +289,6 @@ let rec play_game str f =
     let command = parse str in
     match command with
     | Play str -> let init_st = init_state str in
-        print_board init_st;
       begin
       try(
           play (game_num_plyrs init_st <> Multi)

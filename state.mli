@@ -49,8 +49,6 @@ val get_result_message: state -> (string * string)
  * when the it is in state [s]*)
 val find_cell: state -> (int * int * int) -> cell
 
-(*[print_board s] prints the board in state [s]*)
-val print_board: state -> unit
 
 (*[game_ended s] is whether the game specified by state [s] has terminated*)
 val game_ended: state -> bool

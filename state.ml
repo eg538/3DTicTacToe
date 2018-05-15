@@ -53,14 +53,14 @@ let p2_score s = s.curr_score_2
 let curr_player s = s.current_player
 
 let num_hints st =
-  if (st.p1_avatar = Python && st.current_player = Python) || 
+  if (st.p1_avatar = Python && st.current_player = Python) ||
   (st.p1_avatar = Caml && st.current_player = Caml) then
     st.p1_num_hints
   else
     st.p2_num_hints
 
 let num_tries st =
-  if (st.p1_avatar = Python && st.current_player = Python) || 
+  if (st.p1_avatar = Python && st.current_player = Python) ||
   (st.p1_avatar = Caml && st.current_player = Caml) then
     st.p1_num_tries
   else
@@ -85,7 +85,6 @@ let get_result_message s =
 
 let rec find_cell s (pl, x, y) = get_cell (pl, x, y) s.tttBoard
 
-let print_board st = print_string (asciiBoard st.tttBoard)
 
 (*[make_move s coords] places a move at the cell at coordinates [coords]
  * for the current player of state [s]. Modifies [s]*)
@@ -103,7 +102,7 @@ let p1_avatar s = s.p1_avatar
 
 (*[inc_point st] increments the score of the current player of state [st]*)
 let inc_point inc_amt st =
-  if (st.p1_avatar = Python && st.current_player = Python) || 
+  if (st.p1_avatar = Python && st.current_player = Python) ||
     (st.p1_avatar = Caml && st.current_player = Caml) then
     {st with curr_score_1 = st.curr_score_1 + inc_amt}
   else
@@ -125,9 +124,9 @@ let rec check diag_cells_in_question h =
   | head::tail -> (head = h) && (check tail h)
   | _ -> false
 
-(*[search st diag_cells_in_q diags_cell_list_only] is whether all the cells in 
+(*[search st diag_cells_in_q diags_cell_list_only] is whether all the cells in
  * [diag_cells_in_q] are equivalent to those in [diags_cell_list_only]*)
-let rec search st diag_cells_in_q diags_cell_list_only = 
+let rec search st diag_cells_in_q diags_cell_list_only =
   match (diags_cell_list_only:(int*int*int) list list) with
   | h::t -> (check diag_cells_in_q h) || (search st diag_cells_in_q t)
   | _ -> false
@@ -220,7 +219,7 @@ let do' c st =
       | _ -> st
     end
   | Hint ->
-    if (st.p1_avatar = Python && st.current_player = Python) || 
+    if (st.p1_avatar = Python && st.current_player = Python) ||
       (st.p1_avatar = Caml && st.current_player = Caml) then
       if st.p1_num_hints > 0 then
         {st with p1_num_hints = st.p1_num_hints - 1}
