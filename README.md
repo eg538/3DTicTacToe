@@ -25,6 +25,7 @@ Then run
 In order to install the Graphics module and CamlImages, run
 
 `opam install graphics`
+
 `opam install camlimages`
 
 *********** Sheetal here ****************
