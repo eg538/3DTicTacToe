@@ -92,3 +92,14 @@ val draw_wait_mgs : unit -> unit
    the playing board  with all the necessary information
 *)
 val draw_act_two : string -> int -> int -> int -> int -> (int*int*int) list list -> unit
+
+(* [bomb_animation x y] takes in the x and y position of the icon of the clicked
+   cell and will call a helper function (bomb_boom) and will animate a bomb
+   booming
+*)
+val bomb_animation : unit -> unit
+
+(* [krazy_ocur_animation x y] flashes a message telling the user that something
+   crazy happened at location x y
+*)
+val krazy_ocur_animation : unit -> unit

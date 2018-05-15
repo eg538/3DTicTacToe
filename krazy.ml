@@ -34,17 +34,18 @@ let random_cell_for_krazy st =
 (* let new_krazy_st st = let b = copy empty_board in
   {st with tttBoard = b; curr_score_1 = 0; curr_score_2 = *)
 
-  let rec krazy_recalc_helper cellst st =
-  match cellst with
-  | [] -> st
-  | h::t -> let mod_st = {st with current_player = player_at_cell h} in
-      let move = cell_coords h in
-      let com = Place move in
-      let st' = do' com mod_st in
-      krazy_recalc_helper t st'
+let rec krazy_recalc_helper cellst st =
+match cellst with
+| [] -> st
+| h::t -> let mod_st = {st with current_player = player_at_cell h} in
+    let move = cell_coords h in
+    let com = Place move in
+    let st' = do' com mod_st in
+    krazy_recalc_helper t st'
 
 
 let krazy_recalc_score st =
+  let curr_p_st = curr_player st in
   let num_p = string_of_num_p (game_num_plyrs st) in
   let p1_av = string_of_player (p1_avatar st) in
   let lvl = string_of_level (game_level st) in
@@ -58,7 +59,8 @@ let krazy_recalc_score st =
               p1_num_tries = st.p1_num_tries;
               p2_num_hints = st.p2_num_hints;
               p2_num_tries = st.p2_num_tries} in
-  krazy_recalc_helper occupied {new_st with moves_made = st.moves_made}
+  let new_st2 = krazy_recalc_helper occupied {new_st with moves_made = st.moves_made} in
+  {new_st2 with current_player = curr_p_st}
   (* List.map (fun x -> get_all_win_inst st x) occupied *)
 
 
@@ -108,20 +110,20 @@ let do_krazy c st =
     match c with
     | Try (_, _, _) -> do' c st
     | _ -> do' c st |> inc_moves
-    end
+    end |> up_krazy_happ false
   in
   let new_st =
     if st'.krazy_bomb_happ then
       {st' with krazy_bomb_happ = false}
     else st' in
   if new_st.moves_made = new_st.move_num_dispr then ( (*disappearing square*)
-    print_endline "disappearing square";
+    print_endline "A SQUARE JUST DISAPPEARED";
     let rand_cell = random_cell_for_krazy new_st in
     print_endline ((string_of_int (fst' (rand_cell.cell)))^", "^(string_of_int (snd' (rand_cell.cell)))^", "^(string_of_int (thd (rand_cell.cell))));
     krazy_disappearing_sqs new_st rand_cell |> up_krazy_happ true
   )
   else if new_st.moves_made = new_st.move_num_swap then ( (*swapping cells*)
-    print_endline "swap cells";
+    print_endline "SWAP CELLS";
     let rand_cell1 = random_cell_for_krazy new_st in
     print_endline ((string_of_int (fst' (rand_cell1.cell)))^", "^(string_of_int (snd' (rand_cell1.cell)))^", "^(string_of_int (thd (rand_cell1.cell))));
     let rand_cell2 = random_cell_for_krazy new_st in
@@ -129,7 +131,7 @@ let do_krazy c st =
     krazy_cell_swap new_st rand_cell1 rand_cell2 |> up_krazy_happ true
   )
   else if new_st.moves_made = new_st.move_num_switch_pl then ( (*switching planes*)
-    print_endline "switch planes";
+    print_endline "SWITCH PLANES";
     let pl1 = (Random.int 3) in
     let rand2 = (Random.int 3) in
     let pl2 = if pl1 = rand2 then abs (2 - pl1) else rand2 in
@@ -137,10 +139,17 @@ let do_krazy c st =
     krazy_switch_planes new_st pl1 pl2 |> up_krazy_happ true
   )
   else if new_st.moves_made = new_st.move_num_bomb then ( (*bomb*)
-    print_endline "bomb";
+    print_endline "BOMB";
     let rand_cell = random_cell_for_krazy new_st in
     print_endline ((string_of_int (fst' (rand_cell.cell)))^", "^(string_of_int (snd' (rand_cell.cell)))^", "^(string_of_int (thd (rand_cell.cell))));
     let bomb_state = krazy_bomb new_st rand_cell |> up_krazy_happ true in
     {bomb_state with krazy_bomb_happ = true}
-  ) else if new_st.krazy_happ then new_st |> up_krazy_happ false
+  )
+  (* else if new_st.krazy_happ then new_st |> up_krazy_happ false *)
   else new_st
+
+  (* else if new_st.krazy_happ then new_st |> up_krazy_happ false *)
+(* let do_krazy c st = 
+  let curr_p = curr_player st in
+  let st' = do_krazy_helper c st in
+  {st' with current_player = curr_p |> other_player} *)
