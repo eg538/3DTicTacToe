@@ -5,6 +5,7 @@
 This game is a Cornell University CS 3110 final project.
 
 ##Installation
+
 This game requires OCaml and opam, OCaml Graphics and Camlimages. If OCaml and opam are not installed, please click this link and follow the listed instructions: http://www.cs.cornell.edu/courses/cs3110/2018sp/install.html
 
 X11/XQuartz are also needed for Graphics support. If homebrew is installed, it can be installed by running
