@@ -299,12 +299,8 @@ let do_kray_w_GUI (c:command) st =
         (*animation*)
         Gui.bomb_animation ();
       )
+     else());
     (*Act I*)
-      (*animation*)
-
-   else ());
-      (*Act I*)
-    print_endline "Act I";
     Gui.krazy_ocur_animation ();
     clear_graph();
     draw_image (get_img "imgs/xxoo.jpg") 0 0;
