@@ -43,6 +43,8 @@ let rec iterate lst f =
 
 let computer_move_st do_mode newSt =
   print_endline "Please wait while computer moves...";
+  Graphics.remember_mode false;
+  Gui.draw_wait_mgs();
   let playerr = string_of_player (State.curr_player newSt ) in
   let p1_score0 = p1_score newSt in
   let p2_score0 = p2_score newSt in
@@ -248,8 +250,6 @@ let rec play single do_mode st=
           );
           if single then
             (
-              Graphics.remember_mode false;
-              Gui.draw_wait_mgs();
               let comp_st = computer_move_st do_mode newSt in play single do_mode comp_st)
           else
             (Graphics.remember_mode false;
@@ -257,14 +257,11 @@ let rec play single do_mode st=
           ))
   | Hint ->
     if equal newSt st (game_mode newSt) then (
-      print_endline "NO MORE HINTS";
       Gui.cover_up ();
-      Graphics.remember_mode true;
+      Graphics.auto_synchronize true;
       draw_image (Gui.get_img "imgs/hints_loss.jpg") 236 0;
-      print_endline "AFTER DRAWING NO MORE HINTS";
       play single do_mode newSt
     ) else (
-      print_endline "CALCULATING HINT...";
       let hint_move = player_hint newSt in
       Graphics.remember_mode false;
         let coord_move =
@@ -281,17 +278,16 @@ let rec play single do_mode st=
           (
             Graphics.auto_synchronize true;
             print_endline"did i call from here?";
-            Gui.responsive_board playerr x y ; (* x and y are the locations to draw the image *)
+            Gui.responsive_board playerr x y; (* x and y are the locations to draw the image *)
             Gui.cover_up();
           Gui.score (p1_score newSt) (p2_score newSt))
         else ());
         if single then
           (let comp_st = computer_move_st do_mode newSt' in 
-          (* Graphics.remember_mode false ;  *)
+          Graphics.remember_mode false ; 
           play single do_mode comp_st)
         else
-          ( 
-            (* Graphics.remember_mode false;  *)
+          (Graphics.remember_mode false; 
           play single do_mode newSt') 
     )
   | Look -> (print_board st; play single do_mode newSt)
