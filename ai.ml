@@ -102,22 +102,19 @@ let rec med_ai_move_helper st rem_cells thresh =
   if List.length rem_cells = 1 then
     Place ((List.hd rem_cells).cell)
   else
-    (print_endline "AYYY";
     match game_tree with
     | Leaf -> easy_ai_move st
     | Node (nd, children) -> if List.length children = 0 then
         med_ai_move_helper st rem_cells (thresh -1)
       else
       begin
-      print_endline "POOP";
       match dfs children game_tree nd.h_score with
       | Leaf -> easy_ai_move st
       | Node (mve, _) ->
         Place mve.move
-      end)
+      end
 
 let medium_ai_move st =
-  print_endline "HERE";
   let rem_cells = cells_left (board st) in
   med_ai_move_helper st rem_cells 0
 
@@ -210,7 +207,6 @@ let hard_ai_move st =
   if try_find = (-1, -1, -1) then
     let rem_cells = cells_left (board st) in
     let depth = 30.0 /. (List.length rem_cells |> float_of_int) +. 0.5 |> int_of_float in
-    print_endline (string_of_int depth);
     let move_h_val = minimax_AB (get_node tree) st depth min_int max_int in
     minimax_move st move_h_val tree
   else
