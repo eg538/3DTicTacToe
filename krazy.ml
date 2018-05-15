@@ -21,7 +21,7 @@ let string_of_level l = match l with
   | Medium -> "medium"
   | Hard -> "hard"
 
-(*[random_cell_for_krazy st] is a random cell from the occupied cells in the board 
+(*[random_cell_for_krazy st] is a random cell from the occupied cells in the board
  * specified by [st]*)
 let random_cell_for_krazy st =
   let all_cells = cells_occupied (board st) in
@@ -31,7 +31,7 @@ let random_cell_for_krazy st =
     begin
     let index = (Random.int ((List.length  all_cells)-1)) in
     (List.nth (all_cells) index)
-  end 
+  end
 
 (*[krazy_recalc_helper cellst st] is a helper function for krazy_recalc_score*)
 let rec krazy_recalc_helper cellst st =
@@ -52,11 +52,10 @@ let krazy_recalc_score st =
   let lvl = string_of_level (game_level st) in
   let mode = string_of_mode (game_mode st) in
   let info_str = num_p^" "^p1_av^" "^lvl^" "^mode in
-  let win_inst_tracker = [] in
   let occupied = cells_occupied (board st) in
   let st' = init_state info_str in
   let new_st =
-    {st' with 
+    {st' with
       p1_num_hints = st.p1_num_hints;
       p1_num_tries = st.p1_num_tries;
       p2_num_hints = st.p2_num_hints;
@@ -101,7 +100,7 @@ let krazy_bomb st c =
   let instances = col_3d @ v_3d_diag @ h_3d_diag @ plane_2d_inst in
   let inst_list = extract_cell_pos instances in
   let _ = List.iter (fun i ->
-      Hashtbl.replace b (Hashtbl.find b i).cell 
+      Hashtbl.replace b (Hashtbl.find b i).cell
         {(Hashtbl.find b i) with player=None}) inst_list in
   {st with tttBoard = b} |> krazy_recalc_score
 

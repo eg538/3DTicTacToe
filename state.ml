@@ -79,7 +79,8 @@ let get_result_message s =
   | Single -> if s.winner = s.p1_avatar then
       ("win", "Congratulations! You won the Java cup!")
     else if s.winner <> None then
-      ("draw", "Sad! You didn't win the Java cup, but try again next time for that steaming mug of Java!")
+      ("draw", "Sad! You didn't win the Java cup, but try again next time for
+that steaming mug of Java!")
     else
       ("lost", "Oh no! You were close to winning the Java cup!")
 
@@ -122,7 +123,6 @@ let rec check diag_cells_in_question h =
   match diag_cells_in_question with
   | [] -> true
   | head::tail -> (head = h) && (check tail h)
-  | _ -> false
 
 (*[search st diag_cells_in_q diags_cell_list_only] is whether all the cells in
  * [diag_cells_in_q] are equivalent to those in [diags_cell_list_only]*)
