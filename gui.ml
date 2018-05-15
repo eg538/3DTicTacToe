@@ -105,6 +105,10 @@ let rect_drawn_bblack x y width height =
   set_line_width 9;
    draw_rect x y width height;)
 
+(* Draws a gray rectangle around the button the player presses.
+   [rect_drawn_gray x y width height] draws a gray rectangle with lower left
+   corner at position (x,y) with width [width] and height [height]
+*)
 let rect_drawn_gray x y width height =
   (set_color gray;
    set_line_width 2;

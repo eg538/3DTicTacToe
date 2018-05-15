@@ -25,8 +25,13 @@ let string_of_level l = match l with
  * specified by [st]*)
 let random_cell_for_krazy st =
   let all_cells = cells_occupied (board st) in
-  let index = (Random.int ((List.length all_cells)-1)) in
-  (List.nth (all_cells) index)
+  if ((List.length all_cells) = 0) then failwith "Populate your board first!"
+  else if ((List.length all_cells) = 1 ) then List.nth (all_cells) 0
+  else
+    begin
+    let index = (Random.int ((List.length  all_cells)-1)) in
+    (List.nth (all_cells) index)
+  end 
 
 (*[krazy_recalc_helper cellst st] is a helper function for krazy_recalc_score*)
 let rec krazy_recalc_helper cellst st =

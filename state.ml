@@ -52,7 +52,7 @@ let p2_score s = s.curr_score_2
 
 let curr_player s = s.current_player
 
-let num_hints s = 
+let num_hints s =
   let curr_p = s.current_player in
   match curr_p with
   | p1_avatar -> s.p1_num_hints

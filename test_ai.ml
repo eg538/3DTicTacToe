@@ -19,7 +19,13 @@ let string_stats stats =
 let rec play ai1 ai2 (f: string -> int -> stats -> unit) str n st acc_stats=
   if game_ended st then
     begin
+<<<<<<< HEAD
+    print_endline "]";
+    (* print_endline "Game end"; *)
+    let win_plyr = (*winner st*) st.winner in
+=======
     let win_plyr = winner st in
+>>>>>>> ab21e001975288e1e7e8e17ac14f7ff8f28beb75
     let new_stats =
     begin
     match win_plyr with
@@ -48,6 +54,12 @@ let rec play ai1 ai2 (f: string -> int -> stats -> unit) str n st acc_stats=
 
 let rec play_game ai1 ai2 str n acc =
   let init_st = init_state str in
+<<<<<<< HEAD
+  print_endline ("Starting game " ^ (string_of_int n) ^ "...");
+  (* print_board init_st; *)
+  print_string "[" |> flush_all;
+=======
+>>>>>>> ab21e001975288e1e7e8e17ac14f7ff8f28beb75
   if n > 0 then
   try(
     play ai1 ai2 play_game str n init_st acc
@@ -58,3 +70,8 @@ let rec play_game ai1 ai2 str n acc =
 
 let rec start ai1 ai2 n =
   play_game ai1 ai2 "multi python easy normal" n {python = 0; caml = 0; none = 0}
+<<<<<<< HEAD
+
+(* let () = start easy_ai_move hard_ai_move 1000 *)
+=======
+>>>>>>> ab21e001975288e1e7e8e17ac14f7ff8f28beb75

@@ -1,14 +1,5 @@
 open Parse_init
 open Types
-(* type cell
-type board
-(*WinType3D is a variant type used to distinguish the different types of
-  "diagonal" wins that could occur in the 3x3x3 space.
-*)
-type winType3D =
-| WinV of cell list list
-| WinH of cell list list
-| WinNone *)
 
 (*[empty_board] is an empty 3D tic tac toe board*)
 val empty_board: board
@@ -74,22 +65,52 @@ val get_the_win: cell -> player -> board -> cell list list
  *that create a three in a row with [c] in [lst_of_cells]*)
 val all_three_in_row_cells: cell -> board -> cell list list
 
+(*[threed_diag_wins c b]*)
 val threed_diag_wins: cell -> board -> cell list list
 
+(*[diag_check c b] finds the respective diagonal and horizontal wins that cover
+  all three levels of the grid_space that relate to cell [c]
+ *)
 val diag_check: cell -> board -> (winType3D * winType3D)
 
+(*[three_row_2d_cells c b] compiles a list of 3-in-a-row instances that are
+  possible for a given cell [c] in board [b]; 3-in-a-row instances include
+  vertical, horizontal, and diagonal matches.
+*)
 val three_row_2d_cells: cell -> board -> cell list list
 
+(*[victory_on_plane c possible_instances acc] traverses through [possible_instances]
+  to check whether at least one of [possible_instances] has resulted in a win
+  for the player who has played [c] and accumulates it to [acc]
+*)
 val victory_on_plane: cell -> cell list list -> cell list list -> cell list list
 
+(*[threed_col_win] actually returns the list of cells that form a column win
+  with [c] on the board [b]
+*)
 val threed_col_win: cell -> board -> cell list
 
+(*[col_check c b] checks to see whether all the remaining cells in the column of
+  [c] are taken by the same player that played [c] in [b]
+*)
 val col_check: cell -> board -> bool
 
+(*[find_vertical_cells c b] finds the other cells that are in the same column
+  as [c]
+*)
 val find_vertical_cells: cell -> board -> cell list
 
+(*[vertical_3d_group c b] extracts the diagonal instances that [c] is part of,
+  by slicing the 3D grid space represented by hashtable board [b] vertically
+*)
 val vertical_3d_groups: cell -> board -> cell list list
 
+(*[horizontal_3d_group c b] extracts the diagonal instances that [c] is part of,
+  by slicing the 3D grid space represented by hashtable board [b] horizontally
+*)
 val horizontal_3d_group: cell -> board -> cell list list
 
+(*[extract_cell_pos inst] takes a three-in-a-row instance and returns a list
+  of coordinates that indicate all the positions of the cells of [inst]
+*)
 val extract_cell_pos: cell list -> (int*int*int) list
