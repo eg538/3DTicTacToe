@@ -297,11 +297,12 @@ let do_kray_w_GUI (c:command) st =
     (*redraw*)
     print_endline "krazy happened!";
     (if krazy_bomb_happ_st st' then (
-      (*animation*)
+        (*animation*)
+        Gui.bomb_animation ();
     )
     else ());
-      (*Act I*)
-    print_endline "Act I";
+    (*Act I*)
+    Gui.krazy_ocur_animation ();
     clear_graph();
     draw_image (get_img "imgs/xxoo.jpg") 0 0;
     draw_image (get_img "imgs/TTTmain.jpg") 250 40;

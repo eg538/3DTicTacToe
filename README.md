@@ -32,8 +32,6 @@ In order to install the Graphics module and CamlImages, run
 
 `opam install camlimages`
 
-*********** Sheetal here ****************
-
 ## Running the game
 
 ### Starting the game
