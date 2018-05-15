@@ -30,10 +30,10 @@ let init_state str =
     krazy_happ = false;
     krazy_bomb_happ = false;
     moves_made = 0;
-    move_num_dispr = 13;(*Random.int 26 + 5;*)
-    move_num_swap = 15;(*Random.int 26 + 5;*)
-    move_num_switch_pl = 5;(*Random.int 26 + 5;*)
-    move_num_bomb = 10;(*Random.int 26 + 5*)
+    move_num_dispr = 30;(*Random.int 26 + 5;*)
+    move_num_swap = 30;(*Random.int 26 + 5;*)
+    move_num_switch_pl = 30;(*Random.int 26 + 5;*)
+    move_num_bomb = 19(*Random.int 26 + 5*)
   }
 
 let game_mode s = s.mode
