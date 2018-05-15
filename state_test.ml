@@ -42,7 +42,6 @@ let init_tests = [
   "init_krazy_happ" >:: (fun _ -> assert_equal false st.krazy_happ);
   "init_krazy_bomb" >:: (fun _ -> assert_equal false st.krazy_bomb_happ);
   "init_moves_made" >:: (fun _ -> assert_equal 0 st.moves_made);
-  (*)"init_moves_made_st0" >:: (fun _ -> assert_equal 2 st0.moves_made); *)
 
   "add_icon_p" >:: (fun _ -> assert_equal p (Hashtbl.find st0.tttBoard (0,0,0)));
   "add_icon_c" >:: (fun _ -> assert_equal c (Hashtbl.find st0.tttBoard (1,2,0)));

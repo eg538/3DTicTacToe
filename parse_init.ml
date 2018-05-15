@@ -25,6 +25,7 @@ let rec parse_init str =
     | "easy" -> Easy
     | "medium" -> Medium
     | "hard" -> Hard
+    |_ -> failwith "Impossible"
   }
 
 let mode i = i.info_mode

@@ -179,6 +179,10 @@ let rec victory_on_plane c possible_instances acc =
       else
         victory_on_plane c t acc
 
+(*[place (pl,row,col) b plyr] updates the hashtable board [b] with the selected
+  cell on the board indicated by [(pl,row,col)] which was selected by the player
+  [plyr]
+*)
 let place (pl, row, col) b plyr =
   let c = get_cell (pl, row, col) b in
   if move_valid c b then
@@ -209,19 +213,8 @@ let horizontal_3d_group c b =
     end
   else []
 
-  (*
-  match c.cell with
-  | (x,0,z) when (x=z) -> List.filter (fun a -> ((a.cell |> fst')=(a.cell |> thd)) && ((a.cell |> snd')=0)) grid_space (*cell list of length 2*)
-  | _,0,_ -> List.filter (*cell list of length 2*)
-               (fun a -> (a.cell = (2,0,0)) || (a.cell = (1,0,1)) || (a.cell = (0,0,2))) grid_space
-  | x,1,z when (x=z) -> []
-  | _,1,_ -> []
-  | x,2,z when (x=z) -> List.filter (fun a -> ((a.cell |> fst')=(a.cell |> thd)) && (a.cell |> snd' = 2)) grid_space
-  | _ -> List.filter
-           (fun a -> a.cell = (2,2,0) || a.cell = (1,2,1) || a.cell = (0,2,2)) grid_space
-*)
-(*[vertical_3d_groups c b] extracts the diagonal instances that [c] is part of,
-  by slicing the 3D grid space represented by hashtable board [b] horizontally
+(*[vertical_3d_group c b] extracts the diagonal instances that [c] is part of,
+  by slicing the 3D grid space represented by hashtable board [b] vertically
 *)
 let vertical_3d_groups c b =
   let grid_space = board_list_of_cells b in
@@ -242,25 +235,7 @@ let vertical_3d_groups c b =
       [l1;l2]
     end
   else []
-(*match c.cell with
-| 1,1,0 -> (List.filter (fun a -> a.cell = (0,0,0) || a.cell = (1,1,0) || a.cell = (2,2,0)) grid_space)::(List.filter
-                        (fun a -> a.cell = (2,0,0) || a.cell = (1,1,0) || a.cell = (0,2,0)) grid_space)
-| 1,1,2 -> (List.filter (fun a -> a.cell = (0,0,2) || a.cell = (1,1,2) || a.cell = (2,2,2)) grid_space)::(List.filter
-                        (fun a -> a.cell = (2,0,2) || a.cell = (1,1,2) || a.cell = (0,2,2)) grid_space)
-| x,0,z when (x=z) -> List.filter (fun a -> (a.cell |> fst')=(a.cell |> thd)) grid_space
-| 0,_,_ -> List.filter
-          (fun a -> a.cell <> (0,0,1) && a.cell <> (1,0,0) && a.cell <> (2,0,1) && a.cell <> (1,0,2)) grid_space
-| x,1,z when (x=z) -> List.filter (fun a -> (a.cell |> fst')=(a.cell |> thd)) grid_space
-| 1,_,_ -> List.filter
-              (fun a -> a.cell <> (0,0,1) && a.cell <> (1,1,0) && a.cell <> (1,1,2) && a.cell <> (2,1,1)) grid_space
-| x,2,z when (x=z) -> List.filter (fun a -> (a.cell |> fst')=(a.cell |> thd) && (a.cell |> snd' = 2)) grid_space
-| _ -> List.filter
-         (fun a -> a.cell <> (0,2,1) && a.cell <> (1,2,0) && a.cell <> (2,2,1) && a.cell <> (1,2,2) && (a.cell |> thd = 0)) grid_space
-*)
 
-(*[diag_check c b] finds the respective diagonal and horizontal wins that cover
-  all three levels of the grid_space that relate to cell [c]
-*)
 let threed_diag_wins c b =
   let diag_h = horizontal_3d_group c b in
   let diag_v = vertical_3d_groups c b in
@@ -327,6 +302,9 @@ let find_vertical_cells c b =
   List.filter
     (fun i -> (i.cell |> snd')=s && ((i.cell |> thd)=t) && (i<>c)) grid_space
 
+(*[threed_col_win] actually returns the list of cells that form a column win
+  with [c] on the board [b]
+*)
 let threed_col_win c b =
   if (((c.cell|> thd) = 1) && ((c.cell |> snd') = 1)) then [] else
     begin
@@ -349,6 +327,7 @@ let col_check c b =
   (cell_1.player = c.player) && (cell_2.player = c.player)
   end
 
+(*[player_at_cell c] returns the player that has played [c]*)
 let player_at_cell c = c.player
 
 let win_evaluation c b =
@@ -386,6 +365,7 @@ let get_the_win c current_player b=
     | _ -> [c ::(find_vertical_cells c b)]
   else []
 
+(*[get_all_win_inst st c] gets all the possible wins associated *)
 let get_all_win_inst st c =
   let b = st.tttBoard in
   let col_3d = find_vertical_cells c b in

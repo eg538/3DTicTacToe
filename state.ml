@@ -30,17 +30,13 @@ let init_state str =
     krazy_happ = false;
     krazy_bomb_happ = false;
     moves_made = 0;
-    move_num_dispr = 
-      (* 35; *)
+    move_num_dispr =
       Random.int 26 + 5;
-    move_num_swap = 
-      (* 30; *)
+    move_num_swap =
       Random.int 26 + 5;
-    move_num_switch_pl = 
-      (* 30; *)
+    move_num_switch_pl =
       Random.int 26 + 5;
-    move_num_bomb = 
-      (* 10; *)
+    move_num_bomb =
       Random.int 26 + 5
   }
 
@@ -56,8 +52,9 @@ let p2_score s = s.curr_score_2
 
 let curr_player s = s.current_player
 
-let num_hints s =
-  match s.current_player with
+let num_hints s = 
+  let curr_p = s.current_player in
+  match curr_p with
   | p1_avatar -> s.p1_num_hints
   | _ -> s.p2_num_hints
 
@@ -95,8 +92,6 @@ let try_move s (pl, x, y) = let copy_b = copy s.tttBoard in
   place (pl, x, y) copy_b s.current_player;
   s
 
-let hint s = failwith "Unimplemented"
-
 let board s = s.tttBoard
 
 let p1_avatar s = s.p1_avatar
@@ -107,12 +102,6 @@ let inc_point inc_amt st =
     {st with curr_score_1 = st.curr_score_1 + inc_amt}
   else
     {st with curr_score_2 = st.curr_score_2 + inc_amt}
-(*
- let rec extract_cells_from_st st st_diags =
-  match st.diagonals with
-  | [] -> []
-  | [{cell=c1;player=_};{cell=c2;player=_};{cell=c3;player=_}]::t -> [c1;c2;c3]::(extract_cells_from_st st t)
-  | _ -> [] *)
 
 let diag_cells_in_question diag_list =
   match diag_list with
@@ -150,8 +139,6 @@ let rec string_three_row clstlst acc =
  * creates a three-in-a-row for the player that made the move*)
 let play_move st (pl, row, col) =
   make_move st (pl, row, col);
-  (* print_endline ((string_of_int pl)^", "^(string_of_int row)^", "^(string_of_int col)); *)
-  (* print_board st; *)
   if win_evaluation (find_cell st (pl, row, col)) st.tttBoard then
     begin
     let c = find_cell st (pl,row,col) in
@@ -159,8 +146,6 @@ let play_move st (pl, row, col) =
     let diag_check_lst = threed_diag_wins c b in
     let instances = (three_row_2d_cells c b) in
     let case_2d = victory_on_plane c instances [] in
-    print_endline ("CASE 2D");
-    print_endline (string_three_row (List.map (fun lst -> List.map (fun a -> a.cell) lst) case_2d) "");
     let case_3d =
     begin
       if (threed_col_win c b) = [] then
@@ -228,7 +213,6 @@ let do' c st =
       | _ -> st
     end
   | Place (pl, row, col) ->
-    (* print_endline ("Move made: "^(string_o22f_int pl)^", "^(string_of_int row)^", "^(string_of_int col)); *)
     begin
       try(
         play_move st (pl, row, col) |> switch_players |> check_game_end
