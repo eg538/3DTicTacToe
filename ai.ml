@@ -8,6 +8,8 @@ type node = {move: int*int*int; available: cell list; taken: cell list; h_score:
 type gsTree = Leaf | Node of node * (gsTree list)
 type three_count = {none: int; curr_p: int; opp: int}
 
+(*[three_count move clst plyr acc] records the number of cells containing [plyr],
+ * [plyr]'s opponent, and None in [clst]*)
 let rec three_count move clst plyr acc =
   match clst with
   | [] -> acc
