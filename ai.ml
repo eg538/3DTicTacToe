@@ -61,6 +61,7 @@ let rec placement_helper f b remaining_cells plyr d acc s_thresh =
     else (*don't create node and its children*)
       placement_helper f b t plyr d acc s_thresh
 
+(*[gt_gen_help b rem_cells mv scr plyr d s_thresh] is a helper function for game_tree_generate*)
 let rec gt_gen_help b rem_cells mv scr plyr d s_thresh=
   let occupied_cells = cells_occupied b in
   let nd = {move = mv; available = rem_cells; taken = occupied_cells; h_score = scr} in
@@ -70,6 +71,9 @@ let rec gt_gen_help b rem_cells mv scr plyr d s_thresh=
   else
     Node (nd, [Leaf])
 
+(*[game_tree_generate st d s_thresh] generates a game search tree from [st] that has 
+ * depth [d] and prunes each level of children by only generating those with heuristic 
+ * value greater than [s_thresh]*)
 let game_tree_generate st d s_thresh = let b = board st in
   let p = other_player (curr_player st) in
     gt_gen_help b (cells_left b) (-1, -1, -1) (min_int) p d s_thresh
