@@ -88,6 +88,12 @@ let rec ended () =
   | Restart -> raise Gui.Restart
   | _ -> ended ()
 
+let equal st1 st2 mode = 
+  match mode with
+  | Krazy -> {st1 with krazy_happ = false; krazy_bomb_happ = false; moves_made = 0} = 
+      {st2 with krazy_happ = false; krazy_bomb_happ = false; moves_made = 0}
+  | Normal -> st1 = st2
+
 (*[play st] is the helper function for play_game ()*)
 let rec play single do_mode st=
   if game_ended st then
@@ -195,22 +201,24 @@ let rec play single do_mode st=
       )
     )
   | Place (pl, x, y) ->
-    (if newSt = st then
+    (if equal newSt st (game_mode newSt) then
        (let ex = snd test |> fst in
         let why = snd test |> snd in
         Gui.repeat_cell ex why;
         print_endline "Action impossible. Please try a different move.";
-        play single do_mode newSt;)
+        play single do_mode newSt)
 
      else
-       (  (if not (krazy_happ_st newSt) then(
+       (  print_endline "HERE";
+         (if not (krazy_happ_st newSt) then(
             print_board newSt;
+            print_endline (string_three_row [List.map (fun a -> a.cell) (cells_occ st)] "");
             let x = snd test |> fst in
             let y = snd test |> snd in
             Gui.cover_up ();
             print_int x;
             print_int y;
-            Graphics.synchronize(); Graphics.remember_mode true;
+            (* Graphics.synchronize(); Graphics.remember_mode true; *)
             Gui.responsive_board playerr x y ; (* x and y are the locations to draw the image *)
             Gui.score (p1_score newSt) (p2_score newSt) ;
             Gui.num_try_hint (num_tries newSt) 836 587;
@@ -258,6 +266,7 @@ let rec play single do_mode st=
   )
 
 let rec draw_all_moves cllst = 
+  (* print_endline "Drawing all moves again..."; *)
   match cllst with
   | [] -> ()
   | h::t -> let (x, y) = cell_coords_to_x_y (h.cell) in
@@ -266,18 +275,18 @@ let rec draw_all_moves cllst =
       draw_all_moves t
 
 let do_kray_w_GUI (c:command) st = 
-  (* print_endline "++++++++++++++";
-  print_endline (string_three_row [List.map (fun a -> a.cell) (cells_occ st)] ""); *)
+  print_endline "++++++++++++++";
+  print_endline (string_three_row [List.map (fun a -> a.cell) (cells_occ st)] "");
   let st' = do_krazy c st in
-  if krazy_happ_st st' then (
+  (if krazy_happ_st st' then (
     (*redraw*)
+    print_endline "krazy happened!";
     (if krazy_bomb_happ_st st' then (
       (*animation*)
-      (* print_endline (string_three_row [List.map (fun a -> a.cell) (cells_occ st')] "");
-      print_endline "++++++++++++++"; *)
     )
     else ());
       (*Act I*)
+    print_endline "Act I";
     clear_graph();
     draw_image (get_img "imgs/xxoo.jpg") 0 0;
     draw_image (get_img "imgs/TTTmain.jpg") 250 40;
@@ -299,8 +308,10 @@ let do_kray_w_GUI (c:command) st =
     draw_act_two playerr p1_sc p2_sc hint_num num_trys recent_wins_lst
   )
   else (
-    ()
-  );
+    print_endline "No krazy happened!"
+  ));
+  print_endline (string_three_row [List.map (fun a -> a.cell) (cells_occ st')] "");
+  print_endline "++++++++++++++";
   st'
 
 let rec play_game str f =
