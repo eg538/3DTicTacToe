@@ -53,6 +53,7 @@ let computer_move_st do_mode newSt =
       hard_ai_move newSt
   in
   let newSt' = do_mode comp_move newSt in
+  (* Graphics.synchronize();Graphics.remember_mode true; *)
   let coords_move =
     begin
       match comp_move with
@@ -159,10 +160,13 @@ let rec play single do_mode st=
         if (clicked_accept) then (
           let place_st = do_mode (Place (pl, x, y)) newSt in
           if single then (
-            let comp_st = computer_move_st do_mode place_st in play single do_mode comp_st
+            Graphics.synchronize();
+            Graphics.remember_mode true;
+            let comp_st = computer_move_st do_mode place_st in Graphics.remember_mode false;play single do_mode comp_st
           )
           else (
-            Graphics.remember_mode false;
+            Graphics.synchronize();
+            Graphics.remember_mode true;
             play single do_mode place_st
           )
         )
@@ -216,7 +220,7 @@ let rec play single do_mode st=
             Gui.cover_up ();
             print_int x;
             print_int y;
-            (*Graphics.synchronize(); Graphics.remember_mode true;*)
+            (* Graphics.synchronize(); Graphics.remember_mode true; *)
             Gui.responsive_board playerr x y ; (* x and y are the locations to draw the image *)
             Gui.score (p1_score newSt) (p2_score newSt) ;
             Gui.num_try_hint (num_tries newSt) 836 587;
@@ -250,15 +254,16 @@ let rec play single do_mode st=
       let newSt' = do_mode hint_move newSt in
       (if (not (krazy_happ_st newSt' )) then
          (
-          Graphics.synchronize ();Graphics.remember_mode true;
+          Graphics.auto_synchronize true;
           print_endline"did i call from here?";
-        Gui.responsive_board playerr x y ; (* x and y are the locations to draw the image *)
+          Gui.responsive_board playerr x y ; (* x and y are the locations to draw the image *)
+          Gui.cover_up();
         Gui.score (p1_score newSt) (p2_score newSt))
       else ());
       if single then
-        (let comp_st = computer_move_st do_mode newSt' in Graphics.remember_mode false; play single do_mode comp_st)
+        (let comp_st = computer_move_st do_mode newSt' in Graphics.remember_mode false ; play single do_mode comp_st)
       else
-        (Graphics.synchronize(); Graphics.remember_mode false; play single do_mode newSt')
+        ( Graphics.remember_mode false; play single do_mode newSt')
   | Look -> (print_board st; play single do_mode newSt)
   | CurrentPlayer ->
     (print_endline ("Current player: "^(string_of_player (curr_player st)));

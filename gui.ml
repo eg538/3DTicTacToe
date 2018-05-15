@@ -81,7 +81,6 @@ let get_img img =
 
 (* Tells the player to please wait as the computer calculates the next best move*)
 let draw_wait_mgs () =
-  Graphics.remember_mode false; Graphics.synchronize();
   (print_endline "in draw_wait_mgs";
    draw_image (get_img "imgs/pls_wait.jpg") 236 0;print_endline"it happened";)
 
@@ -247,6 +246,7 @@ let num_try_hint num x y =
   let thd (_,_,y) = y
 
 let which_command () =
+
     let event_lst = [Graphics.Button_up] in
     let mouse_status = wait_next_event event_lst  in
     let x = mouse_status.mouse_x in
@@ -255,14 +255,14 @@ let which_command () =
     print_string "y is: "; print_int y; print_endline " ";
     print_endline " ";
 
-    (* Graphics.synchronize (); Graphics.remember_mode true; *)
+
     if ((x >= 149 && x <= (149 + 69)) && (y >= 627 && y<= (627 + 44))) then
       ( let ev = [Graphics.Button_up] in
         let ms = wait_next_event ev in
         let xx =  ms.mouse_x in
         let yy = ms.mouse_y in
         ("try" , xx, yy)) else if ((x >= 801 && x <= 894)&&( y >= 624 && y <= 664)) then
-      (Graphics.remember_mode true;Graphics.synchronize();  draw_wait_mgs();print_endline"emily gao";("hint", x, y) )
+      (  Graphics.auto_synchronize false; draw_wait_mgs();Graphics.remember_mode true;("hint", x, y) )
     else if ((x >= 850 && x <= (850 + 110)) && (y >= 313 && y<= (313 + 49))) then ("quit", x, y)
     else if ((x >= 50 && x <= (50 + 134)) && (y >= 313 && y<= (313 + 61))) then ("restart", x, y)
     else ("place" , x, y)
@@ -335,7 +335,7 @@ let cover_try str ex why =
      set_color mid_plep;
      choose_letter str
     )
-  else if (why >= 225 && why <= 330) then
+  else if (why >= 220 && why <= 330) then
     (moveto (ex+15) (why+4);
      set_color bot_plep;
      choose_letter str
