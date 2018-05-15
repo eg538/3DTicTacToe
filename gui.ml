@@ -441,26 +441,39 @@ let cell_coords_to_x_y (pl, x, y)=
   | _ -> failwith "Nop"
 
 
+(* [mark_three move_x move_y]draws a red box around the image with lower left
+   corner [move_x], [move_y]
+*)
 let mark_three move_x move_y =
   ( rect_drawn_red move_x move_y;)
 
-let rec draw_three_row_helper lst =
+(* [draw_three_row most_recent_wins] draws a red box around each cell in
+   most_recent_wins
+   REQUIRES: most_recent_wins is a list of the cells that make a three in a row
+*)
+let rec draw_three_row lst =
   match lst with
   | [] -> ();
   | h::t -> (let (move_x, move_y) = cell_coords_to_x_y h in
-             mark_three move_x move_y; draw_three_row_helper t;)
+             mark_three move_x move_y; draw_three_row t;)
 
 
-let draw_three_row recent_wins =
-  match recent_wins with
-  | [] -> ();
-  | xs -> (draw_three_row_helper (List.sort Pervasives.compare xs); )
-
+(* [iterate lst f] helper method for Gui.draw_three_in_a_row
+   REQUIRES: a cell list list to iterate through, a function (specifically,
+   draw_three_row)
+*)
 let rec iterate lst f =
   match lst with
   | [] -> ();
   | h::t -> (f h; iterate t f;)
 
+(* [draw_act_two playerr p1_score p2_score hint_num num_tries recent_wins_lst]
+   draws in state specific information onto the GUI window
+   REQUIRES: current player: [playerr], scores for both players : [p1_score],
+             [p2_score], number of tries remaining for [playerr] : [num_tries],
+             number of hints remaining for [playerr] : [hint_num],
+             list of the most recent wins : [recent_wins_lst]
+*)
 let draw_act_two playerr p1_score p2_score hint_num num_tries recent_wins_lst =
   highlight_curr_player playerr;
   score p1_score p2_score;
@@ -469,8 +482,15 @@ let draw_act_two playerr p1_score p2_score hint_num num_tries recent_wins_lst =
   responsive_board playerr 0 700;
   num_try_hint hint_num 836 580;
   num_try_hint num_tries 171 587;
-  if not (recent_wins_lst = []) then (Graphics.remember_mode false; iterate recent_wins_lst draw_three_row;)
+  if not (recent_wins_lst = []) then
+    (Graphics.remember_mode false; iterate recent_wins_lst draw_three_row;)
 
+(* [bomb_boom orig x y] switches between the explode, fire, and dead images
+   at one second intervals to make the animation for bomb_animation.
+   [orig] is the time bomb_animation was called. [x] and [y] are the
+   coordinates to draw the images
+   REQUIRES: [x], [y] that falls in the range of the GUI window
+*)
 let rec bomb_boom orig x y =
   if (Unix.time()) = orig +. 1. then
     (responsive_board "explode" x y;
@@ -484,11 +504,21 @@ let rec bomb_boom orig x y =
   else if (Unix.time()) = orig +. 4. then ()
   else (bomb_boom orig x y;)
 
+(* [bomb_animation x y] takes in the x and y position of the icon of the clicked
+   cell and will call a helper function (bomb_boom) and will animate a bomb
+   booming
+*)
 let bomb_animation () =
   (draw_image (get_img "imgs/bomb.jpg") 250 170;
     let orig = Unix.time()  in
     bomb_boom orig 250 170;)
 
+(* [kray_kray orig x y] switches between the krazy_occur and inverse images
+   at one second intervals to make the animation for krazy_ocur_animation.
+  [orig] is the time krazy_ocur_animation was called. [x] and [y] are the
+  coordinates to draw the images
+   REQUIRES: [x], [y] that falls in the range of the GUI window
+*)
 let rec kray_kray orig x y=
   if (Unix.time()) = orig +. 1. then
     (responsive_board "inverse" x y;
@@ -505,6 +535,9 @@ let rec kray_kray orig x y=
   else if (Unix.time()) = orig +. 5. then ()
   else (kray_kray orig x y;)
 
+(* [krazy_ocur_animation x y] flashes a message telling the user that something
+   crazy happened at location x y
+*)
 let krazy_ocur_animation () =
   draw_image (get_img "imgs/krazy_occur.jpg") 250 600;
   let orig = Unix.time() in
