@@ -89,9 +89,9 @@ let rec ended () =
   | Restart -> raise Gui.Restart
   | _ -> ended ()
 
-let equal st1 st2 mode = 
+let equal st1 st2 mode =
   match mode with
-  | Krazy -> {st1 with krazy_happ = false; krazy_bomb_happ = false; moves_made = 0} = 
+  | Krazy -> {st1 with krazy_happ = false; krazy_bomb_happ = false; moves_made = 0} =
       {st2 with krazy_happ = false; krazy_bomb_happ = false; moves_made = 0}
   | Normal -> st1 = st2
 
@@ -280,6 +280,7 @@ let rec play single do_mode st=
                 play single do_mode st)
   )
 
+
 let rec draw_all_moves cllst =
   match cllst with
   | [] -> ()
@@ -288,9 +289,8 @@ let rec draw_all_moves cllst =
       Gui.responsive_board plyr x y;
       draw_all_moves t
 
+
 let do_kray_w_GUI (c:command) st =
-  (* print_endline "++++++++++++++";
-  print_endline (string_three_row [List.map (fun a -> a.cell) (cells_occ st)] ""); *)
   let st' = do_krazy c st in
   (if krazy_happ_st st' then (
     (*redraw*)
@@ -298,8 +298,8 @@ let do_kray_w_GUI (c:command) st =
     (if krazy_bomb_happ_st st' then (
         (*animation*)
         Gui.bomb_animation ();
-    )
-    else ());
+      )
+     else());
     (*Act I*)
     Gui.krazy_ocur_animation ();
     clear_graph();
@@ -320,8 +320,8 @@ let do_kray_w_GUI (c:command) st =
     let hint_num = num_hints st' in
     let num_trys = num_tries st' in
     let recent_wins_lst = most_recent_wins st' in
-    draw_act_two playerr p1_sc p2_sc hint_num num_trys recent_wins_lst
-  )
+    draw_act_two playerr p1_sc p2_sc hint_num num_trys recent_wins_lst;)
+
   else (
     print_endline "No krazy happened!"
   ));
