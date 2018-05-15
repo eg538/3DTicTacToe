@@ -12,6 +12,9 @@ type choices
   RETURNS: a string to start the game *)
 val init_welcome : unit -> string
 
+(* [begin_game x y] draws the game screen*)
+val begin_game : unit -> unit
+
 (* Causes the warning message (stay inside the lines, can't play in (1,1,1), etc ) to disappear *)
 val cover_up: unit -> unit
 
