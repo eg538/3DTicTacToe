@@ -31,12 +31,16 @@ let init_state str =
     krazy_bomb_happ = false;
     moves_made = 0;
     move_num_dispr = 
+      (* 35; *)
       Random.int 26 + 5;
     move_num_swap = 
+      (* 30; *)
       Random.int 26 + 5;
     move_num_switch_pl = 
+      (* 30; *)
       Random.int 26 + 5;
     move_num_bomb = 
+      (* 10; *)
       Random.int 26 + 5
   }
 
