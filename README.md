@@ -35,6 +35,9 @@ In order to install the Graphics module and CamlImages, run
 ### Starting the game
 
 Run `make play` in order to launch the GUI and begin playing the game. The first screen will detail the rules of the game. Click anywhere in order to continue and a welcome screen should appear.
+
+![Rules Screen](imgs/rules_screen.png "Rules Screen")
+
 If you wish to only compile, run `make compile`.
 
 ### Welcome screen
