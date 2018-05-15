@@ -52,16 +52,19 @@ let p2_score s = s.curr_score_2
 
 let curr_player s = s.current_player
 
-let num_hints s =
-  let curr_p = s.current_player in
-  match curr_p with
-  | p1_avatar -> s.p1_num_hints
-  | _ -> s.p2_num_hints
+let num_hints st =
+  if (st.p1_avatar = Python && st.current_player = Python) || 
+  (st.p1_avatar = Caml && st.current_player = Caml) then
+    st.p1_num_hints
+  else
+    st.p2_num_hints
 
-let num_tries s =
-  match s.current_player with
-  | Python ->  s.p1_num_tries
-  | _ -> s.p2_num_tries
+let num_tries st =
+  if (st.p1_avatar = Python && st.current_player = Python) || 
+  (st.p1_avatar = Caml && st.current_player = Caml) then
+    st.p1_num_tries
+  else
+    st.p2_num_tries
 
 let get_result s = s.winner
 

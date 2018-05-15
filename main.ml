@@ -222,6 +222,8 @@ let rec play single do_mode st=
       draw_image (Gui.get_img "imgs/hints_loss.jpg") 236 0;
       play single do_mode newSt
     ) else (
+      Graphics.auto_synchronize true;
+      draw_image (Gui.get_img "imgs/hint_msg.jpg") 236 0;
       let hint_move = player_hint newSt in
       Graphics.remember_mode false;
         let coord_move =
