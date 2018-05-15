@@ -451,5 +451,46 @@ let draw_act_two playerr p1_score p2_score hint_num num_tries recent_wins_lst =
   responsive_board playerr 0 700;
   num_try_hint hint_num 836 580;
   num_try_hint num_tries 171 587;
-  if not (recent_wins_lst = []) then Graphics.remember_mode false; iterate recent_wins_lst draw_three_row;
-  
+  if not (recent_wins_lst = []) then (Graphics.remember_mode false; iterate recent_wins_lst draw_three_row;)
+
+let rec bomb_boom orig x y =
+  (* print_endline "in bomb boom"; *)
+  if (Unix.time()) = orig +. 1. then
+    (responsive_board "explode" x y;
+     bomb_boom orig x y;)
+  else if (Unix.time()) = orig +. 2. then
+    (responsive_board "fire" x y;
+     bomb_boom orig x y;)
+  else if (Unix.time()) = orig +. 3. then
+    (responsive_board "dead" x y;
+     bomb_boom orig x y;)
+  else if (Unix.time()) = orig +. 4. then ()
+  else (bomb_boom orig x y;)
+
+let bomb_animation () =
+(  print_endline "in bomb animation";
+  draw_image (get_img "imgs/bomb.jpg") 250 170;
+  print_endline "draw pict";
+    let orig = Unix.time()  in
+    bomb_boom orig 250 170;)
+
+let rec kray_kray orig x y=
+  if (Unix.time()) = orig +. 1. then
+    (responsive_board "inverse" x y;
+     kray_kray orig x y;)
+  else if (Unix.time()) = orig +. 2. then
+    (responsive_board "krazy_occur" x y;
+     kray_kray orig x y;)
+  else if (Unix.time()) = orig +. 3. then
+    (responsive_board "krazy_occur" x y;
+     kray_kray orig x y;)
+  else if (Unix.time()) = orig +. 4. then
+    (responsive_board "inverse" x y;
+     kray_kray orig x y;)
+  else if (Unix.time()) = orig +. 5. then ()
+  else (kray_kray orig x y;)
+
+let krazy_ocur_animation () =
+  draw_image (get_img "imgs/krazy_occur.jpg") 250 600;
+  let orig = Unix.time() in
+  kray_kray orig 250 600;

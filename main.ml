@@ -257,7 +257,7 @@ let rec play single do_mode st=
                 play single do_mode st)
   )
 
-let rec draw_all_moves cllst = 
+let rec draw_all_moves cllst =
   match cllst with
   | [] -> ()
   | h::t -> let (x, y) = cell_coords_to_x_y (h.cell) in
@@ -265,30 +265,30 @@ let rec draw_all_moves cllst =
       Gui.responsive_board plyr x y;
       draw_all_moves t
 
-let do_kray_w_GUI (c:command) st = 
+let do_kray_w_GUI (c:command) st =
   (* print_endline "++++++++++++++";
   print_endline (string_three_row [List.map (fun a -> a.cell) (cells_occ st)] ""); *)
   let st' = do_krazy c st in
   if krazy_happ_st st' then (
     (*redraw*)
     (if krazy_bomb_happ_st st' then (
-      (*animation*)
-      (* print_endline (string_three_row [List.map (fun a -> a.cell) (cells_occ st')] "");
-      print_endline "++++++++++++++"; *)
+        (*animation*)
+        Gui.bomb_animation ();
     )
     else ());
-      (*Act I*)
+    (*Act I*)
+    Gui.krazy_ocur_animation ();
     clear_graph();
     draw_image (get_img "imgs/xxoo.jpg") 0 0;
     draw_image (get_img "imgs/TTTmain.jpg") 250 40;
-    draw_image (get_img "imgs/hint.jpg") 800 555; 
+    draw_image (get_img "imgs/hint.jpg") 800 555;
     draw_image (get_img "imgs/try.jpg") 134 555;
-    draw_image(get_img "imgs/quit.jpg") 850 313; 
+    draw_image(get_img "imgs/quit.jpg") 850 313;
     draw_image(get_img "imgs/restart.jpg") 50 313;
 
     (*Intermission*)
     cells_occ st' |> draw_all_moves;
-    
+
     (*Act 2*)
     let playerr = curr_player st'|> string_of_player in
     let p1_sc = p1_score st' in
