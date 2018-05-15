@@ -280,8 +280,8 @@ let rec play single do_mode st=
                 play single do_mode st)
   )
 
+
 let rec draw_all_moves cllst =
-  (* print_endline "Drawing all moves again..."; *)
   match cllst with
   | [] -> ()
   | h::t -> let (x, y) = cell_coords_to_x_y (h.cell) in
@@ -299,8 +299,8 @@ let do_kray_w_GUI (c:command) st =
     (if krazy_bomb_happ_st st' then (
         (*animation*)
         Gui.bomb_animation ();
-    )
-    else ());
+      )
+     else());
     (*Act I*)
     Gui.krazy_ocur_animation ();
     clear_graph();
@@ -321,8 +321,8 @@ let do_kray_w_GUI (c:command) st =
     let hint_num = num_hints st' in
     let num_trys = num_tries st' in
     let recent_wins_lst = most_recent_wins st' in
-    draw_act_two playerr p1_sc p2_sc hint_num num_trys recent_wins_lst
-  )
+    draw_act_two playerr p1_sc p2_sc hint_num num_trys recent_wins_lst;)
+
   else (
     print_endline "No krazy happened!"
   ));
