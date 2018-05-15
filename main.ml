@@ -280,12 +280,7 @@ let rec play single do_mode st=
                 play single do_mode st)
   )
 
-<<<<<<< HEAD
 let rec draw_all_moves cllst =
-=======
-let rec draw_all_moves cllst = 
-  (* print_endline "Drawing all moves again..."; *)
->>>>>>> 7ea4a2de7e7d8cb25e119898cf43405dbd638beb
   match cllst with
   | [] -> ()
   | h::t -> let (x, y) = cell_coords_to_x_y (h.cell) in
@@ -293,34 +288,20 @@ let rec draw_all_moves cllst =
       Gui.responsive_board plyr x y;
       draw_all_moves t
 
-<<<<<<< HEAD
 let do_kray_w_GUI (c:command) st =
   (* print_endline "++++++++++++++";
   print_endline (string_three_row [List.map (fun a -> a.cell) (cells_occ st)] ""); *)
-=======
-let do_kray_w_GUI (c:command) st = 
-  print_endline "++++++++++++++";
-  print_endline (string_three_row [List.map (fun a -> a.cell) (cells_occ st)] "");
->>>>>>> 7ea4a2de7e7d8cb25e119898cf43405dbd638beb
   let st' = do_krazy c st in
   (if krazy_happ_st st' then (
     (*redraw*)
     print_endline "krazy happened!";
     (if krazy_bomb_happ_st st' then (
-<<<<<<< HEAD
         (*animation*)
         Gui.bomb_animation ();
     )
     else ());
     (*Act I*)
     Gui.krazy_ocur_animation ();
-=======
-      (*animation*)
-    )
-    else ());
-      (*Act I*)
-    print_endline "Act I";
->>>>>>> 7ea4a2de7e7d8cb25e119898cf43405dbd638beb
     clear_graph();
     draw_image (get_img "imgs/xxoo.jpg") 0 0;
     draw_image (get_img "imgs/TTTmain.jpg") 250 40;
