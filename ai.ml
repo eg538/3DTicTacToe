@@ -35,12 +35,12 @@ let move_heur_fn_helper (move: cell) (clst: cell list) (plyr: player) (acc: int)
   else
     -1
 
-(*[move_heur_fn move b clstlst plyr acc] is the value of [move] for [plyr] in 
+(*[move_heur_fn move b clstlst plyr acc] is the value of [move] for [plyr] in
  * board [b] according to the heuristic function h(move) = 3 f2 (move) + 2 g2 (move) + e2 (move) - (A),
- * where f2 (move) returns the triples that would result in a three-in-a-row win for 
- * player p if they took [move], g2 (move) returns the triples that would result in a three-in-a-row 
- * win for the opponent if they had taken [move]], e2 (move) returns the number of triples whose other 
- * 2 cells apart from the one filled by action a are empty and no players have yet made a move at 
+ * where f2 (move) returns the triples that would result in a three-in-a-row win for
+ * player p if they took [move], g2 (move) returns the triples that would result in a three-in-a-row
+ * win for the opponent if they had taken [move]], e2 (move) returns the number of triples whose other
+ * 2 cells apart from the one filled by action a are empty and no players have yet made a move at
  * their locations, and A represent all other circumstances*)
 let rec move_heur_fn move b clstlst plyr acc =
   match clstlst with
@@ -48,6 +48,9 @@ let rec move_heur_fn move b clstlst plyr acc =
   | h::t -> let score = move_heur_fn_helper move h plyr 0 in
     move_heur_fn move b t plyr (acc + score)
 
+(*[placement_helper f b remaining_cells plyr d acc s_thresh] generates the children of the node
+* in the tree given board [b] and [remaining_cells] that [plyr] can choose. Is depth bounded by [d]
+* and breadth-bounded by [s_thresh] based on nodes' heuristic values*)
 let rec placement_helper f b remaining_cells plyr d acc s_thresh =
   match remaining_cells with
   | [] -> acc
@@ -78,25 +81,24 @@ let game_tree_generate st d s_thresh = let b = board st in
   let p = other_player (curr_player st) in
     gt_gen_help b (cells_left b) (-1, -1, -1) (min_int) p d s_thresh
 
-let rec tree_size t accum =
+(*[move_h_score t] is the heuristic value of the head node of [t]. If [t] is empty, 
+ * returns -1 *)
+let rec move_h_score t =
   match t with
-  | Leaf -> accum
-  | Node (nd, children) -> accum + 1 + List.fold_left (fun acc a -> acc + tree_size a accum) 0 children
+  | Leaf -> -1
+  | Node (nd, children) -> nd.h_score
 
-let rec move_h_score t accum =
-  match t with
-  | Leaf -> accum
-  | Node (nd, children) -> accum + nd.h_score + List.fold_left (fun acc a -> acc + move_h_score a accum) 0 children
-
+(*[dfs child_lst mv acc] is the best move to make from [child_lst] given a depth-first search*)
 let rec dfs child_lst mv acc =
   match child_lst with
   | [] -> mv
-  | h::t -> let sc = move_h_score h 0 in
+  | h::t -> let sc = move_h_score h in
       if sc > acc then
         dfs t h sc
       else
         dfs t mv acc
 
+(*[easy_ai_move_help clst num acc] a helper function for easy_ai_move*)
 let rec easy_ai_move_help clst num acc=
   if num > 0 then
     match clst with
@@ -111,6 +113,7 @@ let easy_ai_move st =
   let mve = easy_ai_move_help rem (Random.int (List.length rem)) (List.hd rem |> cell_coords) in
   Place mve
 
+(*[med_ai_move_helper st rem_cells thresh] a helper function for medium_ai_move*)
 let rec med_ai_move_helper st rem_cells thresh =
   let game_tree = game_tree_generate st 5 thresh in
   if List.length rem_cells = 1 then
@@ -132,11 +135,12 @@ let medium_ai_move st =
   let rem_cells = cells_left (board st) in
   med_ai_move_helper st rem_cells 0
 
-
+(*[get_node t] is the head node of [t]*)
 let get_node t = match t with
     | Leaf -> failwith "Invalid input"
     | Node (info, _) -> info
 
+(*[maximin_helper minf ndlist st d a b valu] is a helper function for maximin_AB*)
 let rec maximin_helper minf (ndlist: node list) (st: state) (d: int) (a: int) (b: int) (valu: int) =
   match ndlist with
   | [] -> valu
@@ -149,6 +153,7 @@ let rec maximin_helper minf (ndlist: node list) (st: state) (d: int) (a: int) (b
       else
         maximin_helper minf t st d a b valu
 
+(*[maximin_AB f nd st d a b] is the best move according to a maximin algorithm*)
 let rec maximin_AB f (nd : node) (st : state) (d : int) (a: int) (b: int) =
   let brd = board st in
   let rem = cells_left brd in
@@ -162,6 +167,7 @@ let rec maximin_AB f (nd : node) (st : state) (d : int) (a: int) (b: int) =
     | Node (info, children) ->
         maximin_helper f (List.map get_node children) st d a b valu
 
+(*[minimax_help f ndlist st d a b valu] is a helper function for minimax_AB*)
 let rec minimax_help f (ndlist : node list) (st : state) (d : int) (a: int) (b: int) (valu: int)=
   match ndlist with
   | [] -> valu
@@ -174,6 +180,7 @@ let rec minimax_help f (ndlist : node list) (st : state) (d : int) (a: int) (b: 
       else
       minimax_help f t st d a b valu
 
+(*[minimax_AB nd st d a b] is the best move according to the minimax algorithm*)
 let rec minimax_AB (nd : node) (st : state) (d : int) (a: int) (b: int) =
   let brd = board st in
   let rem = cells_left brd in
@@ -187,6 +194,7 @@ let rec minimax_AB (nd : node) (st : state) (d : int) (a: int) (b: int) =
     | Node (info, children) ->
       minimax_help minimax_AB (List.map get_node children) st d a b valu
 
+(*[minimax_move_helper st h_val children] is a helper funciton for minimax_move*)
 let rec minimax_move_helper st h_val children =
   match children with
   | [] -> easy_ai_move st
@@ -195,6 +203,8 @@ let rec minimax_move_helper st h_val children =
     else minimax_move_helper st h_val t
   | _ -> failwith "Nop"
 
+(*[minimax_move st h_val tree] is the best move according to minimax algorithm 
+ * with alpha-beta pruning*)
 let rec minimax_move st h_val tree =
   match tree with
   | Leaf -> easy_ai_move st
@@ -203,6 +213,7 @@ let rec minimax_move st h_val tree =
     else
       minimax_move_helper st h_val children
 
+(*[find_helper thresh lst] is a helper function for [find_greater]*)
 let rec find_helper thresh lst =
   match lst with
   | [] -> (-1, -1, -1)
@@ -210,6 +221,8 @@ let rec find_helper thresh lst =
     else
       find_helper thresh t
 
+(*[find_greater thresh tree] is the coordinates of the move in [tree] with the greatest
+ * heuristic value that is greater than [thresh]*)
 let find_greater thresh tree =
   match tree with
   | Leaf -> failwith "Invalid argument"
@@ -226,7 +239,7 @@ let hard_ai_move st =
   else
     Place try_find
 
-let player_hint st = 
+let player_hint st =
   let lvl = game_level st in
   match lvl with
   | Easy -> hard_ai_move st
