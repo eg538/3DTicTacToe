@@ -10,7 +10,7 @@ This game requires OCaml and opam, OCaml Graphics and Camlimages. If OCaml and o
 
 X11/XQuartz are also needed for Graphics support. If homebrew is installed, it can be installed by running
 
-`brew install Caskroom/cask/xquartz`
+```brew install Caskroom/cask/xquartz```
 `brew reinstall ocaml --with-x11`
 
 Then, map opam to use the system installation by running
