@@ -139,11 +139,6 @@ let do_krazy c st =
     print_endline ((string_of_int (fst' (rand_cell.cell)))^", "^(string_of_int (snd' (rand_cell.cell)))^", "^(string_of_int (thd (rand_cell.cell))));
     let bomb_state = krazy_bomb new_st rand_cell |> up_krazy_happ true in
     {bomb_state with krazy_bomb_happ = true}
-<<<<<<< HEAD
+
   ) else if new_st.krazy_happ then new_st |> up_krazy_happ false
   else new_st
-=======
-  ) 
-  (* else if new_st.krazy_happ then new_st |> up_krazy_happ false *)
-  else new_st
->>>>>>> 7ea4a2de7e7d8cb25e119898cf43405dbd638beb
