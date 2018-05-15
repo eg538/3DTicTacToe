@@ -11,6 +11,10 @@ type choices
 (*Draws the welcome screen, with the title of the game and creators*)
 val init_welcome : unit -> string
 
+
+(* [begin_game x y] draws the game screen*)
+val begin_game : unit -> unit
+  
 (* Draws a gray rectangle around the button the player presses.
    [rect_drawn_gray x y width height] draws a gray rectangle with lower left
    corner at position (x,y) with width [width] and height [height]

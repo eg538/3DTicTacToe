@@ -36,11 +36,15 @@ let string_of_player p = match p with
   | Caml -> "caml"
   | None -> "none"
 
+(* [iterate lst f] helper method for Gui.draw_three_in_a_row *)
 let rec iterate lst f =
   match lst with
   | [] -> ();
   | h::t -> (f h; iterate t f;)
 
+(* [computer_move_st do_mode newSt] returns the state of the game in the single
+ * player mode after the computer has made its move depending on the AI level of the game
+ * (easy, medium, or hard)*)
 let computer_move_st do_mode newSt =
   print_endline "Please wait while computer moves...";
   let playerr = string_of_player (State.curr_player newSt ) in
@@ -84,6 +88,8 @@ let computer_move_st do_mode newSt =
     else
       newSt
 
+(* [ended ()] method is used to parse the commands and check whether we
+ * reached the end of the game and checked if the user has chosed to Quit or Restart the game. *)
 let rec ended () =
   print_endline "Ended";
   let input = Gui.which_command () in
@@ -98,6 +104,9 @@ let rec ended () =
   | Restart -> raise Gui.Restart
   | _ -> ended ()
 
+
+(* [equal st1 st2 mode] compares the state of the game after a command has occured and
+ * the old state and checks according to mode whether or not the state has indeed changed. *)
 let equal st1 st2 mode =
   match mode with
   | Krazy -> {st1 with krazy_happ = false; krazy_bomb_happ = false; moves_made = 0} =
@@ -240,8 +249,6 @@ let rec play single do_mode st=
             Gui.score (p1_score newSt) (p2_score newSt) ;
             Gui.num_try_hint (num_tries newSt) 836 587;
             Gui.num_try_hint (num_hints newSt) 171 593;
-            let recent_wins = (most_recent_wins newSt ) = [] in
-            print_endline ("MOST RECENT WIN:" ^ (string_three_row (most_recent_wins newSt) ""));
           )
           else
             ()
@@ -286,13 +293,13 @@ let rec play single do_mode st=
           Gui.score (p1_score newSt) (p2_score newSt))
         else ());
         if single then
-          (let comp_st = computer_move_st do_mode newSt' in 
+          (let comp_st = computer_move_st do_mode newSt' in
           (* Graphics.remember_mode false ;  *)
           play single do_mode comp_st)
         else
-          ( 
+          (
             (* Graphics.remember_mode false;  *)
-          play single do_mode newSt') 
+          play single do_mode newSt')
     )
   | Look -> (print_board st; play single do_mode newSt)
   | CurrentPlayer ->
@@ -302,7 +309,8 @@ let rec play single do_mode st=
                 play single do_mode st)
   )
 
-
+(* [draw_all_moves cllst] helper method for [do_kray_w_GUI] to redraw new game state
+ * after a krazy move has occured. *)
 let rec draw_all_moves cllst =
   match cllst with
   | [] -> ()
@@ -311,6 +319,8 @@ let rec draw_all_moves cllst =
       Gui.responsive_board plyr x y;
       draw_all_moves t
 
+(* [do_kray_w_GUI c st] returns the state of the game
+ * after the animations for the krazy mode occur*)
 let do_kray_w_GUI (c:command) st =
   print_endline (string_three_row [List.map (fun a -> a.cell) (cells_occ st)] "");
   let st' = do_krazy c st in
@@ -325,14 +335,7 @@ let do_kray_w_GUI (c:command) st =
      else());
     (*Act I*)
     Gui.krazy_ocur_animation ();
-    clear_graph();
-    draw_image (get_img "imgs/xxoo.jpg") 0 0;
-    draw_image (get_img "imgs/TTTmain.jpg") 250 40;
-    draw_image (get_img "imgs/hint.jpg") 800 555;
-    draw_image (get_img "imgs/try.jpg") 134 555;
-    draw_image(get_img "imgs/quit.jpg") 850 313;
-    draw_image(get_img "imgs/restart.jpg") 50 313;
-
+    Gui.begin_game ();
     (*Intermission*)
     cells_occ st' |> draw_all_moves;
 
@@ -351,6 +354,7 @@ let do_kray_w_GUI (c:command) st =
   print_endline (string_three_row [List.map (fun a -> a.cell) (cells_occ st')] "");
   st'
 
+(* [play_game str f] accepts the command to either start playing the game, quit or restart *)
 let rec play_game str f =
 try (
   let command = parse str in
@@ -374,6 +378,8 @@ try (
 ) with
 | _ -> (print_endline "Invalid")
 
+(* [main ()] starts the REPL, which prompts for a game to play.
+ * It displays the window for where the graphics would be displayed for game play.*)
 let rec main () =
   ANSITerminal.(print_string [red]
                   "\n\nWelcome to 3D Tic Tac Toe.\n");
