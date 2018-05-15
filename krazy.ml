@@ -144,3 +144,7 @@ let do_krazy c st =
   else new_st
 
   (* else if new_st.krazy_happ then new_st |> up_krazy_happ false *)
+(* let do_krazy c st = 
+  let curr_p = curr_player st in
+  let st' = do_krazy_helper c st in
+  {st' with current_player = curr_p |> other_player} *)

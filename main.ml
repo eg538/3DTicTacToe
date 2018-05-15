@@ -43,8 +43,14 @@ let rec iterate lst f =
 
 let computer_move_st do_mode newSt =
   print_endline "Please wait while computer moves...";
-  let playerr = string_of_player (State.curr_player newSt) in
-  highlight_curr_player playerr;
+  (* let playerr = string_of_player (State.curr_player newSt) in *)
+  let playerr = string_of_player (State.curr_player newSt ) in
+  let p1_score0 = p1_score newSt in
+  let p2_score0 = p2_score newSt in
+  let hint_num = num_hints newSt in
+  let try_num = num_tries newSt in
+  let recent_wins = (most_recent_wins newSt) in
+  Gui.draw_act_two playerr p1_score0 p2_score0 hint_num try_num recent_wins;
   let comp_move =
     if game_level newSt = Easy then
       easy_ai_move newSt
@@ -78,6 +84,7 @@ let computer_move_st do_mode newSt =
   newSt'
 
 let rec ended () =
+  print_endline "Ended";
   let input = Gui.which_command () in
   let commend = fst' input in
   let x = snd' input in
@@ -99,12 +106,12 @@ let equal st1 st2 mode =
 (*[play st] is the helper function for play_game ()*)
 let rec play single do_mode st=
   if game_ended st then
-    let win_msg_and_stuff = get_result_message st in
+    (let win_msg_and_stuff = get_result_message st in
     let win_msg = snd win_msg_and_stuff in
     print_endline win_msg;
     print_endline (fst win_msg_and_stuff);
     (Gui.winner_winner_chicken_dinner (fst win_msg_and_stuff));
-    ended ()
+    ended ())
   else
   (print_endline "Please enter command";
   let playerr = string_of_player (State.curr_player st ) in
@@ -116,16 +123,16 @@ let rec play single do_mode st=
   Gui.draw_act_two playerr p1_score0 p2_score0 hint_num try_num recent_wins;
   let input = Gui.which_command () in
   let commend = fst' input in
-    let x = snd' input in
-    print_endline "x is";
-    print_int x;
-    let y = thd input in
-    print_endline "y is";
-    print_int y;
-    let test = Gui.play_board commend x y in
-    let com = fst test in
-    print_endline commend;
-    print_endline com;
+  let x = snd' input in
+  print_endline "x is";
+  print_int x;
+  let y = thd input in
+  print_endline "y is";
+  print_int y;
+  let test = Gui.play_board commend x y in
+  let com = fst test in
+  print_endline commend;
+  print_endline com;
   (* let st_modified = (  if playerr = "python" then (print_endline "python";print_int st.p1_num_tries;  {st with p1_num_tries = st.p1_num_tries - 1 })
                        else (print_endline "caml";print_int st.p2_num_tries;   {st with p2_num_tries = st.p2_num_tries - 1})) in *)
   if com = "try 1,1,1" then play single do_mode st else
@@ -235,7 +242,8 @@ let rec play single do_mode st=
             Gui.num_try_hint (num_tries newSt) 836 587;
             Gui.num_try_hint (num_hints newSt) 171 593;
             let recent_wins = (most_recent_wins newSt ) = [] in
-            print_endline " ";print_endline "recent_wins is empty"; print_endline (string_of_bool recent_wins); print_endline " "
+            print_endline ("MOST RECENT WIN:" ^ (string_three_row (most_recent_wins newSt) ""));
+            (* print_endline " ";print_endline "recent_wins is empty"; print_endline (string_of_bool recent_wins); print_endline " " *)
           )
           else
             ()
