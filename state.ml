@@ -146,8 +146,6 @@ let play_move st (pl, row, col) =
     let diag_check_lst = threed_diag_wins c b in
     let instances = (three_row_2d_cells c b) in
     let case_2d = victory_on_plane c instances [] in
-    print_endline ("CASE 2D");
-    print_endline (string_three_row (List.map (fun lst -> List.map (fun a -> a.cell) lst) case_2d) "");
     let case_3d =
     begin
       if (threed_col_win c b) = [] then
@@ -215,7 +213,6 @@ let do' c st =
       | _ -> st
     end
   | Place (pl, row, col) ->
-    (* print_endline ("Move made: "^(string_o22f_int pl)^", "^(string_of_int row)^", "^(string_of_int col)); *)
     begin
       try(
         play_move st (pl, row, col) |> switch_players |> check_game_end

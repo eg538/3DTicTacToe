@@ -19,7 +19,6 @@ let string_stats stats =
 let rec play ai1 ai2 (f: string -> int -> stats -> unit) str n st acc_stats=
   if game_ended st then
     begin
-    print_endline "]";
     let win_plyr = winner st in
     let new_stats =
     begin
@@ -29,12 +28,10 @@ let rec play ai1 ai2 (f: string -> int -> stats -> unit) str n st acc_stats=
     | _ -> {acc_stats with none = acc_stats.none + 1}
     end
     in
-    print_endline (string_stats new_stats);
     f str (n - 1) new_stats
     end
   else
     begin
-    print_string "#" |> flush_all;
     let current = curr_player st in
     let move =
       begin
@@ -45,18 +42,12 @@ let rec play ai1 ai2 (f: string -> int -> stats -> unit) str n st acc_stats=
       end
     in
     let newSt = do' move st in
-    if newSt = st then
-      (print_endline "";
-      print_endline (string_of_player current);
-      print_board newSt)
-    else
+    if newSt <> st then
       play ai1 ai2 f str n newSt acc_stats
     end
 
 let rec play_game ai1 ai2 str n acc =
   let init_st = init_state str in
-  print_endline ("Starting game " ^ (string_of_int n) ^ "...");
-  print_string "[" |> flush_all;
   if n > 0 then
   try(
     play ai1 ai2 play_game str n init_st acc
