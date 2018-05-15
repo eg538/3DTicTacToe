@@ -1,0 +1,610 @@
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Runner: processes
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Chooser: simple
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Configuration suite_name = "3D Tic Tac Toe test suite"
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Configuration cache_filename = "/Users/cdchang/CS3110/3d-tictactoe/_build/oUnit-$(suite_name).cache"
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Configuration display = "true"
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Configuration results_style_1_X = "false"
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Configuration verbose = "false"
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Configuration health_check_interval = "1."
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Configuration testdata_dir = "none"
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Configuration chooser = "simple"
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Configuration output_html_dir = "none"
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Configuration processes_kill_period = "5."
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Configuration runner = "processes"
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Configuration shards = "2"
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Configuration processes_grace_period = "5."
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Configuration log_encoding = "utf-8"
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Configuration output_junit_file = "none"
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Configuration output_file = "/Users/cdchang/CS3110/3d-tictactoe/_build/oUnit-$(suite_name)-$(shard_id).log"
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Using 2 workers maximum.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Starting worker number dhcp-rhodes-1499.redrover.cornell.edu#01.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Worker dhcp-rhodes-1499.redrover.cornell.edu#01 started.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Starting worker number dhcp-rhodes-1499.redrover.cornell.edu#02.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Worker dhcp-rhodes-1499.redrover.cornell.edu#02 started.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:1:init_curr_plyr, 3D Tic Tac Toe test suite:0:init_board.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:0:init_board.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:1:init_curr_plyr, 3D Tic Tac Toe test suite:0:init_board.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:1:init_curr_plyr.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:1:init_curr_plyr, 3D Tic Tac Toe test suite:0:init_board.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:1:init_curr_plyr is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:1:init_curr_plyr, 3D Tic Tac Toe test suite:0:init_board.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:1:init_curr_plyr.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:1:init_curr_plyr, 3D Tic Tac Toe test suite:0:init_board.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:2:init_curr_score1, 3D Tic Tac Toe test suite:0:init_board.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:2:init_curr_score1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:2:init_curr_score1, 3D Tic Tac Toe test suite:0:init_board.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:2:init_curr_score1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:2:init_curr_score1, 3D Tic Tac Toe test suite:0:init_board.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:0:init_board is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:2:init_curr_score1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:2:init_curr_score1, 3D Tic Tac Toe test suite:0:init_board.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:0:init_board.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:3:init_curr_score2, 3D Tic Tac Toe test suite:0:init_board.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:4:init_num_plyrs, 3D Tic Tac Toe test suite:3:init_curr_score2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:3:init_curr_score2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:4:init_num_plyrs.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:4:init_num_plyrs, 3D Tic Tac Toe test suite:3:init_curr_score2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:3:init_curr_score2 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:4:init_num_plyrs, 3D Tic Tac Toe test suite:3:init_curr_score2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:3:init_curr_score2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:4:init_num_plyrs is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:4:init_num_plyrs, 3D Tic Tac Toe test suite:3:init_curr_score2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:4:init_num_plyrs.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:5:init_mode, 3D Tic Tac Toe test suite:4:init_num_plyrs.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:6:init_level, 3D Tic Tac Toe test suite:5:init_mode.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:5:init_mode.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:6:init_level, 3D Tic Tac Toe test suite:5:init_mode.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:6:init_level.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:6:init_level, 3D Tic Tac Toe test suite:5:init_mode.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:5:init_mode is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:6:init_level, 3D Tic Tac Toe test suite:5:init_mode.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:5:init_mode.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:6:init_level, 3D Tic Tac Toe test suite:5:init_mode.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:7:init_p1_avatar, 3D Tic Tac Toe test suite:6:init_level.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:6:init_level is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:7:init_p1_avatar, 3D Tic Tac Toe test suite:6:init_level.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:6:init_level.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:7:init_p1_avatar.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:7:init_p1_avatar, 3D Tic Tac Toe test suite:6:init_level.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:8:init_p1_num_hints, 3D Tic Tac Toe test suite:7:init_p1_avatar.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:8:init_p1_num_hints.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:8:init_p1_num_hints, 3D Tic Tac Toe test suite:7:init_p1_avatar.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:7:init_p1_avatar is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:8:init_p1_num_hints, 3D Tic Tac Toe test suite:7:init_p1_avatar.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:7:init_p1_avatar.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:8:init_p1_num_hints, 3D Tic Tac Toe test suite:7:init_p1_avatar.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:9:init_p1_num_tries, 3D Tic Tac Toe test suite:8:init_p1_num_hints.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:8:init_p1_num_hints is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:9:init_p1_num_tries.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:9:init_p1_num_tries, 3D Tic Tac Toe test suite:8:init_p1_num_hints.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:8:init_p1_num_hints.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:9:init_p1_num_tries, 3D Tic Tac Toe test suite:8:init_p1_num_hints.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:10:init_p2_num_hints, 3D Tic Tac Toe test suite:9:init_p1_num_tries.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:10:init_p2_num_hints.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:10:init_p2_num_hints, 3D Tic Tac Toe test suite:9:init_p1_num_tries.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:9:init_p1_num_tries is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:10:init_p2_num_hints, 3D Tic Tac Toe test suite:9:init_p1_num_tries.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:9:init_p1_num_tries.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:10:init_p2_num_hints, 3D Tic Tac Toe test suite:9:init_p1_num_tries.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:11:init_p2_num_tries, 3D Tic Tac Toe test suite:10:init_p2_num_hints.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:10:init_p2_num_hints is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:11:init_p2_num_tries.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:11:init_p2_num_tries, 3D Tic Tac Toe test suite:10:init_p2_num_hints.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:10:init_p2_num_hints.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:11:init_p2_num_tries, 3D Tic Tac Toe test suite:10:init_p2_num_hints.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:12:init_most_recent_win, 3D Tic Tac Toe test suite:11:init_p2_num_tries.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:12:init_most_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:12:init_most_recent_win, 3D Tic Tac Toe test suite:11:init_p2_num_tries.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:11:init_p2_num_tries is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:12:init_most_recent_win, 3D Tic Tac Toe test suite:11:init_p2_num_tries.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:11:init_p2_num_tries.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:12:init_most_recent_win, 3D Tic Tac Toe test suite:11:init_p2_num_tries.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:13:init_winner, 3D Tic Tac Toe test suite:12:init_most_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:13:init_winner.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:13:init_winner, 3D Tic Tac Toe test suite:12:init_most_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:12:init_most_recent_win is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:13:init_winner, 3D Tic Tac Toe test suite:12:init_most_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:12:init_most_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:13:init_winner, 3D Tic Tac Toe test suite:12:init_most_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:14:init_game_end, 3D Tic Tac Toe test suite:13:init_winner.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:13:init_winner is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:14:init_game_end.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:14:init_game_end, 3D Tic Tac Toe test suite:13:init_winner.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:13:init_winner.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:14:init_game_end, 3D Tic Tac Toe test suite:13:init_winner.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:15:init_krazy_happ, 3D Tic Tac Toe test suite:14:init_game_end.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:15:init_krazy_happ.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:15:init_krazy_happ, 3D Tic Tac Toe test suite:14:init_game_end.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:14:init_game_end is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:15:init_krazy_happ, 3D Tic Tac Toe test suite:14:init_game_end.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:14:init_game_end.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:15:init_krazy_happ, 3D Tic Tac Toe test suite:14:init_game_end.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:16:init_krazy_bomb, 3D Tic Tac Toe test suite:15:init_krazy_happ.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:16:init_krazy_bomb.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:16:init_krazy_bomb, 3D Tic Tac Toe test suite:15:init_krazy_happ.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:15:init_krazy_happ is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:16:init_krazy_bomb, 3D Tic Tac Toe test suite:15:init_krazy_happ.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:15:init_krazy_happ.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:16:init_krazy_bomb, 3D Tic Tac Toe test suite:15:init_krazy_happ.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:17:init_moves_made, 3D Tic Tac Toe test suite:16:init_krazy_bomb.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:16:init_krazy_bomb is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:17:init_moves_made, 3D Tic Tac Toe test suite:16:init_krazy_bomb.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:16:init_krazy_bomb.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:17:init_moves_made.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:17:init_moves_made, 3D Tic Tac Toe test suite:16:init_krazy_bomb.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:18:add_icon_p, 3D Tic Tac Toe test suite:17:init_moves_made.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:18:add_icon_p.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:18:add_icon_p, 3D Tic Tac Toe test suite:17:init_moves_made.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:17:init_moves_made is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:18:add_icon_p, 3D Tic Tac Toe test suite:17:init_moves_made.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:17:init_moves_made.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:18:add_icon_p, 3D Tic Tac Toe test suite:17:init_moves_made.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:19:add_icon_c, 3D Tic Tac Toe test suite:18:add_icon_p.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:18:add_icon_p is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:19:add_icon_c.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:19:add_icon_c, 3D Tic Tac Toe test suite:18:add_icon_p.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:18:add_icon_p.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:19:add_icon_c, 3D Tic Tac Toe test suite:18:add_icon_p.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:20:empty_cell, 3D Tic Tac Toe test suite:19:add_icon_c.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:20:empty_cell.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:20:empty_cell, 3D Tic Tac Toe test suite:19:add_icon_c.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:19:add_icon_c is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:20:empty_cell, 3D Tic Tac Toe test suite:19:add_icon_c.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:19:add_icon_c.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:20:empty_cell, 3D Tic Tac Toe test suite:19:add_icon_c.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:20:empty_cell is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:21:2d_diag_win_p1, 3D Tic Tac Toe test suite:20:empty_cell.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:20:empty_cell.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:21:2d_diag_win_p1, 3D Tic Tac Toe test suite:20:empty_cell.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:21:2d_diag_win_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:22:2d_diag_win_p2, 3D Tic Tac Toe test suite:21:2d_diag_win_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:21:2d_diag_win_p1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:22:2d_diag_win_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:22:2d_diag_win_p2, 3D Tic Tac Toe test suite:21:2d_diag_win_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:21:2d_diag_win_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:22:2d_diag_win_p2 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:22:2d_diag_win_p2, 3D Tic Tac Toe test suite:21:2d_diag_win_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:22:2d_diag_win_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:23:2d_diag_recent_win, 3D Tic Tac Toe test suite:22:2d_diag_win_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:24:3d_col_win_p1, 3D Tic Tac Toe test suite:23:2d_diag_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:23:2d_diag_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:24:3d_col_win_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:24:3d_col_win_p1, 3D Tic Tac Toe test suite:23:2d_diag_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:24:3d_col_win_p1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:24:3d_col_win_p1, 3D Tic Tac Toe test suite:23:2d_diag_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:23:2d_diag_recent_win is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:24:3d_col_win_p1, 3D Tic Tac Toe test suite:23:2d_diag_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:23:2d_diag_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:24:3d_col_win_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:24:3d_col_win_p1, 3D Tic Tac Toe test suite:23:2d_diag_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:26:3d_col_recent_win, 3D Tic Tac Toe test suite:25:3d_col_win_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:25:3d_col_win_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:26:3d_col_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:26:3d_col_recent_win, 3D Tic Tac Toe test suite:25:3d_col_win_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:25:3d_col_win_p2 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:26:3d_col_recent_win is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:26:3d_col_recent_win, 3D Tic Tac Toe test suite:25:3d_col_win_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:25:3d_col_win_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:26:3d_col_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:26:3d_col_recent_win, 3D Tic Tac Toe test suite:25:3d_col_win_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:28:2d_horz_win_p2, 3D Tic Tac Toe test suite:27:2d_horz_win_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:27:2d_horz_win_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:28:2d_horz_win_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:28:2d_horz_win_p2, 3D Tic Tac Toe test suite:27:2d_horz_win_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:27:2d_horz_win_p1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:28:2d_horz_win_p2 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:28:2d_horz_win_p2, 3D Tic Tac Toe test suite:27:2d_horz_win_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:27:2d_horz_win_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:28:2d_horz_win_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:28:2d_horz_win_p2, 3D Tic Tac Toe test suite:27:2d_horz_win_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:30:2d_vert_win_p1, 3D Tic Tac Toe test suite:29:2d_horz_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:30:2d_vert_win_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:30:2d_vert_win_p1, 3D Tic Tac Toe test suite:29:2d_horz_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:29:2d_horz_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:30:2d_vert_win_p1, 3D Tic Tac Toe test suite:29:2d_horz_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:30:2d_vert_win_p1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:30:2d_vert_win_p1, 3D Tic Tac Toe test suite:29:2d_horz_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:30:2d_vert_win_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:30:2d_vert_win_p1, 3D Tic Tac Toe test suite:29:2d_horz_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:29:2d_horz_recent_win is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:31:2d_vert_win_p2, 3D Tic Tac Toe test suite:29:2d_horz_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:29:2d_horz_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:31:2d_vert_win_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:31:2d_vert_win_p2, 3D Tic Tac Toe test suite:29:2d_horz_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:32:2d_vert_recent_win, 3D Tic Tac Toe test suite:31:2d_vert_win_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:32:2d_vert_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:32:2d_vert_recent_win, 3D Tic Tac Toe test suite:31:2d_vert_win_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:31:2d_vert_win_p2 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:32:2d_vert_recent_win is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:32:2d_vert_recent_win, 3D Tic Tac Toe test suite:31:2d_vert_win_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:31:2d_vert_win_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:32:2d_vert_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:32:2d_vert_recent_win, 3D Tic Tac Toe test suite:31:2d_vert_win_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:34:3d_diag_win1_p2, 3D Tic Tac Toe test suite:33:3d_diag_win1_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:33:3d_diag_win1_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:34:3d_diag_win1_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:34:3d_diag_win1_p2, 3D Tic Tac Toe test suite:33:3d_diag_win1_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:33:3d_diag_win1_p1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:34:3d_diag_win1_p2, 3D Tic Tac Toe test suite:33:3d_diag_win1_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:33:3d_diag_win1_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:34:3d_diag_win1_p2 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:34:3d_diag_win1_p2, 3D Tic Tac Toe test suite:33:3d_diag_win1_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:34:3d_diag_win1_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:35:3d_diag1_recent_win, 3D Tic Tac Toe test suite:34:3d_diag_win1_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:35:3d_diag1_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:36:3d_diag_win2_p1, 3D Tic Tac Toe test suite:35:3d_diag1_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:36:3d_diag_win2_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:36:3d_diag_win2_p1, 3D Tic Tac Toe test suite:35:3d_diag1_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:35:3d_diag1_recent_win is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:36:3d_diag_win2_p1, 3D Tic Tac Toe test suite:35:3d_diag1_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:35:3d_diag1_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:36:3d_diag_win2_p1, 3D Tic Tac Toe test suite:35:3d_diag1_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:36:3d_diag_win2_p1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:37:3d_diag_win2_p2, 3D Tic Tac Toe test suite:36:3d_diag_win2_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:36:3d_diag_win2_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:37:3d_diag_win2_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:37:3d_diag_win2_p2, 3D Tic Tac Toe test suite:36:3d_diag_win2_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:38:3d_diag2_recent_win, 3D Tic Tac Toe test suite:37:3d_diag_win2_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:38:3d_diag2_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:38:3d_diag2_recent_win, 3D Tic Tac Toe test suite:37:3d_diag_win2_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:37:3d_diag_win2_p2 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:38:3d_diag2_recent_win, 3D Tic Tac Toe test suite:37:3d_diag_win2_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:37:3d_diag_win2_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:38:3d_diag2_recent_win, 3D Tic Tac Toe test suite:37:3d_diag_win2_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:39:3d_doub_vert_group_p1, 3D Tic Tac Toe test suite:38:3d_diag2_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:38:3d_diag2_recent_win is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:39:3d_doub_vert_group_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:39:3d_doub_vert_group_p1, 3D Tic Tac Toe test suite:38:3d_diag2_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:38:3d_diag2_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:39:3d_doub_vert_group_p1, 3D Tic Tac Toe test suite:38:3d_diag2_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:40:3d_doub_vert_group_p2, 3D Tic Tac Toe test suite:39:3d_doub_vert_group_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:40:3d_doub_vert_group_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:40:3d_doub_vert_group_p2, 3D Tic Tac Toe test suite:39:3d_doub_vert_group_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:39:3d_doub_vert_group_p1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:40:3d_doub_vert_group_p2, 3D Tic Tac Toe test suite:39:3d_doub_vert_group_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:39:3d_doub_vert_group_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:40:3d_doub_vert_group_p2, 3D Tic Tac Toe test suite:39:3d_doub_vert_group_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:41:3d_doub_vert_group_recent_win, 3D Tic Tac Toe test suite:40:3d_doub_vert_group_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:41:3d_doub_vert_group_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:41:3d_doub_vert_group_recent_win, 3D Tic Tac Toe test suite:40:3d_doub_vert_group_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:40:3d_doub_vert_group_p2 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:41:3d_doub_vert_group_recent_win, 3D Tic Tac Toe test suite:40:3d_doub_vert_group_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:40:3d_doub_vert_group_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:41:3d_doub_vert_group_recent_win, 3D Tic Tac Toe test suite:40:3d_doub_vert_group_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:42:3d_doub_horz_group_p1, 3D Tic Tac Toe test suite:41:3d_doub_vert_group_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:42:3d_doub_horz_group_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:42:3d_doub_horz_group_p1, 3D Tic Tac Toe test suite:41:3d_doub_vert_group_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:41:3d_doub_vert_group_recent_win is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:42:3d_doub_horz_group_p1, 3D Tic Tac Toe test suite:41:3d_doub_vert_group_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:41:3d_doub_vert_group_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:42:3d_doub_horz_group_p1, 3D Tic Tac Toe test suite:41:3d_doub_vert_group_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:43:3d_doub_horz_group_p2, 3D Tic Tac Toe test suite:42:3d_doub_horz_group_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:43:3d_doub_horz_group_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:43:3d_doub_horz_group_p2, 3D Tic Tac Toe test suite:42:3d_doub_horz_group_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:42:3d_doub_horz_group_p1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:43:3d_doub_horz_group_p2, 3D Tic Tac Toe test suite:42:3d_doub_horz_group_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:42:3d_doub_horz_group_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:43:3d_doub_horz_group_p2, 3D Tic Tac Toe test suite:42:3d_doub_horz_group_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:43:3d_doub_horz_group_p2 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:44:3d_doub_horz_group_recent_win, 3D Tic Tac Toe test suite:43:3d_doub_horz_group_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:43:3d_doub_horz_group_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:44:3d_doub_horz_group_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:44:3d_doub_horz_group_recent_win, 3D Tic Tac Toe test suite:43:3d_doub_horz_group_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:45:3d_vertical_slice_p1a, 3D Tic Tac Toe test suite:44:3d_doub_horz_group_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:45:3d_vertical_slice_p1a.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:45:3d_vertical_slice_p1a, 3D Tic Tac Toe test suite:44:3d_doub_horz_group_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:44:3d_doub_horz_group_recent_win is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:45:3d_vertical_slice_p1a, 3D Tic Tac Toe test suite:44:3d_doub_horz_group_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:44:3d_doub_horz_group_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:45:3d_vertical_slice_p1a is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:45:3d_vertical_slice_p1a, 3D Tic Tac Toe test suite:44:3d_doub_horz_group_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:45:3d_vertical_slice_p1a.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:46:3d_vertical_slice_p2a, 3D Tic Tac Toe test suite:45:3d_vertical_slice_p1a.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:46:3d_vertical_slice_p2a.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:47:3d_vertical_slice_recent_wina, 3D Tic Tac Toe test suite:46:3d_vertical_slice_p2a.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:47:3d_vertical_slice_recent_wina.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:47:3d_vertical_slice_recent_wina, 3D Tic Tac Toe test suite:46:3d_vertical_slice_p2a.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:46:3d_vertical_slice_p2a is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:47:3d_vertical_slice_recent_wina, 3D Tic Tac Toe test suite:46:3d_vertical_slice_p2a.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:46:3d_vertical_slice_p2a.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:47:3d_vertical_slice_recent_wina is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:47:3d_vertical_slice_recent_wina, 3D Tic Tac Toe test suite:46:3d_vertical_slice_p2a.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:47:3d_vertical_slice_recent_wina.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:48:3d_vertical_slice_p1b, 3D Tic Tac Toe test suite:47:3d_vertical_slice_recent_wina.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:48:3d_vertical_slice_p1b.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:49:3d_vertical_slice_p2b, 3D Tic Tac Toe test suite:48:3d_vertical_slice_p1b.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:49:3d_vertical_slice_p2b.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:49:3d_vertical_slice_p2b, 3D Tic Tac Toe test suite:48:3d_vertical_slice_p1b.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:48:3d_vertical_slice_p1b is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:49:3d_vertical_slice_p2b, 3D Tic Tac Toe test suite:48:3d_vertical_slice_p1b.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:48:3d_vertical_slice_p1b.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:49:3d_vertical_slice_p2b is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:49:3d_vertical_slice_p2b, 3D Tic Tac Toe test suite:48:3d_vertical_slice_p1b.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:49:3d_vertical_slice_p2b.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:50:3d_vertical_slice_recent_winb, 3D Tic Tac Toe test suite:49:3d_vertical_slice_p2b.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:50:3d_vertical_slice_recent_winb.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:51:inactive_111_horz_p1, 3D Tic Tac Toe test suite:50:3d_vertical_slice_recent_winb.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:51:inactive_111_horz_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:51:inactive_111_horz_p1, 3D Tic Tac Toe test suite:50:3d_vertical_slice_recent_winb.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:50:3d_vertical_slice_recent_winb is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:51:inactive_111_horz_p1, 3D Tic Tac Toe test suite:50:3d_vertical_slice_recent_winb.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:50:3d_vertical_slice_recent_winb.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:51:inactive_111_horz_p1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:51:inactive_111_horz_p1, 3D Tic Tac Toe test suite:50:3d_vertical_slice_recent_winb.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:51:inactive_111_horz_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:52:inactive_111_horz_p2, 3D Tic Tac Toe test suite:51:inactive_111_horz_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:52:inactive_111_horz_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:53:inactive_111_vert_p1, 3D Tic Tac Toe test suite:52:inactive_111_horz_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:53:inactive_111_vert_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:53:inactive_111_vert_p1, 3D Tic Tac Toe test suite:52:inactive_111_horz_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:52:inactive_111_horz_p2 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:53:inactive_111_vert_p1, 3D Tic Tac Toe test suite:52:inactive_111_horz_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:52:inactive_111_horz_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:53:inactive_111_vert_p1, 3D Tic Tac Toe test suite:52:inactive_111_horz_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:53:inactive_111_vert_p1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:54:inactive_111_vert_p2, 3D Tic Tac Toe test suite:53:inactive_111_vert_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:53:inactive_111_vert_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:54:inactive_111_vert_p2, 3D Tic Tac Toe test suite:53:inactive_111_vert_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:54:inactive_111_vert_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:55:inactive_111_3d_diag_p1, 3D Tic Tac Toe test suite:54:inactive_111_vert_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:55:inactive_111_3d_diag_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:55:inactive_111_3d_diag_p1, 3D Tic Tac Toe test suite:54:inactive_111_vert_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:54:inactive_111_vert_p2 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:55:inactive_111_3d_diag_p1, 3D Tic Tac Toe test suite:54:inactive_111_vert_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:54:inactive_111_vert_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:55:inactive_111_3d_diag_p1, 3D Tic Tac Toe test suite:54:inactive_111_vert_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:55:inactive_111_3d_diag_p1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:56:inactive_111_3d_diag_p2, 3D Tic Tac Toe test suite:55:inactive_111_3d_diag_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:55:inactive_111_3d_diag_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:56:inactive_111_3d_diag_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:56:inactive_111_3d_diag_p2, 3D Tic Tac Toe test suite:55:inactive_111_3d_diag_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:57:2d_horz_plane_p1, 3D Tic Tac Toe test suite:56:inactive_111_3d_diag_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:57:2d_horz_plane_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:57:2d_horz_plane_p1, 3D Tic Tac Toe test suite:56:inactive_111_3d_diag_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:56:inactive_111_3d_diag_p2 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:57:2d_horz_plane_p1, 3D Tic Tac Toe test suite:56:inactive_111_3d_diag_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:56:inactive_111_3d_diag_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:57:2d_horz_plane_p1, 3D Tic Tac Toe test suite:56:inactive_111_3d_diag_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:57:2d_horz_plane_p1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:58:2d_horz_plane_p2, 3D Tic Tac Toe test suite:57:2d_horz_plane_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:57:2d_horz_plane_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:58:2d_horz_plane_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:58:2d_horz_plane_p2, 3D Tic Tac Toe test suite:57:2d_horz_plane_p1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:59:2d_horz_plane_recent_win, 3D Tic Tac Toe test suite:58:2d_horz_plane_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:59:2d_horz_plane_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:59:2d_horz_plane_recent_win, 3D Tic Tac Toe test suite:58:2d_horz_plane_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:58:2d_horz_plane_p2 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:59:2d_horz_plane_recent_win, 3D Tic Tac Toe test suite:58:2d_horz_plane_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:58:2d_horz_plane_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:59:2d_horz_plane_recent_win, 3D Tic Tac Toe test suite:58:2d_horz_plane_p2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:60:init_krazy_test, 3D Tic Tac Toe test suite:59:2d_horz_plane_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:60:init_krazy_test.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:60:init_krazy_test, 3D Tic Tac Toe test suite:59:2d_horz_plane_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:59:2d_horz_plane_recent_win is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:60:init_krazy_test, 3D Tic Tac Toe test suite:59:2d_horz_plane_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:59:2d_horz_plane_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:60:init_krazy_test, 3D Tic Tac Toe test suite:59:2d_horz_plane_recent_win.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:61:single_krazy_bomb1, 3D Tic Tac Toe test suite:60:init_krazy_test.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:60:init_krazy_test is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:61:single_krazy_bomb1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:61:single_krazy_bomb1, 3D Tic Tac Toe test suite:60:init_krazy_test.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:60:init_krazy_test.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:61:single_krazy_bomb1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:61:single_krazy_bomb1, 3D Tic Tac Toe test suite:60:init_krazy_test.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:61:single_krazy_bomb1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:62:single_krazy_bomb2, 3D Tic Tac Toe test suite:61:single_krazy_bomb1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:63:single_krazy_bomb3, 3D Tic Tac Toe test suite:62:single_krazy_bomb2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:62:single_krazy_bomb2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:63:single_krazy_bomb3, 3D Tic Tac Toe test suite:62:single_krazy_bomb2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:63:single_krazy_bomb3.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:63:single_krazy_bomb3, 3D Tic Tac Toe test suite:62:single_krazy_bomb2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:62:single_krazy_bomb2 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:63:single_krazy_bomb3, 3D Tic Tac Toe test suite:62:single_krazy_bomb2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:62:single_krazy_bomb2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:63:single_krazy_bomb3, 3D Tic Tac Toe test suite:62:single_krazy_bomb2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:63:single_krazy_bomb3 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:64:single_krazy_bomb4, 3D Tic Tac Toe test suite:63:single_krazy_bomb3.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:63:single_krazy_bomb3.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:64:single_krazy_bomb4.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:64:single_krazy_bomb4, 3D Tic Tac Toe test suite:63:single_krazy_bomb3.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:65:single_krazy_bomb_plyrs_5, 3D Tic Tac Toe test suite:64:single_krazy_bomb4.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:65:single_krazy_bomb_plyrs_5.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:65:single_krazy_bomb_plyrs_5, 3D Tic Tac Toe test suite:64:single_krazy_bomb4.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:65:single_krazy_bomb_plyrs_5 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:65:single_krazy_bomb_plyrs_5, 3D Tic Tac Toe test suite:64:single_krazy_bomb4.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:65:single_krazy_bomb_plyrs_5.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:65:single_krazy_bomb_plyrs_5, 3D Tic Tac Toe test suite:64:single_krazy_bomb4.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:66:single_krazy_bomb_6, 3D Tic Tac Toe test suite:64:single_krazy_bomb4.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:66:single_krazy_bomb_6.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:66:single_krazy_bomb_6, 3D Tic Tac Toe test suite:64:single_krazy_bomb4.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:66:single_krazy_bomb_6 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:66:single_krazy_bomb_6, 3D Tic Tac Toe test suite:64:single_krazy_bomb4.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:66:single_krazy_bomb_6.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:66:single_krazy_bomb_6, 3D Tic Tac Toe test suite:64:single_krazy_bomb4.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:67:single_krazy_swap1, 3D Tic Tac Toe test suite:64:single_krazy_bomb4.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:67:single_krazy_swap1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:67:single_krazy_swap1, 3D Tic Tac Toe test suite:64:single_krazy_bomb4.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:67:single_krazy_swap1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:67:single_krazy_swap1, 3D Tic Tac Toe test suite:64:single_krazy_bomb4.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:64:single_krazy_bomb4 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:67:single_krazy_swap1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:67:single_krazy_swap1, 3D Tic Tac Toe test suite:64:single_krazy_bomb4.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:64:single_krazy_bomb4.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:68:single_krazy_swap1b, 3D Tic Tac Toe test suite:64:single_krazy_bomb4.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:68:single_krazy_swap1b.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:69:single_krazy_swap2, 3D Tic Tac Toe test suite:68:single_krazy_swap1b.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:69:single_krazy_swap2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:69:single_krazy_swap2, 3D Tic Tac Toe test suite:68:single_krazy_swap1b.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:68:single_krazy_swap1b is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:69:single_krazy_swap2, 3D Tic Tac Toe test suite:68:single_krazy_swap1b.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:68:single_krazy_swap1b.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:69:single_krazy_swap2 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:69:single_krazy_swap2, 3D Tic Tac Toe test suite:68:single_krazy_swap1b.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:69:single_krazy_swap2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:70:single_krazy_swap3, 3D Tic Tac Toe test suite:69:single_krazy_swap2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:70:single_krazy_swap3.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:71:single_krazy_swap3b, 3D Tic Tac Toe test suite:70:single_krazy_swap3.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:71:single_krazy_swap3b.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:71:single_krazy_swap3b, 3D Tic Tac Toe test suite:70:single_krazy_swap3.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:70:single_krazy_swap3 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:71:single_krazy_swap3b, 3D Tic Tac Toe test suite:70:single_krazy_swap3.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:70:single_krazy_swap3.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:71:single_krazy_swap3b is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:71:single_krazy_swap3b, 3D Tic Tac Toe test suite:70:single_krazy_swap3.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:71:single_krazy_swap3b.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:72:single_krazy_switch_pl1, 3D Tic Tac Toe test suite:71:single_krazy_swap3b.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:72:single_krazy_switch_pl1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:73:single_krazy_switch_pl2, 3D Tic Tac Toe test suite:72:single_krazy_switch_pl1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:73:single_krazy_switch_pl2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:73:single_krazy_switch_pl2, 3D Tic Tac Toe test suite:72:single_krazy_switch_pl1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:72:single_krazy_switch_pl1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:73:single_krazy_switch_pl2, 3D Tic Tac Toe test suite:72:single_krazy_switch_pl1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:72:single_krazy_switch_pl1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:73:single_krazy_switch_pl2 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:73:single_krazy_switch_pl2, 3D Tic Tac Toe test suite:72:single_krazy_switch_pl1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:73:single_krazy_switch_pl2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:74:single_krazy_dispr_sq1, 3D Tic Tac Toe test suite:73:single_krazy_switch_pl2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:75:single_krazy_dispr_sq2, 3D Tic Tac Toe test suite:74:single_krazy_dispr_sq1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:74:single_krazy_dispr_sq1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:75:single_krazy_dispr_sq2, 3D Tic Tac Toe test suite:74:single_krazy_dispr_sq1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:75:single_krazy_dispr_sq2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:75:single_krazy_dispr_sq2, 3D Tic Tac Toe test suite:74:single_krazy_dispr_sq1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:74:single_krazy_dispr_sq1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:75:single_krazy_dispr_sq2, 3D Tic Tac Toe test suite:74:single_krazy_dispr_sq1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:74:single_krazy_dispr_sq1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:75:single_krazy_dispr_sq2 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:75:single_krazy_dispr_sq2, 3D Tic Tac Toe test suite:74:single_krazy_dispr_sq1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:75:single_krazy_dispr_sq2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:76:single_krazy_dispr_sq3, 3D Tic Tac Toe test suite:75:single_krazy_dispr_sq2.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:77:single_krazy_dispr_sq4, 3D Tic Tac Toe test suite:76:single_krazy_dispr_sq3.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:76:single_krazy_dispr_sq3.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:77:single_krazy_dispr_sq4, 3D Tic Tac Toe test suite:76:single_krazy_dispr_sq3.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:77:single_krazy_dispr_sq4.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:77:single_krazy_dispr_sq4, 3D Tic Tac Toe test suite:76:single_krazy_dispr_sq3.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:76:single_krazy_dispr_sq3 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:77:single_krazy_dispr_sq4, 3D Tic Tac Toe test suite:76:single_krazy_dispr_sq3.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:76:single_krazy_dispr_sq3.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:77:single_krazy_dispr_sq4 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:77:single_krazy_dispr_sq4, 3D Tic Tac Toe test suite:76:single_krazy_dispr_sq3.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:77:single_krazy_dispr_sq4.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:78:single_krazy_dispr_sq5, 3D Tic Tac Toe test suite:77:single_krazy_dispr_sq4.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:78:single_krazy_dispr_sq5.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:79:all_krazy_feature_1, 3D Tic Tac Toe test suite:78:single_krazy_dispr_sq5.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Start test 3D Tic Tac Toe test suite:79:all_krazy_feature_1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:79:all_krazy_feature_1, 3D Tic Tac Toe test suite:78:single_krazy_dispr_sq5.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:78:single_krazy_dispr_sq5 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:79:all_krazy_feature_1, 3D Tic Tac Toe test suite:78:single_krazy_dispr_sq5.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:78:single_krazy_dispr_sq5.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:79:all_krazy_feature_1, 3D Tic Tac Toe test suite:78:single_krazy_dispr_sq5.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: Test 3D Tic Tac Toe test suite:79:all_krazy_feature_1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Still 2 tests running : 3D Tic Tac Toe test suite:80:game_over, 3D Tic Tac Toe test suite:79:all_krazy_feature_1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:80:game_over, 3D Tic Tac Toe test suite:79:all_krazy_feature_1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#02 I: End test 3D Tic Tac Toe test suite:79:all_krazy_feature_1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Start test 3D Tic Tac Toe test suite:80:game_over.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Still 2 tests running : 3D Tic Tac Toe test suite:80:game_over, 3D Tic Tac Toe test suite:79:all_krazy_feature_1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 2 tests running: 3D Tic Tac Toe test suite:80:game_over, 3D Tic Tac Toe test suite:79:all_krazy_feature_1.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Still 1 tests running : 3D Tic Tac Toe test suite:80:game_over.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 1 tests running: 3D Tic Tac Toe test suite:80:game_over.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: Test 3D Tic Tac Toe test suite:80:game_over is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Still 1 tests running : 3D Tic Tac Toe test suite:80:game_over.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 1 tests running: 3D Tic Tac Toe test suite:80:game_over.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#01 I: End test 3D Tic Tac Toe test suite:80:game_over.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Still 1 tests running : 3D Tic Tac Toe test suite:80:game_over.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 1 tests running: 3D Tic Tac Toe test suite:80:game_over.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: 0 tests running: .
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Worker dhcp-rhodes-1499.redrover.cornell.edu#02 has ended.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Worker dhcp-rhodes-1499.redrover.cornell.edu#01 has ended.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Used 2 worker during test execution.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Run 39 tests with shard dhcp-rhodes-1499.redrover.cornell.edu#02.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Run 42 tests with shard dhcp-rhodes-1499.redrover.cornell.edu#01.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: ==============
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Summary:
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:80:game_over is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:79:all_krazy_feature_1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:78:single_krazy_dispr_sq5 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:77:single_krazy_dispr_sq4 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:76:single_krazy_dispr_sq3 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:75:single_krazy_dispr_sq2 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:74:single_krazy_dispr_sq1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:73:single_krazy_switch_pl2 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:72:single_krazy_switch_pl1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:71:single_krazy_swap3b is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:70:single_krazy_swap3 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:69:single_krazy_swap2 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:68:single_krazy_swap1b is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:64:single_krazy_bomb4 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:67:single_krazy_swap1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:66:single_krazy_bomb_6 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:65:single_krazy_bomb_plyrs_5 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:63:single_krazy_bomb3 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:62:single_krazy_bomb2 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:61:single_krazy_bomb1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:60:init_krazy_test is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:59:2d_horz_plane_recent_win is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:58:2d_horz_plane_p2 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:57:2d_horz_plane_p1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:56:inactive_111_3d_diag_p2 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:55:inactive_111_3d_diag_p1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:54:inactive_111_vert_p2 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:53:inactive_111_vert_p1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:52:inactive_111_horz_p2 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:51:inactive_111_horz_p1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:50:3d_vertical_slice_recent_winb is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:49:3d_vertical_slice_p2b is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:48:3d_vertical_slice_p1b is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:47:3d_vertical_slice_recent_wina is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:46:3d_vertical_slice_p2a is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:45:3d_vertical_slice_p1a is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:44:3d_doub_horz_group_recent_win is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:43:3d_doub_horz_group_p2 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:42:3d_doub_horz_group_p1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:41:3d_doub_vert_group_recent_win is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:40:3d_doub_vert_group_p2 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:39:3d_doub_vert_group_p1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:38:3d_diag2_recent_win is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:37:3d_diag_win2_p2 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:36:3d_diag_win2_p1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:35:3d_diag1_recent_win is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:34:3d_diag_win1_p2 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:33:3d_diag_win1_p1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:32:2d_vert_recent_win is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:31:2d_vert_win_p2 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:29:2d_horz_recent_win is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:30:2d_vert_win_p1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:28:2d_horz_win_p2 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:27:2d_horz_win_p1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:26:3d_col_recent_win is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:25:3d_col_win_p2 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:24:3d_col_win_p1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:23:2d_diag_recent_win is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:22:2d_diag_win_p2 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:21:2d_diag_win_p1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:20:empty_cell is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:19:add_icon_c is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:18:add_icon_p is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:17:init_moves_made is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:16:init_krazy_bomb is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:15:init_krazy_happ is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:14:init_game_end is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:13:init_winner is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:12:init_most_recent_win is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:11:init_p2_num_tries is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:10:init_p2_num_hints is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:9:init_p1_num_tries is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:8:init_p1_num_hints is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:7:init_p1_avatar is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:6:init_level is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:5:init_mode is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:4:init_num_plyrs is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:3:init_curr_score2 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:0:init_board is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:2:init_curr_score1 is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Test 3D Tic Tac Toe test suite:1:init_curr_plyr is successful.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Ran: 81 tests in: 0.14 seconds.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Cases: 81.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Tried: 81.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Errors: 0.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Failures: 0.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Skip: 0.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Todo: 0.
+2018-05-15T06:36:56+00:00 dhcp-rhodes-1499.redrover.cornell.edu#00 I: Timeout: 0.

@@ -167,7 +167,7 @@ let three_row_2d_cells c b =
   |_ -> failwith "non-exhaustive match "
 
 
-(*[victory_on_plane c possible_instances ] traverses through [possible_instances]
+(*[victory_on_plane c possible_instances] traverses through [possible_instances]
   to check whether at least one of [possible_instances] has resulted in a win
   for the player who has played [c]
 *)
