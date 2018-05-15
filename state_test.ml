@@ -316,7 +316,7 @@ let st14 = do_krazy (Place (0,2,0)) st14
 let st14 = do_krazy (Place (0,2,2)) st14
 let st14 = do_krazy (Place (1,0,0)) st14
 let st14 = do_krazy (Place (1,0,2)) st14
-let st14 = do_krazy(Place (1,1,0)) st14
+let st14 = do_krazy (Place (1,1,0)) st14
 let st14 = do_krazy (Place (1,1,2)) st14
 let st14 = do_krazy (Place (1,2,0)) st14
 let st14 = do_krazy (Place (1,2,2)) st14
@@ -330,14 +330,102 @@ let st14 = do_krazy (Place (2,2,2)) st14
 let st14_aft = ((cells_occupied st14.tttBoard), (st14.curr_score_1, st14.curr_score_2))
 let st14_bool1 = st14_bef <> st14_aft
 let st14_bool2 = ((st14_bef |> snd |> snd) <> (st14_aft |> snd |> snd)) || ((st14_bef |> snd |> fst) <> (st14_aft |> snd |> fst))
-(*let st13c = init_state "single python easy krazy"
-let st13c = {st13c with move_num_dispr = 2; move_num_swap = 16;
-                        move_num_switch_pl = 14; move_num_bomb = 19}
-  let st13c = do_krazy (Place (1,2,0)) st13c *)
-(*let st13c = do_krazy (Place (2,2,2)) st13c *)
-(*let cell1 = (get_cell (1,2,0) st13c.tttBoard).player
-let cell2 = (get_cell (2,2,2) st13c.tttBoard).player
-  let st13c_bool_expr = ((cell1 = None) || (cell2=None)) && (cell1 <> cell2) *)
+
+(*Krazy swap cell feature*)
+let st15 = init_state "single python easy krazy"
+let st15 = {st15 with move_num_dispr = 20; move_num_swap = 5;
+                move_num_switch_pl = 10; move_num_bomb = 18}
+let st15 = do_krazy (Place (0,0,0)) st15
+let st15 = do_krazy (Place (2,2,2)) st15
+let st15 = do_krazy (Place (0,1,1)) st15
+let st15 = do_krazy (Place (2,1,1)) st15
+let b = st15.tttBoard
+let st15 = do_krazy (Place (0,1,0)) st15
+let b' = st15.tttBoard
+let t_bool = b <> b'
+
+let st16 = init_state "single python easy krazy"
+let st16 = {st16 with move_num_dispr = 20; move_num_swap = 1;
+                      move_num_switch_pl = 19; move_num_bomb = 18}
+let st16 = do_krazy (Place (0,0,0)) st16
+let st16 = do_krazy (Place (2,0,1)) st16
+let st16 = do_krazy (Place (0,0,2)) st16
+let b = st16.tttBoard
+let st16 = do_krazy (Place (1,1,2)) st16
+let st16_bool1 = st16.tttBoard <> b
+
+let st17 = init_state "single python easy krazy"
+let st17 = {st17 with move_num_dispr = 20; move_num_swap = 2;
+                      move_num_switch_pl = 19; move_num_bomb = 18}
+let st17 = do_krazy (Place (0,0,0)) st17
+let cells_bef = cells_occupied st17.tttBoard
+let st17 = do_krazy (Place (2,0,1)) st17
+let cells_aft = cells_occupied st17.tttBoard
+let st17 = do_krazy (Place (1,1,2)) st17
+let st17_bool1 = cells_aft <> cells_bef
+
+(*Krazy plane switching*)
+let st18b = init_state "single python easy krazy"
+let st18b = {st18b with move_num_dispr = 20; move_num_swap = 9;
+                        move_num_switch_pl = 3; move_num_bomb = 18}
+let cells_bef = [{cell=(1,2,1);player=Python};{cell=(0,0,0);player=Caml};
+             {cell=(2,2,2);player=Python}]
+let st18b = do_krazy (Place (1,2,1)) st18b (*Python*)
+let st18b = do_krazy (Place (0,0,0)) st18b (*Caml*)
+let st18b = do_krazy (Place (2,2,2)) st18b (*Python*)
+let cells_aft = (cells_occupied st18b.tttBoard)
+let st18b_bool = cells_aft <> cells_bef
+
+let st18c = init_state "single python easy krazy"
+let st18c = {st18c with move_num_dispr = 20; move_num_swap = 9;
+                        move_num_switch_pl = 7; move_num_bomb = 18}
+let st18c = do_krazy (Place (1,2,1)) st18c
+let st18c = do_krazy (Place (1,0,0)) st18c
+let st18c = do_krazy (Place (1,1,2)) st18c
+let st18c = do_krazy (Place (1,2,2)) st18c
+let st18c = do_krazy (Place (1,0,1)) st18c
+let st18c = do_krazy (Place (0,0,0)) st18c
+let b = st18c.tttBoard
+let st18c = do_krazy (Place (2,2,2)) st18c
+let b' = st18c.tttBoard
+let st18c_bool = b <> b'
+
+let st19a = init_state "single python easy krazy"
+let st19a = {st19a with move_num_dispr = 1; move_num_swap = 9;
+                        move_num_switch_pl = 6; move_num_bomb = 18}
+let st19a = do_krazy (Place (1,2,1)) st19a
+let st19_bool = (st19a.tttBoard = empty_board)
+
+let st19b = init_state "single python easy krazy"
+let st19b = {st19b with move_num_dispr = 2; move_num_swap = 9;
+                        move_num_switch_pl = 6; move_num_bomb = 18}
+let st19b = do_krazy (Place (1,2,1)) st19b
+let st19b = do_krazy (Place (2,0,0)) st19b
+let st19b_bool = (List.length (cells_occupied (st19b.tttBoard))) = 1
+
+let st19c = init_state "single python easy krazy"
+let st19c = {st19c with move_num_dispr = 6; move_num_swap = 10;
+                        move_num_switch_pl = 8; move_num_bomb = 18}
+let st19c = do_krazy (Place (1,2,1)) st19c
+let st19c = do_krazy (Place (2,2,2)) st19c
+let st19c = do_krazy (Place (0,0,0)) st19c
+let st19c = do_krazy (Place (0,0,1)) st19c
+let st19c = do_krazy (Place (2,0,0)) st19c
+let st19c_cells = List.length (cells_occupied st19c.tttBoard)
+let st19c = do_krazy (Place (2,1,1)) st19c
+let st19c_bool = List.length (cells_occupied st19c.tttBoard) = st19c_cells
+
+(*combo example*)
+let st20 = init_state "single python easy krazy"
+let st20 = {st20 with move_num_dispr = 1; move_num_swap = 3;
+                      move_num_switch_pl = 5; move_num_bomb = 7}
+let st20 = do_krazy (Place (0,0,0)) st20
+let st20_removed = st20.tttBoard
+let st20 = do_krazy (Place (0,0,0)) st20
+let st20_cells_bef = [{cell=(0,0,0);player=Python}]
+let st20 = do_krazy (Place (2,1,0)) st20
+let st20_cells_aft = (cells_occupied st20.tttBoard)
+let st20_bool1 = (st20_cells_bef <> st20_cells_aft)
 
 let tests_wins_krazy = [
   "init_krazy_test" >:: (fun _ -> assert_equal Krazy st11.mode);
@@ -353,23 +441,69 @@ let tests_wins_krazy = [
   "single_krazy_bomb_plyrs_5" >:: (fun _ -> assert_equal true (st14_bool2 && st14_bool1));
   "single_krazy_bomb_6" >:: (fun _ -> assert_equal true st14.krazy_happ);
 
-  (*
-    (*(*only disappearing squares - single cell placement*)*)
-  "single_krazy_dispr_sq1" >:: (fun _ -> assert_equal st13a.tttBoard st13b.tttBoard);
-  "single_krazy_dispr_sq2" >:: (fun _ -> assert_equal true st13b.krazy_happ);
+  (*swapping*)
+  "single_krazy_swap1" >:: (fun _ -> assert_equal true t_bool);
+  "single_krazy_swap1b" >:: (fun _ -> assert_equal true st15.krazy_happ);
+  (*swapping 1 cell with itself won't change anything *)
+  "single_krazy_swap2" >:: (fun _ -> assert_equal false st16_bool1);
+  (*swapping exactly 2 cells *)
+  "single_krazy_swap3" >:: (fun _ -> assert_equal true st17_bool1);
+  "single_krazy_swap3b" >:: (fun _ -> assert_equal false st17.krazy_happ);
+
+  (*krazy switching planes*)
+  "single_krazy_switch_pl1" >:: (fun _ -> assert_equal true st18b_bool);
+  "single_krazy_switch_pl2" >:: (fun _ -> assert_equal true st18c_bool);
 
   (*only disappearing squares*)
-  "single_krazy_dispr_sq3" >:: (fun _ -> assert_equal false st13c_bool_expr);
-  "single_krazy_dispr_sq4" >:: (fun _ -> assert_equal true st13c.krazy_happ); *)
+  "single_krazy_dispr_sq1" >:: (fun _ -> assert_equal true st19_bool);
+  "single_krazy_dispr_sq2" >:: (fun _ -> assert_equal true st19b_bool);
   "single_krazy_dispr_sq3" >:: (fun _ -> assert_equal true st13b_bool_expr);
   "single_krazy_dispr_sq4" >:: (fun _ -> assert_equal true st13b.krazy_happ);
+  "single_krazy_dispr_sq5" >:: (fun _ -> assert_equal true st19c_bool);
 
+  (*combo krazy features*)
+  "all_krazy_feature_1" >:: (fun _ -> assert_equal true st20_bool1);
 ]
 
-let game_play_edge_cases = []
+let last_st = init_state "single python medium normal"
+let last_st = do' (Place (0,0,0)) last_st
+let last_st = do' (Place (0,0,1)) last_st
+let last_st = do' (Place (0,0,2)) last_st
+let last_st = do' (Place (0,1,0)) last_st
+let last_st = do' (Place (0,1,1)) last_st
+let last_st = do' (Place (0,1,2)) last_st
+let last_st = do' (Place (0,2,0)) last_st
+let last_st = do' (Place (0,2,1)) last_st
+let last_st = do' (Place (0,2,2)) last_st
+
+let last_st = do' (Place (1,0,0)) last_st
+let last_st = do' (Place (1,0,1)) last_st
+let last_st = do' (Place (1,0,2)) last_st
+let last_st = do' (Place (1,1,0)) last_st
+let last_st = do' (Place (1,1,2)) last_st
+let last_st = do' (Place (1,2,0)) last_st
+let last_st = do' (Place (1,2,1)) last_st
+let last_st = do' (Place (1,2,2)) last_st
+
+let last_st = do' (Place (2,0,0)) last_st
+let last_st = do' (Place (2,0,1)) last_st
+let last_st = do' (Place (2,0,2)) last_st
+let last_st = do' (Place (2,1,0)) last_st
+let last_st = do' (Place (2,1,1)) last_st
+let last_st = do' (Place (2,1,2)) last_st
+let last_st = do' (Place (2,2,0)) last_st
+let last_st = do' (Place (2,2,1)) last_st
+let last_st = do' (Place (2,2,2)) last_st
+
+let other_game_play_edge_cases = [
+  "game_over" >:: (fun _ -> assert_equal true last_st.game_end);
+]
 
 let suite =
   "3D Tic Tac Toe test suite"
-  >::: List.flatten [init_tests;tests_wins_normal;tests_wins_krazy]
+  >::: List.flatten [init_tests;
+                     tests_wins_normal;
+                     tests_wins_krazy;
+                    other_game_play_edge_cases]
 
 let _ = run_test_tt_main suite

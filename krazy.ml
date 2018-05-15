@@ -23,8 +23,13 @@ let string_of_level l = match l with
 
 let random_cell_for_krazy st =
   let all_cells = cells_occupied (board st) in
-  let index = (Random.int ((List.length all_cells)-1)) in
-  (List.nth (all_cells) index)
+  if ((List.length all_cells) = 0) then failwith "Populate your board first!"
+  else if ((List.length all_cells) = 1 ) then List.nth (all_cells) 0
+  else
+    begin
+    let index = (Random.int ((List.length  all_cells)-1)) in
+    (List.nth (all_cells) index)
+  end 
 
 (* let new_krazy_st st = let b = copy empty_board in
   {st with tttBoard = b; curr_score_1 = 0; curr_score_2 = *)
