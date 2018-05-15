@@ -10,12 +10,25 @@ open ANSITerminal
 open Gui
 open Graphics
 
-
 let fst' (y,_,_) = y
 
 let snd' (_,y,_) = y
 
 let thd (_,_,y) = y
+
+let rec string_3_row_h clst acc =
+  match clst with
+  | [] -> acc
+  | coords::t -> (*let coords = h.cell in*)
+      let str = ("(")^(string_of_int (fst' coords))^", "^(string_of_int (snd' coords))^", "^(string_of_int (thd coords))^")"
+      ^"   "^acc in
+      string_3_row_h t str
+
+let rec string_three_row clstlst acc =
+  match clstlst with
+  | [] -> acc
+  | h::t -> let str = (string_3_row_h h "")^"\n"^acc in
+    string_three_row t str
 
 (*[string_of_player p] is the string representation of [p]*)
 let string_of_player p = match p with
@@ -266,22 +279,32 @@ let do_kray_w_GUI (c:command) st =
   let st' = do_krazy c st in
   if krazy_happ_st st' then (
     (*redraw*)
-    if krazy_bomb_happ_st st' then (
+    (if krazy_bomb_happ_st st' then (
       (*animation*)
+      (* print_endline (string_three_row [List.map (fun a -> a.cell) (cells_occ st')] "");
+      print_endline "++++++++++++++"; *)
     )
-    else (
+    else ());
       (*Act I*)
-      clear_graph();
-      draw_image (get_img "imgs/xxoo.jpg") 0 0;
-      draw_image (get_img "imgs/TTTmain.jpg") 250 40;
-      draw_image (get_img "imgs/hint.jpg") 800 555;
-      draw_image (get_img "imgs/try.jpg") 134 555;
+    clear_graph();
+    draw_image (get_img "imgs/xxoo.jpg") 0 0;
+    draw_image (get_img "imgs/TTTmain.jpg") 250 40;
+    draw_image (get_img "imgs/hint.jpg") 800 555;
+    draw_image (get_img "imgs/try.jpg") 134 555;
+    draw_image(get_img "imgs/quit.jpg") 850 313;
+    draw_image(get_img "imgs/restart.jpg") 50 313;
 
-      (*Intermission*)
-      cells_occ st' |> draw_all_moves;
+    (*Intermission*)
+    cells_occ st' |> draw_all_moves;
 
-      (*Act 2*)
-    )
+    (*Act 2*)
+    let playerr = curr_player st'|> string_of_player in
+    let p1_sc = p1_score st' in
+    let p2_sc = p2_score st' in
+    let hint_num = num_hints st' in
+    let num_trys = num_tries st' in
+    let recent_wins_lst = most_recent_wins st' in
+    draw_act_two playerr p1_sc p2_sc hint_num num_trys recent_wins_lst
   )
   else (
     ()
