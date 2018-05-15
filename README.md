@@ -24,7 +24,7 @@ Then run
 
 GTK will also be needed for CamlImages. To install GTK, run
 
-'sudo apt-get install gtk2.0'
+`sudo apt-get install gtk2.0`
 
 In order to install the Graphics module and CamlImages, run
 
