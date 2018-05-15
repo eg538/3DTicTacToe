@@ -1,13 +1,6 @@
 open Types
 
-val random_cell_for_krazy: state -> cell
-
-val krazy_disappearing_sqs : state -> cell -> state
-
-val krazy_cell_swap: state -> cell -> cell -> state
-
-val krazy_switch_planes: state -> int -> int -> state
-
-val krazy_bomb: state -> cell -> state
-
+(*[do_krazy c st] takes a command [c] and a state [st] and updates [st] according to [c].
+ * Functions very similarly to do' in State module but returns the appropriate state for if 
+ * something special such as bomb or switching planes occured*)
 val do_krazy: command -> state -> state
