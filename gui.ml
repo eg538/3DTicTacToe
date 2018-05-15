@@ -315,7 +315,6 @@ let repeat_cell x y =
 
 let responsive_board str x y =
   (let file_name = "imgs/" ^ str ^ ".jpg" in
-  print_endline "Drawing a move";
   draw_image (get_img file_name ) x y;)
 
 let choose_letter str =

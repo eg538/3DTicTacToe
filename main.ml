@@ -63,7 +63,7 @@ let computer_move_st do_mode newSt =
     end
   in
   (if krazy_happ_st newSt' then
-    ()
+    (Graphics.synchronize())
   else
     let x = fst (cell_coords_to_x_y coords_move) in
     let y = snd (cell_coords_to_x_y coords_move) in
@@ -220,7 +220,7 @@ let rec play single do_mode st=
         play single do_mode newSt;)
 
      else
-       (  print_endline "HERE";
+       (  
          (if not (krazy_happ_st newSt) then(
             print_board newSt;
             print_endline (string_three_row [List.map (fun a -> a.cell) (cells_occ st)] "");
@@ -241,11 +241,13 @@ let rec play single do_mode st=
             ()
           );
           if single then
-            (Graphics.remember_mode false;
+            (
+              Graphics.remember_mode false;
               Gui.draw_wait_mgs();
               let comp_st = computer_move_st do_mode newSt in play single do_mode comp_st)
           else
-            (Graphics.remember_mode false;play single do_mode newSt)
+            (Graphics.remember_mode false;
+            play single do_mode newSt)
           ))
   | Hint ->
 
@@ -294,6 +296,7 @@ let do_kray_w_GUI (c:command) st =
   print_endline "++++++++++++++";
   print_endline (string_three_row [List.map (fun a -> a.cell) (cells_occ st)] "");
   let st' = do_krazy c st in
+  Graphics.remember_mode true;
   (if krazy_happ_st st' then (
     (*redraw*)
     print_endline "krazy happened!";
