@@ -134,7 +134,7 @@ let rec play single do_mode st=
         let why = snd test |> snd in
         Gui.repeat_cell ex why;
         if ((playerr = "python" && newSt.p1_num_tries = 0) ||
-          (playerr = "caml" && newSt.p2_num_tries = 0)) then 
+          (playerr = "caml" && newSt.p2_num_tries = 0)) then
           draw_image (Gui.get_img "imgs/tries_loss.jpg") 236 0;
         Graphics.remember_mode false;
         play single do_mode st
@@ -152,7 +152,7 @@ let rec play single do_mode st=
           if single then (
             Graphics.synchronize();
             Graphics.remember_mode true;
-            let comp_st = computer_move_st do_mode place_st in 
+            let comp_st = computer_move_st do_mode place_st in
             Graphics.remember_mode false;
             play single do_mode comp_st
           )
@@ -187,7 +187,7 @@ let rec play single do_mode st=
             Gui.cover_try playerr xx yy;
             Gui.cover_up();
             if single then (
-              let comp_st = computer_move_st do_mode news in 
+              let comp_st = computer_move_st do_mode news in
               Graphics.remember_mode false;
               play single do_mode comp_st
             ) else
@@ -210,7 +210,7 @@ let rec play single do_mode st=
         let y = snd test |> snd in
         Gui.cover_up ();
         (* x and y are the locations to draw the image *)
-        Gui.responsive_board playerr x y ; 
+        Gui.responsive_board playerr x y ;
         Gui.score (p1_score newSt) (p2_score newSt) ;
         Gui.num_try_hint (num_tries newSt) 836 587;
         Gui.num_try_hint (num_hints newSt) 171 593;
@@ -244,7 +244,7 @@ let rec play single do_mode st=
             Graphics.auto_synchronize true;
             print_endline"did i call from here?";
             (* x and y are the locations to draw the image *)
-            Gui.responsive_board playerr x y; 
+            Gui.responsive_board playerr x y;
             Gui.cover_up();
           Gui.score (p1_score newSt) (p2_score newSt)
         ) else ());
