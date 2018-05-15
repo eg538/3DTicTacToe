@@ -51,37 +51,40 @@ let computer_move_st do_mode newSt =
   let try_num = num_tries newSt in
   let recent_wins = (most_recent_wins newSt) in
   Gui.draw_act_two playerr p1_score0 p2_score0 hint_num try_num recent_wins;
-  let comp_move =
+  if List.length (cells_occ newSt) < 26 then (
+    let comp_move =
     if game_level newSt = Easy then
       easy_ai_move newSt
     else if game_level newSt = Medium then
       medium_ai_move newSt
     else
       hard_ai_move newSt
-  in
-  let newSt' = do_mode comp_move newSt in
-  (* Graphics.synchronize();Graphics.remember_mode true; *)
-  let coords_move =
-    begin
-      match comp_move with
-      | Place (a, b, c) -> (a, b, c)
-      | _ -> failwith "Unimplemented"
-    end
-  in
-  (if krazy_happ_st newSt' then
-    (Graphics.synchronize())
-  else
-    let x = fst (cell_coords_to_x_y coords_move) in
-    let y = snd (cell_coords_to_x_y coords_move) in
-    Graphics.synchronize();
-    Graphics.remember_mode true;
-    Gui.responsive_board playerr x y ;
-    Gui.score (p1_score newSt') (p2_score newSt') ;
-    print_board newSt';
-    print_endline ("Score of player 1: "^(string_of_int (p1_score newSt'))^
-                    "\n"^"Score of player 2: "^(string_of_int (p2_score newSt')))
-  );
-  newSt'
+    in
+    let newSt' = do_mode comp_move newSt in
+    (* Graphics.synchronize();Graphics.remember_mode true; *)
+    let coords_move =
+      begin
+        match comp_move with
+        | Place (a, b, c) -> (a, b, c)
+        | _ -> failwith "Unimplemented"
+      end
+    in
+    (if krazy_happ_st newSt' then
+      (Graphics.synchronize())
+    else
+      let x = fst (cell_coords_to_x_y coords_move) in
+      let y = snd (cell_coords_to_x_y coords_move) in
+      Graphics.synchronize();
+      Graphics.remember_mode true;
+      Gui.responsive_board playerr x y ;
+      Gui.score (p1_score newSt') (p2_score newSt') ;
+      print_board newSt';
+      print_endline ("Score of player 1: "^(string_of_int (p1_score newSt'))^
+                      "\n"^"Score of player 2: "^(string_of_int (p2_score newSt')))
+    );
+    newSt')
+    else
+      newSt
 
 let rec ended () =
   print_endline "Ended";

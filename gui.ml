@@ -371,13 +371,13 @@ let winner_winner_chicken_appetizer str =
 let winner_winner_chicken_dinner str =
   if str = "win" then (winner_winner_chicken_appetizer "imgs/win.jpg";
                        quit_restart_check())
-  else if str = "lost" then (winner_winner_chicken_appetizer "imgs/loss_img.jpg";
+  else if str = "draw" then (winner_winner_chicken_appetizer "imgs/loss_img.jpg";
                              quit_restart_check())
   else if str = "caml" then (winner_winner_chicken_appetizer "imgs/caml_wins.jpg";
                              quit_restart_check())
   else if str = "python" then (winner_winner_chicken_appetizer "imgs/python_wins.jpg";
                                quit_restart_check())
-  else (winner_winner_chicken_appetizer "imgs/draw_img.jpg";
+  else (winner_winner_chicken_appetizer "imgs/draw.jpg";
         quit_restart_check())
 
 
