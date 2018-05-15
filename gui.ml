@@ -254,15 +254,17 @@ let init_welcome () =
   let (xx, yy) = mouse_up() in
   start_game ch xx yy
 
-
-
+(* [cover_up ()] Causes the warning message (stay inside the lines, can't play in
+   (1,1,1), etc ) to disappear *)
 let cover_up () =
   draw_image (get_img "imgs/coverup.jpg") 0 11;
   draw_image (get_img "imgs/coverup.jpg") 0 3;
   draw_image (get_img "imgs/coverup.jpg") 500 11;
   (draw_image (get_img "imgs/coverup.jpg")236 3;)
 
-
+(* [score p1 p2] Draws the current score for each player. The first int is player1's
+   score and the second int is player 2's score
+*)
 let score p1 p2 =
   draw_image (get_img "imgs/eraser.jpg") 330 42;
   draw_image (get_img "imgs/eraser.jpg") 590 42;
@@ -275,7 +277,10 @@ let score p1 p2 =
   moveto 617 72;
   (draw_string tiu;)
 
-
+(* [num_try_hint num x y] displays the [num] of hints and tries left at location
+   [x],[y]
+   REQUIRES: int x and int y that is within range of the GUI window
+*)
 let num_try_hint num x y =
   let str = string_of_int num in
   draw_image (get_img "imgs/eraser.jpg") (x-24) (y-52);
@@ -290,6 +295,11 @@ let num_try_hint num x y =
 
   let thd (_,_,y) = y
 
+(* [which_command ()] Returns which a triple where the first element is the string
+   version of command depending on whether or not the user has pressed the try button,
+   and the second and third element are the x and y coordinates, respectively of
+   where the user pressed
+*)
 let which_command () =
   let (x,y) = mouse_up () in
     if ((x >= 149 && x <= (149 + 69)) && (y >= 627 && y<= (627 + 44))) then
@@ -300,57 +310,103 @@ let which_command () =
     else if ((x >= 50 && x <= (50 + 134)) && (y >= 313 && y<= (313 + 61))) then ("restart", x, y)
     else ("place" , x, y)
 
+(* [play_board command x y] will return the concatenated form of "[command] cell"
+   and a tuple of coordinates to determine where the picture should be placed.
+   Example of commands include: "place", "try"
+*)
 let play_board command x y =
-  if ((x >= 331 && x <=426) && (y >= 651 && y <= 685 )) then ((command^" 0,0,0"), (360, 666))
-  else if ((x >= 438 && x <= 575) && (y >= 653 && y <= 685 )) then ((command^" 0,0,1"), (475, 666))
-  else if ((x >= 580 && x <= 696) && (y >= 651 && y <= 684)) then ((command^" 0,0,2"), (605, 666))
-  else if ((x >= 296 && x <= 414) && (y >= 596 && y <= 645)) then ((command^" 0,1,0"), (340, 610))
-  else if ((x >= 422 && x <= 574) && (y >= 597 && y <= 644)) then ((command^" 0,1,1"), (475, 615))
-  else if ((x >= 585 && x <= 697) && (y >= 597 && y <= 645)) then ((command^" 0,1,2"), (625, 610))
-  else if ((x >= 251 && x <= 401) && (y >= 541 && y <= 590)) then ((command^" 0,2,0"), (320, 550))
-  else if ((x >= 418 && x <= 576) && (y >= 540 && y <= 590)) then ((command^" 0,2,1"), (475, 555))
-  else if ((x >= 583 && x <= 760) && (y >= 540 && y <= 590)) then ((command^" 0,2,2"), (645, 555))
+  if ((x >= 331 && x <=426) && (y >= 651 && y <= 685 )) then
+    ((command^" 0,0,0"), (360, 666))
+  else if ((x >= 438 && x <= 575) && (y >= 653 && y <= 685 )) then
+    ((command^" 0,0,1"), (475, 666))
+  else if ((x >= 580 && x <= 696) && (y >= 651 && y <= 684)) then
+    ((command^" 0,0,2"), (605, 666))
+  else if ((x >= 296 && x <= 414) && (y >= 596 && y <= 645)) then
+    ((command^" 0,1,0"), (340, 610))
+  else if ((x >= 422 && x <= 574) && (y >= 597 && y <= 644)) then
+    ((command^" 0,1,1"), (475, 615))
+  else if ((x >= 585 && x <= 697) && (y >= 597 && y <= 645)) then
+    ((command^" 0,1,2"), (625, 610))
+  else if ((x >= 251 && x <= 401) && (y >= 541 && y <= 590)) then
+    ((command^" 0,2,0"), (320, 550))
+  else if ((x >= 418 && x <= 576) && (y >= 540 && y <= 590)) then
+    ((command^" 0,2,1"), (475, 555))
+  else if ((x >= 583 && x <= 760) && (y >= 540 && y <= 590)) then
+    ((command^" 0,2,2"), (645, 555))
+  else if ((x >= 319 && x <= 428) && (y >= 480 && y <= 520)) then
+    ((command^" 1,0,0"), (350, 492))
+  else if ((x >= 439 && x <= 575) && (y >= 496 && y <= 524)) then
+    ((command^" 1,0,1"), (475, 492))
+  else if ((x >= 577 && x <= 670) && (y >= 493 && y <= 528)) then
+    ((command^" 1,0,2"), (605, 492))
+  else if ((x >= 300 && x <= 414) && (y >= 437 && y <= 489)) then
+    ((command^" 1,1,0"), (340, 440))
+  else if ((x >= 433 && x <= 575) && (y >= 440 && y <= 490)) then
+    ((command^" 1,1,1"), (0,0))
+  else if ((x >= 583 && x <= 726) && (y >= 439 && y <= 489)) then
+    ((command^" 1,1,2"), (625, 440))
+  else if ((x >= 251 && x <= 401) && (y >= 384 && y <= 434)) then
+    ((command^" 1,2,0"), (320, 385))
+  else if ((x >= 418 && x <= 579) && (y >= 383 && y <= 432)) then
+    ((command^" 1,2,1"), (475, 390))
+  else if ((x >= 583 && x <= 763) && (y >= 381 && y <= 432)) then
+    ((command^" 1,2,2"), (645, 385))
+  else if ((x >= 316 && x <= 427) && (y >= 324 && y <= 361)) then
+    ((command^" 2,0,0"), (360, 330))
+  else if ((x >= 440 && x <= 575) && (y >= 324 && y <= 360)) then
+    ((command^" 2,0,1"), (475, 330))
+  else if ((x >= 580 && x <= 694) && (y >= 323 && y <= 360)) then
+    ((command^" 2,0,2"), (605, 330))
+  else if ((x >= 284 && x <= 414) && (y >= 269 && y <= 322)) then
+    ((command^" 2,1,0"), (340, 280))
+  else if ((x >= 430 && x <= 576) && (y >= 270 && y <= 318)) then
+    ((command^" 2,1,1"), (475, 280))
+  else if ((x >= 582 && x <= 730) && (y >= 270 && y <= 318)) then
+    ((command^" 2,1,2"), (625, 280))
+  else if ((x >= 252 && x <= 404) && (y >= 216 && y <= 265)) then
+    ((command^" 2,2,0"), (320, 225))
+  else if ((x >= 420 && x <= 580) && (y >= 215 && y <= 265)) then
+    ((command^" 2,2,1"), (475, 220))
+  else if ((x >= 585 && x <= 763) && (y >= 216 && y <= 266)) then
+    ((command^" 2,2,2"), (645, 225))
+  else
+    (command^" 1,1,1", (1,1))
 
-  else if ((x >= 319 && x <= 428) && (y >= 480 && y <= 520)) then ((command^" 1,0,0"), (350, 492))
-  else if ((x >= 439 && x <= 575) && (y >= 496 && y <= 524)) then ((command^" 1,0,1"), (475, 492))
-  else if ((x >= 577 && x <= 670) && (y >= 493 && y <= 528)) then ((command^" 1,0,2"), (605, 492))
-  else if ((x >= 300 && x <= 414) && (y >= 437 && y <= 489)) then ((command^" 1,1,0"), (340, 440))
-  else if ((x >= 433 && x <= 575) && (y >= 440 && y <= 490)) then ((command^" 1,1,1"), (0,0))
-  else if ((x >= 583 && x <= 726) && (y >= 439 && y <= 489)) then ((command^" 1,1,2"), (625, 440))
-  else if ((x >= 251 && x <= 401) && (y >= 384 && y <= 434)) then ((command^" 1,2,0"), (320, 385))
-  else if ((x >= 418 && x <= 579) && (y >= 383 && y <= 432)) then ((command^" 1,2,1"), (475, 390))
-  else if ((x >= 583 && x <= 763) && (y >= 381 && y <= 432)) then ((command^" 1,2,2"), (645, 385))
-
-  else if ((x >= 316 && x <= 427) && (y >= 324 && y <= 361)) then ((command^" 2,0,0"), (360, 330))
-  else if ((x >= 440 && x <= 575) && (y >= 324 && y <= 360)) then ((command^" 2,0,1"), (475, 330))
-  else if ((x >= 580 && x <= 694) && (y >= 323 && y <= 360)) then ((command^" 2,0,2"), (605, 330))
-  else if ((x >= 284 && x <= 414) && (y >= 269 && y <= 322)) then ((command^" 2,1,0"), (340, 280))
-  else if ((x >= 430 && x <= 576) && (y >= 270 && y <= 318)) then ((command^" 2,1,1"), (475, 280))
-  else if ((x >= 582 && x <= 730) && (y >= 270 && y <= 318)) then ((command^" 2,1,2"), (625, 280))
-  else if ((x >= 252 && x <= 404) && (y >= 216 && y <= 265)) then ((command^" 2,2,0"), (320, 225))
-  else if ((x >= 420 && x <= 580) && (y >= 215 && y <= 265)) then ((command^" 2,2,1"), (475, 220))
-  else if ((x >= 585 && x <= 763) && (y >= 216 && y <= 266)) then ((command^" 2,2,2"), (645, 225))
-
-  else (command^" 1,1,1", (1,1))
-
+(* [quit_restart_check ()] checks whether or not user clicked on either the
+   Quit or restart button *)
 let quit_restart_check () = let (x, y) = mouse_up() in
-  if ((x >= 225 && x <= 335) && ( y >= 425 && y <= 474)) then (
-    clear_graph(); raise Quit)else if ((x >= 225 && x <= 359) && ( y >= 325 && y <= 386)) then (clear_graph(); raise Restart)
+  if ((x >= 225 && x <= 335) && ( y >= 425 && y <= 474)) then
+    (clear_graph(); raise Quit)
+  else if ((x >= 225 && x <= 359) && ( y >= 325 && y <= 386)) then
+    (clear_graph(); raise Restart)
   else ()
 
+(* [repeat_cell x y] will display an error message depending on the [x] and [y]
+   coordinates of where the user touched. These messages include: stay in the
+   lines, cell already taken, and forbidden cell *)
 let repeat_cell x y =
   if x = 0 && y = 0 then (draw_image (get_img "imgs/no_x.jpg") 236 0;)
   else if x = 1 && y = 1 then (draw_image (get_img "imgs/stay.jpg") 236 0;)
   else (sound 440 1000; draw_image (get_img "imgs/msg2.jpg") 236 0;)
 
+(* [responsive_board x y] Draws the python or caml picture (determined by the
+   string parameter) at the location specified by [x] and [y]
+*)
 let responsive_board str x y =
   (let file_name = "imgs/" ^ str ^ ".jpg" in
   draw_image (get_img file_name ) x y;)
 
+(* [choose_letter str] is a helper method that checks whether or not we need to
+   draw a python or caml depending on the current player for the Try command *)
 let choose_letter str =
-  if str = "python" then (draw_string "P";)
-  else (draw_string "C";)
+  if str = "python" then
+    (draw_string "P";)
+  else
+    (draw_string "C";)
 
+(* [cover_try playerr x y] covers the [playerr]'s try at location [x],[y] when
+   the user decides to choose a different spot rather than what they had
+   originally tried *)
 let cover_try str ex why =
   if (why >= 500 && why <= 666) then
     (moveto (ex+15) (why+4);
@@ -369,13 +425,20 @@ let cover_try str ex why =
     )
   else ()
 
+(* [try_responsive_board playerr x y (pl,ex,why)] returns (true, xx, yy) if
+   the player accepts the tried move (by either pressing on the accept button or
+   the same square)It returns (false, xx yy) if [playerr] decides to not accept
+   the location and presses anywhere else. (xx, yy) are the coordinates of where
+   the player pressed.
+   REQUIRES: string version of a player, int x and int y that is within range
+            of the GUI window, a valid cell
+*)
 let try_responsive_board str x y (pl, ex, why)=
     moveto (x+15) (y+4);
     set_color annoying_green;
     Graphics.set_font "-*-fixed-medium-r-semicondensed--17-*-*-*-*-*-iso8859-1";
      choose_letter str;
     draw_image (get_img "imgs/accept.jpg") 65 22;
-
     let (xa,ya) = mouse_up () in
     let (sy, (a, b)) = play_board "try" xa ya in
     let c1 = String.index sy ',' in
@@ -383,32 +446,51 @@ let try_responsive_board str x y (pl, ex, why)=
     let xx = int_of_char (String.get sy (c1 + 1)) - 48 in
     let yy = int_of_char (String.get sy (c1 + 3)) - 48 in
     if ((p = pl && ex = xx && why = yy)||((xa >= 66 && xa <= 198)&& (ya >= 22 && ya <= 78) )) then
-      ( if (p = pl && ex = xx && why = yy) then (responsive_board str x y;cover_up(); (true, a, b);)else
-          (responsive_board str x y; cover_up();(true, a, b);)) else ((false, xa, ya);)
+      ( if (p = pl && ex = xx && why = yy) then
+          (responsive_board str x y;cover_up(); (true, a, b);)
+        else
+          (responsive_board str x y; cover_up();(true, a, b);))
+    else
+      ((false, xa, ya);)
 
+(* [hightligh_curr_player playerr] Draws a rectangle around the image of the
+   current player [playerr] *)
 let highlight_curr_player str =
-  if str = "python" then (rect_drawn_bblack 596 150 64 60; rect_drawn_cyan 334 145 62 65;)
-  else (rect_drawn_bblack 334 145 62 65; rect_drawn_cyan 596 150 64 60;)
+  if str = "python" then
+    (rect_drawn_bblack 596 150 64 60; rect_drawn_cyan 334 145 62 65;)
+  else
+    (rect_drawn_bblack 334 145 62 65; rect_drawn_cyan 596 150 64 60;)
 
+(* [winner_winner_chicken_appetizer str] helper function for the win/lose/draw
+   message display that checks which player won and displays the quit and restart
+   buttons for the user *)
 let winner_winner_chicken_appetizer str =
   draw_image (get_img str) 200 200;
   draw_image (get_img "imgs/quit.jpg") 225 425;
   (draw_image (get_img "imgs/restart.jpg") 225 325;)
 
-
+(* [winner_winner_chicken_dinner winner] Displays the win/lose/draw message based
+   on what [winner] corresponds to
+*)
 let winner_winner_chicken_dinner str =
-  if str = "win" then (winner_winner_chicken_appetizer "imgs/win.jpg";
-                       quit_restart_check())
-  else if str = "draw" then (winner_winner_chicken_appetizer "imgs/loss_img.jpg";
-                             quit_restart_check())
-  else if str = "caml" then (winner_winner_chicken_appetizer "imgs/caml_wins.jpg";
-                             quit_restart_check())
+  if str = "win" then
+    (winner_winner_chicken_appetizer "imgs/win.jpg";
+     quit_restart_check())
+  else if str = "draw" then
+    (winner_winner_chicken_appetizer "imgs/loss_img.jpg";
+     quit_restart_check())
+  else if str = "caml" then
+    (winner_winner_chicken_appetizer "imgs/caml_wins.jpg";
+     quit_restart_check())
   else if str = "python" then (winner_winner_chicken_appetizer "imgs/python_wins.jpg";
                                quit_restart_check())
   else (winner_winner_chicken_appetizer "imgs/draw.jpg";
         quit_restart_check())
 
-
+(* [cell_coords_to_x_y cell] returns the (x,y) location of where the playerr's
+   icon will be placed according to cell [cell]
+   REQUIRES: a valid cell
+*)
 let cell_coords_to_x_y (pl, x, y)=
   match (pl,x,y) with
   | (0,0,0) -> (360, 666)

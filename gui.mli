@@ -15,12 +15,13 @@ val init_welcome : unit -> string
 (* [begin_game x y] draws the game screen*)
 val begin_game : unit -> unit
 
-(* Causes the warning message (stay inside the lines, can't play in (1,1,1), etc ) to disappear *)
+(* [cover_up ()] Causes the warning message (stay inside the lines, can't play in
+   (1,1,1), etc ) to disappear *)
 val cover_up: unit -> unit
 
-(* [play_board command x y] will return the concatenated form of "[command] cell" and a tuple of
-   coordinates to determine where the picture should be placed. Example of commands include:
-   "place", "try"
+(* [play_board command x y] will return the concatenated form of "[command] cell"
+   and a tuple of coordinates to determine where the picture should be placed.
+   Example of commands include: "place", "try"
 *)
 val play_board : string -> int -> int -> string * (int * int)
 
@@ -38,8 +39,8 @@ val repeat_cell : int -> int -> unit
    current player [playerr] *)
 val highlight_curr_player: string -> unit
 
-(* Draws the current score for each player. The first int is player1's score and
-   the second int is player 2's score
+(* [score p1 p2] Draws the current score for each player. The first int is player1's
+   score and the second int is player 2's score
 *)
 val score : int -> int -> unit
 
@@ -54,7 +55,9 @@ val winner_winner_chicken_dinner: string -> unit
 *)
 val num_try_hint : int -> int -> int -> unit
 
-(* [cover_try playerr x y] covers the [playerr]'s try at location [x],[y] *)
+(* [cover_try playerr x y] covers the [playerr]'s try at location [x],[y] when
+   the user decides to choose a different spot rather than what they had
+   originally tried *)
 val cover_try : string -> int -> int -> unit
 
 (* [try_responsive_board playerr x y (pl,ex,why)] returns (true, xx, yy) if
@@ -68,8 +71,8 @@ val cover_try : string -> int -> int -> unit
 val try_responsive_board: string -> int -> int-> (int * int * int)-> (bool* int * int)
 
 
-(* Returns which a triple where the first element is the string version
-   of command depending on whether or not the user has pressed the try button,
+(* [which_command ()] Returns which a triple where the first element is the string
+   version of command depending on whether or not the user has pressed the try button,
    and the second and third element are the x and y coordinates, respectively of
    where the user pressed
 *)
