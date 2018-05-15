@@ -6,7 +6,7 @@ This game is a Cornell University CS 3110 final project.
 
 ## Installation
 
-This game requires OCaml and opam, OCaml Graphics and Camlimages. If OCaml and opam are not installed, please click this link and follow the listed instructions: http://www.cs.cornell.edu/courses/cs3110/2018sp/install.html
+This game requires OCaml and opam, OCaml Graphics and CamlImages. If OCaml and opam are not installed, please click this link and follow the listed instructions: http://www.cs.cornell.edu/courses/cs3110/2018sp/install.html
 
 X11/XQuartz are also needed for Graphics support. If homebrew is installed, it can be installed by running
 
@@ -21,6 +21,10 @@ Then, map opam to use the system installation by running
 Then run 
 
 `eval opam config env`
+
+GTK will also be needed for CamlImages. To install GTK, run
+
+'sudo apt-get install gtk2.0'
 
 In order to install the Graphics module and CamlImages, run
 
