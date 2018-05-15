@@ -1,61 +1,59 @@
-# 3d-tictactoe
-cs 3110 final project
-** modified on April 10, 2018 **
+# 3D TicTacToe
 
-http://www.myhip.com/ttt3d/3d_tic_tac_toe_too.html <- for inspiration
+3D TicTacToe is a 3-dimensional version of the classic tic-tac-toe game. It involves three classic tic-tac-toe board stacked on top of each other and additional three-in-a-rows that span those three boards. It also determines the winner of the game not by who reaches a three-in-a-row first, but who has the most three-in-a-rows by the time all the cells in the 3-dimensional board are filled. 
 
-Design Review Meeting: (Monday 04/09/2018 --- Friday 04/13/2018)
-Here's the agenda for your design review meeting:
+This game is a Cornell University CS 3110 final project.
 
-Introductions and overview [2 min]: The staff member begins the meeting. (We suggest that the team appoint one member as a note-taker for the meeting.)
-Background [3 min]: The team gives a brief reminder of project and overview of design, especially highlighting any changes that might have occurred since submitting design document.
-Discussion of design [21 min]: The team and staff member discuss the design. The staff member will come prepared with questions and constructive feedback.
-Planning [3 min]: The team presents its implementation plan to the staff member.
-Wrapup [1 min].
+## Installation
 
-** modifed on April 13, 2018 **
-* need to add more features to make it more complicated --> more heuresitcs, web game applications, more rows, up the GUI
-* reason-react-JS for front end web; reprocessing
-* co-https (networking) <- for multiplayer games (running on a server)
+This game requires OCaml and opam, OCaml Graphics and CamlImages. If OCaml and opam are not installed, please click this link and follow the listed instructions: http://www.cs.cornell.edu/courses/cs3110/2018sp/install.html
 
+X11/XQuartz are also needed for Graphics support. If homebrew is installed, it can be installed by running
 
-Milestone 2: Prototype (05/01/2018, Tuesday)
-Prepare status.pdf:
-contains:
--System Description: Include your system proposal and design document from Milestones 0 and 1, updated to account for any changes you have since made.
--Changes: lol
--Status: what pieces of your project you have implemented so far
--Roadmap: what remains to be implemented
--Testing: what has been tested successfully
+```brew install Caskroom/cask/xquartz```
 
+```brew reinstall ocaml --with-x11```
 
+Then, map opam to use the system installation by running
 
-Prototype Review Meeting: (Wednesday 05/02/2018 --- Tuesday 05/08/2018)
-Here's the agenda for your prototype review meeting:
+`opam switch sys`
+ 
+Then run 
 
-Introductions and overview [2 min]: The staff member begins the meeting. (We suggest that the team appoint one member as a note-taker for the meeting.)
-Background [3 min]: The team gives a brief reminder of project and overview of design, especially highlighting any changes that might have occurred since the design review.
-Discussion of prototype [21 min]: The team and staff member discuss the prototype. The staff member will come prepared with questions and constructive feedback.
-Planning [3 min]: The team presents its roadmap to the staff member.
-Wrapup [1 min].
+`eval opam config env`
 
+GTK will also be needed for CamlImages. To install GTK, run
 
+`sudo apt-get install gtk2.0`
 
-Milestone 3: Implementation (Tuesday 05/15/2018 4:30pm aaah)
-src.zip, containing the source code of your system. Make sure to include all the files necessary to compile and run your system. In that zip file, include a file named README.txt with clear instructions to the grader on how to compile and run your project. As always, your code must be written with good style and be well documented.
-gitlog.txt, containing your Git log.
-design.pdf, which is an updated version of your design document:
-Account for any changes made during implementation.
-You do not need to submit a separate interfaces.zip for this milestone, because you're already submitting those files as part of src.zip.
-Update the test plan to discuss what you accomplished and describe any known bugs.
-Add a new section on Division of labor: Who implemented what? Write a paragraph for each team member describing their primary contributions to the implementation effort. Include an estimate of how many hours each person worked.
+In order to install the Graphics module and CamlImages, run
 
+`opam install graphics`
 
+`opam install camlimages`
 
-DEMO: ( Monday 05/14/2018 --- Friday 05/18/2018)
-Here's the agenda for your demo:
+## Running the game
 
-Introductions and overview [2 min]: The staff member begins the meeting.
-Background [3 min]: The team gives a brief reminder of project, especially highlighting any changes that might have occurred since the design phase.
-Demo of system [24 min]: The team presents the implemented functionality, demoing the features of the system that are working, and discussing any planned functionality that wasn't completed. You must demo what you turned in as of the Milestone 3 deadline; sorry, but for fairness to other teams we can't allow you to continue improving the system after that.
-Wrapup [1 min].
+### Starting the game
+
+Run `make play` in order to launch the GUI and begin playing the game. The first screen will detail the rules of the game. Click anywhere in order to continue and a welcome screen should appear.
+
+![Rules Screen](imgs/rules_screen.png "Rules Screen")
+
+If you wish to only compile, run `make compile`.
+
+### Welcome screen
+
+One the welcome screen there will be option for three things:
+* Level
+* Mode
+* Number of players
+
+![Welcome Screen](imgs/welcome_screen.png "Welcome Screen")
+
+If the number of players is specified to be Single, then the mode will determine the AI that will be the player's opponent.
+There are two modes: normal and krazy. Normal functions as a classic tic-tac-toe game while krazy mode involves special features such as bomb, switching planes, etc.
+
+### Testing, Clean
+Run `make test` to run the tests included in the project.
+Run `make clean` to remove build files.

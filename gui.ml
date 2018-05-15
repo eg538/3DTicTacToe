@@ -81,9 +81,8 @@ let get_img img =
 
 (* Tells the player to please wait as the computer calculates the next best move*)
 let draw_wait_mgs () =
-  (* Graphics.remember_mode false; *)
   (print_endline "in draw_wait_mgs";
-  draw_image (get_img "imgs/pls_wait.jpg") 236 0;)
+   draw_image (get_img "imgs/pls_wait.jpg") 236 0;print_endline"it happened";)
 
 let rect_drawn x y width height =
   (set_color magenta;
@@ -247,6 +246,7 @@ let num_try_hint num x y =
   let thd (_,_,y) = y
 
 let which_command () =
+
     let event_lst = [Graphics.Button_up] in
     let mouse_status = wait_next_event event_lst  in
     let x = mouse_status.mouse_x in
@@ -255,7 +255,6 @@ let which_command () =
     print_string "y is: "; print_int y; print_endline " ";
     print_endline " ";
 
-    (* Graphics.synchronize (); Graphics.remember_mode true; *)
 
     if ((x >= 149 && x <= (149 + 69)) && (y >= 627 && y<= (627 + 44))) then
       ( let ev = [Graphics.Button_up] in
@@ -263,7 +262,7 @@ let which_command () =
         let xx =  ms.mouse_x in
         let yy = ms.mouse_y in
         ("try" , xx, yy)) else if ((x >= 801 && x <= 894)&&( y >= 624 && y <= 664)) then
-      (Graphics.remember_mode false; draw_wait_mgs(); ("hint", x, y))
+      (  Graphics.auto_synchronize false; draw_wait_mgs();Graphics.remember_mode true;("hint", x, y) )
     else if ((x >= 850 && x <= (850 + 110)) && (y >= 313 && y<= (313 + 49))) then ("quit", x, y)
     else if ((x >= 50 && x <= (50 + 134)) && (y >= 313 && y<= (313 + 61))) then ("restart", x, y)
     else ("place" , x, y)
@@ -304,9 +303,7 @@ let play_board command x y =
   else (command^" 1,1,1", (1,1))
 
 let quit_restart_check () = let (x, y) = mouse_up() in
-  print_endline("ttttt");
   if ((x >= 225 && x <= 335) && ( y >= 425 && y <= 474)) then (
-    print_endline"yup yup33";
     clear_graph(); raise Quit)else if ((x >= 225 && x <= 359) && ( y >= 325 && y <= 386)) then (clear_graph(); raise Restart)
   else ()
 
@@ -318,8 +315,8 @@ let repeat_cell x y =
 
 let responsive_board str x y =
   (let file_name = "imgs/" ^ str ^ ".jpg" in
-   print_endline file_name;
-   draw_image (get_img file_name ) x y;)
+  print_endline "Drawing a move";
+  draw_image (get_img file_name ) x y;)
 
 let choose_letter str =
   if str = "python" then (draw_string "P";)
@@ -336,7 +333,7 @@ let cover_try str ex why =
      set_color mid_plep;
      choose_letter str
     )
-  else if (why >= 225 && why <= 330) then
+  else if (why >= 220 && why <= 330) then
     (moveto (ex+15) (why+4);
      set_color bot_plep;
      choose_letter str
@@ -350,17 +347,14 @@ let try_responsive_board str x y (pl, ex, why)=
      choose_letter str;
     draw_image (get_img "imgs/accept.jpg") 65 22;
     let event_lst = [Graphics.Button_up] in
-     let mouse_status = wait_next_event event_lst  in
-     let xa = mouse_status.mouse_x in
-     let ya = mouse_status.mouse_y in
-     let (sy, (a, b)) = play_board "try" xa ya in
-     let c1 = String.index sy ',' in
+    let mouse_status = wait_next_event event_lst  in
+    let xa = mouse_status.mouse_x in
+    let ya = mouse_status.mouse_y in
+    let (sy, (a, b)) = play_board "try" xa ya in
+    let c1 = String.index sy ',' in
     let p = int_of_char (String.get sy (c1 - 1)) - 48 in
-    print_endline(string_of_bool (p = pl));
     let xx = int_of_char (String.get sy (c1 + 1)) - 48 in
-    print_endline(string_of_bool (ex = xx));
     let yy = int_of_char (String.get sy (c1 + 3)) - 48 in
-    print_endline(string_of_bool (why = yy));
     if ((p = pl && ex = xx && why = yy)||((xa >= 66 && xa <= 198)&& (ya >= 22 && ya <= 78) )) then
       ( if (p = pl && ex = xx && why = yy) then (responsive_board str x y;cover_up(); (true, a, b);)else
           (responsive_board str x y; cover_up();(true, a, b);)) else ((false, xa, ya);)
@@ -383,7 +377,6 @@ let winner_winner_chicken_dinner str =
   else if str = "caml" then (winner_winner_chicken_appetizer "imgs/caml_wins.jpg";
                              quit_restart_check())
   else if str = "python" then (winner_winner_chicken_appetizer "imgs/python_wins.jpg";
-                               print_endline"yup yup";
                                quit_restart_check())
   else (winner_winner_chicken_appetizer "imgs/draw_img.jpg";
         quit_restart_check())
@@ -422,20 +415,18 @@ let cell_coords_to_x_y (pl, x, y)=
 
 
 let mark_three move_x move_y =
-  ( print_endline "mark_three";
-    rect_drawn_red move_x move_y;)
+  ( rect_drawn_red move_x move_y;)
 
 let rec draw_three_row_helper lst =
   match lst with
-  | [] -> (print_endline "no more cells in this triple");
+  | [] -> ();
   | h::t -> (let (move_x, move_y) = cell_coords_to_x_y h in
              mark_three move_x move_y; draw_three_row_helper t;)
 
 
 let draw_three_row recent_wins =
-  print_endline " "; print_endline "in Gui.draw_three_row"; print_endline " ";
   match recent_wins with
-  | [] -> print_endline "HEREHEHE";
+  | [] -> ();
   | xs -> (draw_three_row_helper (List.sort Pervasives.compare xs); )
 
 let rec iterate lst f =
