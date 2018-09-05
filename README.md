@@ -49,8 +49,6 @@ One the welcome screen there will be option for three things:
 * Mode
 * Number of players
 
-![Welcome Screen](imgs/welcome_screen.png "Welcome Screen")
-
 If the number of players is specified to be Single, then the mode will determine the AI that will be the player's opponent.
 There are two modes: normal and krazy. Normal functions as a classic tic-tac-toe game while krazy mode involves special features such as bomb, switching planes, etc.
 
